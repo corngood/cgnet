@@ -8,8 +8,8 @@
     <ProjectGuid>{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CGNet</RootNamespace>
-    <AssemblyName>CGNet</AssemblyName>
+    <RootNamespace>CgNet</RootNamespace>
+    <AssemblyName>CgNet</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

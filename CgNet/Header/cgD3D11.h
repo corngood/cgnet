@@ -49,33 +49,34 @@
  *
  */
 
-#ifndef __CGD3D10_H__
-#define __CGD3D10_H__
+#ifndef __CGD3D11_H__
+#define __CGD3D11_H__
 
 #ifdef _WIN32
 
 #pragma once
 
 #include <windows.h>
-#include <d3d10_1.h>
+#include <d3d11.h>
+#include <D3Dcompiler.h>
 
 #include "Cg/cg.h"
 
 /* Set up for either Win32 import/export/lib. */
 
-#ifdef CGD3D10DLL_EXPORTS
-# define CGD3D10DLL_API __declspec(dllexport)
+#ifdef CGD3D11DLL_EXPORTS
+# define CGD3D11DLL_API __declspec(dllexport)
 #elif defined(CG_LIB)
-# define CGD3D10DLL_API
+# define CGD3D11DLL_API
 #else
-# define CGD3D10DLL_API __declspec(dllimport)
+# define CGD3D11DLL_API __declspec(dllimport)
 #endif
 
-#ifndef CGD3D10ENTRY
+#ifndef CGD3D11ENTRY
 # ifdef _WIN32
-#  define CGD3D10ENTRY __cdecl
+#  define CGD3D11ENTRY __cdecl
 # else
-#  define CGD3D10ENTRY
+#  define CGD3D11ENTRY
 # endif
 #endif
 
@@ -84,36 +85,38 @@ extern "C"
 {
 #endif
 
-#ifndef CGD3D10_EXPLICIT
+#ifndef CGD3D11_EXPLICIT
 
-CGD3D10DLL_API ID3D10Device * CGD3D10ENTRY cgD3D10GetDevice(CGcontext Context);
-CGD3D10DLL_API HRESULT CGD3D10ENTRY cgD3D10SetDevice(CGcontext Context, ID3D10Device *pDevice);
-CGD3D10DLL_API void CGD3D10ENTRY cgD3D10SetTextureParameter(CGparameter Parameter, ID3D10Resource *pTexture);
-CGD3D10DLL_API void CGD3D10ENTRY cgD3D10SetSamplerStateParameter(CGparameter Parameter, ID3D10SamplerState *pSamplerState);
-CGD3D10DLL_API void CGD3D10ENTRY cgD3D10SetTextureSamplerStateParameter(CGparameter Parameter, ID3D10Resource *pTexture, ID3D10SamplerState *pSamplerState);
-CGD3D10DLL_API HRESULT CGD3D10ENTRY cgD3D10LoadProgram(CGprogram Program, UINT Flags);
-CGD3D10DLL_API ID3D10Blob * CGD3D10ENTRY cgD3D10GetCompiledProgram(CGprogram Program);
-CGD3D10DLL_API ID3D10Blob * CGD3D10ENTRY cgD3D10GetProgramErrors(CGprogram Program);
-CGD3D10DLL_API CGbool CGD3D10ENTRY cgD3D10IsProgramLoaded(CGprogram Program);
-CGD3D10DLL_API HRESULT CGD3D10ENTRY cgD3D10BindProgram(CGprogram Program);
-CGD3D10DLL_API void CGD3D10ENTRY cgD3D10UnloadProgram(CGprogram Program);
-CGD3D10DLL_API void CGD3D10ENTRY cgD3D10UnbindProgram(CGprogram Program);
-CGD3D10DLL_API ID3D10Buffer * CGD3D10ENTRY cgD3D10GetBufferByIndex(CGprogram Program, UINT Index);
-CGD3D10DLL_API void CGD3D10ENTRY cgD3D10RegisterStates(CGcontext Context);
-CGD3D10DLL_API void CGD3D10ENTRY cgD3D10SetManageTextureParameters(CGcontext Context, CGbool Flag);
-CGD3D10DLL_API CGbool CGD3D10ENTRY cgD3D10GetManageTextureParameters(CGcontext Context);
-CGD3D10DLL_API ID3D10Blob * CGD3D10ENTRY cgD3D10GetIASignatureByPass(CGpass Pass);
-CGD3D10DLL_API CGprofile CGD3D10ENTRY cgD3D10GetLatestVertexProfile(void);
-CGD3D10DLL_API CGprofile CGD3D10ENTRY cgD3D10GetLatestGeometryProfile(void);
-CGD3D10DLL_API CGprofile CGD3D10ENTRY cgD3D10GetLatestPixelProfile(void);
-CGD3D10DLL_API CGbool CGD3D10ENTRY cgD3D10IsProfileSupported(CGprofile Profile);
-CGD3D10DLL_API DWORD CGD3D10ENTRY cgD3D10TypeToSize(CGtype Type);
-CGD3D10DLL_API HRESULT CGD3D10ENTRY cgD3D10GetLastError(void);
-CGD3D10DLL_API const char ** CGD3D10ENTRY cgD3D10GetOptimalOptions(CGprofile Profile);
-CGD3D10DLL_API const char * CGD3D10ENTRY cgD3D10TranslateCGerror(CGerror Error);
-CGD3D10DLL_API const char * CGD3D10ENTRY cgD3D10TranslateHRESULT(HRESULT hr);
+CGD3D11DLL_API ID3D11Device * CGD3D11ENTRY cgD3D11GetDevice(CGcontext Context);
+CGD3D11DLL_API HRESULT CGD3D11ENTRY cgD3D11SetDevice(CGcontext Context, ID3D11Device *pDevice);
+CGD3D11DLL_API void CGD3D11ENTRY cgD3D11SetTextureParameter(CGparameter Parameter, ID3D11Resource *pTexture);
+CGD3D11DLL_API void CGD3D11ENTRY cgD3D11SetSamplerStateParameter(CGparameter Parameter, ID3D11SamplerState *pSamplerState);
+CGD3D11DLL_API void CGD3D11ENTRY cgD3D11SetTextureSamplerStateParameter(CGparameter Parameter, ID3D11Resource *pTexture, ID3D11SamplerState *pSamplerState);
+CGD3D11DLL_API HRESULT CGD3D11ENTRY cgD3D11LoadProgram(CGprogram Program, UINT Flags);
+CGD3D11DLL_API ID3D10Blob * CGD3D11ENTRY cgD3D11GetCompiledProgram(CGprogram Program);
+CGD3D11DLL_API ID3D10Blob * CGD3D11ENTRY cgD3D11GetProgramErrors(CGprogram Program);
+CGD3D11DLL_API CGbool CGD3D11ENTRY cgD3D11IsProgramLoaded(CGprogram Program);
+CGD3D11DLL_API HRESULT CGD3D11ENTRY cgD3D11BindProgram(CGprogram Program);
+CGD3D11DLL_API void CGD3D11ENTRY cgD3D11UnloadProgram(CGprogram Program);
+CGD3D11DLL_API ID3D11Buffer * CGD3D11ENTRY cgD3D11GetBufferByIndex(CGprogram Program, UINT Index);
+CGD3D11DLL_API void CGD3D11ENTRY cgD3D11RegisterStates(CGcontext Context);
+CGD3D11DLL_API void CGD3D11ENTRY cgD3D11SetManageTextureParameters(CGcontext Context, CGbool Flag);
+CGD3D11DLL_API CGbool CGD3D11ENTRY cgD3D11GetManageTextureParameters(CGcontext Context);
+CGD3D11DLL_API ID3D10Blob * CGD3D11ENTRY cgD3D11GetIASignatureByPass(CGpass Pass);
+CGD3D11DLL_API CGprofile CGD3D11ENTRY cgD3D11GetLatestVertexProfile(void);
+CGD3D11DLL_API CGprofile CGD3D11ENTRY cgD3D11GetLatestGeometryProfile(void);
+CGD3D11DLL_API CGprofile CGD3D11ENTRY cgD3D11GetLatestPixelProfile(void);
+CGD3D11DLL_API CGprofile CGD3D11ENTRY cgD3D11GetLatestHullProfile(void);
+CGD3D11DLL_API CGprofile CGD3D11ENTRY cgD3D11GetLatestDomainProfile(void);
+CGD3D11DLL_API CGbool CGD3D11ENTRY cgD3D11IsProfileSupported(CGprofile Profile);
+CGD3D11DLL_API DWORD CGD3D11ENTRY cgD3D11TypeToSize(CGtype Type);
+CGD3D11DLL_API HRESULT CGD3D11ENTRY cgD3D11GetLastError(void);
+CGD3D11DLL_API const char ** CGD3D11ENTRY cgD3D11GetOptimalOptions(CGprofile Profile);
+CGD3D11DLL_API const char * CGD3D11ENTRY cgD3D11TranslateCGerror(CGerror Error);
+CGD3D11DLL_API const char * CGD3D11ENTRY cgD3D11TranslateHRESULT(HRESULT hr);
+CGD3D11DLL_API void CGD3D11ENTRY cgD3D11UnbindProgram(CGprogram Program);
 
-#endif /* CGD3D10_EXPLICIT */
+#endif /* CGD3D11_EXPLICIT */
 
 #ifdef __cplusplus
 }

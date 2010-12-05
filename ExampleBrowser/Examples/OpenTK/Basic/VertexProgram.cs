@@ -1,22 +1,26 @@
-﻿namespace Examples
+﻿namespace ExampleBrowser.Examples.OpenTK.Basic
 {
     using System;
 
-    using CGNet;
-    using CGNet.GL;
+    using CgNet;
+    using CgNet.GL;
 
-    using OpenTK;
-    using OpenTK.Graphics.OpenGL;
+    using global::Examples.Helper;
 
-    public class VertexProgram : GameWindow
+    using global::OpenTK;
+    using global::OpenTK.Graphics.OpenGL;
+    using global::OpenTK.Input;
+
+    [Example(NodePath = "OpenTK/Basic/01 Vertex Program")]
+    public class VertexProgram : Example
     {
         #region Fields
 
-        private const string MyProgramName = "01_vertex_program";
-        private const string MyVertexProgramFileName = "C2E1v_green.cg";
+        private const string MyVertexProgramFileName = "Data/C2E1v_green.cg";
         private const string MyVertexProgramName = "C2E1v_green";
 
-        private int myCgVertexProfile;
+        private IntPtr myCgContext;
+        private CgProfile myCgVertexProfile;
         private IntPtr myCgVertexProgram;
 
         #endregion Fields
@@ -24,30 +28,13 @@
         #region Constructors
 
         public VertexProgram()
-            : base(800, 600)
+            : base("01_vertex_program")
         {
         }
 
         #endregion Constructors
 
         #region Methods
-
-        #region Public Static Methods
-       
-        /// <summary>
-        /// Entry point of this example.
-        /// </summary>
-        [STAThread]
-        public static void Main()
-        {
-            using (var example = new VertexProgram())
-            {
-                example.Title = MyProgramName;
-                example.Run(30.0, 0.0);
-            }
-        }
-
-        #endregion Public Static Methods
 
         #region Protected Methods
 
@@ -59,27 +46,27 @@
         {
             GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
 
-            var myCgContext = Cg.CreateContext();
-            //Cg.cgCheckForCgError("creating context");
-            //    cgGLSetDebugMode(CG_FALSE);
+            myCgContext = Cg.CreateContext();
+
+            CheckForCgError("creating context");
+            CgGL.SetDebugMode(false);
             Cg.SetParameterSettingMode(myCgContext, ParameterSettingMode.Deferred);
 
-            this.myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(myCgVertexProfile);
-            //    checkForCgError("selecting vertex profile");
+            CheckForCgError("selecting vertex profile");
 
             this.myCgVertexProgram =
-              Cg.CreateProgramFromFile(
-                myCgContext,              /* Cg runtime context */
-                ProgramType.Source,                /* Program in human-readable form */
-                MyVertexProgramFileName,  /* Name of file containing program */
-                myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
-                MyVertexProgramName,      /* Entry function name */
-                null);                    /* No extra compiler options */
-            //checkForCgError("creating vertex program from file");
+                Cg.CreateProgramFromFile(
+                    myCgContext,              /* Cg runtime context */
+                    ProgramType.Source,                /* Program in human-readable form */
+                    MyVertexProgramFileName,  /* Name of file containing program */
+                    myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
+                    MyVertexProgramName,      /* Entry function name */
+                    null);                    /* No extra compiler options */
+            CheckForCgError("creating vertex program from file");
             CgGL.LoadProgram(myCgVertexProgram);
-            //    checkForCgError("loading vertex program");
-            //
+            CheckForCgError("loading vertex program");
         }
 
         /// <summary>
@@ -92,10 +79,10 @@
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             CgGL.BindProgram(this.myCgVertexProgram);
-            //checkForCgError("binding vertex program");
+            CheckForCgError("binding vertex program");
 
             CgGL.EnableProfile(this.myCgVertexProfile);
-            //checkForCgError("enabling vertex profile");
+            CheckForCgError("enabling vertex profile");
 
             /* Rendering code verbatim from Chapter 1, Section 2.4.1 "Rendering
                a Triangle with OpenGL" (page 57). */
@@ -125,6 +112,9 @@
 
         protected override void OnUnload(EventArgs e)
         {
+            base.OnUnload(e);
+            Cg.DestroyProgram(myCgVertexProgram);
+            Cg.DestroyContext(myCgContext);
         }
 
         /// <summary>
@@ -134,7 +124,7 @@
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            if (Keyboard[OpenTK.Input.Key.Escape])
+            if (Keyboard[Key.Escape])
                 this.Exit();
         }
 
