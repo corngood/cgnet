@@ -48,80 +48,6 @@ namespace CgNet.Wrapper
 
         #region Methods
 
-        #region Public Static Methods
-
-        /// <summary>
-        ///    Gets the name of the specified program.
-        /// </summary>
-        /// <param name="param">Handle to the program to query.</param>
-        /// <returns>The name of the specified program as a string.</returns>
-        public static string cgGetParameterName(IntPtr param)
-        {
-            return Marshal.PtrToStringAnsi(cgGetParameterNameA(param));
-        }
-
-        /// <summary>
-        /// Gets the parameter's semantic string.
-        /// </summary>
-        /// <param name="param">Parameter to get semantic from.</param>
-        /// <returns>Parameter's semantic string.</returns>
-        public static string cgGetParameterSemantic(IntPtr param)
-        {
-            return Marshal.PtrToStringAnsi(cgGetParameterSemanticA(param));
-        }
-
-        /// <summary>
-        /// Gets a program parameter's values. 
-        /// </summary>
-        /// <param name="param">Parameter to retreive parameter's values from.</param>
-        /// <param name="value_type">CG_CONSTANT or CG?DEFAULT</param>
-        /// <param name="nvalues">Array of integers indicating the number of values in parameters.</param>
-        /// <returns>Array of double values.</returns>
-        [DllImport(CgNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern double* cgGetParameterValues(IntPtr param, int value_type, int* nvalues);
-
-        /// <summary>
-        ///     Gets the specified source from the program.
-        /// </summary>
-        /// <param name="program">
-        ///     Handle to the Cg program.
-        /// </param>
-        /// <param name="sourceType">
-        ///     Type of source to pull, whether original or compiled, etc.
-        /// </param>
-        /// <returns>
-        ///     String containing the source of the specified type from the program.
-        /// </returns>
-        public static string cgGetProgramString(IntPtr program, int sourceType)
-        {
-            return Marshal.PtrToStringAnsi(cgGetProgramStringA(program, sourceType));
-        }
-
-        /// <summary>
-        /// get the resource name associated with a resource enumerant 
-        /// </summary>
-        /// <param name="resource">Resource ID to get name from.</param>
-        /// <returns>Resource's name.</returns>
-        public static string cgGetResourceString(int resource)
-        {
-            return Marshal.PtrToStringAnsi(cgGetResourceStringA(resource));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sname"></param>
-        /// <returns></returns>
-        // CGDLL_API const char *cgGetString(CGenum sname);
-        public static string cgGetString(int sname)
-        {
-            return Marshal.PtrToStringAnsi(_cgGetString(sname));
-        }
-
-        #endregion Public Static Methods
-
         #region Internal Static Methods
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
@@ -130,22 +56,38 @@ namespace CgNet.Wrapper
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern int cgCallStateResetCallback(IntPtr stateassignment);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool cgCallStateResetCallback(IntPtr stateassignment);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern int cgCallStateSetCallback(IntPtr stateassignment);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool cgCallStateSetCallback(IntPtr stateassignment);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern int cgCallStateValidateCallback(IntPtr stateassignment);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool cgCallStateValidateCallback(IntPtr stateassignment);
 
-        // CG_API CGprogram CGENTRY cgCombinePrograms( int n, const CGprogram *exeList );
-        // CG_API CGprogram CGENTRY cgCombinePrograms2( const CGprogram exe1, const CGprogram exe2 );
-        // CG_API CGprogram CGENTRY cgCombinePrograms3( const CGprogram exe1, const CGprogram exe2, const CGprogram exe3 );
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
         internal static extern IntPtr cgCombinePrograms(int n, IntPtr[] progs);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern IntPtr cgCombinePrograms2(IntPtr exe1, IntPtr exe2);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern IntPtr cgCombinePrograms3(IntPtr exe1, IntPtr exe2, IntPtr exe3);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern IntPtr cgCombinePrograms4(IntPtr exe1, IntPtr exe2, IntPtr exe3, IntPtr exe4);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern IntPtr cgCombinePrograms5(IntPtr exe1, IntPtr exe2, IntPtr exe3, IntPtr exe4, IntPtr exe5);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
@@ -193,7 +135,7 @@ namespace CgNet.Wrapper
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateProgram(IntPtr context, int type, string source, CgProfile profile, string entry, string[] args);
+        internal static extern IntPtr cgCreateProgram(IntPtr context, ProgramType type, string source, CgProfile profile, string entry, string[] args);
 
         // CG_API CGannotation CGENTRY cgCreateProgramAnnotation(CGprogram program, const char *name, CGtype type);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
@@ -270,7 +212,7 @@ namespace CgNet.Wrapper
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetAutoCompile(IntPtr context);
+        internal static extern AutoCompileMode cgGetAutoCompile(IntPtr context);
 
         // const CGbool * cgGetBoolAnnotationValues( CGannotation ann, int * nvalues );
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
@@ -320,12 +262,12 @@ namespace CgNet.Wrapper
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="enum_string"></param>
+        /// <param name="enumString"></param>
         /// <returns></returns>
         // CGDLL_API CGenum cgGetEnum(const char *enum_string);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetEnum(string enum_string);
+        internal static extern int cgGetEnum(string enumString);
 
         /// <summary>
         /// 
@@ -353,7 +295,7 @@ namespace CgNet.Wrapper
         // CGDLL_API CGerrorCallbackFunc cgGetErrorCallback(void);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern Cg.CGerrorCallbackFuncDelegate cgGetErrorCallback();
+        internal static extern Cg.CgErrorCallbackFuncDelegate cgGetErrorCallback();
 
         /// <summary>
         /// 
@@ -363,7 +305,7 @@ namespace CgNet.Wrapper
         // CGDLL_API CGerrorHandlerFunc cgGetErrorHandler(void **data);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern Cg.CGerrorHandlerFuncDelegate cgGetErrorHandler(IntPtr data);
+        internal static extern Cg.CgErrorHandlerFuncDelegate cgGetErrorHandler(IntPtr data);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
@@ -382,7 +324,6 @@ namespace CgNet.Wrapper
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="ctx"></param>
         /// <returns></returns>
         // CGDLL_API CGeffect cgGetFirstEffect(CGcontext);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
@@ -443,11 +384,11 @@ namespace CgNet.Wrapper
         /// Gets the first parameter in specified program.
         /// </summary>
         /// <param name="prog">The program to retreive the first program from.</param>
-        /// <param name="name_space">Namespace of the parameter to iterate through.</param>
+        /// <param name="nameSpace">Namespace of the parameter to iterate through.</param>
         /// <returns>First parameter in specified program.</returns>
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetFirstParameter(IntPtr prog, int name_space);
+        internal static extern IntPtr cgGetFirstParameter(IntPtr prog, int nameSpace);
 
         /// <summary>
         /// 
@@ -499,7 +440,6 @@ namespace CgNet.Wrapper
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="ctx"></param>
         /// <returns></returns>
         // CGDLL_API CGstate cgGetFirstSamplerState(CGcontext);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
@@ -519,7 +459,6 @@ namespace CgNet.Wrapper
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="ctx"></param>
         /// <returns></returns>
         // CGDLL_API CGstate cgGetFirstState(CGcontext);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
@@ -625,7 +564,7 @@ namespace CgNet.Wrapper
         // CGDLL_API void cgGetMatrixParameterdc(CGparameter param, double *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGetMatrixParameterdc(IntPtr param, out double matrix);
+        internal static extern void cgGetMatrixParameterdc(IntPtr param, IntPtr matrix);
 
         /// <summary>
         /// 
@@ -635,7 +574,7 @@ namespace CgNet.Wrapper
         // CGDLL_API void cgGetMatrixParameterdr(CGparameter param, double *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGetMatrixParameterdr(IntPtr param, out double matrix);
+        internal static extern void cgGetMatrixParameterdr(IntPtr param, IntPtr matrix);
 
         /// <summary>
         /// 
@@ -645,7 +584,7 @@ namespace CgNet.Wrapper
         // CGDLL_API void cgGetMatrixParameterfc(CGparameter param, float *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGetMatrixParameterfc(IntPtr param, out float matrix);
+        internal static extern void cgGetMatrixParameterfc(IntPtr param, IntPtr matrix);
 
         /// <summary>
         /// 
@@ -655,7 +594,7 @@ namespace CgNet.Wrapper
         // CGDLL_API void cgGetMatrixParameterfr(CGparameter param, float *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGetMatrixParameterfr(IntPtr param, out float matrix);
+        internal static extern void cgGetMatrixParameterfr(IntPtr param, IntPtr matrix);
 
         /// <summary>
         /// 
@@ -665,7 +604,7 @@ namespace CgNet.Wrapper
         // CGDLL_API void cgGetMatrixParameteric(CGparameter param, int *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGetMatrixParameteric(IntPtr param, out int matrix);
+        internal static extern void cgGetMatrixParameteric(IntPtr param, IntPtr matrix);
 
         /// <summary>
         /// 
@@ -675,7 +614,7 @@ namespace CgNet.Wrapper
         // CGDLL_API void cgGetMatrixParameterir(CGparameter param, int *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGetMatrixParameterir(IntPtr param, out int matrix);
+        internal static extern void cgGetMatrixParameterir(IntPtr param, IntPtr matrix);
 
         /// <summary>
         /// 
@@ -740,13 +679,13 @@ namespace CgNet.Wrapper
         /// 
         /// </summary>
         /// <param name="prog"></param>
-        /// <param name="name_space"></param>
+        /// <param name="nameSpace"></param>
         /// <param name="name"></param>
         /// <returns></returns>
         // CGDLL_API CGparameter cgGetNamedProgramParameter(CGprogram prog,  CGenum name_space,  const char *name);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetNamedProgramParameter(IntPtr prog, int name_space, string name);
+        internal static extern IntPtr cgGetNamedProgramParameter(IntPtr prog, ProgramNamespace nameSpace, string name);
 
         /// <summary>
         /// 
@@ -1048,6 +987,16 @@ namespace CgNet.Wrapper
         internal static extern int cgGetParameterIndex(IntPtr param);
 
         /// <summary>
+        ///    Gets the name of the specified program.
+        /// </summary>
+        /// <param name="param">Handle to the program to query.</param>
+        /// <returns>IntPtr that must be converted to an Ansi string via Marshal.PtrToStringAnsi.</returns>
+        // CGDLL_API const char *cgGetParameterName(CGparameter param);
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern IntPtr cgGetParameterName(IntPtr param);
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="param"></param>
@@ -1113,6 +1062,10 @@ namespace CgNet.Wrapper
         SuppressUnmanagedCodeSecurity]
         internal static extern int cgGetParameterRows(IntPtr param);
 
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern IntPtr cgGetParameterSemantic(IntPtr param);
+
         /// <summary>
         ///    Gets the data type of the specified parameter.
         /// </summary>
@@ -1133,7 +1086,7 @@ namespace CgNet.Wrapper
         // CGDLL_API int cgGetParameterValuedc(CGparameter param, int n, double *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetParameterValuedc(IntPtr param, int n, double[] vals);
+        internal static extern int cgGetParameterValuedc(IntPtr param, int n, IntPtr vals);
 
         /// <summary>
         /// 
@@ -1145,7 +1098,7 @@ namespace CgNet.Wrapper
         // CGDLL_API int cgGetParameterValuedr(CGparameter param, int n, double *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetParameterValuedr(IntPtr param, int n, double[] vals);
+        internal static extern int cgGetParameterValuedr(IntPtr param, int n, IntPtr vals);
 
         /// <summary>
         /// 
@@ -1157,7 +1110,7 @@ namespace CgNet.Wrapper
         // CGDLL_API int cgGetParameterValuefc(CGparameter param, int n, float *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetParameterValuefc(IntPtr param, int n, float[] vals);
+        internal static extern int cgGetParameterValuefc(IntPtr param, int n, IntPtr vals);
 
         /// <summary>
         /// 
@@ -1169,7 +1122,7 @@ namespace CgNet.Wrapper
         // CGDLL_API int cgGetParameterValuefr(CGparameter param, int n, float *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetParameterValuefr(IntPtr param, int n, float[] vals);
+        internal static extern int cgGetParameterValuefr(IntPtr param, int n, IntPtr vals);
 
         /// <summary>
         /// 
@@ -1181,7 +1134,7 @@ namespace CgNet.Wrapper
         // CGDLL_API int cgGetParameterValueic(CGparameter param, int n, int *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetParameterValueic(IntPtr param, int n, int[] vals);
+        internal static extern int cgGetParameterValueic(IntPtr param, int n, IntPtr vals);
 
         /// <summary>
         /// 
@@ -1193,17 +1146,25 @@ namespace CgNet.Wrapper
         // CGDLL_API int cgGetParameterValueir(CGparameter param, int n, int *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetParameterValueir(IntPtr param, int n, int[] vals);
+        internal static extern int cgGetParameterValueir(IntPtr param, int n, IntPtr vals);
+
+        /// <summary>
+        /// Gets a program parameter's values. 
+        /// </summary>
+        /// <param name="param">Parameter to retreive parameter's values from.</param>
+        /// <param name="valueType">CG_CONSTANT or CG?DEFAULT</param>
+        /// <param name="nvalues">Array of integers indicating the number of values in parameters.</param>
+        /// <returns>Array of double values.</returns>
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        CLSCompliant(false),
+        SuppressUnmanagedCodeSecurity,
+        Obsolete]
+        internal static unsafe extern double* cgGetParameterValues(IntPtr param, int valueType, int* nvalues);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity,
         Obsolete]
         internal static extern double[] cgGetParameterValues(IntPtr param, int value_type, int[] nvalues);
-
-        [DllImport(CgNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity,
-        Obsolete]
-        internal static extern IntPtr cgGetParameterValues(IntPtr param, int value_type, IntPtr nvalues);
 
         /// <summary>
         ///    Gets the variability of the specified param (i.e, uniform, varying, etc).
@@ -1301,13 +1262,34 @@ namespace CgNet.Wrapper
         internal static extern IntPtr cgGetProgramStateAssignmentValue(IntPtr stateassignment);
 
         /// <summary>
+        ///     Gets the specified source from the program.
+        /// </summary>
+        /// <param name="program">
+        ///     Handle to the Cg program.
+        /// </param>
+        /// <param name="sourceType">
+        ///     Type of source to pull, whether original or compiled, etc.
+        /// </param>
+        /// <returns>
+        ///     IntPtr to the string data.  Must be converted using Marshal.PtrToStringAnsi.
+        /// </returns>
+        // CGDLL_API const char *cgGetProgramString(CGprogram prog, CGenum pname);
+        [DllImport(CgNativeLibrary, CallingConvention = Convention, CharSet = CharSet.Auto),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern IntPtr cgGetProgramString(IntPtr program, SourceType sourceType);
+
+        /// <summary>
         /// Gets the resource enumerant assigned to a resource name.
         /// </summary>
-        /// <param name="resource_name">Resource's name.</param>
+        /// <param name="resourceName">Resource's name.</param>
         /// <returns>Resource enumerant.</returns>
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern CgResource cgGetResource(string resource_name);
+        internal static extern CgResource cgGetResource(string resourceName);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern IntPtr cgGetResourceString(CgResource resource);
 
         /// <summary>
         /// 
@@ -1398,7 +1380,7 @@ namespace CgNet.Wrapper
         // CGDLL_API CGstatecallback cgGetStateResetCallback(CGstate);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern Cg.CGstatecallbackDelegate cgGetStateResetCallback(IntPtr state);
+        internal static extern Cg.CgStateCallbackDelegate cgGetStateResetCallback(IntPtr state);
 
         /// <summary>
         /// 
@@ -1408,7 +1390,7 @@ namespace CgNet.Wrapper
         // CGDLL_API CGstatecallback cgGetStateSetCallback(CGstate);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern Cg.CGstatecallbackDelegate cgGetStateSetCallback(IntPtr state);
+        internal static extern Cg.CgStateCallbackDelegate cgGetStateSetCallback(IntPtr state);
 
         /// <summary>
         /// 
@@ -1428,7 +1410,11 @@ namespace CgNet.Wrapper
         // CGDLL_API CGstatecallback cgGetStateValidateCallback(CGstate);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern Cg.CGstatecallbackDelegate cgGetStateValidateCallback(IntPtr state);
+        internal static extern Cg.CgStateCallbackDelegate cgGetStateValidateCallback(IntPtr state);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern IntPtr cgGetString(CgEnum sname);
 
         /// <summary>
         /// 
@@ -1733,12 +1719,10 @@ namespace CgNet.Wrapper
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="ctx"></param>
-        /// <param name="flag"></param>
         // CGDLL_API void cgSetAutoCompile(CGcontext context, CGenum flag);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern void cgSetAutoCompile(IntPtr context, int flag);
+        internal static extern void cgSetAutoCompile(IntPtr context, AutoCompileMode flag);
 
         //CG_API CGbool CGENTRY cgSetBoolAnnotation(CGannotation ann, CGbool value);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
@@ -1753,7 +1737,7 @@ namespace CgNet.Wrapper
         // CGDLL_API void cgSetErrorCallback(CGerrorCallbackFunc func);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern void cgSetErrorCallback(Cg.CGerrorCallbackFuncDelegate func);
+        internal static extern void cgSetErrorCallback(Cg.CgErrorCallbackFuncDelegate func);
 
         /// <summary>
         /// 
@@ -1763,7 +1747,7 @@ namespace CgNet.Wrapper
         // CGDLL_API void cgSetErrorHandler(CGerrorHandlerFunc func, void *data);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern void cgSetErrorHandler(Cg.CGerrorHandlerFuncDelegate func, IntPtr data);
+        internal static extern void cgSetErrorHandler(Cg.CgErrorHandlerFuncDelegate func, IntPtr data);
 
         /// <summary>
         /// 
@@ -2187,7 +2171,7 @@ namespace CgNet.Wrapper
         // CGDLL_API void cgSetStateCallbacks(CGstate, CGstatecallback set, CGstatecallback reset, CGstatecallback validate);
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        internal static extern void cgSetStateCallbacks(IntPtr state, Cg.CGstatecallbackDelegate set, Cg.CGstatecallbackDelegate reset, Cg.CGstatecallbackDelegate validate);
+        internal static extern void cgSetStateCallbacks(IntPtr state, Cg.CgStateCallbackDelegate set, Cg.CgStateCallbackDelegate reset, Cg.CgStateCallbackDelegate validate);
 
         /// <summary>
         /// 
@@ -2217,55 +2201,6 @@ namespace CgNet.Wrapper
 
         #endregion Internal Static Methods
 
-        #region Private Static Methods
-
-        /// <summary>
-        ///    Gets the name of the specified program.
-        /// </summary>
-        /// <param name="param">Handle to the program to query.</param>
-        /// <returns>IntPtr that must be converted to an Ansi string via Marshal.PtrToStringAnsi.</returns>
-        // CGDLL_API const char *cgGetParameterName(CGparameter param);
-        [DllImport(CgNativeLibrary, CallingConvention = Convention, EntryPoint = "cgGetParameterName"),
-        SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr cgGetParameterNameA(IntPtr param);
-
-        [DllImport(CgNativeLibrary, CallingConvention = Convention, EntryPoint = "cgGetErrorString"),
-        SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr cgGetParameterSemanticA(IntPtr param);
-
-        /// <summary>
-        ///     Gets the specified source from the program.
-        /// </summary>
-        /// <param name="program">
-        ///     Handle to the Cg program.
-        /// </param>
-        /// <param name="sourceType">
-        ///     Type of source to pull, whether original or compiled, etc.
-        /// </param>
-        /// <returns>
-        ///     IntPtr to the string data.  Must be converted using Marshal.PtrToStringAnsi.
-        /// </returns>
-        // CGDLL_API const char *cgGetProgramString(CGprogram prog, CGenum pname);
-        [DllImport(CgNativeLibrary, CallingConvention = Convention, EntryPoint = "cgGetProgramString", CharSet = CharSet.Auto),
-        SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr cgGetProgramStringA(IntPtr program, int sourceType);
-
-        [DllImport(CgNativeLibrary, CallingConvention = Convention, EntryPoint = "cgGetErrorString"),
-        SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr cgGetResourceStringA(int resource);
-
-        [DllImport(CgNativeLibrary, EntryPoint = "cgGetString", CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr _cgGetString(int sname);
-
-        #endregion Private Static Methods
-
         #endregion Methods
-
-        #region Other
-
-        // --- Public Externs ---
-
-        #endregion Other
     }
 }

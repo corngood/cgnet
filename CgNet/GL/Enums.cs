@@ -22,6 +22,23 @@ namespace CgNet.GL
 {
     #region Enumerations
 
+    public enum CgGLEnum
+    {
+        MatrixIdentity = 0,
+        MatrixTranspose = 1,
+        MatrixInverse = 2,
+        MatrixInverseTranspose = 3,
+        ModelviewMatrix = 4,
+        ProjectionMatrix = 5,
+        TextureMatrix = 6,
+        ModelviewProjectionMatrix = 7,
+        Vertex = 8,
+        Fragment = 9,
+        Geometry = 10,
+        TessellationControl = 11,
+        TessellationEvaluation = 12
+    }
+
     public enum ProfileClass
     {
         Vertex = 8,

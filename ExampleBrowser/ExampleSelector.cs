@@ -62,7 +62,7 @@
 
         private void TreeView1NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (this.treeView1.SelectedNode != null)
+            if (this.treeView1.SelectedNode != null && this.treeView1.SelectedNode.Tag != null)
             {
                 using (var example = (IExample)((ConstructorInfo)this.treeView1.SelectedNode.Tag).Invoke(null))
                 {

@@ -35,21 +35,21 @@ namespace CgNet
         /// </summary>
         // typedef void (*CGerrorCallbackFunc)(void);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void CGerrorCallbackFuncDelegate();
+        public delegate void CgErrorCallbackFuncDelegate();
 
         /// <summary>
         ///    
         /// </summary>
         // typedef void (*CGerrorHandlerFunc)(CGcontext context, CGerror err, void *data);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void CGerrorHandlerFuncDelegate(IntPtr context, int err, IntPtr data);
+        public delegate void CgErrorHandlerFuncDelegate(IntPtr context, CgError err, IntPtr data);
 
         /// <summary>
         ///    
         /// </summary>
         // typedef CGbool (*CGstatecallback)(CGstateassignment);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int CGstatecallbackDelegate(IntPtr cGstateassignment);
+        public delegate int CgStateCallbackDelegate(IntPtr cGstateassignment);
 
         #endregion Delegates
 
@@ -64,17 +64,37 @@ namespace CgNet
 
         public static bool CallStateResetCallback(IntPtr stateassignment)
         {
-            return CgNativeMethods.cgCallStateResetCallback(stateassignment) == CgNativeMethods.CgTrue;
+            return CgNativeMethods.cgCallStateResetCallback(stateassignment);
         }
 
         public static bool CallStateSetCallback(IntPtr stateassignment)
         {
-            return CgNativeMethods.cgCallStateSetCallback(stateassignment) == CgNativeMethods.CgTrue;
+            return CgNativeMethods.cgCallStateSetCallback(stateassignment);
         }
 
         public static bool CallStateValidateCallback(IntPtr stateassignment)
         {
-            return CgNativeMethods.cgCallStateValidateCallback(stateassignment) == CgNativeMethods.CgTrue;
+            return CgNativeMethods.cgCallStateValidateCallback(stateassignment);
+        }
+
+        public static IntPtr CombinePrograms(IntPtr exe1, IntPtr exe2)
+        {
+            return CgNativeMethods.cgCombinePrograms2(exe1, exe2);
+        }
+
+        public static IntPtr CombinePrograms(IntPtr exe1, IntPtr exe2, IntPtr exe3)
+        {
+            return CgNativeMethods.cgCombinePrograms3(exe1, exe2, exe3);
+        }
+
+        public static IntPtr CombinePrograms(IntPtr exe1, IntPtr exe2, IntPtr exe3, IntPtr exe4)
+        {
+            return CgNativeMethods.cgCombinePrograms4(exe1, exe2, exe3, exe4);
+        }
+
+        public static IntPtr CombinePrograms(IntPtr exe1, IntPtr exe2, IntPtr exe3, IntPtr exe4, IntPtr exe5)
+        {
+            return CgNativeMethods.cgCombinePrograms5(exe1, exe2, exe3, exe4, exe5);
         }
 
         public static IntPtr CombinePrograms(params IntPtr[] programs)
@@ -139,7 +159,7 @@ namespace CgNet
 
         public static IntPtr CreateProgram(IntPtr context, ProgramType type, string source, CgProfile profile, string entry, params string[] args)
         {
-            return CgNativeMethods.cgCreateProgram(context, (int)type, source, profile, entry, args);
+            return CgNativeMethods.cgCreateProgram(context, type, source, profile, entry, args);
         }
 
         public static IntPtr CreateProgramAnnotation(IntPtr prog, string name, CgType type)
@@ -234,9 +254,9 @@ namespace CgNet
             return CgNativeMethods.cgGetArrayType(param);
         }
 
-        public static bool GetAutoCompile(IntPtr context)
+        public static AutoCompileMode GetAutoCompile(IntPtr context)
         {
-            return CgNativeMethods.cgGetAutoCompile(context) == CgNativeMethods.CgTrue;
+            return CgNativeMethods.cgGetAutoCompile(context);
         }
 
         public static bool[] GetBoolAnnotationValues(IntPtr annotation)
@@ -298,12 +318,12 @@ namespace CgNet
             return CgNativeMethods.cgGetError();
         }
 
-        public static CGerrorCallbackFuncDelegate GetErrorCallback()
+        public static CgErrorCallbackFuncDelegate GetErrorCallback()
         {
             return CgNativeMethods.cgGetErrorCallback();
         }
 
-        public static CGerrorHandlerFuncDelegate GetErrorHandler(IntPtr data)
+        public static CgErrorHandlerFuncDelegate GetErrorHandler(IntPtr data)
         {
             return CgNativeMethods.cgGetErrorHandler(data);
         }
@@ -418,6 +438,11 @@ namespace CgNet
             return CgNativeMethods.cgGetFloatStateAssignmentValues(stateassignment, nVals);
         }
 
+        public static string GetGetParameterSemantic(IntPtr param)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetParameterSemantic(param));
+        }
+
         public static int[] GetIntAnnotationValues(IntPtr annotation, out int nvalues)
         {
             return CgNativeMethods.cgGetIntAnnotationValues(annotation, out nvalues);
@@ -438,34 +463,73 @@ namespace CgNet
             return CgNativeMethods.cgGetLastListing(context);
         }
 
-        public static void GetMatrixParameterdc(IntPtr param, out double matrix)
+        public static T[] GetMatrixParameter<T>(IntPtr param)
+            where T : struct
         {
-            CgNativeMethods.cgGetMatrixParameterdc(param, out matrix);
+            return GetMatrixParameter<T>(param, Order.RowMajor);
         }
 
-        public static void GetMatrixParameterdr(IntPtr param, out double matrix)
+        public static T[] GetMatrixParameter<T>(IntPtr param, Order order)
+            where T : struct
         {
-            CgNativeMethods.cgGetMatrixParameterdr(param, out matrix);
-        }
+            var retValue = new T[16];
+            GCHandle handle = GCHandle.Alloc(retValue, GCHandleType.Pinned);
 
-        public static void GetMatrixParameterfc(IntPtr param, out float matrix)
-        {
-            CgNativeMethods.cgGetMatrixParameterfc(param, out matrix);
-        }
+            try
+            {
+                if (typeof(T) == typeof(double))
+                {
+                    switch (order)
+                    {
+                        case Order.ColumnMajor:
+                            CgNativeMethods.cgGetMatrixParameterdc(param, handle.AddrOfPinnedObject());
+                            break;
+                        case Order.RowMajor:
+                            CgNativeMethods.cgGetMatrixParameterdr(param, handle.AddrOfPinnedObject());
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException("order");
+                    }
+                }
+                else if (typeof(T) == typeof(float))
+                {
+                    switch (order)
+                    {
+                        case Order.ColumnMajor:
+                            CgNativeMethods.cgGetMatrixParameterfc(param, handle.AddrOfPinnedObject());
+                            break;
+                        case Order.RowMajor:
+                            CgNativeMethods.cgGetMatrixParameterfr(param, handle.AddrOfPinnedObject());
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException("order");
+                    }
+                }
+                else if (typeof(T) == typeof(int))
+                {
+                    switch (order)
+                    {
+                        case Order.ColumnMajor:
+                            CgNativeMethods.cgGetMatrixParameteric(param, handle.AddrOfPinnedObject());
+                            break;
+                        case Order.RowMajor:
+                            CgNativeMethods.cgGetMatrixParameterir(param, handle.AddrOfPinnedObject());
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException("order");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
 
-        public static void GetMatrixParameterfr(IntPtr param, out float matrix)
-        {
-            CgNativeMethods.cgGetMatrixParameterfr(param, out matrix);
-        }
-
-        public static void GetMatrixParameteric(IntPtr param, out int matrix)
-        {
-            CgNativeMethods.cgGetMatrixParameteric(param, out matrix);
-        }
-
-        public static void GetMatrixParameterir(IntPtr param, out int matrix)
-        {
-            CgNativeMethods.cgGetMatrixParameterir(param, out matrix);
+                return retValue;
+            }
+            finally
+            {
+                handle.Free();
+            }
         }
 
         public static IntPtr GetNamedEffectParameter(IntPtr effect, string name)
@@ -498,7 +562,7 @@ namespace CgNet
             return CgNativeMethods.cgGetNamedProgramAnnotation(prog, name);
         }
 
-        public static IntPtr GetNamedProgramParameter(IntPtr prog, int nameSpace, string name)
+        public static IntPtr GetNamedProgramParameter(IntPtr prog, ProgramNamespace nameSpace, string name)
         {
             return CgNativeMethods.cgGetNamedProgramParameter(prog, nameSpace, name);
         }
@@ -648,6 +712,11 @@ namespace CgNet
             return CgNativeMethods.cgGetParameterIndex(param);
         }
 
+        public static string GetParameterName(IntPtr param)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetParameterName(param));
+        }
+
         public static CgType GetParameterNamedType(IntPtr param)
         {
             return CgNativeMethods.cgGetParameterNamedType(param);
@@ -693,53 +762,72 @@ namespace CgNet
             GetParameterValue(param, ref values, Order.RowMajor);
         }
 
-        public static void GetParameterValue(IntPtr param, ref float[] values)
+        public static T GetParameterValue<T>(IntPtr param)
+            where T : struct
+        {
+            var f = new T[1];
+            GetParameterValue(param, ref f);
+            return f[0];
+        }
+
+        public static void GetParameterValue<T>(IntPtr param, ref T[] values)
+            where T : struct
         {
             GetParameterValue(param, ref values, Order.RowMajor);
         }
 
-        public static void GetParameterValue(IntPtr param, ref int[] values, Order order)
+        public static void GetParameterValue<T>(IntPtr param, ref T[] values, Order order)
+            where T : struct
         {
-            switch (order)
+            GCHandle handle = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
             {
-                case Order.ColumnMajor:
-                    CgNativeMethods.cgGetParameterValueic(param, values.Length, values);
-                    break;
-                case Order.RowMajor:
-                    CgNativeMethods.cgGetParameterValueir(param, values.Length, values);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException("order");
+                if (typeof(T) == typeof(int))
+                {
+                    switch (order)
+                    {
+                        case Order.ColumnMajor:
+                            CgNativeMethods.cgGetParameterValueic(param, values.Length, handle.AddrOfPinnedObject());
+                            break;
+                        case Order.RowMajor:
+                            CgNativeMethods.cgGetParameterValueir(param, values.Length, handle.AddrOfPinnedObject());
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException("order");
+                    }
+                }
+                else if (typeof(T) == typeof(double))
+                {
+                    switch (order)
+                    {
+                        case Order.ColumnMajor:
+                            CgNativeMethods.cgGetParameterValuedc(param, values.Length, handle.AddrOfPinnedObject());
+                            break;
+                        case Order.RowMajor:
+                            CgNativeMethods.cgGetParameterValuedr(param, values.Length, handle.AddrOfPinnedObject());
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException("order");
+                    }
+                }
+                else if (typeof(T) == typeof(float))
+                {
+                    switch (order)
+                    {
+                        case Order.ColumnMajor:
+                            CgNativeMethods.cgGetParameterValuefc(param, values.Length, handle.AddrOfPinnedObject());
+                            break;
+                        case Order.RowMajor:
+                            CgNativeMethods.cgGetParameterValuefr(param, values.Length, handle.AddrOfPinnedObject());
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException("order");
+                    }
+                }
             }
-        }
-
-        public static void GetParameterValue(IntPtr param, ref double[] values, Order order)
-        {
-            switch (order)
+            finally
             {
-                case Order.ColumnMajor:
-                    CgNativeMethods.cgGetParameterValuedc(param, values.Length, values);
-                    break;
-                case Order.RowMajor:
-                    CgNativeMethods.cgGetParameterValuedr(param, values.Length, values);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException("order");
-            }
-        }
-
-        public static void GetParameterValue(IntPtr param, ref float[] values, Order order)
-        {
-            switch (order)
-            {
-                case Order.ColumnMajor:
-                    CgNativeMethods.cgGetParameterValuefc(param, values.Length, values);
-                    break;
-                case Order.RowMajor:
-                    CgNativeMethods.cgGetParameterValuefr(param, values.Length, values);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException("order");
+                handle.Free();
             }
         }
 
@@ -793,9 +881,19 @@ namespace CgNet
             return CgNativeMethods.cgGetProgramStateAssignmentValue(stateassignment);
         }
 
+        public static string GetProgramString(IntPtr program, SourceType sourceType)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetProgramString(program, sourceType));
+        }
+
         public static CgResource GetResource(string resourceName)
         {
             return CgNativeMethods.cgGetResource(resourceName);
+        }
+
+        public static string GetResourceString(CgResource resource)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetResourceString(resource));
         }
 
         public static IntPtr GetSamplerStateAssignmentParameter(IntPtr stateassignment)
@@ -838,12 +936,12 @@ namespace CgNet
             return CgNativeMethods.cgGetStateName(state);
         }
 
-        public static CGstatecallbackDelegate GetStateResetCallback(IntPtr state)
+        public static CgStateCallbackDelegate GetStateResetCallback(IntPtr state)
         {
             return CgNativeMethods.cgGetStateResetCallback(state);
         }
 
-        public static CGstatecallbackDelegate GetStateSetCallback(IntPtr state)
+        public static CgStateCallbackDelegate GetStateSetCallback(IntPtr state)
         {
             return CgNativeMethods.cgGetStateSetCallback(state);
         }
@@ -853,9 +951,14 @@ namespace CgNet
             return CgNativeMethods.cgGetStateType(state);
         }
 
-        public static CGstatecallbackDelegate GetStateValidateCallback(IntPtr state)
+        public static CgStateCallbackDelegate GetStateValidateCallback(IntPtr state)
         {
             return CgNativeMethods.cgGetStateValidateCallback(state);
+        }
+
+        public static string GetString(CgEnum sname)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetString(sname));
         }
 
         public static string GetStringAnnotationValue(IntPtr annotation)
@@ -993,7 +1096,7 @@ namespace CgNet
             CgNativeMethods.cgSetArraySize(param, size);
         }
 
-        public static void SetAutoCompile(IntPtr context, int flag)
+        public static void SetAutoCompile(IntPtr context, AutoCompileMode flag)
         {
             CgNativeMethods.cgSetAutoCompile(context, flag);
         }
@@ -1003,12 +1106,12 @@ namespace CgNet
             return CgNativeMethods.cgSetBoolAnnotation(annotation, value);
         }
 
-        public static void SetErrorCallback(CGerrorCallbackFuncDelegate func)
+        public static void SetErrorCallback(CgErrorCallbackFuncDelegate func)
         {
             CgNativeMethods.cgSetErrorCallback(func);
         }
 
-        public static void SetErrorHandler(CGerrorHandlerFuncDelegate func, IntPtr data)
+        public static void SetErrorHandler(CgErrorHandlerFuncDelegate func, IntPtr data)
         {
             CgNativeMethods.cgSetErrorHandler(func, data);
         }
@@ -1037,6 +1140,7 @@ namespace CgNet
                     throw new InvalidEnumArgumentException("order");
             }
         }
+
         public static void SetMatrixParameter(IntPtr param, double[] matrix)
         {
             SetMatrixParameter(param, matrix, Order.RowMajor);
@@ -1056,6 +1160,7 @@ namespace CgNet
                     throw new InvalidEnumArgumentException("order");
             }
         }
+
         public static void SetMatrixParameter(IntPtr param, int[] matrix)
         {
             SetMatrixParameter(param, matrix, Order.RowMajor);
@@ -1299,7 +1404,7 @@ namespace CgNet
             CgNativeMethods.cgSetSamplerState(param);
         }
 
-        public static void SetStateCallbacks(IntPtr state, CGstatecallbackDelegate set, CGstatecallbackDelegate reset, CGstatecallbackDelegate validate)
+        public static void SetStateCallbacks(IntPtr state, CgStateCallbackDelegate set, CgStateCallbackDelegate reset, CgStateCallbackDelegate validate)
         {
             CgNativeMethods.cgSetStateCallbacks(state, set, reset, validate);
         }

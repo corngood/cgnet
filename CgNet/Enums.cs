@@ -22,6 +22,74 @@ namespace CgNet
 {
     #region Enumerations
 
+    public enum AutoCompileMode
+    {
+        CompileManual = 4114,
+        CompileImmediate = 4115,
+        CompileLazy = 4116,
+    }
+
+    public enum CgEnum
+    {
+        Unknown = 4096,
+        In = 4097,
+        Out = 4098,
+        Inout = 4099,
+        Mixed = 4100,
+        Varying = 4101,
+        Uniform = 4102,
+        Constant = 4103,
+        ProgramSource = 4104, /* GetProgramString                       */
+        ProgramEntry = 4105, /* GetProgramString                       */
+        CompiledProgram = 4106, /* GetProgramString                       */
+        ProgramProfile = 4107, /* GetProgramString                       */
+        Global = 4108,
+        Program = 4109,
+        Default = 4110,
+        Error = 4111,
+        Source = 4112,
+        Object = 4113,
+        CompileManual = 4114,
+        CompileImmediate = 4115,
+        CompileLazy = 4116,
+        Current = 4117,
+        Literal = 4118,
+        Version = 4119, /* GetString                              */
+        RowMajor = 4120,
+        ColumnMajor = 4121,
+        Fragment = 4122, /* GetProgramInput and GetProgramOutput */
+        Vertex = 4123, /* GetProgramInput and GetProgramOutput */
+        Point = 4124, /* Geometry program GetProgramInput       */
+        Line = 4125, /* Geometry program GetProgramInput       */
+        LineAdj = 4126, /* Geometry program GetProgramInput       */
+        Triangle = 4127, /* Geometry program GetProgramInput       */
+        TriangleAdj = 4128, /* Geometry program GetProgramInput       */
+        PointOut = 4129, /* Geometry program GetProgramOutput      */
+        LineOut = 4130, /* Geometry program GetProgramOutput      */
+        TriangleOut = 4131, /* Geometry program GetProgramOutput      */
+        ImmediateParameterSetting = 4132,
+        DeferredParameterSetting = 4133,
+        NoLocksPolicy = 4134,
+        ThreadSafePolicy = 4135,
+        ForceUpperCasePolicy = 4136,
+        UnchangedCasePolicy = 4137,
+        IsOpenglProfile = 4138,
+        IsDirect3DProfile = 4139,
+        IsDirect3D8Profile = 4140,
+        IsDirect3D9Profile = 4141,
+        IsDirect3D10Profile = 4142,
+        IsVertexProfile = 4143,
+        IsFragmentProfile = 4144,
+        IsGeometryProfile = 4145,
+        IsTranslationProfile = 4146,
+        IsHLSLProfile = 4147,
+        IsGLSLProfile = 4148,
+        IsTessellationControlProfile = 4149,
+        IsTessellationEvaluationProfile = 4150,
+        Patch = 4152, /* GetProgramInput and GetProgramOutput */
+        IsDirect3D11Profile = 4153
+    }
+
     public enum CgError
     {
         NoError = 0,
@@ -759,8 +827,8 @@ namespace CgNet
 
     public enum Order
     {
-        ColumnMajor,
-        RowMajor
+        ColumnMajor = 4121,
+        RowMajor = 4120
     }
 
     public enum ParameterSettingMode
@@ -769,10 +837,24 @@ namespace CgNet
         Deferred = 4133
     }
 
+    public enum ProgramNamespace
+    {
+        Global = 4108,
+        Program = 4109,
+    }
+
     public enum ProgramType
     {
         Source = 4112,
         Object = 4113
+    }
+
+    public enum SourceType
+    {
+        ProgramSource = 4104, /* GetProgramString                       */
+        ProgramEntry = 4105, /* GetProgramString                       */
+        CompiledProgram = 4106, /* GetProgramString                       */
+        ProgramProfile = 4107, /* GetProgramString                       */
     }
 
     #endregion Enumerations
