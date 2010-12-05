@@ -48,13 +48,11 @@
 
             myCgContext = Cg.CreateContext();
 
-            CheckForCgError("creating context");
             CgGL.SetDebugMode(false);
             Cg.SetParameterSettingMode(myCgContext, ParameterSettingMode.Deferred);
 
             myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(myCgVertexProfile);
-            CheckForCgError("selecting vertex profile");
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
@@ -64,9 +62,7 @@
                     myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
                     MyVertexProgramName,      /* Entry function name */
                     null);                    /* No extra compiler options */
-            CheckForCgError("creating vertex program from file");
             CgGL.LoadProgram(myCgVertexProgram);
-            CheckForCgError("loading vertex program");
         }
 
         /// <summary>
@@ -79,10 +75,8 @@
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             CgGL.BindProgram(this.myCgVertexProgram);
-            CheckForCgError("binding vertex program");
 
             CgGL.EnableProfile(this.myCgVertexProfile);
-            CheckForCgError("enabling vertex profile");
 
             /* Rendering code verbatim from Chapter 1, Section 2.4.1 "Rendering
                a Triangle with OpenGL" (page 57). */

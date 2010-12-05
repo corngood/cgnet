@@ -51,22 +51,14 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// <param name="e">Not used.</param>
         protected override void OnLoad(EventArgs e)
         {
-            glutInitWindowSize(400, 400);
-            glutInitDisplayMode(0 | 2 | 16);
-            int a = 1;
-            string[] aargv = { "bla" };
-            glutInit(ref a, aargv);
-
             GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
 
             this.myCgContext = Cg.CreateContext();
-            this.CheckForCgError("creating context");
             CgGL.SetDebugMode(false);
             Cg.SetParameterSettingMode(this.myCgContext, ParameterSettingMode.Deferred);
 
             this.myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(this.myCgVertexProfile);
-            this.CheckForCgError("selecting vertex profile");
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
@@ -76,17 +68,13 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     this.myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
                     MyVertexProgramName,      /* Entry function name */
                     null);                    /* No extra compiler options */
-            this.CheckForCgError("creating vertex program from file");
             CgGL.LoadProgram(this.myCgVertexProgram);
-            this.CheckForCgError("loading vertex program");
 
             this.myCgVertexParamModelViewProj =
               Cg.GetNamedParameter(myCgVertexProgram, "modelViewProj");
-            CheckForCgError("could not get modelViewProj parameter");
 
             myCgFragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
             CgGL.SetOptimalOptions(myCgFragmentProfile);
-            CheckForCgError("selecting fragment profile");
 
             /* Specify fragment program with a string. */
             myCgFragmentProgram =
@@ -97,13 +85,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                 myCgFragmentProfile,      /* Profile: latest fragment profile */
                 "main",                   /* Entry function name */
                 null); /* No extra compiler options */
-            CheckForCgError("creating fragment program from string");
             CgGL.LoadProgram(myCgFragmentProgram);
-            CheckForCgError("loading fragment program");
 
             this.myCgFragmentParamC =
               Cg.GetNamedParameter(myCgFragmentProgram, "c");
-            CheckForCgError("could not get c parameter");
         }
 
         /// <summary>
@@ -122,16 +107,12 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             CgGL.BindProgram(this.myCgVertexProgram);
-            this.CheckForCgError("binding vertex program");
 
             CgGL.EnableProfile(this.myCgVertexProfile);
-            this.CheckForCgError("enabling vertex profile");
 
             CgGL.BindProgram(this.myCgFragmentProgram);
-            this.CheckForCgError("binding fragment program");
 
             CgGL.EnableProfile(this.myCgFragmentProfile);
-            this.CheckForCgError("enabling fragment profile");
 
             /* modelView = rotateMatrix * translateMatrix */
             float[] rotateMatrix = new float[16];
@@ -176,10 +157,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             glutWireCone(1.5, 3.5, 20, 20);
 
             CgGL.DisableProfile(myCgVertexProfile);
-            CheckForCgError("disabling vertex profile");
 
             CgGL.DisableProfile(myCgFragmentProfile);
-            CheckForCgError("disabling fragment profile");
 
             this.SwapBuffers();
         }
@@ -328,15 +307,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             m[3 * 4 + 2] = -1;
             m[3 * 4 + 3] = 0;
         }
-
-        [DllImport("glut32.dll")]
-        static extern void glutInit(ref int argcp, string[] argv);
-
-        [DllImport("glut32.dll")]
-        static extern void glutInitDisplayMode(uint mode);
-
-        [DllImport("glut32.dll")]
-        static extern void glutInitWindowSize(int width, int height);
 
         [DllImport("glut32.dll")]
         static extern void glutWireCone(double bse, double height, int slices, int stacks);

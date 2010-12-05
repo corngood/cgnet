@@ -74,13 +74,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
 
             this.myCgContext = Cg.CreateContext();
-            this.CheckForCgError("creating context");
             CgGL.SetDebugMode(false);
             Cg.SetParameterSettingMode(this.myCgContext, ParameterSettingMode.Deferred);
 
             this.myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(this.myCgVertexProfile);
-            this.CheckForCgError("selecting vertex profile");
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
@@ -90,16 +88,12 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     this.myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
                     MyVertexProgramName,      /* Entry function name */
                     null);                    /* No extra compiler options */
-            this.CheckForCgError("creating vertex program from file");
             CgGL.LoadProgram(this.myCgVertexProgram);
-            this.CheckForCgError("loading vertex program");
 
             myCgVertexParam_twisting = Cg.GetNamedParameter(myCgVertexProgram, "twisting");
-            CheckForCgError("could not get twisting parameter");
 
             this.myCgFragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
             CgGL.SetOptimalOptions(this.myCgFragmentProfile);
-            this.CheckForCgError("selecting fragment profile");
 
             this.myCgFragmentProgram =
                 Cg.CreateProgramFromFile(
@@ -109,9 +103,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     this.myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
                     MyFragmentProgramName,      /* Entry function name */
                     null);                      /* No extra compiler options */
-            this.CheckForCgError("creating fragment program from file");
             CgGL.LoadProgram(this.myCgFragmentProgram);
-            this.CheckForCgError("loading fragment program");
         }
 
         /// <summary>
@@ -125,24 +117,18 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             Cg.SetParameter(myCgVertexParam_twisting, myTwisting);
 
             CgGL.BindProgram(this.myCgVertexProgram);
-            this.CheckForCgError("binding vertex program");
 
             CgGL.EnableProfile(this.myCgVertexProfile);
-            this.CheckForCgError("enabling vertex profile");
 
             CgGL.BindProgram(this.myCgFragmentProgram);
-            this.CheckForCgError("binding fragment program");
 
             CgGL.EnableProfile(this.myCgFragmentProfile);
-            this.CheckForCgError("enabling fragment profile");
 
             DrawSubDividedTriangle(5);
 
             CgGL.DisableProfile(this.myCgVertexProfile);
-            this.CheckForCgError("disabling vertex profile");
 
             CgGL.DisableProfile(this.myCgFragmentProfile);
-            this.CheckForCgError("disabling fragment profile");
             this.SwapBuffers();
         }
 

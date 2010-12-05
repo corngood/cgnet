@@ -67,7 +67,7 @@ namespace CgNet.GL
 
         public static void SetDebugMode(bool debug)
         {
-            CgGLNativeMethods.cgGLSetDebugMode(debug ? CgNativeMethods.CgTrue : CgNativeMethods.CgFalse);
+            CgGLNativeMethods.cgGLSetDebugMode(debug);
         }
 
         public static void SetOptimalOptions(CgProfile profile)

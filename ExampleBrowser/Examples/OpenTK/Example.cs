@@ -24,6 +24,7 @@
 
         public void Start()
         {
+            Cg.SetErrorCallback(CheckForCgError);
             this.Run(30.0, 0.0);
         }
 
@@ -31,14 +32,14 @@
 
         #region Protected Methods
 
-        protected void CheckForCgError(string situation)
+        protected void CheckForCgError()
         {
             CgError error;
             string s = Cg.GetLastErrorString(out error);
 
             if (error != CgError.NoError)
             {
-                MessageBox.Show(situation + ": " + s);
+                MessageBox.Show(s);
                 this.Close();
             }
             //  printf("%s: %s: %s\n",

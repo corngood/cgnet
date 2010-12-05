@@ -1030,7 +1030,7 @@ namespace CgNet.Wrapper
         //CGGL_API void CGGLENTRY cgGLSetDebugMode( CGbool debug );
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
-        public static extern void cgGLSetDebugMode(int debug);
+        public static extern void cgGLSetDebugMode([MarshalAs(UnmanagedType.Bool)]bool debug);
 
         /// <summary>
         /// Enables or disables the automatic texture management for the given rendering context.
