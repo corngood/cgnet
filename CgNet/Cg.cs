@@ -21,10 +21,10 @@
 namespace CgNet
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.InteropServices;
-
-    using CgNet.Wrapper;
+    using System.Text;
 
     public static class Cg
     {
@@ -44,12 +44,16 @@ namespace CgNet
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void CgErrorHandlerFuncDelegate(IntPtr context, CgError err, IntPtr data);
 
+        // typedef void (*CGIncludeCallbackFunc)( CGcontext context, const char *filename );
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void CgIncludeCallbackFunc(IntPtr context, string filename);
+
         /// <summary>
         ///    
         /// </summary>
         // typedef CGbool (*CGstatecallback)(CGstateassignment);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int CgStateCallbackDelegate(IntPtr cGstateassignment);
+        public delegate bool CgStateCallbackDelegate(IntPtr cGstateassignment);
 
         #endregion Delegates
 
@@ -112,6 +116,11 @@ namespace CgNet
             CgNativeMethods.cgConnectParameter(from, to);
         }
 
+        public static IntPtr CopyEffect(IntPtr effect)
+        {
+            return CgNativeMethods.cgCopyEffect(effect);
+        }
+
         public static IntPtr CopyProgram(IntPtr program)
         {
             return CgNativeMethods.cgCopyProgram(program);
@@ -127,6 +136,11 @@ namespace CgNet
             return CgNativeMethods.cgCreateArrayState(context, name, type, elementCount);
         }
 
+        public static IntPtr CreateBuffer(IntPtr context, int size, IntPtr data, BufferUsage bufferUsage)
+        {
+            return CgNativeMethods.cgCreateBuffer(context, size, data, bufferUsage);
+        }
+
         public static IntPtr CreateContext()
         {
             return CgNativeMethods.cgCreateContext();
@@ -137,14 +151,49 @@ namespace CgNet
             return CgNativeMethods.cgCreateEffect(context, code, args);
         }
 
+        public static IntPtr CreateEffectAnnotation(IntPtr effect, string name, CgType type)
+        {
+            return CgNativeMethods.cgCreateEffectAnnotation(effect, name, type);
+        }
+
         public static IntPtr CreateEffectFromFile(IntPtr context, string filename, params string[] args)
         {
             return CgNativeMethods.cgCreateEffectFromFile(context, filename, args);
         }
 
+        public static IntPtr CreateEffectParameter(IntPtr context, string name, CgType type)
+        {
+            return CgNativeMethods.cgCreateEffectParameter(context, name, type);
+        }
+
+        public static IntPtr CreateEffectParameterArray(IntPtr effect, string name, CgType type, int length)
+        {
+            return CgNativeMethods.cgCreateEffectParameterArray(effect, name, type, length);
+        }
+
+        public static IntPtr CreateEffectParameterMultiDimArray(IntPtr effect, string name, CgType type, int dim, int[] lengths)
+        {
+            return CgNativeMethods.cgCreateEffectParameterMultiDimArray(effect, name, type, dim, lengths);
+        }
+
+        public static IntPtr CreateObj(IntPtr context, ProgramType programType, string source, CgProfile profile, params string[] args)
+        {
+            return CgNativeMethods.cgCreateObj(context, programType, source, profile, args);
+        }
+
+        public static IntPtr CreateObjFromFile(IntPtr context, ProgramType programType, string sourceFile, CgProfile profile, params string[] args)
+        {
+            return CgNativeMethods.cgCreateObjFromFile(context, programType, sourceFile, profile, args);
+        }
+
         public static IntPtr CreateParameter(IntPtr context, CgType type)
         {
             return CgNativeMethods.cgCreateParameter(context, type);
+        }
+
+        public static IntPtr CreateParameterAnnotation(IntPtr param, string name, CgType type)
+        {
+            return CgNativeMethods.cgCreateParameterAnnotation(param, name, type);
         }
 
         public static IntPtr CreateParameterArray(IntPtr context, CgType type, int length)
@@ -155,6 +204,16 @@ namespace CgNet
         public static IntPtr CreateParameterMultiDimArray(IntPtr context, CgType type, int dim, int[] lengths)
         {
             return CgNativeMethods.cgCreateParameterMultiDimArray(context, type, dim, lengths);
+        }
+
+        public static IntPtr CreatePass(IntPtr tech, string name)
+        {
+            return CgNativeMethods.cgCreatePass(tech, name);
+        }
+
+        public static IntPtr CreatePassAnnotation(IntPtr pass, string name, CgType type)
+        {
+            return CgNativeMethods.cgCreatePassAnnotation(pass, name, type);
         }
 
         public static IntPtr CreateProgram(IntPtr context, ProgramType type, string source, CgProfile profile, string entry, params string[] args)
@@ -182,9 +241,39 @@ namespace CgNet
             return CgNativeMethods.cgCreateSamplerState(context, name, type);
         }
 
+        public static IntPtr CreateSamplerStateAssignment(IntPtr pass, IntPtr state)
+        {
+            return CgNativeMethods.cgCreateSamplerStateAssignment(pass, state);
+        }
+
         public static IntPtr CreateState(IntPtr context, string name, CgType type)
         {
             return CgNativeMethods.cgCreateState(context, name, type);
+        }
+
+        public static IntPtr CreateStateAssignment(IntPtr pass, IntPtr state)
+        {
+            return CgNativeMethods.cgCreateStateAssignment(pass, state);
+        }
+
+        public static IntPtr CreateStateAssignmentIndex(IntPtr pass, IntPtr state, int index)
+        {
+            return CgNativeMethods.cgCreateStateAssignmentIndex(pass, state, index);
+        }
+
+        public static IntPtr CreateTechnique(IntPtr effect, string name)
+        {
+            return CgNativeMethods.cgCreateTechnique(effect, name);
+        }
+
+        public static IntPtr CreateTechniqueAnnotation(IntPtr tech, string name, CgType type)
+        {
+            return CgNativeMethods.cgCreateTechniqueAnnotation(tech, name, type);
+        }
+
+        public static void DestroyBuffer(IntPtr buffer)
+        {
+            CgNativeMethods.cgDestroyBuffer(buffer);
         }
 
         public static void DestroyContext(IntPtr context)
@@ -195,6 +284,11 @@ namespace CgNet
         public static void DestroyEffect(IntPtr effect)
         {
             CgNativeMethods.cgDestroyEffect(effect);
+        }
+
+        public static void DestroyObj(IntPtr obj)
+        {
+            CgNativeMethods.cgDestroyObj(obj);
         }
 
         public static void DestroyParameter(IntPtr param)
@@ -259,6 +353,16 @@ namespace CgNet
             return CgNativeMethods.cgGetAutoCompile(context);
         }
 
+        public static Behavior GetBehavior(string behaviorString)
+        {
+            return CgNativeMethods.cgGetBehavior(behaviorString);
+        }
+
+        public static string GetBehaviorString(Behavior behavior)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetBehaviorString(behavior));
+        }
+
         public static bool[] GetBoolAnnotationValues(IntPtr annotation)
         {
             int count;
@@ -273,9 +377,24 @@ namespace CgNet
             return IntPtrToBoolArray(values, count);
         }
 
+        public static int GetBufferSize(IntPtr buffer)
+        {
+            return CgNativeMethods.cgGetBufferSize(buffer);
+        }
+
+        public static CgIncludeCallbackFunc GetCompilerIncludeCallback(IntPtr context)
+        {
+            return CgNativeMethods.cgGetCompilerIncludeCallback(context);
+        }
+
         public static IntPtr GetConnectedParameter(IntPtr param)
         {
             return CgNativeMethods.cgGetConnectedParameter(param);
+        }
+
+        public static IntPtr GetConnectedStateAssignmentParameter(IntPtr sa)
+        {
+            return CgNativeMethods.cgGetConnectedStateAssignmentParameter(sa);
         }
 
         public static IntPtr GetConnectedToParameter(IntPtr param, int index)
@@ -293,14 +412,39 @@ namespace CgNet
             return CgNativeMethods.cgGetDependentAnnotationParameter(annotation, index);
         }
 
+        public static IntPtr GetDependentProgramArrayStateAssignmentParameter(IntPtr sa, int index)
+        {
+            return CgNativeMethods.cgGetDependentProgramArrayStateAssignmentParameter(sa, index);
+        }
+
         public static IntPtr GetDependentStateAssignmentParameter(IntPtr stateassignment, int index)
         {
             return CgNativeMethods.cgGetDependentStateAssignmentParameter(stateassignment, index);
         }
 
+        public static CgDomain GetDomain(string domainString)
+        {
+            return CgNativeMethods.cgGetDomain(domainString);
+        }
+
+        public static string GetDomainString(CgDomain domain)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetDomainString(domain));
+        }
+
         public static IntPtr GetEffectContext(IntPtr effect)
         {
             return CgNativeMethods.cgGetEffectContext(effect);
+        }
+
+        public static string GetEffectName(IntPtr effect)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetEffectName(effect));
+        }
+
+        public static IntPtr GetEffectParameterBuffer(IntPtr param)
+        {
+            return CgNativeMethods.cgGetEffectParameterBuffer(param);
         }
 
         public static IntPtr GetEffectParameterBySemantic(IntPtr effect, string name)
@@ -346,6 +490,11 @@ namespace CgNet
         public static IntPtr GetFirstEffect(IntPtr context)
         {
             return CgNativeMethods.cgGetFirstEffect(context);
+        }
+
+        public static IntPtr GetFirstEffectAnnotation(IntPtr effect)
+        {
+            return CgNativeMethods.cgGetFirstEffectAnnotation(effect);
         }
 
         public static IntPtr GetFirstEffectParameter(IntPtr effect)
@@ -542,6 +691,26 @@ namespace CgNet
             }
         }
 
+        public static Order GetMatrixParameterOrder(IntPtr param)
+        {
+            return CgNativeMethods.cgGetMatrixParameterOrder(param);
+        }
+
+        public static CgType GetMatrixSize(CgType type, out int nrows, out int ncols)
+        {
+            return CgNativeMethods.cgGetMatrixSize(type, out nrows, out ncols);
+        }
+
+        public static IntPtr GetNamedEffect(IntPtr context, string name)
+        {
+            return CgNativeMethods.cgGetNamedEffect(context, name);
+        }
+
+        public static IntPtr GetNamedEffectAnnotation(IntPtr effect, string name)
+        {
+            return CgNativeMethods.cgGetNamedEffectAnnotation(effect, name);
+        }
+
         public static IntPtr GetNamedEffectParameter(IntPtr effect, string name)
         {
             return CgNativeMethods.cgGetNamedEffectParameter(effect, name);
@@ -600,6 +769,11 @@ namespace CgNet
         public static IntPtr GetNamedStructParameter(IntPtr param, string name)
         {
             return CgNativeMethods.cgGetNamedStructParameter(param, name);
+        }
+
+        public static IntPtr GetNamedSubParameter(IntPtr param, string name)
+        {
+            return CgNativeMethods.cgGetNamedSubParameter(param, name);
         }
 
         public static IntPtr GetNamedTechnique(IntPtr effect, string name)
@@ -672,6 +846,11 @@ namespace CgNet
             return CgNativeMethods.cgGetNumDependentAnnotationParameters(annotation);
         }
 
+        public static int GetNumDependentProgramArrayStateAssignmentParameters(IntPtr sa)
+        {
+            return CgNativeMethods.cgGetNumDependentProgramArrayStateAssignmentParameters(sa);
+        }
+
         public static int GetNumDependentStateAssignmentParameters(IntPtr stateassignment)
         {
             return CgNativeMethods.cgGetNumDependentStateAssignmentParameters(stateassignment);
@@ -680,6 +859,21 @@ namespace CgNet
         public static int GetNumParentTypes(CgType type)
         {
             return CgNativeMethods.cgGetNumParentTypes(type);
+        }
+
+        public static int GetNumProgramDomains(IntPtr program)
+        {
+            return CgNativeMethods.cgGetNumProgramDomains(program);
+        }
+
+        public static int GetNumStateEnumerants(IntPtr state)
+        {
+            return CgNativeMethods.cgGetNumStateEnumerants(state);
+        }
+
+        public static int GetNumSupportedProfiles()
+        {
+            return CgNativeMethods.cgGetNumSupportedProfiles();
         }
 
         public static int GetNumUserTypes(IntPtr handle)
@@ -697,9 +891,29 @@ namespace CgNet
             return CgNativeMethods.cgGetParameterBaseType(param);
         }
 
+        public static int GetParameterBufferIndex(IntPtr param)
+        {
+            return CgNativeMethods.cgGetParameterBufferIndex(param);
+        }
+
+        public static int GetParameterBufferOffset(IntPtr param)
+        {
+            return CgNativeMethods.cgGetParameterBufferOffset(param);
+        }
+
         public static int GetParameterClass(IntPtr param)
         {
             return CgNativeMethods.cgGetParameterClass(param);
+        }
+
+        public static CgParameterClass GetParameterClassEnum(string pString)
+        {
+            return CgNativeMethods.cgGetParameterClassEnum(pString);
+        }
+
+        public static string GetParameterClassString(CgParameterClass pc)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetParameterClassString(pc));
         }
 
         public static int GetParameterColumns(IntPtr param)
@@ -712,9 +926,68 @@ namespace CgNet
             return CgNativeMethods.cgGetParameterContext(param);
         }
 
+        public static int GetParameterDefaultValue(IntPtr param, ref double[] values)
+        {
+            return GetParameterDefaultValue(param, ref values, Order.RowMajor);
+        }
+
+        public static int GetParameterDefaultValue(IntPtr param, ref double[] values, Order order)
+        {
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValuedc(param, values.Length, values);
+                case Order.RowMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValuedr(param, values.Length, values);
+                default:
+                    throw new ArgumentOutOfRangeException("order");
+            }
+        }
+
+        public static int GetParameterDefaultValue(IntPtr param, ref int[] values)
+        {
+            return GetParameterDefaultValue(param, ref values, Order.RowMajor);
+        }
+
+        public static int GetParameterDefaultValue(IntPtr param, ref int[] values, Order order)
+        {
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValueic(param, values.Length, values);
+                case Order.RowMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValueir(param, values.Length, values);
+                default:
+                    throw new ArgumentOutOfRangeException("order");
+            }
+        }
+
+        public static int GetParameterDefaultValue(IntPtr param, ref float[] values)
+        {
+            return GetParameterDefaultValue(param, ref values, Order.RowMajor);
+        }
+
+        public static int GetParameterDefaultValue(IntPtr param, ref float[] values, Order order)
+        {
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValuefc(param, values.Length, values);
+                case Order.RowMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValuefr(param, values.Length, values);
+                default:
+                    throw new ArgumentOutOfRangeException("order");
+            }
+        }
+
         public static int GetParameterDirection(IntPtr param)
         {
             return CgNativeMethods.cgGetParameterDirection(param);
+        }
+
+        public static IntPtr GetParameterEffect(IntPtr param)
+        {
+            return CgNativeMethods.cgGetParameterEffect(param);
         }
 
         public static int GetParameterIndex(IntPtr param)
@@ -752,9 +1025,29 @@ namespace CgNet
             return CgNativeMethods.cgGetParameterResourceIndex(param);
         }
 
+        public static string GetParameterResourceName(IntPtr param)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetParameterResourceName(param));
+        }
+
+        public static int GetParameterResourceSize(IntPtr param)
+        {
+            return CgNativeMethods.cgGetParameterResourceSize(param);
+        }
+
+        public static CgType GetParameterResourceType(IntPtr param)
+        {
+            return CgNativeMethods.cgGetParameterResourceType(param);
+        }
+
         public static int GetParameterRows(IntPtr param)
         {
             return CgNativeMethods.cgGetParameterRows(param);
+        }
+
+        public static ParameterSettingMode GetParameterSettingMode(IntPtr context)
+        {
+            return CgNativeMethods.cgGetParameterSettingMode(context);
         }
 
         public static CgType GetParameterType(IntPtr param)
@@ -856,6 +1149,11 @@ namespace CgNet
             return CgNativeMethods.cgGetPassName(pass);
         }
 
+        public static IntPtr GetPassProgram(IntPtr pass, CgDomain domain)
+        {
+            return CgNativeMethods.cgGetPassProgram(pass, domain);
+        }
+
         public static IntPtr GetPassTechnique(IntPtr pass)
         {
             return CgNativeMethods.cgGetPassTechnique(pass);
@@ -866,9 +1164,34 @@ namespace CgNet
             return CgNativeMethods.cgGetProfile(profile);
         }
 
+        public static CgDomain GetProfileDomain(CgProfile profile)
+        {
+            return CgNativeMethods.cgGetProfileDomain(profile);
+        }
+
+        public static bool GetProfileProperty(CgProfile profile, Query query)
+        {
+            return CgNativeMethods.cgGetProfileProperty(profile, query);
+        }
+
         public static IntPtr GetProfileString(CgProfile profile)
         {
             return CgNativeMethods.cgGetProfileString(profile);
+        }
+
+        public static IntPtr GetProgramBuffer(IntPtr program, int bufferIndex)
+        {
+            return CgNativeMethods.cgGetProgramBuffer(program, bufferIndex);
+        }
+
+        public static int GetProgramBufferMaxIndex(CgProfile profile)
+        {
+            return CgNativeMethods.cgGetProgramBufferMaxIndex(profile);
+        }
+
+        public static int GetProgramBufferMaxSize(CgProfile profile)
+        {
+            return CgNativeMethods.cgGetProgramBufferMaxSize(profile);
         }
 
         public static IntPtr GetProgramContext(IntPtr prog)
@@ -876,9 +1199,34 @@ namespace CgNet
             return CgNativeMethods.cgGetProgramContext(prog);
         }
 
+        public static CgDomain GetProgramDomain(IntPtr program)
+        {
+            return CgNativeMethods.cgGetProgramDomain(program);
+        }
+
+        public static CgProfile GetProgramDomainProfile(IntPtr program, int index)
+        {
+            return CgNativeMethods.cgGetProgramDomainProfile(program, index);
+        }
+
+        public static IntPtr GetProgramDomainProgram(IntPtr program, int index)
+        {
+            return CgNativeMethods.cgGetProgramDomainProgram(program, index);
+        }
+
+        public static ProgramInputOutput GetProgramInput(IntPtr program)
+        {
+            return CgNativeMethods.cgGetProgramInput(program);
+        }
+
         public static string[] GetProgramOptions(IntPtr prog)
         {
             return CgNativeMethods.cgGetProgramOptions(prog);
+        }
+
+        public static ProgramInputOutput GetProgramOutput(IntPtr program)
+        {
+            return CgNativeMethods.cgGetProgramOutput(program);
         }
 
         public static int GetProgramProfile(IntPtr prog)
@@ -941,9 +1289,29 @@ namespace CgNet
             return CgNativeMethods.cgGetStateAssignmentState(stateassignment);
         }
 
+        public static IntPtr GetStateContext(IntPtr state)
+        {
+            return CgNativeMethods.cgGetStateContext(state);
+        }
+
+        public static string GetStateEnumerant(IntPtr state, int index, out int value)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStateEnumerant(state, index, out value));
+        }
+
+        public static string GetStateEnumerantName(IntPtr state, int index)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStateEnumerantName(state, index));
+        }
+
         public static int GetStateEnumerantValue(IntPtr state, string name)
         {
             return CgNativeMethods.cgGetStateEnumerantValue(state, name);
+        }
+
+        public static CgProfile GetStateLatestProfile(IntPtr state)
+        {
+            return CgNativeMethods.cgGetStateLatestProfile(state);
         }
 
         public static string GetStateName(IntPtr state)
@@ -981,6 +1349,45 @@ namespace CgNet
             return CgNativeMethods.cgGetStringAnnotationValue(annotation);
         }
 
+        public static string[] GetStringAnnotationValues(IntPtr ann)
+        {
+            int nvalues;
+            var ptr = CgNativeMethods.cgGetStringAnnotationValues(ann, out nvalues);
+            if (nvalues == 0)
+            {
+                return null;
+            }
+
+            unsafe
+            {
+                var byteArray = (byte**)ptr;
+                var lines = new List<string>();
+                var buffer = new List<byte>();
+
+                for (int i = 0; i < nvalues; i++)
+                {
+                    byte* b = *byteArray;
+                    for (; ; )
+                    {
+                        if (*b == '\0')
+                        {
+                            char[] cc = Encoding.ASCII.GetChars(buffer.ToArray());
+                            lines.Add(new string(cc));
+                            buffer.Clear();
+                            break;
+                        }
+
+                        buffer.Add(*b);
+                        b++;
+                    }
+
+                    byteArray++;
+                }
+
+                return lines.ToArray();
+            }
+        }
+
         public static string GetStringParameterValue(IntPtr param)
         {
             return CgNativeMethods.cgGetStringParameterValue(param);
@@ -989,6 +1396,11 @@ namespace CgNet
         public static string GetStringStateAssignmentValue(IntPtr stateassignment)
         {
             return CgNativeMethods.cgGetStringStateAssignmentValue(stateassignment);
+        }
+
+        public static CgProfile GetSupportedProfile(int index)
+        {
+            return CgNativeMethods.cgGetSupportedProfile(index);
         }
 
         public static IntPtr GetTechniqueEffect(IntPtr technique)
@@ -1009,6 +1421,21 @@ namespace CgNet
         public static CgType GetType(string typeString)
         {
             return CgNativeMethods.cgGetType(typeString);
+        }
+
+        public static CgType GetTypeBase(CgType type)
+        {
+            return CgNativeMethods.cgGetTypeBase(type);
+        }
+
+        public static CgParameterClass GetTypeClass(CgType type)
+        {
+            return CgNativeMethods.cgGetTypeClass(type);
+        }
+
+        public static bool GetTypeSizes(CgType type, out int nrows, out int ncols)
+        {
+            return CgNativeMethods.cgGetTypeSizes(type, out nrows, out ncols);
         }
 
         public static string GetTypeString(CgType type)
@@ -1071,6 +1498,11 @@ namespace CgNet
             return CgNativeMethods.cgIsPass(pass);
         }
 
+        public static bool IsProfileSupported(CgProfile profile)
+        {
+            return CgNativeMethods.cgIsProfileSupported(profile);
+        }
+
         public static bool IsProgram(IntPtr prog)
         {
             return CgNativeMethods.cgIsProgram(prog);
@@ -1101,9 +1533,29 @@ namespace CgNet
             return CgNativeMethods.cgIsTechniqueValidated(technique);
         }
 
+        public static IntPtr MapBuffer(IntPtr buffer, BufferAccess access)
+        {
+            return CgNativeMethods.cgMapBuffer(buffer, access);
+        }
+
         public static void ResetPassState(IntPtr pass)
         {
             CgNativeMethods.cgResetPassState(pass);
+        }
+
+        public static bool SetAnnotation(IntPtr ann, int value)
+        {
+            return CgNativeMethods.cgSetIntAnnotation(ann, value);
+        }
+
+        public static bool SetAnnotation(IntPtr ann, float value)
+        {
+            return CgNativeMethods.cgSetFloatAnnotation(ann, value);
+        }
+
+        public static bool SetAnnotation(IntPtr ann, string value)
+        {
+            return CgNativeMethods.cgSetStringAnnotation(ann, value);
         }
 
         public static void SetArraySize(IntPtr param, int size)
@@ -1121,9 +1573,44 @@ namespace CgNet
             return CgNativeMethods.cgSetBoolAnnotation(annotation, value);
         }
 
+        public static void SetBufferData(IntPtr buffer, int size, IntPtr data)
+        {
+            CgNativeMethods.cgSetBufferData(buffer, size, data);
+        }
+
+        public static void SetBufferSubData(IntPtr buffer, int offset, int size, IntPtr data)
+        {
+            CgNativeMethods.cgSetBufferSubData(buffer, offset, size, data);
+        }
+
+        public static void SetCompilerIncludeCallback(IntPtr context, CgIncludeCallbackFunc func)
+        {
+            CgNativeMethods.cgSetCompilerIncludeCallback(context, func);
+        }
+
+        public static void SetCompilerIncludeFile(IntPtr context, string name, string filename)
+        {
+            CgNativeMethods.cgSetCompilerIncludeFile(context, name, filename);
+        }
+
+        public static void SetCompilerIncludeString(IntPtr context, string name, string source)
+        {
+            CgNativeMethods.cgSetCompilerIncludeString(context, name, source);
+        }
+
         public static void SetContextBehavior(IntPtr context, Behavior behavior)
         {
             CgNativeMethods.cgSetContextBehavior(context, behavior);
+        }
+
+        public static bool SetEffectName(IntPtr effect, string name)
+        {
+            return CgNativeMethods.cgSetEffectName(effect, name);
+        }
+
+        public static void SetEffectParameterBuffer(IntPtr param, IntPtr buffer)
+        {
+            CgNativeMethods.cgSetEffectParameterBuffer(param, buffer);
         }
 
         public static void SetErrorCallback(CgErrorCallbackFuncDelegate func)
@@ -1419,9 +1906,19 @@ namespace CgNet
             CgNativeMethods.cgSetPassState(pass);
         }
 
+        public static void SetProgramBuffer(IntPtr program, int bufferIndex, IntPtr buffer)
+        {
+            CgNativeMethods.cgSetProgramBuffer(program, bufferIndex, buffer);
+        }
+
         public static void SetProgramProfile(IntPtr prog, CgProfile profile)
         {
             CgNativeMethods.cgSetProgramProfile(prog, profile);
+        }
+
+        public static bool SetProgramStateAssignment(IntPtr stateassignment, IntPtr program)
+        {
+            return CgNativeMethods.cgSetProgramStateAssignment(stateassignment, program);
         }
 
         public static void SetSamplerState(IntPtr param)
@@ -1429,9 +1926,49 @@ namespace CgNet
             CgNativeMethods.cgSetSamplerState(param);
         }
 
+        public static bool SetSamplerStateAssignment(IntPtr stateassignment, IntPtr param)
+        {
+            return CgNativeMethods.cgSetSamplerStateAssignment(stateassignment, param);
+        }
+
         public static CasePolicy SetSemanticCasePolicy(CasePolicy casePolicy)
         {
             return CgNativeMethods.cgSetSemanticCasePolicy(casePolicy);
+        }
+
+        public static bool SetStateAssignment(IntPtr stateassignment, float value)
+        {
+            return CgNativeMethods.cgSetFloatStateAssignment(stateassignment, value);
+        }
+
+        public static bool SetStateAssignment(IntPtr stateassignment, int value)
+        {
+            return CgNativeMethods.cgSetIntStateAssignment(stateassignment, value);
+        }
+
+        public static bool SetStateAssignment(IntPtr stateassignment, bool value)
+        {
+            return CgNativeMethods.cgSetBoolStateAssignment(stateassignment, value);
+        }
+
+        public static bool SetStateAssignment(IntPtr stateassignment, string value)
+        {
+            return CgNativeMethods.cgSetStringStateAssignment(stateassignment, value);
+        }
+
+        public static bool SetStateAssignment(IntPtr stateassignment, float[] value)
+        {
+            return CgNativeMethods.cgSetFloatArrayStateAssignment(stateassignment, value);
+        }
+
+        public static bool SetStateAssignment(IntPtr stateassignment, int[] value)
+        {
+            return CgNativeMethods.cgSetIntArrayStateAssignment(stateassignment, value);
+        }
+
+        public static bool SetStateAssignment(IntPtr stateassignment, bool[] value)
+        {
+            return CgNativeMethods.cgSetBoolArrayStateAssignment(stateassignment, value);
         }
 
         public static void SetStateCallbacks(IntPtr state, CgStateCallbackDelegate set, CgStateCallbackDelegate reset, CgStateCallbackDelegate validate)
@@ -1439,9 +1976,29 @@ namespace CgNet
             CgNativeMethods.cgSetStateCallbacks(state, set, reset, validate);
         }
 
+        public static void SetStateLatestProfile(IntPtr state, CgProfile profile)
+        {
+            CgNativeMethods.cgSetStateLatestProfile(state, profile);
+        }
+
         public static void SetStringParameterValue(IntPtr param, string str)
         {
             CgNativeMethods.cgSetStringParameterValue(param, str);
+        }
+
+        public static bool SetTextureStateAssignment(IntPtr stateassignment, IntPtr param)
+        {
+            return CgNativeMethods.cgSetTextureStateAssignment(stateassignment, param);
+        }
+
+        public static void UnmapBuffer(IntPtr buffer)
+        {
+            CgNativeMethods.cgUnmapBuffer(buffer);
+        }
+
+        public static void UpdatePassParameters(IntPtr pass)
+        {
+            CgNativeMethods.cgUpdatePassParameters(pass);
         }
 
         public static void UpdateProgramParameters(IntPtr program)

@@ -22,14 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-namespace CgNet.Wrapper
+namespace CgNet.GL
 {
     using System;
     using System.Runtime.InteropServices;
     using System.Security;
-    using System.Text;
-
-    using CgNet.GL;
 
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
@@ -51,159 +48,6 @@ namespace CgNet.Wrapper
 
         #region Methods
 
-        #region Public Static Methods
-
-        /// <summary>
-        /// Sets the float value to the specified parameter.
-        /// <remarks>
-        /// Use cgGetNamedParameter to obtain the valid pointer to param.
-        /// </remarks>
-        /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameter1fv(IntPtr param, [In] float* values);
-
-        /// <summary>
-        /// Sets the double values to the specified parameter.
-        /// <remarks>
-        /// Use cgGetNamedParameter to obtain the valid pointer to param.
-        /// </remarks>
-        /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameter2dv(IntPtr param, [In] double* values);
-
-        /// <summary>
-        /// Sets the float values to the specified parameter.
-        /// <remarks>
-        /// Use cgGetNamedParameter to obtain the valid pointer to param.
-        /// </remarks>
-        /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameter2fv(IntPtr param, [In] float* values);
-
-        /// <summary>
-        /// Sets the double values to the specified parameter.
-        /// <remarks>
-        /// Use cgGetNamedParameter to obtain the valid pointer to param.
-        /// </remarks>
-        /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameter3dv(IntPtr param, [In] double* values);
-
-        /// <summary>
-        /// Sets the float values to the specified parameter.
-        /// <remarks>
-        /// Use cgGetNamedParameter to obtain the valid pointer to param.
-        /// </remarks>
-        /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameter3fv(IntPtr param, [In] float* values);
-
-        /// <summary>
-        /// Sets the double values to the specified parameter.
-        /// <remarks>
-        /// Use cgGetNamedParameter to obtain the valid pointer to param.
-        /// </remarks>
-        /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameter4dv(IntPtr param, [In] double* values);
-
-        /// <summary>
-        /// Sets the float values to the specified parameter.
-        /// <remarks>
-        /// Use cgGetNamedParameter to obtain the valid pointer to param.
-        /// </remarks>
-        /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameter4fv(IntPtr param, [In] float* values);
-
-        /// <summary>
-        /// Sets the double values to the specific parameter.
-        /// </summary>
-        /// <param name="param">Parameter to set values to.</param>
-        /// <param name="offset">Offset into an array</param>
-        /// <param name="nelements">Number of values to set.</param>
-        /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameterArray1d(IntPtr param, int offset, int nelements, [In] double* values);
-
-        /// <summary>
-        /// Sets the float values to the specific parameter.
-        /// </summary>
-        /// <param name="param">Parameter to set values to.</param>
-        /// <param name="offset">Offset into an array</param>
-        /// <param name="nelements">Number of values to set.</param>
-        /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameterArray1f(IntPtr param, int offset, int nelements, [In] float* values);
-
-        /// <summary>
-        /// Sets the double values to the specific parameter.
-        /// </summary>
-        /// <param name="param">Parameter to set values to.</param>
-        /// <param name="offset">Offset into an array</param>
-        /// <param name="nelements">Number of values to set.</param>
-        /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameterArray2d(IntPtr param, int offset, int nelements, [In] double* values);
-
-        /// <summary>
-        /// Sets the float values to the specific parameter.
-        /// </summary>
-        /// <param name="param">Parameter to set values to.</param>
-        /// <param name="offset">Offset into an array</param>
-        /// <param name="nelements">Number of values to set.</param>
-        /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameterArray2f(IntPtr param, int offset, int nelements, [In] float* values);
-
-        /// <summary>
-        /// Sets the double values to the specific parameter.
-        /// </summary>
-        /// <param name="param">Parameter to set values to.</param>
-        /// <param name="offset">Offset into an array</param>
-        /// <param name="nelements">Number of values to set.</param>
-        /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameterArray3d(IntPtr param, int offset, int nelements, [In] double* values);
-
-        /// <summary>
-        /// Sets the float values to the specific parameter.
-        /// </summary>
-        /// <param name="param">Parameter to set values to.</param>
-        /// <param name="offset">Offset into an array</param>
-        /// <param name="nelements">Number of values to set.</param>
-        /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
-        public static unsafe extern void cgGLSetParameterArray3f(IntPtr param, int offset, int nelements, [In] float* values);
-
-        #endregion Public Static Methods
-
         #region Internal Static Methods
 
         /// <summary>
@@ -212,16 +56,20 @@ namespace CgNet.Wrapper
         /// <param name="program">
         /// Handle to the program to bind.
         /// </param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLBindProgram(IntPtr program);
+
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        internal static extern IntPtr cgGLCreateBuffer(IntPtr context, int size, IntPtr data, OpenTK.Graphics.OpenGL.BufferUsageHint bufferUsage);
 
         /// <summary>
         ///     Disables a vertex attribute in OpenGL state.
         /// </summary>
         /// <param name="param">Parameter to disable.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLDisableClientState(IntPtr param);
 
         /// <summary>
@@ -230,12 +78,12 @@ namespace CgNet.Wrapper
         /// <param name="profile">
         /// Profile to disable.
         /// </param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLDisableProfile(CgProfile profile);
 
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLDisableProgramProfiles(IntPtr program);
 
         /// <summary>
@@ -244,16 +92,16 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLDisableTextureParameter(IntPtr param);
 
         /// <summary>
         ///     Enables a vertex attribute in OpenGL state.
         /// </summary>
         /// <param name="param">Parameter to enable.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLEnableClientState(IntPtr param);
 
         /// <summary>
@@ -262,12 +110,12 @@ namespace CgNet.Wrapper
         /// <param name="profile">
         /// Profile to enable.
         /// </param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLEnableProfile(CgProfile profile);
 
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLEnableProgramProfiles(IntPtr program);
 
         /// <summary>
@@ -276,19 +124,23 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLEnableTextureParameter(IntPtr param);
 
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        internal static extern int cgGLGetBufferObject(IntPtr buffer);
+
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern CgProfile cgGLGetLatestProfile(ProfileClass profileType);
 
         /// <summary>
         /// Retreives the manage texture parameters flag from a context 
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern int cgGLGetManageTextureParameters(IntPtr context);
 
         /// <summary>
@@ -298,8 +150,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">An offset into the array parameter to start getting from.</param>
         /// <param name="nelements">The number of elements to get. A value of 0 will default to the number of elements in the array minus the offset value.</param>
         /// <param name="matrices">The array of values retreived from parameter.. This must be a contiguous set of values that total nelements times the number of elements in the matrix.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetMatrixParameterArraydc(IntPtr param, int offset, int nelements, IntPtr matrices);
 
         /// <summary>
@@ -309,8 +161,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">An offset into the array parameter to start getting from.</param>
         /// <param name="nelements">The number of elements to get. A value of 0 will default to the number of elements in the array minus the offset value.</param>
         /// <param name="matrices">The array of values retreived from parameter.. This must be a contiguous set of values that total nelements times the number of elements in the matrix.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetMatrixParameterArraydr(IntPtr param, int offset, int nelements,
             [In, Out] IntPtr matrices);
 
@@ -321,8 +173,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">An offset into the array parameter to start getting from.</param>
         /// <param name="nelements">The number of elements to get. A value of 0 will default to the number of elements in the array minus the offset value.</param>
         /// <param name="matrices">The array of values retreived from parameter.. This must be a contiguous set of values that total nelements times the number of elements in the matrix.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetMatrixParameterArrayfc(IntPtr param, int offset, int nelements, IntPtr matrices);
 
         /// <summary>
@@ -332,37 +184,37 @@ namespace CgNet.Wrapper
         /// <param name="offset">An offset into the array parameter to start getting from.</param>
         /// <param name="nelements">The number of elements to get. A value of 0 will default to the number of elements in the array minus the offset value.</param>
         /// <param name="matrices">The array of values retreived from parameter.. This must be a contiguous set of values that total nelements times the number of elements in the matrix.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetMatrixParameterArrayfr(IntPtr param, int offset, int nelements, IntPtr matrices);
 
         /// <summary>
         /// Gets the value of matrix parameters in column order.
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetMatrixParameterdc(IntPtr param, IntPtr matrix);
 
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetMatrixParameterdr(IntPtr param, IntPtr matrix);
 
         /// <summary>
         /// Gets the value of matrix parameters in column order.
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetMatrixParameterfc(IntPtr param, IntPtr matrix);
 
         /// <summary>
         /// Gets the value of matrix parameters in row order.
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetMatrixParameterfr(IntPtr param, IntPtr matrix);
 
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention, CharSet = CharSet.Ansi),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention, CharSet = CharSet.Ansi)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern IntPtr cgGLGetOptimalOptions(CgProfile profile);
 
         /// <summary>
@@ -371,8 +223,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameter1d(IntPtr param, [Out] IntPtr values);
 
         /// <summary>
@@ -381,8 +233,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameter1f(IntPtr param, [Out] IntPtr values);
 
         /// <summary>
@@ -391,8 +243,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameter2d(IntPtr param, [Out] IntPtr values);
 
         /// <summary>
@@ -401,8 +253,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameter2f(IntPtr param, [Out] IntPtr values);
 
         /// <summary>
@@ -411,8 +263,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameter3d(IntPtr param, [Out] IntPtr values);
 
         /// <summary>
@@ -421,8 +273,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameter3f(IntPtr param, [Out] IntPtr values);
 
         /// <summary>
@@ -431,8 +283,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameter4d(IntPtr param, [Out] IntPtr values);
 
         /// <summary>
@@ -441,8 +293,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameter4f(IntPtr param, [Out] IntPtr values);
 
         /// <summary>
@@ -452,8 +304,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to get.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameterArray1d(IntPtr param, int offset, int nelements, [Out] IntPtr values);
 
         /// <summary>
@@ -463,8 +315,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to get.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameterArray1f(IntPtr param, int offset, int nelements, [Out] IntPtr values);
 
         /// <summary>
@@ -474,8 +326,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to get.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameterArray2d(IntPtr param, int offset, int nelements, [Out] IntPtr values);
 
         /// <summary>
@@ -485,8 +337,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to get.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameterArray2f(IntPtr param, int offset, int nelements, [Out] IntPtr values);
 
         /// <summary>
@@ -496,8 +348,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to get.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameterArray3d(IntPtr param, int offset, int nelements, [Out] IntPtr values);
 
         /// <summary>
@@ -507,8 +359,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to get.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameterArray3f(IntPtr param, int offset, int nelements, [Out] IntPtr values);
 
         /// <summary>
@@ -518,8 +370,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to get.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameterArray4d(IntPtr param, int offset, int nelements, [Out] IntPtr values);
 
         /// <summary>
@@ -529,8 +381,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to get.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLGetParameterArray4f(IntPtr param, int offset, int nelements, [Out] IntPtr values);
 
         /// <summary>
@@ -542,8 +394,8 @@ namespace CgNet.Wrapper
         /// <returns>
         /// Program's ID.
         /// </returns>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern int cgGLGetProgramID(IntPtr program);
 
         /// <summary>
@@ -553,8 +405,8 @@ namespace CgNet.Wrapper
         /// It can be one of the GL_TEXTURE#_ARB if valid.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern int cgGLGetTextureEnum(IntPtr param);
 
         /// <summary>
@@ -563,8 +415,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern int cgGLGetTextureParameter(IntPtr param);
 
         /// <summary>
@@ -576,8 +428,8 @@ namespace CgNet.Wrapper
         /// <returns>
         /// Returns true if the profile is supported.
         /// </returns>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern bool cgGLIsProfileSupported(CgProfile profile);
 
         /// <summary>
@@ -589,8 +441,8 @@ namespace CgNet.Wrapper
         /// <returns>
         /// True if the specified program is loaded.
         /// </returns>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern bool cgGLIsProgramLoaded(IntPtr program);
 
         /// <summary>
@@ -599,21 +451,21 @@ namespace CgNet.Wrapper
         /// <param name="program">
         /// Handle to the program to load.
         /// </param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLLoadProgram(IntPtr program);
 
         /// <summary>
         ///  
         /// </summary>
         // CGGLDLL_API void cgGLRegisterStates(CGcontext);
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLRegisterStates(IntPtr context);
 
         //CGGL_API void CGGLENTRY cgGLSetDebugMode( CGbool debug );
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetDebugMode([MarshalAs(UnmanagedType.Bool)]bool debug);
 
         /// <summary>
@@ -622,8 +474,8 @@ namespace CgNet.Wrapper
         /// Use CG_TRUE or CG_FALSE to enable/disable automatic texture management.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetManageTextureParameters(IntPtr context, bool flag);
 
         /// <summary>
@@ -633,8 +485,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">An offset into the array parameter to start setting from.</param>
         /// <param name="nelements">The number of elements to set. A value of 0 will default to the number of elements in the array minus the offset value.</param>
         /// <param name="matrices">The array of values to set the parameter to. This must be a contiguous set of values that total nelements times the number of elements in the matrix.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetMatrixParameterArraydc(IntPtr param, int offset, int nelements, [In] Matrix4d[] matrices);
 
         /// <summary>
@@ -644,8 +496,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">An offset into the array parameter to start setting from.</param>
         /// <param name="nelements">The number of elements to set. A value of 0 will default to the number of elements in the array minus the offset value.</param>
         /// <param name="matrices">The array of values to set the parameter to. This must be a contiguous set of values that total nelements times the number of elements in the matrix.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetMatrixParameterArraydr(IntPtr param, int offset, int nelements, [In] Matrix4d[] matrices);
 
         /// <summary>
@@ -655,8 +507,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">An offset into the array parameter to start setting from.</param>
         /// <param name="nelements">The number of elements to set. A value of 0 will default to the number of elements in the array minus the offset value.</param>
         /// <param name="matrices">The array of values to set the parameter to. This must be a contiguous set of values that total nelements times the number of elements in the matrix.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetMatrixParameterArrayfc(IntPtr param, int offset, int nelements, [In] Matrix4[] matrices);
 
         /// <summary>
@@ -666,36 +518,36 @@ namespace CgNet.Wrapper
         /// <param name="offset">An offset into the array parameter to start setting from.</param>
         /// <param name="nelements">The number of elements to set. A value of 0 will default to the number of elements in the array minus the offset value.</param>
         /// <param name="matrices">The array of values to set the parameter to. This must be a contiguous set of values that total nelements times the number of elements in the matrix.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetMatrixParameterArrayfr(IntPtr param, int offset, int nelements, [In] Matrix4[] matrices);
 
         /// <summary>
         /// Sets the value of matrix parameters in column  order.
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetMatrixParameterdc(IntPtr param, [In] Matrix4d matrix);
 
         /// <summary>
         /// Sets the value of matrix parameters in row order.
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetMatrixParameterdr(IntPtr param, [In] Matrix4d matrix);
 
         /// <summary>
         /// Sets the value of matrix parameters in column  order.
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetMatrixParameterfc(IntPtr param, [In] Matrix4 matrix);
 
         /// <summary>
         /// Sets the value of matrix parameters in row order.
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetMatrixParameterfr(IntPtr param, [In] Matrix4 matrix);
 
         /// <summary>
@@ -704,8 +556,8 @@ namespace CgNet.Wrapper
         /// <param name="profile">
         /// Profile.
         /// </param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetOptimalOptions(CgProfile profile);
 
         /// <summary>
@@ -714,8 +566,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter1d(IntPtr param, double x);
 
         /// <summary>
@@ -724,8 +576,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter1dv(IntPtr param, [In] double[] values);
 
         /// <summary>
@@ -734,8 +586,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter1f(IntPtr param, float x);
 
         /// <summary>
@@ -744,8 +596,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter1fv(IntPtr param, [In] float[] values);
 
         /// <summary>
@@ -754,8 +606,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter1fv(IntPtr param, [In] IntPtr values);
 
         /// <summary>
@@ -764,8 +616,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter2d(IntPtr param, double x, double y);
 
         /// <summary>
@@ -774,8 +626,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter2dv(IntPtr param, [In] double[] values);
 
         /// <summary>
@@ -784,8 +636,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter2dv(IntPtr param, [In] IntPtr values);
 
         /// <summary>
@@ -794,8 +646,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter2f(IntPtr param, float x, float y);
 
         /// <summary>
@@ -804,8 +656,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter2fv(IntPtr param, [In] float[] values);
 
         /// <summary>
@@ -814,8 +666,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter2fv(IntPtr param, [In] IntPtr values);
 
         /// <summary>
@@ -824,8 +676,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter3d(IntPtr param, double x, double y, double z);
 
         /// <summary>
@@ -834,8 +686,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter3dv(IntPtr param, [In] double[] values);
 
         /// <summary>
@@ -844,8 +696,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter3dv(IntPtr param, [In] IntPtr values);
 
         /// <summary>
@@ -854,8 +706,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter3f(IntPtr param, float x, float y, float z);
 
         /// <summary>
@@ -864,8 +716,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter3fv(IntPtr param, [In] float[] values);
 
         /// <summary>
@@ -874,8 +726,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter3fv(IntPtr param, [In] IntPtr values);
 
         /// <summary>
@@ -884,8 +736,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter4d(IntPtr param, double x, double y, double z, double w);
 
         /// <summary>
@@ -894,8 +746,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter4dv(IntPtr param, [In] double[] values);
 
         /// <summary>
@@ -904,8 +756,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter4dv(IntPtr param, [In] IntPtr values);
 
         /// <summary>
@@ -914,8 +766,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter4f(IntPtr param, float x, float y, float z, float w);
 
         /// <summary>
@@ -924,8 +776,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter4fv(IntPtr param, [In] float[] values);
 
         /// <summary>
@@ -934,8 +786,8 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameter4fv(IntPtr param, [In] IntPtr values);
 
         /// <summary>
@@ -945,8 +797,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray1d(IntPtr param, int offset, int nelements, [In] double[] values);
 
         /// <summary>
@@ -956,8 +808,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray1d(IntPtr param, int offset, int nelements, [In] IntPtr values);
 
         /// <summary>
@@ -967,8 +819,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray1f(IntPtr param, int offset, int nelements, [In] float[] values);
 
         /// <summary>
@@ -978,8 +830,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray1f(IntPtr param, int offset, int nelements, [In] IntPtr values);
 
         /// <summary>
@@ -989,8 +841,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray2d(IntPtr param, int offset, int nelements, [In] double[] values);
 
         /// <summary>
@@ -1000,8 +852,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray2d(IntPtr param, int offset, int nelements, [In] IntPtr values);
 
         /// <summary>
@@ -1011,8 +863,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray2f(IntPtr param, int offset, int nelements, [In] float[] values);
 
         /// <summary>
@@ -1022,8 +874,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray2f(IntPtr param, int offset, int nelements, [In] IntPtr values);
 
         /// <summary>
@@ -1033,8 +885,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray3d(IntPtr param, int offset, int nelements, [In] double[] values);
 
         /// <summary>
@@ -1044,8 +896,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray3d(IntPtr param, int offset, int nelements, [In] IntPtr values);
 
         /// <summary>
@@ -1055,8 +907,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray3f(IntPtr param, int offset, int nelements, [In] float[] values);
 
         /// <summary>
@@ -1066,8 +918,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray3f(IntPtr param, int offset, int nelements, [In] IntPtr values);
 
         /// <summary>
@@ -1077,12 +929,12 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray4d(IntPtr param, int offset, int nelements, [In]Matrix4d[] values);
 
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray4d(IntPtr param, int offset, int nelements, [In]double[] values);
 
         /// <summary>
@@ -1092,9 +944,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        CLSCompliant(false),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray4f(IntPtr param, int offset, int nelements, [In] Matrix4[] values);
 
         /// <summary>
@@ -1104,8 +955,8 @@ namespace CgNet.Wrapper
         /// <param name="offset">Offset into an array</param>
         /// <param name="nelements">Number of values to set.</param>
         /// <param name="values">Array of values.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterArray4f(IntPtr param, int offset, int nelements, [In] float[] values);
 
         /// <summary>
@@ -1116,8 +967,8 @@ namespace CgNet.Wrapper
         /// <param name="type">Data type of each coordinate.</param>
         /// <param name="stride">Specifies the byte offset between consecutive vertices. If stride is 0 the array is assumed to be tightly packed.</param>
         /// <param name="pointer">The pointer to the first coordinate in the vertex array.</param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetParameterPointer(IntPtr param, int fsize, DataType type, int stride, [In] IntPtr pointer);
 
         /// <summary>
@@ -1132,8 +983,8 @@ namespace CgNet.Wrapper
         /// <param name="transform">
         /// Optional transformation that will be aplied to the OpenGL state matrix before it is retreived to the parameter.
         /// </param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetStateMatrixParameter(IntPtr param, CgGLEnum matrix, CgGLEnum transform);
 
         /// <summary>
@@ -1142,16 +993,16 @@ namespace CgNet.Wrapper
         /// Use cgGetNamedParameter to obtain the valid pointer to param.
         /// </remarks>
         /// </summary>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetTextureParameter(IntPtr param, int texobj);
 
         /// <summary>
         ///  
         /// </summary>
         // CGGLDLL_API void cgGLSetupSampler(CGparameter param, GLuint texobj);
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLSetupSampler(IntPtr param, int texobj);
 
         /// <summary>
@@ -1160,24 +1011,16 @@ namespace CgNet.Wrapper
         /// <param name="profile">
         /// Handle to the profile to unbind programs from.
         /// </param>
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLUnbindProgram(CgProfile profile);
 
-        [DllImport(CgGLNativeLibrary, CallingConvention = Convention),
-        SuppressUnmanagedCodeSecurity]
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern void cgGLUnloadProgram(IntPtr program);
 
         #endregion Internal Static Methods
 
         #endregion Methods
-
-        #region Other
-
-        /* missing
-        CGGL_API CGbuffer CGGLENTRY cgGLCreateBuffer(CGcontext context, int size, const void *data, GLenum bufferUsage);
-        CGGL_API GLuint CGGLENTRY cgGLGetBufferObject(CGbuffer buffer);*/
-
-        #endregion Other
     }
 }

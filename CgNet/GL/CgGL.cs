@@ -26,8 +26,6 @@ namespace CgNet.GL
     using System.Runtime.InteropServices;
     using System.Text;
 
-    using CgNet.Wrapper;
-
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
 
@@ -40,6 +38,11 @@ namespace CgNet.GL
         public static void BindProgram(IntPtr program)
         {
             CgGLNativeMethods.cgGLBindProgram(program);
+        }
+
+        public static IntPtr CreateBuffer(IntPtr context, int size, IntPtr data, BufferUsageHint bufferUsage)
+        {
+            return CgGLNativeMethods.cgGLCreateBuffer(context, size, data, bufferUsage);
         }
 
         public static void DisableClientState(IntPtr param)
@@ -80,6 +83,11 @@ namespace CgNet.GL
         public static void EnableTextureParameter(IntPtr param)
         {
             CgGLNativeMethods.cgGLEnableTextureParameter(param);
+        }
+
+        public static int GetBufferObject(IntPtr buffer)
+        {
+            return CgGLNativeMethods.cgGLGetBufferObject(buffer);
         }
 
         public static CgProfile GetLatestProfile(ProfileClass profileClass)
@@ -384,10 +392,10 @@ namespace CgNet.GL
                 var lines = new List<string>();
                 var buffer = new List<byte>();
 
-                for (;;)
+                for (; ; )
                 {
                     byte* b = *byteArray;
-                    for (;;)
+                    for (; ; )
                     {
                         if (*b == '\0')
                         {

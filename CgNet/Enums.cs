@@ -38,10 +38,43 @@ namespace CgNet
         Current = Behavior3000  /* latest behavior supported at compile time */
     }
 
+    public enum BufferAccess
+    {
+        Read = 0,
+        Write = 1,
+        ReadWrite = 2,
+        WriteDiscard = 3,
+        WriteNoOverwrite = 4
+    }
+
+    public enum BufferUsage
+    {
+        StreamDraw = 0,
+        StreamRead = 1,
+        StreamCopy = 2,
+        StaticDraw = 3,
+        StaticRead = 4,
+        StaticCopy = 5,
+        DynamicDraw = 6,
+        DynamicRead = 7,
+        DynamicCopy = 8
+    }
+
     public enum CasePolicy
     {
         ForceUpperCasePolicy = 4136,
         UnchangedCasePolicy = 4137,
+    }
+
+    public enum CgDomain
+    {
+        UnknownDomain = 0,
+        FirstDomain = 1,
+        VertexDomain = 1,
+        FragmentDomain = 2,
+        GeometryDomain = 3,
+        TessellationControlDomain = 4,
+        TessellationEvaluationDomain = 5
     }
 
     public enum CgEnum
@@ -170,6 +203,18 @@ namespace CgNet
         BufferUpdateNotAllowedError = 60,
         GlslgUncombinedLoadError = 61,
         ErrorMax
+    }
+
+    public enum CgParameterClass
+    {
+        Unknown = 0,
+        Scalar = 1,
+        Vector = 2,
+        Matrix = 3,
+        Struct = 4,
+        Array = 5,
+        Sampler = 6,
+        Object = 7
     }
 
     public enum CgProfile
@@ -858,6 +903,21 @@ namespace CgNet
         Deferred = 4133
     }
 
+    public enum ProgramInputOutput
+    {
+        Fragment = 4122, /* GetProgramInput and GetProgramOutput */
+        Vertex = 4123, /* GetProgramInput and GetProgramOutput */
+        Point = 4124, /* Geometry program GetProgramInput       */
+        Line = 4125, /* Geometry program GetProgramInput       */
+        LineAdj = 4126, /* Geometry program GetProgramInput       */
+        Triangle = 4127, /* Geometry program GetProgramInput       */
+        TriangleAdj = 4128, /* Geometry program GetProgramInput       */
+        PointOut = 4129, /* Geometry program GetProgramOutput      */
+        LineOut = 4130, /* Geometry program GetProgramOutput      */
+        TriangleOut = 4131, /* Geometry program GetProgramOutput      */
+        Patch = 4152, /* GetProgramInput and GetProgramOutput */
+    }
+
     public enum ProgramNamespace
     {
         Global = 4108,
@@ -868,6 +928,23 @@ namespace CgNet
     {
         Source = 4112,
         Object = 4113
+    }
+
+    public enum Query
+    {
+        IsOpenglProfile = 4138,
+        IsDirect3DProfile = 4139,
+        IsDirect3D8Profile = 4140,
+        IsDirect3D9Profile = 4141,
+        IsDirect3D10Profile = 4142,
+        IsVertexProfile = 4143,
+        IsFragmentProfile = 4144,
+        IsGeometryProfile = 4145,
+        IsTranslationProfile = 4146,
+        IsHLSLProfile = 4147,
+        IsGLSLProfile = 4148,
+        IsTessellationControlProfile = 4149,
+        IsTessellationEvaluationProfile = 4150,
     }
 
     public enum SourceType
