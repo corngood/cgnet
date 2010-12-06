@@ -622,6 +622,21 @@ namespace CgNet
             return CgNativeMethods.cgGetLockingPolicy();
         }
 
+        public static void GetMatrixParameter(IntPtr param, out int[] values)
+        {
+            values = GetMatrixParameter<int>(param, Order.RowMajor);
+        }
+
+        public static void GetMatrixParameter(IntPtr param, out float[] values)
+        {
+            values = GetMatrixParameter<float>(param, Order.RowMajor);
+        }
+
+        public static void GetMatrixParameter(IntPtr param, out double[] values)
+        {
+            values = GetMatrixParameter<double>(param, Order.RowMajor);
+        }
+
         public static T[] GetMatrixParameter<T>(IntPtr param)
             where T : struct
         {
@@ -1061,6 +1076,11 @@ namespace CgNet
         }
 
         public static void GetParameterValue(IntPtr param, ref double[] values)
+        {
+            GetParameterValue(param, ref values, Order.RowMajor);
+        }
+
+        public static void GetParameterValue(IntPtr param, ref float[] values)
         {
             GetParameterValue(param, ref values, Order.RowMajor);
         }

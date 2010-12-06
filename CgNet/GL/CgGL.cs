@@ -100,6 +100,16 @@ namespace CgNet.GL
             return CgGLNativeMethods.cgGLGetManageTextureParameters(context);
         }
 
+        public static void GetMatrixParameter(IntPtr param, out Matrix4 value)
+        {
+            value = GetMatrixParameter<Matrix4>(param, Order.RowMajor);
+        }
+
+        public static void GetMatrixParameter(IntPtr param, out Matrix4d value)
+        {
+            value = GetMatrixParameter<Matrix4d>(param, Order.RowMajor);
+        }
+
         public static T GetMatrixParameter<T>(IntPtr param)
             where T : struct
         {
@@ -154,12 +164,24 @@ namespace CgNet.GL
             }
         }
 
+        public static void GetMatrixParameterArray(IntPtr param, int offset, int nelements, out Matrix4[] values)
+        {
+            values = GetMatrixParameterArray<Matrix4>(param, offset, nelements);
+        }
+
+        public static void GetMatrixParameterArray(IntPtr param, int offset, int nelements, out Matrix4d[] values)
+        {
+            values = GetMatrixParameterArray<Matrix4d>(param, offset, nelements);
+        }
+
         public static T[] GetMatrixParameterArray<T>(IntPtr param, int offset, int nelements)
+            where T : struct
         {
             return GetMatrixParameterArray<T>(param, offset, nelements, Order.RowMajor);
         }
 
         public static T[] GetMatrixParameterArray<T>(IntPtr param, int offset, int nelements, Order order)
+            where T : struct
         {
             var retValue = new T[nelements];
             GCHandle g = GCHandle.Alloc(retValue, GCHandleType.Pinned);

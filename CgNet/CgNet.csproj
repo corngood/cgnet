@@ -49,7 +49,9 @@
     <Compile Include="GL\CgGLNativeMethods.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CgNet.config" />
+    <None Include="CgNet.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
