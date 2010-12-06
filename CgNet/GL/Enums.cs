@@ -22,7 +22,7 @@ namespace CgNet.GL
 {
     #region Enumerations
 
-    public enum CgGLEnum
+    public enum CgGLAll
     {
         MatrixIdentity = 0,
         MatrixTranspose = 1,

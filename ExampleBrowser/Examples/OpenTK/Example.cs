@@ -23,7 +23,7 @@
 
         #region Protected Properties
 
-        protected IntPtr CgContext
+        protected IntPtr MyCgContext
         {
             get;
             set;
@@ -49,15 +49,15 @@
 
         protected void CheckForCgError()
         {
-            CgError error;
+            ErrorType error;
             string s = Cg.GetLastErrorString(out error);
 
-            if (error != CgError.NoError)
+            if (error != ErrorType.NoError)
             {
                 MessageBox.Show(s);
                 this.Close();
 
-                var x = Cg.GetLastListing(this.CgContext);
+                var x = Cg.GetLastListing(this.MyCgContext);
             }
             //  printf("%s: %s: %s\n",
             //    myProgramName, situation, string);

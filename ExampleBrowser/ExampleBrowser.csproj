@@ -54,6 +54,7 @@
     <Compile Include="Examples\OpenTK\Basic\TwoTextureAccesses.cs" />
     <Compile Include="Examples\OpenTK\Basic\VaryingParameter.cs" />
     <Compile Include="Examples\OpenTK\Basic\VertexProgram.cs" />
+    <Compile Include="Examples\CgNetOO\VertexProgramOO.cs" />
     <Compile Include="Examples\OpenTK\Basic\VertexTransform.cs" />
     <Compile Include="Examples\OpenTK\Basic\VertexTwisting.cs" />
     <Compile Include="Examples\OpenTK\Example.cs" />

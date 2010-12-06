@@ -1,8 +1,9 @@
-﻿namespace ExampleBrowser.Examples.OpenTK.Basic
+namespace ExampleBrowser.Examples.CgNetOO
 {
     using System;
 
     using CgNet;
+    using CgNet.CgOO;
     using CgNet.GL;
 
     using global::Examples.Helper;
@@ -11,22 +12,25 @@
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/01 Vertex Program")]
-    public class VertexProgram : Example
+    using OpenTK;
+
+    [Example(NodePath = "CgNetOO/OpenTK/Basic/01 Vertex Program")]
+    public class VertexProgramOO : Example
     {
         #region Fields
 
-        private const string MyVertexProgramFileName = "Data/C2E1v_green.cg";
-        private const string MyVertexProgramName = "C2E1v_green";
+        private const string VertexProgramFileName = "Data/C2E1v_green.cg";
+        private const string VertexProgramName = "C2E1v_green";
 
-        private ProfileType myCgVertexProfile;
-        private IntPtr myCgVertexProgram;
+        private ProfileType cgVertexProfile;
+        private CgProgram cgVertexProgram;
+        private CgContext cgContext;
 
         #endregion Fields
 
         #region Constructors
 
-        public VertexProgram()
+        public VertexProgramOO()
             : base("01_vertex_program")
         {
         }
@@ -45,23 +49,23 @@
         {
             GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
 
-            this.MyCgContext = Cg.CreateContext();
-
+            this.cgContext = CgContext.Create();
+          
             CgGL.SetDebugMode(false);
-            Cg.SetParameterSettingMode(this.MyCgContext, ParameterSettingMode.Deferred);
+            this.cgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(myCgVertexProfile);
+            this.cgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(this.cgVertexProfile);
 
-            this.myCgVertexProgram =
-                Cg.CreateProgramFromFile(
-                    this.MyCgContext,              /* Cg runtime context */
+            this.cgVertexProgram =
+                cgContext.CreateProgramFromFile(
                     ProgramType.Source,                /* Program in human-readable form */
-                    MyVertexProgramFileName,  /* Name of file containing program */
-                    myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName,      /* Entry function name */
+                    VertexProgramFileName,  /* Name of file containing program */
+                    this.cgVertexProfile,        /* Profile: OpenGL ARB vertex program */
+                    VertexProgramName,      /* Entry function name */
                     null);                    /* No extra compiler options */
-            CgGL.LoadProgram(myCgVertexProgram);
+
+            CgGL.LoadProgram(this.cgVertexProgram);
         }
 
         /// <summary>
@@ -73,9 +77,9 @@
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            CgGL.BindProgram(this.myCgVertexProgram);
+            CgGL.BindProgram(this.cgVertexProgram);
 
-            CgGL.EnableProfile(this.myCgVertexProfile);
+            CgGL.EnableProfile(this.cgVertexProfile);
 
             /* Rendering code verbatim from Chapter 1, Section 2.4.1 "Rendering
                a Triangle with OpenGL" (page 57). */
@@ -85,8 +89,8 @@
             GL.Vertex2(0.0f, -0.8f);
             GL.End();
 
-            CgGL.DisableProfile(this.myCgVertexProfile);
-            SwapBuffers();
+            CgGL.DisableProfile(this.cgVertexProfile);
+            this.SwapBuffers();
         }
 
         /// <summary>
@@ -96,7 +100,7 @@
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnResize(EventArgs e)
         {
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(0, 0, this.Width, this.Height);
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
@@ -106,8 +110,8 @@
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            Cg.DestroyProgram(myCgVertexProgram);
-            Cg.DestroyContext(this.MyCgContext);
+            this.cgVertexProgram.Dispose();
+            this.cgContext.Dispose();
         }
 
         /// <summary>
@@ -117,7 +121,7 @@
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            if (Keyboard[Key.Escape])
+            if (this.Keyboard[Key.Escape])
                 this.Exit();
         }
 

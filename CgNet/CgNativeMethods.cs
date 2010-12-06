@@ -107,11 +107,11 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateArraySamplerState(IntPtr context, string name, CgType type, int nelems);
+        internal static extern IntPtr cgCreateArraySamplerState(IntPtr context, string name, ParameterType type, int nelems);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateArrayState(IntPtr context, string name, CgType type, int nelems);
+        internal static extern IntPtr cgCreateArrayState(IntPtr context, string name, ParameterType type, int nelems);
 
         // CG_API CGbuffer CGENTRY cgCreateBuffer(CGcontext context, int size, const void *data, CGbufferusage bufferUsage);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -128,7 +128,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateEffectAnnotation(IntPtr effect, string name, CgType type);
+        internal static extern IntPtr cgCreateEffectAnnotation(IntPtr effect, string name, ParameterType type);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -137,43 +137,43 @@ namespace CgNet
         //CG_API CGparameter CGENTRY cgCreateEffectParameter(CGeffect effect, const char *name, CGtype type);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateEffectParameter(IntPtr context, string name, CgType type);
+        internal static extern IntPtr cgCreateEffectParameter(IntPtr context, string name, ParameterType type);
 
         //CG_API CGparameter CGENTRY cgCreateEffectParameterArray(CGeffect effect, const char *name, CGtype type, int length);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateEffectParameterArray(IntPtr effect, string name, CgType type, int length);
+        internal static extern IntPtr cgCreateEffectParameterArray(IntPtr effect, string name, ParameterType type, int length);
 
         //CG_API CGparameter CGENTRY cgCreateEffectParameterMultiDimArray(CGeffect effect, const char *name, CGtype type, int dim, const int *lengths);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateEffectParameterMultiDimArray(IntPtr effect, string name, CgType type, int dim, int[] lengths);
+        internal static extern IntPtr cgCreateEffectParameterMultiDimArray(IntPtr effect, string name, ParameterType type, int dim, int[] lengths);
 
         //CG_API CGobj CGENTRY cgCreateObj(CGcontext context, CGenum program_type, const char *source, CGprofile profile, const char **args);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateObj(IntPtr context, ProgramType programType, string source, CgProfile profile, string[] args);
+        internal static extern IntPtr cgCreateObj(IntPtr context, ProgramType programType, string source, ProfileType profile, string[] args);
 
         //CG_API CGobj CGENTRY cgCreateObjFromFile(CGcontext context, CGenum program_type, const char *source_file, CGprofile profile, const char **args);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateObjFromFile(IntPtr context, ProgramType programType, string sourceFile, CgProfile profile, string[] args);
+        internal static extern IntPtr cgCreateObjFromFile(IntPtr context, ProgramType programType, string sourceFile, ProfileType profile, string[] args);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateParameter(IntPtr context, CgType type);
+        internal static extern IntPtr cgCreateParameter(IntPtr context, ParameterType type);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateParameterAnnotation(IntPtr param, string name, CgType type);
+        internal static extern IntPtr cgCreateParameterAnnotation(IntPtr param, string name, ParameterType type);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateParameterArray(IntPtr context, CgType type, int length);
+        internal static extern IntPtr cgCreateParameterArray(IntPtr context, ParameterType type, int length);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateParameterMultiDimArray(IntPtr context, CgType type, int dim, [In] int[] lengths);
+        internal static extern IntPtr cgCreateParameterMultiDimArray(IntPtr context, ParameterType type, int dim, [In] int[] lengths);
 
         //CG_API CGpass CGENTRY cgCreatePass(CGtechnique tech, const char *name);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -182,28 +182,28 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreatePassAnnotation(IntPtr pass, string name, CgType type);
+        internal static extern IntPtr cgCreatePassAnnotation(IntPtr pass, string name, ParameterType type);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateProgram(IntPtr context, ProgramType type, string source, CgProfile profile, string entry, string[] args);
+        internal static extern IntPtr cgCreateProgram(IntPtr context, ProgramType type, string source, ProfileType profile, string entry, string[] args);
 
         // CG_API CGannotation CGENTRY cgCreateProgramAnnotation(CGprogram program, const char *name, CGtype type);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateProgramAnnotation(IntPtr annotation, string name, CgType type);
+        internal static extern IntPtr cgCreateProgramAnnotation(IntPtr annotation, string name, ParameterType type);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateProgramFromEffect(IntPtr effect, CgProfile profile, string entry, string[] args);
+        internal static extern IntPtr cgCreateProgramFromEffect(IntPtr effect, ProfileType profile, string entry, string[] args);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateProgramFromFile(IntPtr context, ProgramType type, string file, CgProfile profile, string entry, string[] args);
+        internal static extern IntPtr cgCreateProgramFromFile(IntPtr context, ProgramType type, string file, ProfileType profile, string entry, string[] args);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateSamplerState(IntPtr context, string name, CgType type);
+        internal static extern IntPtr cgCreateSamplerState(IntPtr context, string name, ParameterType type);
 
         //CG_API CGstateassignment CGENTRY cgCreateSamplerStateAssignment(CGparameter param, CGstate state);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -212,7 +212,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateState(IntPtr context, string name, CgType type);
+        internal static extern IntPtr cgCreateState(IntPtr context, string name, ParameterType type);
 
         //CG_API CGstateassignment CGENTRY cgCreateStateAssignment(CGpass pass, CGstate state);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -231,7 +231,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgCreateTechniqueAnnotation(IntPtr tech, string name, CgType type);
+        internal static extern IntPtr cgCreateTechniqueAnnotation(IntPtr tech, string name, ParameterType type);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -272,7 +272,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetAnnotationType(IntPtr annotation);
+        internal static extern ParameterType cgGetAnnotationType(IntPtr annotation);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -292,7 +292,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetArrayType(IntPtr param);
+        internal static extern ParameterType cgGetArrayType(IntPtr param);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -358,11 +358,11 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgDomain cgGetDomain(string domainString);
+        internal static extern Domain cgGetDomain(string domainString);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetDomainString(CgDomain domain);
+        internal static extern IntPtr cgGetDomainString(Domain domain);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -415,7 +415,7 @@ namespace CgNet
         //CGDLL_API CGerror cgGetError(void);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgError cgGetError();
+        internal static extern ErrorType cgGetError();
 
         /// <summary>
         /// 
@@ -438,7 +438,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetErrorString(CgError error);
+        internal static extern IntPtr cgGetErrorString(ErrorType error);
 
         /// <summary>
         /// 
@@ -481,7 +481,7 @@ namespace CgNet
         // CGDLL_API CGerror cgGetFirstError(void);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgError cgGetFirstError();
+        internal static extern ErrorType cgGetFirstError();
 
         /// <summary>
         /// 
@@ -684,7 +684,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetLastErrorString(out CgError error);
+        internal static extern IntPtr cgGetLastErrorString(out ErrorType error);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -761,7 +761,7 @@ namespace CgNet
         //CG_API void CGENTRY cgGetMatrixSize(CGtype type, int *nrows, int *ncols);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetMatrixSize(CgType type, out int nrows, out int ncols);
+        internal static extern ParameterType cgGetMatrixSize(ParameterType type, out int nrows, out int ncols);
 
         //CG_API CGeffect CGENTRY cgGetNamedEffect(CGcontext context, const char *name);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -922,7 +922,7 @@ namespace CgNet
         // CGDLL_API CGtype cgGetNamedUserType(CGhandle handle, const char *name);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetNamedUserType(IntPtr handle, string name);
+        internal static extern ParameterType cgGetNamedUserType(IntPtr handle, string name);
 
         /// <summary>
         /// 
@@ -1058,7 +1058,7 @@ namespace CgNet
         // CGDLL_API int cgGetNumParentTypes(CGtype type);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetNumParentTypes(CgType type);
+        internal static extern int cgGetNumParentTypes(ParameterType type);
 
         //CG_API int CGENTRY cgGetNumProgramDomains(CGprogram program);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -1100,7 +1100,7 @@ namespace CgNet
         // CGDLL_API CGtype cgGetParameterBaseType(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetParameterBaseType(IntPtr param);
+        internal static extern ParameterType cgGetParameterBaseType(IntPtr param);
 
         //  CG_API int CGENTRY cgGetParameterBufferIndex(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -1124,11 +1124,11 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgParameterClass cgGetParameterClassEnum(string pString);
+        internal static extern ParameterClass cgGetParameterClassEnum(string pString);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetParameterClassString(CgParameterClass pc);
+        internal static extern IntPtr cgGetParameterClassString(ParameterClass pc);
 
         /// <summary>
         /// 
@@ -1217,7 +1217,7 @@ namespace CgNet
         // CGDLL_API CGtype cgGetParameterNamedType(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetParameterNamedType(IntPtr param);
+        internal static extern ParameterType cgGetParameterNamedType(IntPtr param);
 
         /// <summary>
         /// Returns an integer that represents the position of a parameter when it was declared within the Cg program.
@@ -1278,7 +1278,7 @@ namespace CgNet
         // CG_API CGtype CGENTRY cgGetParameterResourceType(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetParameterResourceType(IntPtr param);
+        internal static extern ParameterType cgGetParameterResourceType(IntPtr param);
 
         /// <summary>
         /// 
@@ -1306,7 +1306,7 @@ namespace CgNet
         // CGDLL_API CGtype cgGetParameterType(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetParameterType(IntPtr param);
+        internal static extern ParameterType cgGetParameterType(IntPtr param);
 
         /// <summary>
         /// 
@@ -1404,7 +1404,7 @@ namespace CgNet
         // CGDLL_API CGtype cgGetParentType(CGtype type, int index);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetParentType(CgType type, int index);
+        internal static extern ParameterType cgGetParentType(ParameterType type, int index);
 
         /// <summary>
         /// 
@@ -1418,7 +1418,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetPassProgram(IntPtr pass, CgDomain domain);
+        internal static extern IntPtr cgGetPassProgram(IntPtr pass, Domain domain);
 
         /// <summary>
         /// 
@@ -1432,21 +1432,21 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgProfile cgGetProfile(string profile);
+        internal static extern ProfileType cgGetProfile(string profile);
 
         // CG_API CGdomain CGENTRY cgGetProfileDomain(CGprofile profile);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgDomain cgGetProfileDomain(CgProfile profile);
+        internal static extern Domain cgGetProfileDomain(ProfileType profile);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool cgGetProfileProperty(CgProfile profile, Query query);
+        internal static extern bool cgGetProfileProperty(ProfileType profile, Query query);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetProfileString(CgProfile profile);
+        internal static extern IntPtr cgGetProfileString(ProfileType profile);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -1454,11 +1454,11 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetProgramBufferMaxIndex(CgProfile profile);
+        internal static extern int cgGetProgramBufferMaxIndex(ProfileType profile);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetProgramBufferMaxSize(CgProfile profile);
+        internal static extern int cgGetProgramBufferMaxSize(ProfileType profile);
 
         /// <summary>
         ///     Gets a programs parent context.
@@ -1475,12 +1475,12 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgDomain cgGetProgramDomain(IntPtr program);
+        internal static extern Domain cgGetProgramDomain(IntPtr program);
 
         //CG_API CGprofile CGENTRY cgGetProgramDomainProfile(CGprogram program, int index);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgProfile cgGetProgramDomainProfile(IntPtr program, int index);
+        internal static extern ProfileType cgGetProgramDomainProfile(IntPtr program, int index);
 
         //CG_API CGprogram CGENTRY cgGetProgramDomainProgram(CGprogram program, int index);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -1516,7 +1516,7 @@ namespace CgNet
         /// </returns>
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetProgramProfile(IntPtr prog);
+        internal static extern ProfileType cgGetProgramProfile(IntPtr prog);
 
         /// <summary>
         /// 
@@ -1552,11 +1552,11 @@ namespace CgNet
         /// <returns>Resource enumerant.</returns>
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgResource cgGetResource(string resourceName);
+        internal static extern ResourceType cgGetResource(string resourceName);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetResourceString(CgResource resource);
+        internal static extern IntPtr cgGetResourceString(ResourceType resource);
 
         /// <summary>
         /// 
@@ -1647,7 +1647,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgProfile cgGetStateLatestProfile(IntPtr state);
+        internal static extern ProfileType cgGetStateLatestProfile(IntPtr state);
 
         /// <summary>
         /// 
@@ -1687,7 +1687,7 @@ namespace CgNet
         // CGDLL_API CGtype cgGetStateType(CGstate);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetStateType(IntPtr state);
+        internal static extern ParameterType cgGetStateType(IntPtr state);
 
         /// <summary>
         /// 
@@ -1701,7 +1701,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetString(CgEnum sname);
+        internal static extern IntPtr cgGetString(CgAll sname);
 
         /// <summary>
         /// 
@@ -1740,7 +1740,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgProfile cgGetSupportedProfile(int index);
+        internal static extern ProfileType cgGetSupportedProfile(int index);
 
         /// <summary>
         /// 
@@ -1780,22 +1780,22 @@ namespace CgNet
         // CGDLL_API CGtype cgGetType(const char *type_string);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetType(string typeString);
+        internal static extern ParameterType cgGetType(string typeString);
 
         //CG_API CGtype CGENTRY cgGetTypeBase(CGtype type);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetTypeBase(CgType type);
+        internal static extern ParameterType cgGetTypeBase(ParameterType type);
 
         //CG_API CGparameterclass CGENTRY cgGetTypeClass(CGtype type);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgParameterClass cgGetTypeClass(CgType type);
+        internal static extern ParameterClass cgGetTypeClass(ParameterType type);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool cgGetTypeSizes(CgType type, out int nrows, out int ncols);
+        internal static extern bool cgGetTypeSizes(ParameterType type, out int nrows, out int ncols);
 
         /// <summary>
         /// 
@@ -1805,7 +1805,7 @@ namespace CgNet
         // CGDLL_API const char *cgGetTypeString(CGtype type);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetTypeString(CgType type);
+        internal static extern IntPtr cgGetTypeString(ParameterType type);
 
         /// <summary>
         /// 
@@ -1816,7 +1816,7 @@ namespace CgNet
         // CGDLL_API CGtype cgGetUserType(CGhandle handle, int index);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgType cgGetUserType(IntPtr handle, int index);
+        internal static extern ParameterType cgGetUserType(IntPtr handle, int index);
 
         /// <summary>
         /// 
@@ -1864,7 +1864,7 @@ namespace CgNet
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool cgIsInterfaceType(CgType type);
+        internal static extern bool cgIsInterfaceType(ParameterType type);
 
         /// <summary>
         /// Determines if parameter is valid Cg parameter object.
@@ -1923,7 +1923,7 @@ namespace CgNet
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool cgIsParentType(CgType parent, int child);
+        internal static extern bool cgIsParentType(ParameterType parent, int child);
 
         /// <summary>
         /// 
@@ -1938,7 +1938,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern bool cgIsProfileSupported(CgProfile profile);
+        internal static extern bool cgIsProfileSupported(ProfileType profile);
 
         /// <summary>
         ///     Determine if a program handle references a Cg program object.
@@ -2550,7 +2550,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgSetProgramProfile(IntPtr prog, CgProfile profile);
+        internal static extern void cgSetProgramProfile(IntPtr prog, ProfileType profile);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -2589,7 +2589,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgSetStateLatestProfile(IntPtr state, CgProfile profile);
+        internal static extern void cgSetStateLatestProfile(IntPtr state, ProfileType profile);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]

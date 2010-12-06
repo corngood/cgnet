@@ -42,7 +42,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         static bool useComputedPointSize;
 
         private IntPtr myCgVertexParamGlobalTime, myCgVertexParamAcceleration, myCgVertexParamModelViewProj;
-        private CgProfile myCgVertexProfile, myCgFragmentProfile;
+        private ProfileType myCgVertexProfile, myCgFragmentProfile;
         private IntPtr myCgVertexProgram, myCgFragmentProgram;
         float myGlobalTime;
         int myPass;
@@ -100,7 +100,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.Enable(EnableCap.PointSmooth);
             GL.Enable(EnableCap.Blend);
             GL.Enable(EnableCap.Texture1D);
-            this.CgContext = Cg.CreateContext();
+            this.MyCgContext = Cg.CreateContext();
             CgGL.SetDebugMode(false);
 
             myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
@@ -108,7 +108,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             myCgVertexProgram =
               Cg.CreateProgramFromFile(
-              this.CgContext,              /* Cg runtime context */
+              this.MyCgContext,              /* Cg runtime context */
               ProgramType.Source,                /* Program in human-readable form */
               MyVertexProgramFileName,  /* Name of file containing program */
               myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
@@ -131,7 +131,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             myCgFragmentProgram =
               Cg.CreateProgramFromFile(
-              this.CgContext,                /* Cg runtime context */
+              this.MyCgContext,                /* Cg runtime context */
               ProgramType.Source,                  /* Program in human-readable form */
               MyFragmentProgramFileName,  /* Name of file containing program */
               myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
@@ -213,7 +213,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             base.OnUnload(e);
             Cg.DestroyProgram(this.myCgVertexProgram);
             Cg.DestroyProgram(myCgFragmentProgram);
-            Cg.DestroyContext(this.CgContext);
+            Cg.DestroyContext(this.MyCgContext);
         }
 
         /// <summary>

@@ -80,7 +80,7 @@ namespace CgNet.GL
         /// </param>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLDisableProfile(CgProfile profile);
+        internal static extern void cgGLDisableProfile(ProfileType profile);
 
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -112,7 +112,7 @@ namespace CgNet.GL
         /// </param>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLEnableProfile(CgProfile profile);
+        internal static extern void cgGLEnableProfile(ProfileType profile);
 
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -134,7 +134,7 @@ namespace CgNet.GL
 
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern CgProfile cgGLGetLatestProfile(ProfileClass profileType);
+        internal static extern ProfileType cgGLGetLatestProfile(ProfileClass profileType);
 
         /// <summary>
         /// Retreives the manage texture parameters flag from a context 
@@ -215,7 +215,7 @@ namespace CgNet.GL
 
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGLGetOptimalOptions(CgProfile profile);
+        internal static extern IntPtr cgGLGetOptimalOptions(ProfileType profile);
 
         /// <summary>
         /// Gets the double value to the specified parameter.
@@ -430,7 +430,7 @@ namespace CgNet.GL
         /// </returns>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern bool cgGLIsProfileSupported(CgProfile profile);
+        internal static extern bool cgGLIsProfileSupported(ProfileType profile);
 
         /// <summary>
         /// Returns true if the specified program is loaded.
@@ -558,7 +558,7 @@ namespace CgNet.GL
         /// </param>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLSetOptimalOptions(CgProfile profile);
+        internal static extern void cgGLSetOptimalOptions(ProfileType profile);
 
         /// <summary>
         /// Sets the double values to the specified parameter.
@@ -1013,7 +1013,7 @@ namespace CgNet.GL
         /// </param>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLUnbindProgram(CgProfile profile);
+        internal static extern void cgGLUnbindProgram(ProfileType profile);
 
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]

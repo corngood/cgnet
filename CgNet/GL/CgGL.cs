@@ -50,7 +50,7 @@ namespace CgNet.GL
             CgGLNativeMethods.cgGLDisableClientState(param);
         }
 
-        public static void DisableProfile(CgProfile profile)
+        public static void DisableProfile(ProfileType profile)
         {
             CgGLNativeMethods.cgGLDisableProfile(profile);
         }
@@ -70,7 +70,7 @@ namespace CgNet.GL
             CgGLNativeMethods.cgGLEnableClientState(param);
         }
 
-        public static void EnableProfile(CgProfile profile)
+        public static void EnableProfile(ProfileType profile)
         {
             CgGLNativeMethods.cgGLEnableProfile(profile);
         }
@@ -90,7 +90,7 @@ namespace CgNet.GL
             return CgGLNativeMethods.cgGLGetBufferObject(buffer);
         }
 
-        public static CgProfile GetLatestProfile(ProfileClass profileClass)
+        public static ProfileType GetLatestProfile(ProfileClass profileClass)
         {
             return CgGLNativeMethods.cgGLGetLatestProfile(profileClass);
         }
@@ -405,7 +405,7 @@ namespace CgNet.GL
             return CgGLNativeMethods.cgGLGetTextureParameter(param);
         }
 
-        public static string[] GLGetOptimalOptions(CgProfile profile)
+        public static string[] GLGetOptimalOptions(ProfileType profile)
         {
             var ptr = CgGLNativeMethods.cgGLGetOptimalOptions(profile);
             unsafe
@@ -443,7 +443,7 @@ namespace CgNet.GL
             }
         }
 
-        public static bool IsProfileSupported(CgProfile profile)
+        public static bool IsProfileSupported(ProfileType profile)
         {
             return CgGLNativeMethods.cgGLIsProfileSupported(profile);
         }
@@ -553,7 +553,7 @@ namespace CgNet.GL
             }
         }
 
-        public static void SetOptimalOptions(CgProfile profile)
+        public static void SetOptimalOptions(ProfileType profile)
         {
             CgGLNativeMethods.cgGLSetOptimalOptions(profile);
         }
@@ -728,7 +728,7 @@ namespace CgNet.GL
             CgGLNativeMethods.cgGLSetupSampler(param, texobj);
         }
 
-        public static void UnbindProgram(CgProfile profile)
+        public static void UnbindProgram(ProfileType profile)
         {
             CgGLNativeMethods.cgGLUnbindProgram(profile);
         }

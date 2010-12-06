@@ -51,11 +51,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         float my2Pi = 2.0f * 3.14159265358979323846f;
         private IntPtr myCgFragmentParamNormalizeCube;
         private IntPtr myCgFragmentParamNormalMap;
-        private CgProfile myCgFragmentProfile;
+        private ProfileType myCgFragmentProfile;
         private IntPtr myCgFragmentProgram;
         private IntPtr myCgVertexParamLightPosition;
         private IntPtr myCgVertexParamModelViewProj;
-        private CgProfile myCgVertexProfile;
+        private ProfileType myCgVertexProfile;
         private IntPtr myCgVertexProgram;
         float myLightAngle = 4.0f; /* Angle light rotates around scene. */
 
@@ -136,16 +136,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int)All.ClampToEdge);
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)All.ClampToEdge);
 
-            this.CgContext = Cg.CreateContext();
+            this.MyCgContext = Cg.CreateContext();
             CgGL.SetDebugMode(false);
-            Cg.SetParameterSettingMode(this.CgContext, ParameterSettingMode.Deferred);
+            Cg.SetParameterSettingMode(this.MyCgContext, ParameterSettingMode.Deferred);
 
             this.myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(this.myCgVertexProfile);
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
-                    this.CgContext,              /* Cg runtime context */
+                    this.MyCgContext,              /* Cg runtime context */
                     ProgramType.Source,                /* Program in human-readable form */
                     MyVertexProgramFileName,  /* Name of file containing program */
                     this.myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
@@ -164,7 +164,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             this.myCgFragmentProgram =
                 Cg.CreateProgramFromFile(
-                    this.CgContext,                /* Cg runtime context */
+                    this.MyCgContext,                /* Cg runtime context */
                     ProgramType.Source,                  /* Program in human-readable form */
                     MyFragmentProgramFileName,  /* Name of file containing program */
                     this.myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
@@ -270,7 +270,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             base.OnUnload(e);
             Cg.DestroyProgram(this.myCgVertexProgram);
             Cg.DestroyProgram(this.myCgFragmentProgram);
-            Cg.DestroyContext(this.CgContext);
+            Cg.DestroyContext(this.MyCgContext);
         }
 
         /// <summary>

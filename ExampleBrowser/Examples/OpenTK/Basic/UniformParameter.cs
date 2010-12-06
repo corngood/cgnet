@@ -21,10 +21,10 @@
         private const string MyVertexProgramFileName = "Data/C3E1v_anycolor.cg";
         private const string MyVertexProgramName = "C3E1v_anycolor";
 
-        private CgProfile myCgFragmentProfile;
+        private ProfileType myCgFragmentProfile;
         private IntPtr myCgFragmentProgram;
         private IntPtr myCgVertexParamConstantColor;
-        private CgProfile myCgVertexProfile;
+        private ProfileType myCgVertexProfile;
         private IntPtr myCgVertexProgram;
 
         #endregion Fields
@@ -50,16 +50,16 @@
         {
             GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
 
-            this.CgContext = Cg.CreateContext();
+            this.MyCgContext = Cg.CreateContext();
             CgGL.SetDebugMode(false);
-            Cg.SetParameterSettingMode(this.CgContext, ParameterSettingMode.Deferred);
+            Cg.SetParameterSettingMode(this.MyCgContext, ParameterSettingMode.Deferred);
 
             myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(myCgVertexProfile);
 
             myCgVertexProgram =
               Cg.CreateProgramFromFile(
-                this.CgContext,              /* Cg runtime context */
+                this.MyCgContext,              /* Cg runtime context */
                 ProgramType.Source,                /* Program in human-readable form */
                 MyVertexProgramFileName,  /* Name of file containing program */
                 myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
@@ -74,7 +74,7 @@
 
             myCgFragmentProgram =
               Cg.CreateProgramFromFile(
-                this.CgContext,                /* Cg runtime context */
+                this.MyCgContext,                /* Cg runtime context */
                 ProgramType.Source,                  /* Program in human-readable form */
                 MyFragmentProgramFileName,  /* Name of file containing program */
                 myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
@@ -127,7 +127,7 @@
             base.OnUnload(e);
             Cg.DestroyProgram(myCgVertexProgram);
             Cg.DestroyProgram(myCgFragmentProgram);
-            Cg.DestroyContext(this.CgContext);
+            Cg.DestroyContext(this.MyCgContext);
         }
 
         /// <summary>
