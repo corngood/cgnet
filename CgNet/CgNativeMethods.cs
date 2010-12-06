@@ -238,6 +238,10 @@ namespace CgNet.Wrapper
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
+        internal static extern Behavior cgGetContextBehavior(IntPtr context);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
         internal static extern IntPtr cgGetDependentAnnotationParameter(IntPtr annotation, int index);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
@@ -555,6 +559,10 @@ namespace CgNet.Wrapper
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
         internal static extern IntPtr cgGetLastListing(IntPtr context);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern LockingPolicy cgGetLockingPolicy();
 
         /// <summary>
         /// 
@@ -1321,6 +1329,10 @@ namespace CgNet.Wrapper
         SuppressUnmanagedCodeSecurity]
         internal static extern IntPtr cgGetSamplerStateAssignmentValue(IntPtr stateassignment);
 
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern CasePolicy cgGetSemanticCasePolicy();
+
         /// <summary>
         /// 
         /// </summary>
@@ -1730,6 +1742,10 @@ namespace CgNet.Wrapper
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool cgSetBoolAnnotation(IntPtr annotation, [MarshalAs(UnmanagedType.Bool)]bool value);
 
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern void cgSetContextBehavior(IntPtr context, Behavior behavior);
+
         /// <summary>
         /// 
         /// </summary>
@@ -1758,6 +1774,10 @@ namespace CgNet.Wrapper
         [DllImport(CgNativeLibrary, CallingConvention = Convention),
         SuppressUnmanagedCodeSecurity]
         internal static extern void cgSetLastListing(IntPtr handle, string listing);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern LockingPolicy cgSetLockingPolicy(LockingPolicy lockingPolicy);
 
         /// <summary>
         /// 
@@ -2161,6 +2181,10 @@ namespace CgNet.Wrapper
         SuppressUnmanagedCodeSecurity]
         internal static extern void cgSetSamplerState(IntPtr param);
 
+        [DllImport(CgNativeLibrary, CallingConvention = Convention),
+        SuppressUnmanagedCodeSecurity]
+        internal static extern CasePolicy cgSetSemanticCasePolicy(CasePolicy casePolicy);
+
         /// <summary>
         /// 
         /// </summary>
@@ -2202,5 +2226,112 @@ namespace CgNet.Wrapper
         #endregion Internal Static Methods
 
         #endregion Methods
+
+        #region Other
+
+        /* missing
+
+        CG_API const char * CGENTRY cgGetBehaviorString(CGbehavior behavior);
+        CG_API CGbehavior CGENTRY cgGetBehavior(const char *behavior_string);
+        CG_API CGenum CGENTRY cgGetParameterSettingMode(CGcontext context);
+        CG_API void CGENTRY cgSetCompilerIncludeString(CGcontext context, const char *name, const char *source);
+        CG_API void CGENTRY cgSetCompilerIncludeFile(CGcontext context, const char *name, const char *filename);
+        CG_API void CGENTRY cgSetCompilerIncludeCallback(CGcontext context, CGIncludeCallbackFunc func);
+        CG_API CGIncludeCallbackFunc CGENTRY cgGetCompilerIncludeCallback(CGcontext context);
+        CG_API CGenum CGENTRY cgGetProgramInput(CGprogram program);
+        CG_API CGenum CGENTRY cgGetProgramOutput(CGprogram program);
+        CG_API void CGENTRY cgUpdatePassParameters(CGpass pass);
+        CG_API int CGENTRY cgGetParameterDefaultValuedr(CGparameter param, int nelements, double *vals);
+        CG_API int CGENTRY cgGetParameterDefaultValuedc(CGparameter param, int nelements, double *vals);
+        CG_API int CGENTRY cgGetParameterDefaultValuefr(CGparameter param, int nelements, float *vals);
+        CG_API int CGENTRY cgGetParameterDefaultValuefc(CGparameter param, int nelements, float *vals);
+        CG_API int CGENTRY cgGetParameterDefaultValueir(CGparameter param, int nelements, int *vals);
+        CG_API int CGENTRY cgGetParameterDefaultValueic(CGparameter param, int nelements, int *vals);
+        CG_API CGenum CGENTRY cgGetMatrixParameterOrder(CGparameter param);
+        CG_API CGparameter CGENTRY cgGetNamedSubParameter(CGparameter param, const char *name);
+        CG_API int CGENTRY cgGetNumSupportedProfiles(void);
+        CG_API CGprofile CGENTRY cgGetSupportedProfile(int index);
+        CG_API CGbool CGENTRY cgIsProfileSupported(CGprofile profile);
+        CG_API CGbool CGENTRY cgGetProfileProperty(CGprofile profile, CGenum query);
+        CG_API const char * CGENTRY cgGetParameterClassString(CGparameterclass pc);
+        CG_API CGparameterclass CGENTRY cgGetParameterClassEnum(const char *pString);
+        CG_API const char * CGENTRY cgGetDomainString(CGdomain domain);
+        CG_API CGdomain CGENTRY cgGetDomain(const char *domain_string);
+        CG_API CGdomain CGENTRY cgGetProgramDomain(CGprogram program);
+        CG_API CGeffect CGENTRY cgCopyEffect(CGeffect effect);
+        CG_API CGprogram CGENTRY cgGetPassProgram(CGpass pass, CGdomain domain);
+        CG_API int CGENTRY cgGetNumDependentProgramArrayStateAssignmentParameters(CGstateassignment sa);
+        CG_API CGparameter CGENTRY cgGetDependentProgramArrayStateAssignmentParameter(CGstateassignment sa, int index);
+        CG_API CGparameter CGENTRY cgGetConnectedStateAssignmentParameter(CGstateassignment sa);
+        CG_API void CGENTRY cgSetStateLatestProfile(CGstate state, CGprofile profile);
+        CG_API CGprofile CGENTRY cgGetStateLatestProfile(CGstate state);
+        CG_API CGcontext CGENTRY cgGetStateContext(CGstate state);
+        CG_API CGannotation CGENTRY cgGetFirstEffectAnnotation(CGeffect effect);
+        CG_API CGannotation CGENTRY cgGetNamedEffectAnnotation(CGeffect effect, const char *name);
+        CG_API const char * const * CGENTRY cgGetStringAnnotationValues(CGannotation ann, int *nvalues);
+        CG_API CGbool CGENTRY cgSetEffectName(CGeffect effect, const char *name);
+        CG_API const char * CGENTRY cgGetEffectName(CGeffect effect);
+        CG_API CGeffect CGENTRY cgGetNamedEffect(CGcontext context, const char *name);
+        CG_API CGparameter CGENTRY cgCreateEffectParameter(CGeffect effect, const char *name, CGtype type);
+        CG_API CGtechnique CGENTRY cgCreateTechnique(CGeffect effect, const char *name);
+        CG_API CGparameter CGENTRY cgCreateEffectParameterArray(CGeffect effect, const char *name, CGtype type, int length);
+        CG_API CGparameter CGENTRY cgCreateEffectParameterMultiDimArray(CGeffect effect, const char *name, CGtype type, int dim, const int *lengths);
+        CG_API CGpass CGENTRY cgCreatePass(CGtechnique tech, const char *name);
+        CG_API CGstateassignment CGENTRY cgCreateStateAssignment(CGpass pass, CGstate state);
+        CG_API CGstateassignment CGENTRY cgCreateStateAssignmentIndex(CGpass pass, CGstate state, int index);
+        CG_API CGstateassignment CGENTRY cgCreateSamplerStateAssignment(CGparameter param, CGstate state);
+        CG_API CGbool CGENTRY cgSetFloatStateAssignment(CGstateassignment sa, float value);
+        CG_API CGbool CGENTRY cgSetIntStateAssignment(CGstateassignment sa, int value);
+        CG_API CGbool CGENTRY cgSetBoolStateAssignment(CGstateassignment sa, CGbool value);
+        CG_API CGbool CGENTRY cgSetStringStateAssignment(CGstateassignment sa, const char *value);
+        CG_API CGbool CGENTRY cgSetProgramStateAssignment(CGstateassignment sa, CGprogram program);
+        CG_API CGbool CGENTRY cgSetSamplerStateAssignment(CGstateassignment sa, CGparameter param);
+        CG_API CGbool CGENTRY cgSetTextureStateAssignment(CGstateassignment sa, CGparameter param);
+        CG_API CGbool CGENTRY cgSetFloatArrayStateAssignment(CGstateassignment sa, const float *vals);
+        CG_API CGbool CGENTRY cgSetIntArrayStateAssignment(CGstateassignment sa, const int *vals);
+        CG_API CGbool CGENTRY cgSetBoolArrayStateAssignment(CGstateassignment sa, const CGbool *vals);
+        CG_API CGannotation CGENTRY cgCreateTechniqueAnnotation(CGtechnique tech, const char *name, CGtype type);
+        CG_API CGannotation CGENTRY cgCreatePassAnnotation(CGpass pass, const char *name, CGtype type);
+        CG_API CGannotation CGENTRY cgCreateParameterAnnotation(CGparameter param, const char *name, CGtype type);
+        CG_API CGannotation CGENTRY cgCreateEffectAnnotation(CGeffect effect, const char *name, CGtype type);
+        CG_API CGbool CGENTRY cgSetIntAnnotation(CGannotation ann, int value);
+        CG_API CGbool CGENTRY cgSetFloatAnnotation(CGannotation ann, float value);
+        CG_API CGbool CGENTRY cgSetStringAnnotation(CGannotation ann, const char *value);
+        CG_API int CGENTRY cgGetNumStateEnumerants(CGstate state);
+        CG_API const char * CGENTRY cgGetStateEnumerant(CGstate state, int index, int *value);
+        CG_API const char * CGENTRY cgGetStateEnumerantName(CGstate state, int value);
+        CG_API CGeffect CGENTRY cgGetParameterEffect(CGparameter param);
+        CG_API CGparameterclass CGENTRY cgGetTypeClass(CGtype type);
+        CG_API CGtype CGENTRY cgGetTypeBase(CGtype type);
+        CG_API CGbool CGENTRY cgGetTypeSizes(CGtype type, int *nrows, int *ncols);
+        CG_API void CGENTRY cgGetMatrixSize(CGtype type, int *nrows, int *ncols);
+        CG_API int CGENTRY cgGetNumProgramDomains(CGprogram program);
+        CG_API CGdomain CGENTRY cgGetProfileDomain(CGprofile profile);
+        CG_API CGprofile CGENTRY cgGetProgramDomainProfile(CGprogram program, int index);
+        CG_API CGprogram CGENTRY cgGetProgramDomainProgram(CGprogram program, int index);
+        CG_API CGobj CGENTRY cgCreateObj(CGcontext context, CGenum program_type, const char *source, CGprofile profile, const char **args);
+        CG_API CGobj CGENTRY cgCreateObjFromFile(CGcontext context, CGenum program_type, const char *source_file, CGprofile profile, const char **args);
+        CG_API void CGENTRY cgDestroyObj(CGobj obj);
+        CG_API long CGENTRY cgGetParameterResourceSize(CGparameter param);
+        CG_API CGtype CGENTRY cgGetParameterResourceType(CGparameter param);
+        CG_API const char * CGENTRY cgGetParameterResourceName(CGparameter param);
+        CG_API int CGENTRY cgGetParameterBufferIndex(CGparameter param);
+        CG_API int CGENTRY cgGetParameterBufferOffset(CGparameter param);
+        CG_API CGbuffer CGENTRY cgCreateBuffer(CGcontext context, int size, const void *data, CGbufferusage bufferUsage);
+        CG_API void CGENTRY cgSetBufferData(CGbuffer buffer, int size, const void *data);
+        CG_API void CGENTRY cgSetBufferSubData(CGbuffer buffer, int offset, int size, const void *data);
+        CG_API void CGENTRY cgSetProgramBuffer(CGprogram program, int bufferIndex, CGbuffer buffer);
+        CG_API void * CGENTRY cgMapBuffer(CGbuffer buffer, CGbufferaccess access);
+        CG_API void CGENTRY cgUnmapBuffer(CGbuffer buffer);
+        CG_API void CGENTRY cgDestroyBuffer(CGbuffer buffer);
+        CG_API CGbuffer CGENTRY cgGetProgramBuffer(CGprogram program, int bufferIndex);
+        CG_API int CGENTRY cgGetBufferSize(CGbuffer buffer);
+        CG_API int CGENTRY cgGetProgramBufferMaxSize(CGprofile profile);
+        CG_API int CGENTRY cgGetProgramBufferMaxIndex(CGprofile profile);
+        CG_API CGbuffer CGENTRY cgGetEffectParameterBuffer(CGparameter param);
+        CG_API void CGENTRY cgSetEffectParameterBuffer(CGparameter param, CGbuffer buffer);
+        */
+
+        #endregion Other
     }
 }

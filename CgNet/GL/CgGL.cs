@@ -21,8 +21,10 @@
 namespace CgNet.GL
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.InteropServices;
+    using System.Text;
 
     using CgNet.Wrapper;
 
@@ -50,6 +52,11 @@ namespace CgNet.GL
             CgGLNativeMethods.cgGLDisableProfile(profile);
         }
 
+        public static void DisableProgramProfiles(IntPtr program)
+        {
+            CgGLNativeMethods.cgGLDisableProgramProfiles(program);
+        }
+
         public static void DisableTextureParameter(IntPtr param)
         {
             CgGLNativeMethods.cgGLDisableTextureParameter(param);
@@ -63,6 +70,11 @@ namespace CgNet.GL
         public static void EnableProfile(CgProfile profile)
         {
             CgGLNativeMethods.cgGLEnableProfile(profile);
+        }
+
+        public static void EnableProgramProfiles(IntPtr program)
+        {
+            CgGLNativeMethods.cgGLEnableProgramProfiles(program);
         }
 
         public static void EnableTextureParameter(IntPtr param)
@@ -363,6 +375,44 @@ namespace CgNet.GL
             return CgGLNativeMethods.cgGLGetTextureParameter(param);
         }
 
+        public static string[] GLGetOptimalOptions(CgProfile profile)
+        {
+            var ptr = CgGLNativeMethods.cgGLGetOptimalOptions(profile);
+            unsafe
+            {
+                var byteArray = (byte**)ptr;
+                var lines = new List<string>();
+                var buffer = new List<byte>();
+
+                for (;;)
+                {
+                    byte* b = *byteArray;
+                    for (;;)
+                    {
+                        if (*b == '\0')
+                        {
+                            char[] cc = Encoding.ASCII.GetChars(buffer.ToArray());
+                            lines.Add(new string(cc));
+                            buffer.Clear();
+                            break;
+                        }
+
+                        buffer.Add(*b);
+                        b++;
+                    }
+
+                    byteArray++;
+
+                    if (*byteArray == null)
+                    {
+                        break;
+                    }
+                }
+
+                return lines.ToArray();
+            }
+        }
+
         public static bool IsProfileSupported(CgProfile profile)
         {
             return CgGLNativeMethods.cgGLIsProfileSupported(profile);
@@ -651,6 +701,11 @@ namespace CgNet.GL
         public static void UnbindProgram(CgProfile profile)
         {
             CgGLNativeMethods.cgGLUnbindProgram(profile);
+        }
+
+        public static void UnloadProgram(IntPtr program)
+        {
+            CgGLNativeMethods.cgGLUnloadProgram(program);
         }
 
         #endregion Public Static Methods

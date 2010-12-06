@@ -283,6 +283,11 @@ namespace CgNet
             return CgNativeMethods.cgGetConnectedToParameter(param, index);
         }
 
+        public static Behavior GetContextBehavior(IntPtr context)
+        {
+            return CgNativeMethods.cgGetContextBehavior(context);
+        }
+
         public static IntPtr GetDependentAnnotationParameter(IntPtr annotation, int index)
         {
             return CgNativeMethods.cgGetDependentAnnotationParameter(annotation, index);
@@ -461,6 +466,11 @@ namespace CgNet
         public static IntPtr GetLastListing(IntPtr context)
         {
             return CgNativeMethods.cgGetLastListing(context);
+        }
+
+        public static LockingPolicy GetLockingPolicy()
+        {
+            return CgNativeMethods.cgGetLockingPolicy();
         }
 
         public static T[] GetMatrixParameter<T>(IntPtr param)
@@ -911,6 +921,11 @@ namespace CgNet
             return CgNativeMethods.cgGetSamplerStateAssignmentValue(stateassignment);
         }
 
+        public static CasePolicy GetSemanticCasePolicy()
+        {
+            return CgNativeMethods.cgGetSemanticCasePolicy();
+        }
+
         public static int GetStateAssignmentIndex(IntPtr stateassignment)
         {
             return CgNativeMethods.cgGetStateAssignmentIndex(stateassignment);
@@ -1106,6 +1121,11 @@ namespace CgNet
             return CgNativeMethods.cgSetBoolAnnotation(annotation, value);
         }
 
+        public static void SetContextBehavior(IntPtr context, Behavior behavior)
+        {
+            CgNativeMethods.cgSetContextBehavior(context, behavior);
+        }
+
         public static void SetErrorCallback(CgErrorCallbackFuncDelegate func)
         {
             CgNativeMethods.cgSetErrorCallback(func);
@@ -1119,6 +1139,11 @@ namespace CgNet
         public static void SetLastListing(IntPtr handle, string listing)
         {
             CgNativeMethods.cgSetLastListing(handle, listing);
+        }
+
+        public static LockingPolicy SetLockingPolicy(LockingPolicy lockingPolicy)
+        {
+            return CgNativeMethods.cgSetLockingPolicy(lockingPolicy);
         }
 
         public static void SetMatrixParameter(IntPtr param, float[] matrix)
@@ -1402,6 +1427,11 @@ namespace CgNet
         public static void SetSamplerState(IntPtr param)
         {
             CgNativeMethods.cgSetSamplerState(param);
+        }
+
+        public static CasePolicy SetSemanticCasePolicy(CasePolicy casePolicy)
+        {
+            return CgNativeMethods.cgSetSemanticCasePolicy(casePolicy);
         }
 
         public static void SetStateCallbacks(IntPtr state, CgStateCallbackDelegate set, CgStateCallbackDelegate reset, CgStateCallbackDelegate validate)

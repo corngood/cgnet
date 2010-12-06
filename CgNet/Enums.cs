@@ -29,6 +29,21 @@ namespace CgNet
         CompileLazy = 4116,
     }
 
+    public enum Behavior
+    {
+        Unknown = 0,
+        Latest = 1,                /* latest behavior supported at runtime      */
+        Behavior2200 = 1000,             /* default behavior                          */
+        Behavior3000 = 2000,
+        Current = Behavior3000  /* latest behavior supported at compile time */
+    }
+
+    public enum CasePolicy
+    {
+        ForceUpperCasePolicy = 4136,
+        UnchangedCasePolicy = 4137,
+    }
+
     public enum CgEnum
     {
         Unknown = 4096,
@@ -823,6 +838,12 @@ namespace CgNet
         Ushort4X2 = 1247,
         Ushort4X3 = 1248,
         Ushort4X4 = 1249
+    }
+
+    public enum LockingPolicy
+    {
+        NoLocksPolicy = 4134,
+        ThreadSafePolicy = 4135,
     }
 
     public enum Order
