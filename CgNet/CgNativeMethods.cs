@@ -1489,7 +1489,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern ProgramInputOutput cgGetProgramInput(IntPtr program);
+        internal static extern ProgramInput cgGetProgramInput(IntPtr program);
 
         /// <summary>
         /// 
@@ -1503,7 +1503,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern ProgramInputOutput cgGetProgramOutput(IntPtr program);
+        internal static extern ProgramOutput cgGetProgramOutput(IntPtr program);
 
         /// <summary>
         ///     Gets the profile enumeration of the program.

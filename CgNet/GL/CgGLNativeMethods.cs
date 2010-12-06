@@ -985,7 +985,7 @@ namespace CgNet.GL
         /// </param>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLSetStateMatrixParameter(IntPtr param, CgGLEnum matrix, CgGLEnum transform);
+        internal static extern void cgGLSetStateMatrixParameter(IntPtr param, MatrixType matrix, MatrixTransform transform);
 
         /// <summary>
         /// Sets texture object to the specified parameter.

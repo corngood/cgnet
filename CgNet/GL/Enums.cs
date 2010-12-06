@@ -39,6 +39,22 @@ namespace CgNet.GL
         TessellationEvaluation = 12
     }
 
+    public enum MatrixTransform
+    {
+        MatrixIdentity = 0,
+        MatrixTranspose = 1,
+        MatrixInverse = 2,
+        MatrixInverseTranspose = 3,
+    }
+
+    public enum MatrixType
+    {
+        ModelviewMatrix = 4,
+        ProjectionMatrix = 5,
+        TextureMatrix = 6,
+        ModelviewProjectionMatrix = 7,
+    }
+
     public enum ProfileClass
     {
         Vertex = 8,

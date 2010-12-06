@@ -21,11 +21,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         private const string MyVertexProgramFileName = "Data/C3E5v_twoTextures.cg";
         private const string MyVertexProgramName = "C3E5v_twoTextures";
 
-        private IntPtr myCgContext;
         private IntPtr myCgFragmentParamDecal;
         private CgProfile myCgFragmentProfile;
         private IntPtr myCgFragmentProgram;
-        private IntPtr myCgVertexParam_leftSeparation, myCgVertexParam_rightSeparation;
+        private IntPtr myCgVertexParamLeftSeparation, myCgVertexParamRightSeparation;
         private CgProfile myCgVertexProfile;
         private IntPtr myCgVertexProgram;
         private float mySeparation = 0.1f,
@@ -63,16 +62,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
-            this.myCgContext = Cg.CreateContext();
+            this.CgContext = Cg.CreateContext();
             CgGL.SetDebugMode(false);
-            Cg.SetParameterSettingMode(this.myCgContext, ParameterSettingMode.Deferred);
+            Cg.SetParameterSettingMode(this.CgContext, ParameterSettingMode.Deferred);
 
             this.myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(this.myCgVertexProfile);
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
-                    this.myCgContext, /* Cg runtime context */
+                    this.CgContext, /* Cg runtime context */
                     ProgramType.Source, /* Program in human-readable form */
                     MyVertexProgramFileName, /* Name of file containing program */
                     this.myCgVertexProfile,  /* Profile: OpenGL ARB vertex program */
@@ -80,9 +79,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     null);                    /* No extra compiler options */
             CgGL.LoadProgram(this.myCgVertexProgram);
 
-            myCgVertexParam_leftSeparation =
+            this.myCgVertexParamLeftSeparation =
              Cg.GetNamedParameter(myCgVertexProgram, "leftSeparation");
-            myCgVertexParam_rightSeparation =
+            this.myCgVertexParamRightSeparation =
               Cg.GetNamedParameter(myCgVertexProgram, "rightSeparation");
 
             this.myCgFragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
@@ -90,7 +89,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             this.myCgFragmentProgram =
                 Cg.CreateProgramFromFile(
-                    this.myCgContext, /* Cg runtime context */
+                    this.CgContext, /* Cg runtime context */
                     ProgramType.Source,  /* Program in human-readable form */
                     MyFragmentProgramFileName,  /* Name of file containing program */
                     this.myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
@@ -116,14 +115,14 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             if (mySeparation > 0)
             {
                 /* Separate in the horizontal direction. */
-                Cg.SetParameter(myCgVertexParam_leftSeparation, -mySeparation, 0);
-                Cg.SetParameter(myCgVertexParam_rightSeparation, mySeparation, 0);
+                Cg.SetParameter(this.myCgVertexParamLeftSeparation, -mySeparation, 0);
+                Cg.SetParameter(this.myCgVertexParamRightSeparation, mySeparation, 0);
             }
             else
             {
                 /* Separate in the vertical direction. */
-                Cg.SetParameter(myCgVertexParam_leftSeparation, 0, -mySeparation);
-                Cg.SetParameter(myCgVertexParam_rightSeparation, 0, mySeparation);
+                Cg.SetParameter(this.myCgVertexParamLeftSeparation, 0, -mySeparation);
+                Cg.SetParameter(this.myCgVertexParamRightSeparation, 0, mySeparation);
             }
 
             CgGL.BindProgram(this.myCgVertexProgram);
@@ -175,7 +174,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             base.OnUnload(e);
             Cg.DestroyProgram(this.myCgVertexProgram);
             Cg.DestroyProgram(this.myCgFragmentProgram);
-            Cg.DestroyContext(this.myCgContext);
+            Cg.DestroyContext(this.CgContext);
         }
 
         /// <summary>

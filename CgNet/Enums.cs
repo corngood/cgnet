@@ -903,7 +903,7 @@ namespace CgNet
         Deferred = 4133
     }
 
-    public enum ProgramInputOutput
+    public enum ProgramInput
     {
         Fragment = 4122, /* GetProgramInput and GetProgramOutput */
         Vertex = 4123, /* GetProgramInput and GetProgramOutput */
@@ -922,6 +922,21 @@ namespace CgNet
     {
         Global = 4108,
         Program = 4109,
+    }
+
+    public enum ProgramOutput
+    {
+        Fragment = 4122, /* GetProgramInput and GetProgramOutput */
+        Vertex = 4123, /* GetProgramInput and GetProgramOutput */
+        Point = 4124, /* Geometry program GetProgramInput       */
+        Line = 4125, /* Geometry program GetProgramInput       */
+        LineAdj = 4126, /* Geometry program GetProgramInput       */
+        Triangle = 4127, /* Geometry program GetProgramInput       */
+        TriangleAdj = 4128, /* Geometry program GetProgramInput       */
+        PointOut = 4129, /* Geometry program GetProgramOutput      */
+        LineOut = 4130, /* Geometry program GetProgramOutput      */
+        TriangleOut = 4131, /* Geometry program GetProgramOutput      */
+        Patch = 4152, /* GetProgramInput and GetProgramOutput */
     }
 
     public enum ProgramType

@@ -21,7 +21,6 @@
         private const string MyVertexProgramFileName = "Data/C3E1v_anycolor.cg";
         private const string MyVertexProgramName = "C3E1v_anycolor";
 
-        private IntPtr myCgContext;
         private CgProfile myCgFragmentProfile;
         private IntPtr myCgFragmentProgram;
         private IntPtr myCgVertexParamConstantColor;
@@ -51,16 +50,16 @@
         {
             GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
 
-            myCgContext = Cg.CreateContext();
+            this.CgContext = Cg.CreateContext();
             CgGL.SetDebugMode(false);
-            Cg.SetParameterSettingMode(myCgContext, ParameterSettingMode.Deferred);
+            Cg.SetParameterSettingMode(this.CgContext, ParameterSettingMode.Deferred);
 
             myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(myCgVertexProfile);
 
             myCgVertexProgram =
               Cg.CreateProgramFromFile(
-                myCgContext,              /* Cg runtime context */
+                this.CgContext,              /* Cg runtime context */
                 ProgramType.Source,                /* Program in human-readable form */
                 MyVertexProgramFileName,  /* Name of file containing program */
                 myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
@@ -75,7 +74,7 @@
 
             myCgFragmentProgram =
               Cg.CreateProgramFromFile(
-                myCgContext,                /* Cg runtime context */
+                this.CgContext,                /* Cg runtime context */
                 ProgramType.Source,                  /* Program in human-readable form */
                 MyFragmentProgramFileName,  /* Name of file containing program */
                 myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
@@ -128,7 +127,7 @@
             base.OnUnload(e);
             Cg.DestroyProgram(myCgVertexProgram);
             Cg.DestroyProgram(myCgFragmentProgram);
-            Cg.DestroyContext(myCgContext);
+            Cg.DestroyContext(this.CgContext);
         }
 
         /// <summary>

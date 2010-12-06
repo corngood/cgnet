@@ -1,5 +1,6 @@
 ﻿namespace ExampleBrowser.Examples.OpenTK
 {
+    using System;
     using System.Windows.Forms;
 
     using CgNet;
@@ -17,6 +18,20 @@
         }
 
         #endregion Constructors
+
+        #region Properties
+
+        #region Protected Properties
+
+        protected IntPtr CgContext
+        {
+            get;
+            set;
+        }
+
+        #endregion Protected Properties
+
+        #endregion Properties
 
         #region Methods
 
@@ -41,6 +56,8 @@
             {
                 MessageBox.Show(s);
                 this.Close();
+
+                var x = Cg.GetLastListing(this.CgContext);
             }
             //  printf("%s: %s: %s\n",
             //    myProgramName, situation, string);

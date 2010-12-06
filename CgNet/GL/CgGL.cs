@@ -691,7 +691,7 @@ namespace CgNet.GL
             CgGLNativeMethods.cgGLSetParameterPointer(param, fsize, type, stride, pointer);
         }
 
-        public static void SetStateMatrixParameter(IntPtr param, CgGLEnum matrix, CgGLEnum transform)
+        public static void SetStateMatrixParameter(IntPtr param, MatrixType matrix, MatrixTransform transform)
         {
             CgGLNativeMethods.cgGLSetStateMatrixParameter(param, matrix, transform);
         }

@@ -25,7 +25,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         static float myEyeAngle; /* Angle eye rotates around scene. */
 
-        private IntPtr myCgContext;
         private IntPtr myCgVertexParamModelViewProj, myCgFragmentParamC;
         private CgProfile myCgVertexProfile, myCgFragmentProfile;
         private IntPtr myCgVertexProgram, myCgFragmentProgram;
@@ -53,16 +52,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         {
             GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
 
-            this.myCgContext = Cg.CreateContext();
+            this.CgContext = Cg.CreateContext();
             CgGL.SetDebugMode(false);
-            Cg.SetParameterSettingMode(this.myCgContext, ParameterSettingMode.Deferred);
+            Cg.SetParameterSettingMode(this.CgContext, ParameterSettingMode.Deferred);
 
             this.myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(this.myCgVertexProfile);
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
-                    this.myCgContext,              /* Cg runtime context */
+                    this.CgContext,              /* Cg runtime context */
                     ProgramType.Source,                /* Program in human-readable form */
                     MyVertexProgramFileName,  /* Name of file containing program */
                     this.myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
@@ -79,7 +78,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             /* Specify fragment program with a string. */
             myCgFragmentProgram =
               Cg.CreateProgram(
-                myCgContext,              /* Cg runtime context */
+                this.CgContext,              /* Cg runtime context */
                 ProgramType.Source,                /* Program in human-readable form */
                 "float4 main(uniform float4 c) : COLOR { return c; }",
                 myCgFragmentProfile,      /* Profile: latest fragment profile */
@@ -182,7 +181,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         {
             base.OnUnload(e);
             Cg.DestroyProgram(this.myCgVertexProgram);
-            Cg.DestroyContext(this.myCgContext);
+            Cg.DestroyContext(this.CgContext);
         }
 
         /// <summary>

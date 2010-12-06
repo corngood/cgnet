@@ -612,9 +612,9 @@ namespace CgNet
             return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetLastErrorString(out error));
         }
 
-        public static IntPtr GetLastListing(IntPtr context)
+        public static string GetLastListing(IntPtr context)
         {
-            return CgNativeMethods.cgGetLastListing(context);
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetLastListing(context));
         }
 
         public static LockingPolicy GetLockingPolicy()
@@ -1214,7 +1214,7 @@ namespace CgNet
             return CgNativeMethods.cgGetProgramDomainProgram(program, index);
         }
 
-        public static ProgramInputOutput GetProgramInput(IntPtr program)
+        public static ProgramInput GetProgramInput(IntPtr program)
         {
             return CgNativeMethods.cgGetProgramInput(program);
         }
@@ -1224,7 +1224,7 @@ namespace CgNet
             return CgNativeMethods.cgGetProgramOptions(prog);
         }
 
-        public static ProgramInputOutput GetProgramOutput(IntPtr program)
+        public static ProgramOutput GetProgramOutput(IntPtr program)
         {
             return CgNativeMethods.cgGetProgramOutput(program);
         }

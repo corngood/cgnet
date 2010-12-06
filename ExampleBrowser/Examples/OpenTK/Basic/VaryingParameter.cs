@@ -21,7 +21,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         private const string MyVertexProgramFileName = "Data/C3E2v_varying.cg";
         private const string MyVertexProgramName = "C3E2v_varying";
 
-        private IntPtr myCgContext;
         private CgProfile myCgFragmentProfile;
         private IntPtr myCgFragmentProgram;
         private CgProfile myCgVertexProfile;
@@ -50,16 +49,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         {
             GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
 
-            this.myCgContext = Cg.CreateContext();
+            this.CgContext = Cg.CreateContext();
             CgGL.SetDebugMode(false);
-            Cg.SetParameterSettingMode(this.myCgContext, ParameterSettingMode.Deferred);
+            Cg.SetParameterSettingMode(this.CgContext, ParameterSettingMode.Deferred);
 
             this.myCgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(this.myCgVertexProfile);
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
-                    this.myCgContext,              /* Cg runtime context */
+                    this.CgContext,              /* Cg runtime context */
                     ProgramType.Source,                /* Program in human-readable form */
                     MyVertexProgramFileName,  /* Name of file containing program */
                     this.myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
@@ -72,7 +71,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             this.myCgFragmentProgram =
                 Cg.CreateProgramFromFile(
-                    this.myCgContext,                /* Cg runtime context */
+                    this.CgContext,                /* Cg runtime context */
                     ProgramType.Source,                  /* Program in human-readable form */
                     MyFragmentProgramFileName,  /* Name of file containing program */
                     this.myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
@@ -134,7 +133,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             base.OnUnload(e);
             Cg.DestroyProgram(this.myCgVertexProgram);
             Cg.DestroyProgram(this.myCgFragmentProgram);
-            Cg.DestroyContext(this.myCgContext);
+            Cg.DestroyContext(this.CgContext);
         }
 
         /// <summary>
