@@ -1,9 +1,11 @@
-namespace ExampleBrowser.Examples.OpenTK.Basic
+namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
 {
     using System;
 
-    using CgNet;
-    using CgNet.GL;
+    using global::CgNet;
+    using global::CgNet.GL;
+
+    using ExampleBrowser.Examples.CgNet.OpenTK;
 
     using global::Examples.Helper;
 
@@ -11,7 +13,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/07 Two Texture Accesses")]
+    [Example(NodePath = "CgNet/OpenTK/Basic/07 Two Texture Accesses")]
     public class TwoTextureAccesses : Example
     {
         #region Fields
@@ -27,8 +29,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         private IntPtr myCgVertexParamLeftSeparation, myCgVertexParamRightSeparation;
         private ProfileType myCgVertexProfile;
         private IntPtr myCgVertexProgram;
+
         private float mySeparation = 0.1f,
-             mySeparationVelocity = 0.005f;
+                      mySeparationVelocity = 0.005f;
 
         #endregion Fields
 
@@ -51,14 +54,14 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// <param name="e">Not used.</param>
         protected override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
+            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
 
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1); /* Tightly packed texture data. */
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, 666);
 
-            GL.TexImage2D<byte>(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb8, 128, 128, 0,
-                                PixelFormat.Rgb, PixelType.UnsignedByte, DemonPic.Array);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb8, 128, 128, 0,
+                          PixelFormat.Rgb, PixelType.UnsignedByte, DemonPic.Array);
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
@@ -74,15 +77,15 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     this.MyCgContext, /* Cg runtime context */
                     ProgramType.Source, /* Program in human-readable form */
                     MyVertexProgramFileName, /* Name of file containing program */
-                    this.myCgVertexProfile,  /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName,      /* Entry function name */
-                    null);                    /* No extra compiler options */
+                    this.myCgVertexProfile, /* Profile: OpenGL ARB vertex program */
+                    MyVertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(this.myCgVertexProgram);
 
             this.myCgVertexParamLeftSeparation =
-             Cg.GetNamedParameter(myCgVertexProgram, "leftSeparation");
+                Cg.GetNamedParameter(myCgVertexProgram, "leftSeparation");
             this.myCgVertexParamRightSeparation =
-              Cg.GetNamedParameter(myCgVertexProgram, "rightSeparation");
+                Cg.GetNamedParameter(myCgVertexProgram, "rightSeparation");
 
             this.myCgFragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
             CgGL.SetOptimalOptions(this.myCgFragmentProfile);
@@ -90,11 +93,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.myCgFragmentProgram =
                 Cg.CreateProgramFromFile(
                     this.MyCgContext, /* Cg runtime context */
-                    ProgramType.Source,  /* Program in human-readable form */
-                    MyFragmentProgramFileName,  /* Name of file containing program */
-                    this.myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
-                    MyFragmentProgramName,      /* Entry function name */
-                    null);                      /* No extra compiler options */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyFragmentProgramFileName, /* Name of file containing program */
+                    this.myCgFragmentProfile, /* Profile: OpenGL ARB vertex program */
+                    MyFragmentProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(this.myCgFragmentProgram);
 
             this.myCgFragmentParamDecal =
@@ -195,7 +198,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             mySeparation += mySeparationVelocity;
 
             if (this.Keyboard[Key.Escape])
+            {
                 this.Exit();
+            }
         }
 
         #endregion Protected Methods

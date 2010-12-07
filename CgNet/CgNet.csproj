@@ -40,28 +40,29 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CgOO\CgAnnotation.cs" />
     <Compile Include="CgOO\CgBuffer.cs" />
     <Compile Include="CgOO\CgContext.cs" />
     <Compile Include="CgOO\CgEffect.cs" />
-    <Compile Include="CgOO\CgOO.cs" />
+    <Compile Include="CgOO\CgObj.cs" />
     <Compile Include="CgOO\CgParameter.cs" />
     <Compile Include="CgOO\CgPass.cs" />
     <Compile Include="CgOO\CgProgram.cs" />
     <Compile Include="CgOO\CgState.cs" />
+    <Compile Include="CgOO\CgStateAssignment.cs" />
     <Compile Include="CgOO\CgTechnique.cs" />
+    <Compile Include="CgOO\GL\CgOOGL.cs" />
     <Compile Include="CgOO\WrapperObject.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="GL\Enums.cs" />
+    <Compile Include="CgNet\CgEnums.cs" />
+    <Compile Include="CgNet\GL\CgGLEnums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Cg.cs" />
-    <Compile Include="GL\CgGL.cs" />
-    <Compile Include="CgNativeMethods.cs" />
-    <Compile Include="GL\CgGLNativeMethods.cs" />
+    <Compile Include="CgNet\Cg.cs" />
+    <Compile Include="CgNet\GL\CgGL.cs" />
+    <Compile Include="CgNet\CgNativeMethods.cs" />
+    <Compile Include="CgNet\GL\CgGLNativeMethods.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CgNet.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Properties\App.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

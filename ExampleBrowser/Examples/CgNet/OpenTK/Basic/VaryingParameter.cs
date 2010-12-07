@@ -1,9 +1,11 @@
-namespace ExampleBrowser.Examples.OpenTK.Basic
+namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
 {
     using System;
 
-    using CgNet;
-    using CgNet.GL;
+    using global::CgNet;
+    using global::CgNet.GL;
+
+    using ExampleBrowser.Examples.CgNet.OpenTK;
 
     using global::Examples.Helper;
 
@@ -11,7 +13,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/04 Varying Parameter")]
+    [Example(NodePath = "CgNet/OpenTK/Basic/04 Varying Parameter")]
     public class VaryingParameter : Example
     {
         #region Fields
@@ -47,7 +49,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// <param name="e">Not used.</param>
         protected override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
+            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
 
             this.MyCgContext = Cg.CreateContext();
             CgGL.SetDebugMode(false);
@@ -58,12 +60,12 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
-                    this.MyCgContext,              /* Cg runtime context */
-                    ProgramType.Source,                /* Program in human-readable form */
-                    MyVertexProgramFileName,  /* Name of file containing program */
-                    this.myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName,      /* Entry function name */
-                    null);                    /* No extra compiler options */
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyVertexProgramFileName, /* Name of file containing program */
+                    this.myCgVertexProfile, /* Profile: OpenGL ARB vertex program */
+                    MyVertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(this.myCgVertexProgram);
 
             this.myCgFragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
@@ -71,12 +73,12 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             this.myCgFragmentProgram =
                 Cg.CreateProgramFromFile(
-                    this.MyCgContext,                /* Cg runtime context */
-                    ProgramType.Source,                  /* Program in human-readable form */
-                    MyFragmentProgramFileName,  /* Name of file containing program */
-                    this.myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
-                    MyFragmentProgramName,      /* Entry function name */
-                    null);                      /* No extra compiler options */
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyFragmentProgramFileName, /* Name of file containing program */
+                    this.myCgFragmentProfile, /* Profile: OpenGL ARB vertex program */
+                    MyFragmentProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(this.myCgFragmentProgram);
         }
 
@@ -98,13 +100,13 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.EnableProfile(this.myCgFragmentProfile);
 
             GL.Begin(BeginMode.Triangles);
-            GL.Color3(1f, 0f, 0f);  /* Red */
+            GL.Color3(1f, 0f, 0f); /* Red */
             GL.Vertex2(-0.8f, 0.8f);
 
-            GL.Color3(0f, 1f, 0f);  /* Green */
+            GL.Color3(0f, 1f, 0f); /* Green */
             GL.Vertex2(0.8f, 0.8f);
 
-            GL.Color3(0f, 0f, 1f);  /* Blue */
+            GL.Color3(0f, 0f, 1f); /* Blue */
             GL.Vertex2(0.0f, -0.8f);
             GL.End();
 
@@ -144,7 +146,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             if (this.Keyboard[Key.Escape])
+            {
                 this.Exit();
+            }
         }
 
         #endregion Protected Methods

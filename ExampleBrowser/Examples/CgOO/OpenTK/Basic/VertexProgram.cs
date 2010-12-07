@@ -1,10 +1,12 @@
-namespace ExampleBrowser.Examples.CgNetOO
+namespace ExampleBrowser.Examples.CgOO.OpenTK.Basic
 {
     using System;
 
-    using CgNet;
-    using CgNet.CgOO;
-    using CgNet.GL;
+    using global::CgNet;
+    using global::CgNet.GL;
+
+    using global::CgOO;
+    using global::CgOO.GL;
 
     using global::Examples.Helper;
 
@@ -12,10 +14,8 @@ namespace ExampleBrowser.Examples.CgNetOO
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    using OpenTK;
-
-    [Example(NodePath = "CgNetOO/OpenTK/Basic/01 Vertex Program")]
-    public class VertexProgramOO : Example
+    [Example(NodePath = "CgOO/OpenTK/Basic/01 Vertex Program")]
+    public class VertexProgram : Example
     {
         #region Fields
 
@@ -30,7 +30,7 @@ namespace ExampleBrowser.Examples.CgNetOO
 
         #region Constructors
 
-        public VertexProgramOO()
+        public VertexProgram()
             : base("01_vertex_program")
         {
         }
@@ -77,7 +77,7 @@ namespace ExampleBrowser.Examples.CgNetOO
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            CgGL.BindProgram(this.cgVertexProgram.Handle);
+            this.cgVertexProgram.BindProgram();
 
             CgGL.EnableProfile(this.cgVertexProfile);
 
@@ -88,7 +88,7 @@ namespace ExampleBrowser.Examples.CgNetOO
             GL.Vertex2(0.8f, 0.8f);
             GL.Vertex2(0.0f, -0.8f);
             GL.End();
-
+            
             CgGL.DisableProfile(this.cgVertexProfile);
             this.SwapBuffers();
         }

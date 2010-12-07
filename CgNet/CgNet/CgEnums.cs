@@ -32,10 +32,10 @@ namespace CgNet
     public enum Behavior
     {
         Unknown = 0,
-        Latest = 1,                /* latest behavior supported at runtime      */
-        Behavior2200 = 1000,             /* default behavior                          */
+        Latest = 1, /* latest behavior supported at runtime      */
+        Behavior2200 = 1000, /* default behavior                          */
         Behavior3000 = 2000,
-        Current = Behavior3000  /* latest behavior supported at compile time */
+        Current = Behavior3000 /* latest behavior supported at compile time */
     }
 
     public enum BufferAccess

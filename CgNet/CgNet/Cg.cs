@@ -582,24 +582,28 @@ namespace CgNet
             return CgNativeMethods.cgGetFirstTechniqueAnnotation(technique);
         }
 
-        public static float[] GetFloatAnnotationValues(IntPtr annotation, out int nvalues)
+        public static float[] GetFloatAnnotationValues(IntPtr annotation)
         {
+            int nvalues;
             return CgNativeMethods.cgGetFloatAnnotationValues(annotation, out nvalues);
         }
 
-        public static float[] GetFloatStateAssignmentValues(IntPtr stateassignment, int[] nVals)
+        public static float[] GetFloatStateAssignmentValues(IntPtr stateassignment)
         {
-            return CgNativeMethods.cgGetFloatStateAssignmentValues(stateassignment, nVals);
+            int nVals;
+            return CgNativeMethods.cgGetFloatStateAssignmentValues(stateassignment, out nVals);
         }
 
-        public static int[] GetIntAnnotationValues(IntPtr annotation, out int nvalues)
+        public static int[] GetIntAnnotationValues(IntPtr annotation)
         {
+            int nvalues;
             return CgNativeMethods.cgGetIntAnnotationValues(annotation, out nvalues);
         }
 
-        public static int[] GetIntStateAssignmentValues(IntPtr stateassignment, int[] nVals)
+        public static int[] GetIntStateAssignmentValues(IntPtr stateassignment)
         {
-            return CgNativeMethods.cgGetIntStateAssignmentValues(stateassignment, nVals);
+            int nVals;
+            return CgNativeMethods.cgGetIntStateAssignmentValues(stateassignment, out nVals);
         }
 
         public static string GetLastErrorString(out ErrorType error)
@@ -1387,7 +1391,7 @@ namespace CgNet
                 for (int i = 0; i < nvalues; i++)
                 {
                     byte* b = *byteArray;
-                    for (; ; )
+                    for (;;)
                     {
                         if (*b == '\0')
                         {
@@ -1578,6 +1582,11 @@ namespace CgNet
             return CgNativeMethods.cgSetStringAnnotation(ann, value);
         }
 
+        public static bool SetAnnotation(IntPtr annotation, bool value)
+        {
+            return CgNativeMethods.cgSetBoolAnnotation(annotation, value);
+        }
+
         public static void SetArraySize(IntPtr param, int size)
         {
             CgNativeMethods.cgSetArraySize(param, size);
@@ -1586,11 +1595,6 @@ namespace CgNet
         public static void SetAutoCompile(IntPtr context, AutoCompileMode flag)
         {
             CgNativeMethods.cgSetAutoCompile(context, flag);
-        }
-
-        public static bool SetBoolAnnotation(IntPtr annotation, bool value)
-        {
-            return CgNativeMethods.cgSetBoolAnnotation(annotation, value);
         }
 
         public static void SetBufferData(IntPtr buffer, int size, IntPtr data)

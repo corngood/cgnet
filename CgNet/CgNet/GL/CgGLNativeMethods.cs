@@ -141,7 +141,8 @@ namespace CgNet.GL
         /// </summary>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGLGetManageTextureParameters(IntPtr context);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool cgGLGetManageTextureParameters(IntPtr context);
 
         /// <summary>
         /// Gets an array matrix parameters (double) in column order.
@@ -466,7 +467,7 @@ namespace CgNet.GL
         //CGGL_API void CGGLENTRY cgGLSetDebugMode( CGbool debug );
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLSetDebugMode([MarshalAs(UnmanagedType.Bool)]bool debug);
+        internal static extern void cgGLSetDebugMode([MarshalAs(UnmanagedType.Bool)] bool debug);
 
         /// <summary>
         /// Enables or disables the automatic texture management for the given rendering context.
@@ -931,11 +932,11 @@ namespace CgNet.GL
         /// <param name="values">Array of values.</param>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLSetParameterArray4d(IntPtr param, int offset, int nelements, [In]Matrix4d[] values);
+        internal static extern void cgGLSetParameterArray4d(IntPtr param, int offset, int nelements, [In] Matrix4d[] values);
 
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLSetParameterArray4d(IntPtr param, int offset, int nelements, [In]double[] values);
+        internal static extern void cgGLSetParameterArray4d(IntPtr param, int offset, int nelements, [In] double[] values);
 
         /// <summary>
         /// Sets the float values to the specific parameter.

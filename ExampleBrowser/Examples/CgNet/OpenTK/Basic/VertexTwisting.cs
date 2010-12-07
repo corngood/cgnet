@@ -1,9 +1,11 @@
-namespace ExampleBrowser.Examples.OpenTK.Basic
+namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
 {
     using System;
 
-    using CgNet;
-    using CgNet.GL;
+    using global::CgNet;
+    using global::CgNet.GL;
+
+    using ExampleBrowser.Examples.CgNet.OpenTK;
 
     using global::Examples.Helper;
 
@@ -11,7 +13,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/06 Vertex Twisting")]
+    [Example(NodePath = "CgNet/OpenTK/Basic/06 Vertex Twisting")]
     public class VertexTwisting : Example
     {
         #region Fields
@@ -27,8 +29,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         private IntPtr myCgFragmentProgram;
         private ProfileType myCgVertexProfile;
         private IntPtr myCgVertexProgram;
+
         private float myTwisting = 2.9f, /* Twisting angle in radians. */
-             myTwistDirection = 0.1f; /* Animation delta for twist. */
+                      myTwistDirection = 0.1f; /* Animation delta for twist. */
+
         private bool wireframe;
 
         #endregion Fields
@@ -69,7 +73,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// <param name="e">Not used.</param>
         protected override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
+            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
 
             this.MyCgContext = Cg.CreateContext();
             CgGL.SetDebugMode(false);
@@ -80,12 +84,12 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
-                    this.MyCgContext,              /* Cg runtime context */
-                    ProgramType.Source,                /* Program in human-readable form */
-                    MyVertexProgramFileName,  /* Name of file containing program */
-                    this.myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName,      /* Entry function name */
-                    null);                    /* No extra compiler options */
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyVertexProgramFileName, /* Name of file containing program */
+                    this.myCgVertexProfile, /* Profile: OpenGL ARB vertex program */
+                    MyVertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(this.myCgVertexProgram);
 
             myCgVertexParam_twisting = Cg.GetNamedParameter(myCgVertexProgram, "twisting");
@@ -95,12 +99,12 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             this.myCgFragmentProgram =
                 Cg.CreateProgramFromFile(
-                    this.MyCgContext,                /* Cg runtime context */
-                    ProgramType.Source,                  /* Program in human-readable form */
-                    MyFragmentProgramFileName,  /* Name of file containing program */
-                    this.myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
-                    MyFragmentProgramName,      /* Entry function name */
-                    null);                      /* No extra compiler options */
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyFragmentProgramFileName, /* Name of file containing program */
+                    this.myCgFragmentProfile, /* Profile: OpenGL ARB vertex program */
+                    MyFragmentProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(this.myCgFragmentProgram);
         }
 
@@ -161,7 +165,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         {
             Twist();
             if (this.Keyboard[Key.Escape])
+            {
                 this.Exit();
+            }
         }
 
         #endregion Protected Methods
@@ -182,11 +188,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             else
             {
                 float[] d = { (a[0] + b[0]) / 2, (a[1] + b[1]) / 2 },
-                            e = { (b[0] + c[0]) / 2, (b[1] + c[1]) / 2 },
-                            f = { (c[0] + a[0]) / 2, (c[1] + a[1]) / 2 };
+                        e = { (b[0] + c[0]) / 2, (b[1] + c[1]) / 2 },
+                        f = { (c[0] + a[0]) / 2, (c[1] + a[1]) / 2 };
                 float[] cd = { (ca[0] + cb[0]) / 2, (ca[1] + cb[1]) / 2, (ca[2] + cb[2]) / 2 },
-                            ce = { (cb[0] + cc[0]) / 2, (cb[1] + cc[1]) / 2, (cb[2] + cc[2]) / 2 },
-                            cf = { (cc[0] + ca[0]) / 2, (cc[1] + ca[1]) / 2, (cc[2] + ca[2]) / 2 };
+                        ce = { (cb[0] + cc[0]) / 2, (cb[1] + cc[1]) / 2, (cb[2] + cc[2]) / 2 },
+                        cf = { (cc[0] + ca[0]) / 2, (cc[1] + ca[1]) / 2, (cc[2] + ca[2]) / 2 };
 
                 depth -= 1;
                 TriangleDivide(depth, a, d, f, ca, cd, cf);
@@ -203,14 +209,15 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /* Large vertex displacements such as are possible with C3E4v_twist
            require a high degree of tessellation.  This routine draws a
            triangle recursively subdivided to provide sufficient tessellation. */
+
         private void DrawSubDividedTriangle(int subdivisions)
         {
             float[] a = { -0.8f, 0.8f },
-                       b = { 0.8f, 0.8f },
-                       c = { 0.0f, -0.8f },
-                       ca = { 0, 0, 1 },
-                       cb = { 0, 0, 1 },
-                       cc = { 0.7f, 0.7f, 1 };
+                    b = { 0.8f, 0.8f },
+                    c = { 0.0f, -0.8f },
+                    ca = { 0, 0, 1 },
+                    cb = { 0, 0, 1 },
+                    cc = { 0.7f, 0.7f, 1 };
 
             GL.Begin(BeginMode.Triangles);
             TriangleDivide(subdivisions, a, b, c, ca, cb, cc);

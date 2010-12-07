@@ -18,9 +18,11 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
  */
-namespace CgNet.CgOO
+namespace CgOO
 {
     using System;
+
+    using CgNet;
 
     public sealed class CgTechnique : WrapperObject
     {
@@ -44,9 +46,21 @@ namespace CgNet.CgOO
                 var ptr = Cg.GetTechniqueEffect(this.Handle);
 
                 return ptr == IntPtr.Zero ? null : new CgEffect(ptr)
-                {
-                    OwnsHandle = false
-                };
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
+
+        public CgAnnotation FirstAnnotation
+        {
+            get
+            {
+                var ptr = Cg.GetFirstTechniqueAnnotation(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -57,9 +71,9 @@ namespace CgNet.CgOO
                 var ptr = Cg.GetFirstPass(this.Handle);
 
                 return ptr == IntPtr.Zero ? null : new CgPass(ptr)
-                {
-                    OwnsHandle = false
-                };
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -122,14 +136,28 @@ namespace CgNet.CgOO
             return new CgPass(Cg.CreatePass(this.Handle, name));
         }
 
+        public CgAnnotation CreateTechniqueAnnotation(string name, ParameterType type)
+        {
+            return new CgAnnotation(Cg.CreateTechniqueAnnotation(this.Handle, name, type));
+        }
+
+        public CgAnnotation GetNamedAnnotation(string name)
+        {
+            var ptr = Cg.GetNamedTechniqueAnnotation(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
         public CgPass GetNamedPass(string name)
         {
             var ptr = Cg.GetNamedPass(this.Handle, name);
 
             return ptr == IntPtr.Zero ? null : new CgPass(ptr)
-            {
-                OwnsHandle = false
-            };
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public bool Validate()

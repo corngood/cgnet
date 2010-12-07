@@ -1,10 +1,12 @@
-namespace ExampleBrowser.Examples.OpenTK.Basic
+namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
 {
     using System;
     using System.Runtime.InteropServices;
 
-    using CgNet;
-    using CgNet.GL;
+    using global::CgNet;
+    using global::CgNet.GL;
+
+    using ExampleBrowser.Examples.CgNet.OpenTK;
 
     using global::Examples.Helper;
 
@@ -12,18 +14,18 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/08 Vertex Transform")]
+    [Example(NodePath = "CgNet/OpenTK/Basic/08 Vertex Transform")]
     public class VertexTransform : Example
     {
         #region Fields
 
-        const double MyPi = 3.14159265358979323846;
+        private const double MyPi = 3.14159265358979323846;
         private const string MyVertexProgramFileName = "Data/C4E1v_transform.cg";
         private const string MyVertexProgramName = "C4E1v_transform";
 
-        static readonly float[] MyProjectionMatrix = new float[16];
+        private static readonly float[] MyProjectionMatrix = new float[16];
 
-        static float myEyeAngle; /* Angle eye rotates around scene. */
+        private static float myEyeAngle; /* Angle eye rotates around scene. */
 
         private IntPtr myCgVertexParamModelViewProj, myCgFragmentParamC;
         private ProfileType myCgVertexProfile, myCgFragmentProfile;
@@ -50,7 +52,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// <param name="e">Not used.</param>
         protected override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
+            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
 
             this.MyCgContext = Cg.CreateContext();
             CgGL.SetDebugMode(false);
@@ -61,33 +63,33 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
-                    this.MyCgContext,              /* Cg runtime context */
-                    ProgramType.Source,                /* Program in human-readable form */
-                    MyVertexProgramFileName,  /* Name of file containing program */
-                    this.myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName,      /* Entry function name */
-                    null);                    /* No extra compiler options */
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyVertexProgramFileName, /* Name of file containing program */
+                    this.myCgVertexProfile, /* Profile: OpenGL ARB vertex program */
+                    MyVertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(this.myCgVertexProgram);
 
             this.myCgVertexParamModelViewProj =
-              Cg.GetNamedParameter(myCgVertexProgram, "modelViewProj");
+                Cg.GetNamedParameter(myCgVertexProgram, "modelViewProj");
 
             myCgFragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
             CgGL.SetOptimalOptions(myCgFragmentProfile);
 
             /* Specify fragment program with a string. */
             myCgFragmentProgram =
-              Cg.CreateProgram(
-                this.MyCgContext,              /* Cg runtime context */
-                ProgramType.Source,                /* Program in human-readable form */
-                "float4 main(uniform float4 c) : COLOR { return c; }",
-                myCgFragmentProfile,      /* Profile: latest fragment profile */
-                "main",                   /* Entry function name */
-                null); /* No extra compiler options */
+                Cg.CreateProgram(
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    "float4 main(uniform float4 c) : COLOR { return c; }",
+                    myCgFragmentProfile, /* Profile: latest fragment profile */
+                    "main", /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(myCgFragmentProgram);
 
             this.myCgFragmentParamC =
-              Cg.GetNamedParameter(myCgFragmentProgram, "c");
+                Cg.GetNamedParameter(myCgFragmentProgram, "c");
         }
 
         /// <summary>
@@ -98,10 +100,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             float[] viewMatrix = new float[16];
-            BuildLookAtMatrix(13 * Math.Sin(myEyeAngle), 0, 13 * Math.Cos(myEyeAngle),  /* eye position */
-                  0, 0, 0, /* view center */
-                  0, 1, 0, /* up vector */
-                  viewMatrix);
+            BuildLookAtMatrix(13 * Math.Sin(myEyeAngle), 0, 13 * Math.Cos(myEyeAngle), /* eye position */
+                              0, 0, 0, /* view center */
+                              0, 1, 0, /* up vector */
+                              viewMatrix);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -132,7 +134,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             /* Set matrix parameter with row-major matrix. */
             Cg.SetMatrixParameter(this.myCgVertexParamModelViewProj, modelViewProjMatrix);
-            Cg.SetParameter(this.myCgFragmentParamC, 0.1f, 0.7f, 0.1f, 1f);  /* Green */
+            Cg.SetParameter(this.myCgFragmentParamC, 0.1f, 0.7f, 0.1f, 1f); /* Green */
             Cg.UpdateProgramParameters(myCgVertexProgram);
             Cg.UpdateProgramParameters(myCgFragmentProgram);
             glutWireSphere(2.0, 30, 30);
@@ -150,7 +152,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             /* Set matrix parameter with row-major matrix. */
             Cg.SetMatrixParameter(this.myCgVertexParamModelViewProj, modelViewProjMatrix);
-            Cg.SetParameter(this.myCgFragmentParamC, 0.8f, 0.1f, 0.1f, 1);  /* Red */
+            Cg.SetParameter(this.myCgFragmentParamC, 0.8f, 0.1f, 0.1f, 1); /* Red */
             Cg.UpdateProgramParameters(myCgVertexProgram);
             Cg.UpdateProgramParameters(myCgFragmentProgram);
             glutWireCone(1.5, 3.5, 20, 20);
@@ -191,14 +193,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            myEyeAngle += 0.008f;  /* Add a small angle (in radians). */
+            myEyeAngle += 0.008f; /* Add a small angle (in radians). */
             if (myEyeAngle > 2 * MyPi)
             {
                 myEyeAngle -= (float)(2 * MyPi);
             }
 
             if (this.Keyboard[Key.Escape])
+            {
                 this.Exit();
+            }
         }
 
         #endregion Protected Methods
@@ -207,10 +211,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         /* Build a row-major (C-style) 4x4 matrix transform based on the
            parameters for gluLookAt. */
-        static void BuildLookAtMatrix(double eyex, double eyey, double eyez,
-            double centerx, double centery, double centerz,
-            double upx, double upy, double upz,
-            float[] m)
+
+        private static void BuildLookAtMatrix(double eyex, double eyey, double eyez,
+                                              double centerx, double centery, double centerz,
+                                              double upx, double upy, double upz,
+                                              float[] m)
         {
             double[] x = new double[3], y = new double[3], z = new double[3];
 
@@ -261,22 +266,31 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             }
 
             /* Build resulting view matrix. */
-            m[0 * 4 + 0] = (float)x[0]; m[0 * 4 + 1] = (float)x[1];
-            m[0 * 4 + 2] = (float)x[2]; m[0 * 4 + 3] = (float)(-x[0] * eyex + -x[1] * eyey + -x[2] * eyez);
+            m[0 * 4 + 0] = (float)x[0];
+            m[0 * 4 + 1] = (float)x[1];
+            m[0 * 4 + 2] = (float)x[2];
+            m[0 * 4 + 3] = (float)(-x[0] * eyex + -x[1] * eyey + -x[2] * eyez);
 
-            m[1 * 4 + 0] = (float)y[0]; m[1 * 4 + 1] = (float)y[1];
-            m[1 * 4 + 2] = (float)y[2]; m[1 * 4 + 3] = (float)(-y[0] * eyex + -y[1] * eyey + -y[2] * eyez);
+            m[1 * 4 + 0] = (float)y[0];
+            m[1 * 4 + 1] = (float)y[1];
+            m[1 * 4 + 2] = (float)y[2];
+            m[1 * 4 + 3] = (float)(-y[0] * eyex + -y[1] * eyey + -y[2] * eyez);
 
-            m[2 * 4 + 0] = (float)z[0]; m[2 * 4 + 1] = (float)z[1];
-            m[2 * 4 + 2] = (float)z[2]; m[2 * 4 + 3] = (float)(-z[0] * eyex + -z[1] * eyey + -z[2] * eyez);
+            m[2 * 4 + 0] = (float)z[0];
+            m[2 * 4 + 1] = (float)z[1];
+            m[2 * 4 + 2] = (float)z[2];
+            m[2 * 4 + 3] = (float)(-z[0] * eyex + -z[1] * eyey + -z[2] * eyez);
 
-            m[3 * 4 + 0] = 0.0f; m[3 * 4 + 1] = 0.0f; m[3 * 4 + 2] = 0.0f; m[3 * 4 + 3] = 1.0f;
+            m[3 * 4 + 0] = 0.0f;
+            m[3 * 4 + 1] = 0.0f;
+            m[3 * 4 + 2] = 0.0f;
+            m[3 * 4 + 3] = 1.0f;
         }
 
-        static void BuildPerspectiveMatrix(double fieldOfView,
-            double aspectRatio,
-            double zNear, double zFar,
-            float[] m)
+        private static void BuildPerspectiveMatrix(double fieldOfView,
+                                                   double aspectRatio,
+                                                   double zNear, double zFar,
+                                                   float[] m)
         {
             double radians = fieldOfView / 2.0 * MyPi / 180.0;
 
@@ -308,14 +322,14 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         }
 
         [DllImport("glut32.dll")]
-        static extern void glutWireCone(double bse, double height, int slices, int stacks);
+        private static extern void glutWireCone(double bse, double height, int slices, int stacks);
 
         [DllImport("glut32.dll")]
-        static extern void glutWireSphere(double radius, int slices, int stacks);
+        private static extern void glutWireSphere(double radius, int slices, int stacks);
 
-        static void MakeRotateMatrix(float angle,
-            float ax, float ay, float az,
-            float[] m)
+        private static void MakeRotateMatrix(float angle,
+                                             float ax, float ay, float az,
+                                             float[] m)
         {
             float[] axis = new float[3];
 
@@ -358,17 +372,30 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             m[15] = 1;
         }
 
-        static void MakeTranslateMatrix(float x, float y, float z, float[] m)
+        private static void MakeTranslateMatrix(float x, float y, float z, float[] m)
         {
-            m[0] = 1; m[1] = 0; m[2] = 0; m[3] = x;
-            m[4] = 0; m[5] = 1; m[6] = 0; m[7] = y;
-            m[8] = 0; m[9] = 0; m[10] = 1; m[11] = z;
-            m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
+            m[0] = 1;
+            m[1] = 0;
+            m[2] = 0;
+            m[3] = x;
+            m[4] = 0;
+            m[5] = 1;
+            m[6] = 0;
+            m[7] = y;
+            m[8] = 0;
+            m[9] = 0;
+            m[10] = 1;
+            m[11] = z;
+            m[12] = 0;
+            m[13] = 0;
+            m[14] = 0;
+            m[15] = 1;
         }
 
         /* Simple 4x4 matrix by 4x4 matrix multiply. */
-        static void MultMatrix(float[] dst,
-            float[] src1, float[] src2)
+
+        private static void MultMatrix(float[] dst,
+                                       float[] src1, float[] src2)
         {
             float[] tmp = new float[16];
             int i;
@@ -379,25 +406,27 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                 for (j = 0; j < 4; j++)
                 {
                     tmp[i * 4 + j] = src1[i * 4 + 0] * src2[0 * 4 + j] +
-                         src1[i * 4 + 1] * src2[1 * 4 + j] +
-                         src1[i * 4 + 2] * src2[2 * 4 + j] +
-                         src1[i * 4 + 3] * src2[3 * 4 + j];
+                                     src1[i * 4 + 1] * src2[1 * 4 + j] +
+                                     src1[i * 4 + 2] * src2[2 * 4 + j] +
+                                     src1[i * 4 + 3] * src2[3 * 4 + j];
                 }
             }
             /* Copy result to dst (so dst can also be src1 or src2). */
             for (i = 0; i < 16; i++)
+            {
                 dst[i] = tmp[i];
+            }
         }
 
-        static void Reshape(int width, int height)
+        private static void Reshape(int width, int height)
         {
             double aspectRatio = (float)width / height;
             const double FieldOfView = 40.0;
 
             /* Build projection matrix once. */
             BuildPerspectiveMatrix(FieldOfView, aspectRatio,
-                       1.0, 20.0,  /* Znear and Zfar */
-                       MyProjectionMatrix);
+                                   1.0, 20.0, /* Znear and Zfar */
+                                   MyProjectionMatrix);
         }
 
         #endregion Private Static Methods

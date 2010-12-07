@@ -18,9 +18,11 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
  */
-namespace CgNet.CgOO
+namespace CgOO
 {
     using System;
+
+    using CgNet;
 
     public sealed class CgState : WrapperObject
     {
@@ -42,7 +44,7 @@ namespace CgNet.CgOO
             get
             {
                 var ptr = Cg.GetStateContext(this.Handle);
-                return ptr != IntPtr.Zero ? null : new CgContext(ptr)
+                return ptr == IntPtr.Zero ? null : new CgContext(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -86,7 +88,7 @@ namespace CgNet.CgOO
             get
             {
                 var ptr = Cg.GetNextState(this.Handle);
-                return ptr != IntPtr.Zero ? null : new CgState(ptr)
+                return ptr == IntPtr.Zero ? null : new CgState(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -136,6 +138,11 @@ namespace CgNet.CgOO
         public static CgState Create(CgContext context, string name, ParameterType type)
         {
             return new CgState(Cg.CreateState(context.Handle, name, type));
+        }
+
+        public static CgState CreateArrayState(CgContext context, string name, ParameterType type, int elementCount)
+        {
+            return new CgState(Cg.CreateArrayState(context.Handle, name, type, elementCount));
         }
 
         #endregion Public Static Methods

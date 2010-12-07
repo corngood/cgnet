@@ -1,42 +1,34 @@
-namespace ExampleBrowser.Examples.OpenTK.Basic
+namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
 {
     using System;
     using System.Runtime.InteropServices;
 
-    using All = global::OpenTK.Graphics.OpenGL.All;
+    using global::CgNet;
+    using global::CgNet.GL;
 
-    using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
-
-    using CgNet;
-    using CgNet.GL;
-
-    using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
-
-    using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
-
-    using GL = global::OpenTK.Graphics.OpenGL.GL;
+    using ExampleBrowser.Examples.CgNet.OpenTK;
 
     using global::Examples.Helper;
 
-    using global::OpenTK;
     using global::OpenTK.Graphics;
+
+    using GL = global::OpenTK.Graphics.OpenGL.GL;
+    using global::OpenTK;
     using global::OpenTK.Input;
 
+    using All = global::OpenTK.Graphics.OpenGL.All;
+    using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
+    using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
+    using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
     using MatrixMode = global::OpenTK.Graphics.OpenGL.MatrixMode;
-
     using PixelFormat = global::OpenTK.Graphics.OpenGL.PixelFormat;
-
     using PixelInternalFormat = global::OpenTK.Graphics.OpenGL.PixelInternalFormat;
-
     using PixelStoreParameter = global::OpenTK.Graphics.OpenGL.PixelStoreParameter;
-
     using PixelType = global::OpenTK.Graphics.OpenGL.PixelType;
-
     using TextureParameterName = global::OpenTK.Graphics.OpenGL.TextureParameterName;
-
     using TextureTarget = global::OpenTK.Graphics.OpenGL.TextureTarget;
 
-    [Example(NodePath = "OpenTK/Basic/21 Bump Map Wall")]
+    [Example(NodePath = "CgNet/OpenTK/Basic/21 Bump Map Wall")]
     public class BumpMapWall : Example
     {
         #region Fields
@@ -46,9 +38,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         private const string MyVertexProgramFileName = "Data/C8E1v_bumpWall.cg";
         private const string MyVertexProgramName = "C8E1v_bumpWall";
 
-        readonly int[] texObj = new int[2];
+        private readonly int[] texObj = new int[2];
 
-        float my2Pi = 2.0f * 3.14159265358979323846f;
+        private float my2Pi = 2.0f * 3.14159265358979323846f;
         private IntPtr myCgFragmentParamNormalizeCube;
         private IntPtr myCgFragmentParamNormalMap;
         private ProfileType myCgFragmentProfile;
@@ -57,7 +49,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         private IntPtr myCgVertexParamModelViewProj;
         private ProfileType myCgVertexProfile;
         private IntPtr myCgVertexProgram;
-        float myLightAngle = 4.0f; /* Angle light rotates around scene. */
+        private float myLightAngle = 4.0f; /* Angle light rotates around scene. */
 
         #endregion Fields
 
@@ -80,7 +72,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// <param name="e">Not used.</param>
         protected override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
+            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.Texture2D);
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1); /* Tightly packed texture data. */
@@ -99,12 +91,12 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     int size;
                     int level;
                     for (size = 128, level = 0;
-                        size > 0;
-                        image += 3 * size * size, size /= 2, level++)
+                         size > 0;
+                         image += 3 * size * size, size /= 2, level++)
                     {
                         GL.TexImage2D(TextureTarget.Texture2D, level,
-                            PixelInternalFormat.Rgba8, size, size, 0,
-                            PixelFormat.Rgb, PixelType.UnsignedByte, new IntPtr(image));
+                                      PixelInternalFormat.Rgba8, size, size, 0,
+                                      PixelFormat.Rgb, PixelType.UnsignedByte, new IntPtr(image));
                     }
                 }
             }
@@ -126,8 +118,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                          face++, image += 3 * 32 * 32)
                     {
                         GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX + face, 0,
-                            PixelInternalFormat.Rgba8, 32, 32, 0,
-                            PixelFormat.Rgb, PixelType.UnsignedByte, new IntPtr(image));
+                                      PixelInternalFormat.Rgba8, 32, 32, 0,
+                                      PixelFormat.Rgb, PixelType.UnsignedByte, new IntPtr(image));
                     }
                 }
             }
@@ -145,44 +137,44 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
-                    this.MyCgContext,              /* Cg runtime context */
-                    ProgramType.Source,                /* Program in human-readable form */
-                    MyVertexProgramFileName,  /* Name of file containing program */
-                    this.myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName,      /* Entry function name */
-                    null);                    /* No extra compiler options */
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyVertexProgramFileName, /* Name of file containing program */
+                    this.myCgVertexProfile, /* Profile: OpenGL ARB vertex program */
+                    MyVertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(this.myCgVertexProgram);
 
             this.myCgVertexParamLightPosition =
                 Cg.GetNamedParameter(myCgVertexProgram, "lightPosition");
 
             this.myCgVertexParamModelViewProj =
-              Cg.GetNamedParameter(myCgVertexProgram, "modelViewProj");
+                Cg.GetNamedParameter(myCgVertexProgram, "modelViewProj");
 
             this.myCgFragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
             CgGL.SetOptimalOptions(this.myCgFragmentProfile);
 
             this.myCgFragmentProgram =
                 Cg.CreateProgramFromFile(
-                    this.MyCgContext,                /* Cg runtime context */
-                    ProgramType.Source,                  /* Program in human-readable form */
-                    MyFragmentProgramFileName,  /* Name of file containing program */
-                    this.myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
-                    MyFragmentProgramName,      /* Entry function name */
-                    null);                      /* No extra compiler options */
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyFragmentProgramFileName, /* Name of file containing program */
+                    this.myCgFragmentProfile, /* Profile: OpenGL ARB vertex program */
+                    MyFragmentProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(this.myCgFragmentProgram);
 
             this.myCgFragmentParamNormalMap =
-              Cg.GetNamedParameter(myCgFragmentProgram, "normalMap");
+                Cg.GetNamedParameter(myCgFragmentProgram, "normalMap");
 
             this.myCgFragmentParamNormalizeCube =
-              Cg.GetNamedParameter(myCgFragmentProgram, "normalizeCube");
+                Cg.GetNamedParameter(myCgFragmentProgram, "normalizeCube");
 
             CgGL.SetTextureParameter(this.myCgFragmentParamNormalMap,
-              texObj[1]);
+                                     texObj[1]);
 
             CgGL.SetTextureParameter(this.myCgFragmentParamNormalizeCube,
-              texObj[0]);
+                                     texObj[0]);
         }
 
         /// <summary>
@@ -192,17 +184,19 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            float[] lightPosition = { 12.5f*(float)Math.Sin(this.myLightAngle),
-                                   12.5f*(float)Math.Cos(this.myLightAngle),
-                                   4 };
+            float[] lightPosition = {
+                                        12.5f * (float)Math.Sin(this.myLightAngle),
+                                        12.5f * (float)Math.Cos(this.myLightAngle),
+                                        4
+                                    };
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.LoadIdentity();
             Glu.LookAt(
-              0.0, 0.0, 20.0,
-              0.0, 0.0, 0.0,   /* XYZ view center */
-              0.0, 1.0, 0.0);  /* Up is in positive Y direction */
+                0.0, 0.0, 20.0,
+                0.0, 0.0, 0.0, /* XYZ view center */
+                0.0, 1.0, 0.0); /* Up is in positive Y direction */
 
             CgGL.BindProgram(myCgVertexProgram);
 
@@ -226,10 +220,14 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             GL.Begin(BeginMode.Quads);
             /* Counter clockwise (GL_CCW) winding */
-            GL.TexCoord2(0f, 0f); GL.Vertex2(-7f, -7f);
-            GL.TexCoord2(1f, 0f); GL.Vertex2(7f, -7f);
-            GL.TexCoord2(1f, 1f); GL.Vertex2(7f, 7f);
-            GL.TexCoord2(0f, 1f); GL.Vertex2(-7f, 7f);
+            GL.TexCoord2(0f, 0f);
+            GL.Vertex2(-7f, -7f);
+            GL.TexCoord2(1f, 0f);
+            GL.Vertex2(7f, -7f);
+            GL.TexCoord2(1f, 1f);
+            GL.Vertex2(7f, 7f);
+            GL.TexCoord2(0f, 1f);
+            GL.Vertex2(-7f, 7f);
             GL.End();
 
             CgGL.DisableProfile(myCgVertexProfile);
@@ -258,8 +256,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             Glu.Perspective(fieldOfView, aspectRatio,
-              0.1,    /* Z near */
-              100.0); /* Z far */
+                            0.1, /* Z near */
+                            100.0); /* Z far */
             GL.MatrixMode(MatrixMode.Modelview);
 
             GL.Viewport(0, 0, this.Width, this.Height);
@@ -280,14 +278,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            this.myLightAngle += 0.008f;  /* Add a small angle (in radians). */
+            this.myLightAngle += 0.008f; /* Add a small angle (in radians). */
             if (this.myLightAngle > my2Pi)
             {
                 this.myLightAngle -= my2Pi;
             }
 
             if (this.Keyboard[Key.Escape])
+            {
                 this.Exit();
+            }
         }
 
         #endregion Protected Methods
@@ -295,7 +295,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         #region Private Static Methods
 
         [DllImport("glut32.dll")]
-        static extern void glutSolidSphere(double radius, int slices, int stacks);
+        private static extern void glutSolidSphere(double radius, int slices, int stacks);
 
         #endregion Private Static Methods
 

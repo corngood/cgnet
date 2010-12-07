@@ -45,19 +45,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Examples\BrickImage.cs" />
+    <Compile Include="Examples\CgOO\OpenTK\Example.cs" />
     <Compile Include="Examples\ExampleAttribute.cs" />
     <Compile Include="Examples\IExample.cs" />
     <Compile Include="Examples\DemonPic.cs" />
     <Compile Include="Examples\NormcmImage.cs" />
-    <Compile Include="Examples\OpenTK\Basic\BumpMapWall.cs" />
-    <Compile Include="Examples\OpenTK\Basic\ParticleSystem.cs" />
-    <Compile Include="Examples\OpenTK\Basic\TwoTextureAccesses.cs" />
-    <Compile Include="Examples\OpenTK\Basic\VaryingParameter.cs" />
-    <Compile Include="Examples\OpenTK\Basic\VertexProgram.cs" />
-    <Compile Include="Examples\CgNetOO\VertexProgramOO.cs" />
-    <Compile Include="Examples\OpenTK\Basic\VertexTransform.cs" />
-    <Compile Include="Examples\OpenTK\Basic\VertexTwisting.cs" />
-    <Compile Include="Examples\OpenTK\Example.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Basic\BumpMapWall.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Basic\ParticleSystem.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Basic\TwoTextureAccesses.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Basic\VaryingParameter.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Basic\VertexProgram.cs" />
+    <Compile Include="Examples\CgOO\OpenTK\Basic\VertexProgram.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Basic\VertexTransform.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Basic\VertexTwisting.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Example.cs" />
     <Compile Include="ExampleSelector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,9 +67,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Examples\OpenTK\Basic\UniformParameter.cs" />
-    <Compile Include="Examples\OpenTK\Basic\VertexAndFragmentProgram.cs" />
-    <Compile Include="Examples\OpenTK\Basic\TextureSampling.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Basic\UniformParameter.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Basic\VertexAndFragmentProgram.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Basic\TextureSampling.cs" />
     <EmbeddedResource Include="ExampleSelector.resx">
       <DependentUpon>ExampleSelector.cs</DependentUpon>
     </EmbeddedResource>

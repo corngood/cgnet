@@ -1,9 +1,11 @@
-﻿namespace ExampleBrowser.Examples.OpenTK.Basic
+﻿namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
 {
     using System;
 
-    using CgNet;
-    using CgNet.GL;
+    using global::CgNet;
+    using global::CgNet.GL;
+
+    using ExampleBrowser.Examples.CgNet.OpenTK;
 
     using global::Examples.Helper;
 
@@ -11,16 +13,17 @@
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/02 Vertex And Fragment Program")]
-    public class VertexAndFragmentProgram : Example
+    [Example(NodePath = "CgNet/OpenTK/Basic/05 Texture Sampling")]
+    public class TextureSampling : Example
     {
         #region Fields
 
-        private const string MyFragmentProgramFileName = "Data/C2E2f_passthru.cg";
-        private const string MyFragmentProgramName = "C2E2f_passthru";
-        private const string MyVertexProgramFileName = "Data/C2E1v_green.cg";
-        private const string MyVertexProgramName = "C2E1v_green";
+        private const string MyFragmentProgramFileName = "Data/C3E3f_texture.cg";
+        private const string MyFragmentProgramName = "C3E3f_texture";
+        private const string MyVertexProgramFileName = "Data/C3E2v_varying.cg";
+        private const string MyVertexProgramName = "C3E2v_varying";
 
+        private IntPtr myCgFragmentParamDecal;
         private ProfileType myCgFragmentProfile;
         private IntPtr myCgFragmentProgram;
         private ProfileType myCgVertexProfile;
@@ -30,8 +33,8 @@
 
         #region Constructors
 
-        public VertexAndFragmentProgram()
-            : base("02_vertex_and_fragment_program")
+        public TextureSampling()
+            : base("05_texture_sampling")
         {
         }
 
@@ -47,9 +50,19 @@
         /// <param name="e">Not used.</param>
         protected override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
+            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
+
+            GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1); /* Tightly packed texture data. */
+            GL.Enable(EnableCap.Texture2D);
+            GL.BindTexture(TextureTarget.Texture2D, 666);
+
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb8, 128, 128, 0,
+                          PixelFormat.Rgb, PixelType.UnsignedByte, DemonPic.Array);
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
             this.MyCgContext = Cg.CreateContext();
+
             CgGL.SetDebugMode(false);
             Cg.SetParameterSettingMode(this.MyCgContext, ParameterSettingMode.Deferred);
 
@@ -57,27 +70,34 @@
             CgGL.SetOptimalOptions(myCgVertexProfile);
 
             myCgVertexProgram =
-              Cg.CreateProgramFromFile(
-                this.MyCgContext,              /* Cg runtime context */
-                ProgramType.Source,                /* Program in human-readable form */
-                MyVertexProgramFileName,  /* Name of file containing program */
-                myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
-                MyVertexProgramName,      /* Entry function name */
-                null);                    /* No extra compiler options */
+                Cg.CreateProgramFromFile(
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyVertexProgramFileName, /* Name of file containing program */
+                    myCgVertexProfile, /* Profile: OpenGL ARB vertex program */
+                    MyVertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
+
             CgGL.LoadProgram(myCgVertexProgram);
 
+            /* No uniform vertex program parameters expected. */
             myCgFragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
             CgGL.SetOptimalOptions(myCgFragmentProfile);
 
             myCgFragmentProgram =
-              Cg.CreateProgramFromFile(
-                this.MyCgContext,                /* Cg runtime context */
-                ProgramType.Source,                  /* Program in human-readable form */
-                MyFragmentProgramFileName,  /* Name of file containing program */
-                myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
-                MyFragmentProgramName,      /* Entry function name */
-                null);                      /* No extra compiler options */
+                Cg.CreateProgramFromFile(
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyFragmentProgramFileName, /* Name of file containing program */
+                    myCgFragmentProfile, /* Profile: OpenGL ARB vertex program */
+                    MyFragmentProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
+
             CgGL.LoadProgram(myCgFragmentProgram);
+
+            this.myCgFragmentParamDecal = Cg.GetNamedParameter(myCgFragmentProgram, "decal");
+
+            CgGL.SetTextureParameter(this.myCgFragmentParamDecal, 666);
         }
 
         /// <summary>
@@ -97,11 +117,25 @@
 
             CgGL.EnableProfile(myCgFragmentProfile);
 
-            DrawStars();
+            CgGL.EnableTextureParameter(this.myCgFragmentParamDecal);
+
+            GL.Begin(BeginMode.Triangles);
+            GL.TexCoord2(0, 0);
+            GL.Vertex2(-0.8f, 0.8f);
+
+            GL.TexCoord2(1, 0);
+            GL.Vertex2(0.8f, 0.8f);
+
+            GL.TexCoord2(0.5f, 1);
+            GL.Vertex2(0.0f, -0.8f);
+            GL.End();
 
             CgGL.DisableProfile(myCgVertexProfile);
 
             CgGL.DisableProfile(myCgFragmentProfile);
+
+            CgGL.DisableTextureParameter(this.myCgFragmentParamDecal);
+
             SwapBuffers();
         }
 
@@ -135,49 +169,12 @@
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             if (Keyboard[Key.Escape])
+            {
                 this.Exit();
+            }
         }
 
         #endregion Protected Methods
-
-        #region Private Static Methods
-
-        static void DrawStar(float x, float y, int starPoints, float R, float r)
-        {
-            int i;
-            double piOverStarPoints = 3.14159 / starPoints,
-                   angle = 0.0;
-
-            GL.Begin(BeginMode.TriangleFan);
-            GL.Vertex2(x, y);  /* Center of star */
-            /* Emit exterior vertices for star's points. */
-            for (i = 0; i < starPoints; i++)
-            {
-                GL.Vertex2(x + R * Math.Cos(angle), y + R * Math.Sin(angle));
-                angle += piOverStarPoints;
-                GL.Vertex2(x + r * Math.Cos(angle), y + r * Math.Sin(angle));
-                angle += piOverStarPoints;
-            }
-            /* End by repeating first exterior vertex of star. */
-            angle = 0;
-            GL.Vertex2(x + R * Math.Cos(angle), y + R * Math.Sin(angle));
-            GL.End();
-        }
-
-        static void DrawStars()
-        {
-            /*                     star    outer   inner  */
-            /*        x      y     Points  radius  radius */
-            /*       =====  =====  ======  ======  ====== */
-            DrawStar(-0.1f, 0, 5, 0.5f, 0.2f);
-            DrawStar(-0.84f, 0.1f, 5, 0.3f, 0.12f);
-            DrawStar(0.92f, -0.5f, 5, 0.25f, 0.11f);
-            DrawStar(0.3f, 0.97f, 5, 0.3f, 0.1f);
-            DrawStar(0.94f, 0.3f, 5, 0.5f, 0.2f);
-            DrawStar(-0.97f, -0.8f, 5, 0.6f, 0.2f);
-        }
-
-        #endregion Private Static Methods
 
         #endregion Methods
     }

@@ -1,9 +1,9 @@
-﻿namespace ExampleBrowser.Examples.OpenTK
+﻿namespace ExampleBrowser.Examples.CgNet.OpenTK
 {
     using System;
     using System.Windows.Forms;
 
-    using CgNet;
+    using global::CgNet;
 
     using global::OpenTK;
 

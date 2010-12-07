@@ -18,7 +18,7 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
  */
-namespace CgNet.CgOO
+namespace CgOO
 {
     using System;
 
@@ -92,7 +92,10 @@ namespace CgNet.CgOO
             get
             {
                 var ptr = Cg.GetConnectedParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgParameter(ptr) { OwnsHandle = false };
+                return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -109,7 +112,10 @@ namespace CgNet.CgOO
             get
             {
                 var ptr = Cg.GetParameterContext(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgContext(ptr) { OwnsHandle = false };
+                return ptr == IntPtr.Zero ? null : new CgContext(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -118,7 +124,34 @@ namespace CgNet.CgOO
             get
             {
                 var ptr = Cg.GetParameterEffect(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgEffect(ptr) { OwnsHandle = false };
+                return ptr == IntPtr.Zero ? null : new CgEffect(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
+
+        public CgAnnotation FirstAnnotation
+        {
+            get
+            {
+                var ptr = Cg.GetFirstParameterAnnotation(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
+
+        public CgStateAssignment FirstStateAssignment
+        {
+            get
+            {
+                var ptr = Cg.GetFirstSamplerStateAssignment(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgStateAssignment(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -170,6 +203,30 @@ namespace CgNet.CgOO
             }
         }
 
+        public CgParameter NextLeafParameter
+        {
+            get
+            {
+                var ptr = Cg.GetNextLeafParameter(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
+
+        public CgParameter NextParameter
+        {
+            get
+            {
+                var ptr = Cg.GetNextParameter(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
+
         public int OrdinalNumber
         {
             get
@@ -191,7 +248,10 @@ namespace CgNet.CgOO
             get
             {
                 var ptr = Cg.GetParameterProgram(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgProgram(ptr) { OwnsHandle = false };
+                return ptr == IntPtr.Zero ? null : new CgProgram(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -283,7 +343,31 @@ namespace CgNet.CgOO
 
         #region Methods
 
+        #region Public Static Methods
+
+        public static void ConnectParameters(CgParameter from, CgParameter to)
+        {
+            Cg.ConnectParameter(from.Handle, to.Handle);
+        }
+
+        public static CgParameter Create(CgContext context, ParameterType type)
+        {
+            return new CgParameter(Cg.CreateParameter(context.Handle, type));
+        }
+
+        #endregion Public Static Methods
+
         #region Public Methods
+
+        public void Connect(CgParameter to)
+        {
+            Cg.ConnectParameter(this.Handle, to.Handle);
+        }
+
+        public CgAnnotation CreateAnnotation(string name, ParameterType type)
+        {
+            return new CgAnnotation(Cg.CreateParameterAnnotation(this.Handle, name, type));
+        }
 
         public void Disconnect()
         {
@@ -293,6 +377,15 @@ namespace CgNet.CgOO
         public int GetArrayDimension()
         {
             return Cg.GetArrayDimension(this.Handle);
+        }
+
+        public CgParameter GetArrayParameter(IntPtr aparam, int index)
+        {
+            var ptr = Cg.GetArrayParameter(this.Handle, index);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public int GetArraySize(int dimension)
@@ -313,7 +406,10 @@ namespace CgNet.CgOO
         public CgParameter GetConnectedToParameter(int index)
         {
             var ptr = Cg.GetConnectedToParameter(this.Handle, index);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr) { OwnsHandle = false };
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public int GetDefaultValue(ref double[] values)
@@ -349,19 +445,28 @@ namespace CgNet.CgOO
         public CgBuffer GetEffectParameterBuffer()
         {
             var ptr = Cg.GetEffectParameterBuffer(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgBuffer(ptr) { OwnsHandle = false };
+            return ptr == IntPtr.Zero ? null : new CgBuffer(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public CgParameter GetFirstDependentParameter()
         {
             var ptr = Cg.GetFirstDependentParameter(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr) { OwnsHandle = false };
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public CgParameter GetFirstStructParameter()
         {
             var ptr = Cg.GetFirstStructParameter(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr) { OwnsHandle = false };
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public void GetMatrixParameter(out int[] values)
@@ -396,16 +501,40 @@ namespace CgNet.CgOO
             return Cg.GetMatrixParameterOrder(this.Handle);
         }
 
+        public CgAnnotation GetNamedAnnotation(string name)
+        {
+            var ptr = Cg.GetNamedParameterAnnotation(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
+        public CgStateAssignment GetNamedStateAssignment(string name)
+        {
+            var ptr = Cg.GetNamedSamplerStateAssignment(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgStateAssignment(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
         public CgParameter GetNamedStructParameter(string name)
         {
             var ptr = Cg.GetNamedStructParameter(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr) { OwnsHandle = false };
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public CgParameter GetNamedSubParameter(string name)
         {
             var ptr = Cg.GetNamedSubParameter(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr) { OwnsHandle = false };
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public string GetStringValue()
@@ -444,6 +573,11 @@ namespace CgNet.CgOO
             where T : struct
         {
             Cg.GetParameterValue(this.Handle, ref values, order);
+        }
+
+        public bool IsParameterUsed(WrapperObject container)
+        {
+            return Cg.IsParameterUsed(this.Handle, container.Handle);
         }
 
         public void Set(float x)

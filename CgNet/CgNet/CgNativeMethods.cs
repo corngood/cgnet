@@ -658,7 +658,7 @@ namespace CgNet
         // CGDLL_API const float *cgGetFloatStateAssignmentValues(CGstateassignment, int *nVals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern float[] cgGetFloatStateAssignmentValues(IntPtr stateassignment, int[] nVals);
+        internal static extern float[] cgGetFloatStateAssignmentValues(IntPtr stateassignment, out int nVals);
 
         /// <summary>
         /// 
@@ -680,7 +680,7 @@ namespace CgNet
         // CGDLL_API const int *cgGetIntStateAssignmentValues(CGstateassignment, int *nVals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int[] cgGetIntStateAssignmentValues(IntPtr stateassignment, int[] nVals);
+        internal static extern int[] cgGetIntStateAssignmentValues(IntPtr stateassignment, out int nVals);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -2047,7 +2047,7 @@ namespace CgNet
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool cgSetBoolAnnotation(IntPtr annotation, [MarshalAs(UnmanagedType.Bool)]bool value);
+        internal static extern bool cgSetBoolAnnotation(IntPtr annotation, [MarshalAs(UnmanagedType.Bool)] bool value);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -2057,7 +2057,7 @@ namespace CgNet
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool cgSetBoolStateAssignment(IntPtr stateassignment, [MarshalAs(UnmanagedType.Bool)]bool value);
+        internal static extern bool cgSetBoolStateAssignment(IntPtr stateassignment, [MarshalAs(UnmanagedType.Bool)] bool value);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]

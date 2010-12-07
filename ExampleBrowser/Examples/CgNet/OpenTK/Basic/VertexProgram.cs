@@ -1,9 +1,11 @@
-﻿namespace ExampleBrowser.Examples.OpenTK.Basic
+﻿namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
 {
     using System;
 
-    using CgNet;
-    using CgNet.GL;
+    using global::CgNet;
+    using global::CgNet.GL;
+
+    using ExampleBrowser.Examples.CgNet.OpenTK;
 
     using global::Examples.Helper;
 
@@ -11,7 +13,7 @@
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/01 Vertex Program")]
+    [Example(NodePath = "CgNet/OpenTK/Basic/01 Vertex Program")]
     public class VertexProgram : Example
     {
         #region Fields
@@ -43,7 +45,7 @@
         /// <param name="e">Not used.</param>
         protected override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
+            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
 
             this.MyCgContext = Cg.CreateContext();
 
@@ -55,12 +57,12 @@
 
             this.myCgVertexProgram =
                 Cg.CreateProgramFromFile(
-                    this.MyCgContext,              /* Cg runtime context */
-                    ProgramType.Source,                /* Program in human-readable form */
-                    MyVertexProgramFileName,  /* Name of file containing program */
-                    myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName,      /* Entry function name */
-                    null);                    /* No extra compiler options */
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyVertexProgramFileName, /* Name of file containing program */
+                    myCgVertexProfile, /* Profile: OpenGL ARB vertex program */
+                    MyVertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(myCgVertexProgram);
         }
 
@@ -118,7 +120,9 @@
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             if (Keyboard[Key.Escape])
+            {
                 this.Exit();
+            }
         }
 
         #endregion Protected Methods

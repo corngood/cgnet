@@ -18,7 +18,7 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
  */
-namespace CgNet.CgOO
+namespace CgOO
 {
     using System;
 
@@ -56,6 +56,18 @@ namespace CgNet.CgOO
             get
             {
                 return Cg.GetNumProgramDomains(this.Handle);
+            }
+        }
+
+        public CgAnnotation FirstAnnotation
+        {
+            get
+            {
+                var ptr = Cg.GetFirstProgramAnnotation(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -203,6 +215,11 @@ namespace CgNet.CgOO
             return ptr == IntPtr.Zero ? null : new CgProgram(ptr);
         }
 
+        public CgAnnotation CreateAnnotation(string name, ParameterType type)
+        {
+            return new CgAnnotation(Cg.CreateProgramAnnotation(this.Handle, name, type));
+        }
+
         public float[] EvaluateProgram(int ncomps, int nx, int ny, int nz)
         {
             return Cg.EvaluateProgram(this.Handle, ncomps, nx, ny, nz);
@@ -212,6 +229,51 @@ namespace CgNet.CgOO
         {
             var ptr = Cg.GetProgramBuffer(this.Handle, bufferIndex);
             return ptr == IntPtr.Zero ? null : new CgBuffer(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
+        public CgParameter GetFirstLeafParameter(int nameSpace)
+        {
+            var ptr = Cg.GetFirstLeafParameter(this.Handle, nameSpace);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
+        public CgParameter GetFirstParameter(int nameSpace)
+        {
+            var ptr = Cg.GetFirstParameter(this.Handle, nameSpace);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
+        public CgAnnotation GetNamedAnnotation(string name)
+        {
+            var ptr = Cg.GetNamedProgramAnnotation(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
+        public CgParameter GetNamedParameter(ProgramNamespace nameSpace, string name)
+        {
+            var ptr = Cg.GetNamedProgramParameter(this.Handle, nameSpace, name);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
+        public CgParameter GetNamedParameter(string parameter)
+        {
+            var ptr = Cg.GetNamedParameter(this.Handle, parameter);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };

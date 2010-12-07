@@ -1,21 +1,11 @@
-namespace ExampleBrowser.Examples.OpenTK.Basic
+namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
 {
     using System;
 
-    using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
+    using global::CgNet;
+    using global::CgNet.GL;
 
-    using BlendingFactorDest = global::OpenTK.Graphics.OpenGL.BlendingFactorDest;
-
-    using BlendingFactorSrc = global::OpenTK.Graphics.OpenGL.BlendingFactorSrc;
-
-    using CgNet;
-    using CgNet.GL;
-
-    using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
-
-    using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
-
-    using GL = global::OpenTK.Graphics.OpenGL.GL;
+    using ExampleBrowser.Examples.CgNet.OpenTK;
 
     using global::Examples.Helper;
 
@@ -23,11 +13,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using global::OpenTK.Graphics;
     using global::OpenTK.Input;
 
+    using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
+    using BlendingFactorDest = global::OpenTK.Graphics.OpenGL.BlendingFactorDest;
+    using BlendingFactorSrc = global::OpenTK.Graphics.OpenGL.BlendingFactorSrc;
+    using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
+    using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
+    using GL = global::OpenTK.Graphics.OpenGL.GL;
     using MatrixMode = global::OpenTK.Graphics.OpenGL.MatrixMode;
-
     using TextureUnit = global::OpenTK.Graphics.OpenGL.TextureUnit;
 
-    [Example(NodePath = "OpenTK/Basic/15 Particle System")]
+    [Example(NodePath = "CgNet/OpenTK/Basic/15 Particle System")]
     public class ParticleSystem : Example
     {
         #region Fields
@@ -39,13 +34,13 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         private readonly Particle[] myParticleSystem = new Particle[800];
 
-        static bool useComputedPointSize;
+        private static bool useComputedPointSize;
 
         private IntPtr myCgVertexParamGlobalTime, myCgVertexParamAcceleration, myCgVertexParamModelViewProj;
         private ProfileType myCgVertexProfile, myCgFragmentProfile;
         private IntPtr myCgVertexProgram, myCgFragmentProgram;
-        float myGlobalTime;
-        int myPass;
+        private float myGlobalTime;
+        private int myPass;
 
         #endregion Fields
 
@@ -94,7 +89,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         {
             this.ResetParticles();
 
-            GL.ClearColor(0.2f, 0.6f, 1.0f, 1);  /* Blue background */
+            GL.ClearColor(0.2f, 0.6f, 1.0f, 1); /* Blue background */
             GL.PointSize(6.0f);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.Enable(EnableCap.PointSmooth);
@@ -107,36 +102,36 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.SetOptimalOptions(myCgVertexProfile);
 
             myCgVertexProgram =
-              Cg.CreateProgramFromFile(
-              this.MyCgContext,              /* Cg runtime context */
-              ProgramType.Source,                /* Program in human-readable form */
-              MyVertexProgramFileName,  /* Name of file containing program */
-              myCgVertexProfile,        /* Profile: OpenGL ARB vertex program */
-              MyVertexProgramName,      /* Entry function name */
-              null);                    /* No extra compiler options */
+                Cg.CreateProgramFromFile(
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyVertexProgramFileName, /* Name of file containing program */
+                    myCgVertexProfile, /* Profile: OpenGL ARB vertex program */
+                    MyVertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
 
             CgGL.LoadProgram(myCgVertexProgram);
 
             this.myCgVertexParamGlobalTime =
-              Cg.GetNamedParameter(myCgVertexProgram, "globalTime");
+                Cg.GetNamedParameter(myCgVertexProgram, "globalTime");
 
             this.myCgVertexParamAcceleration =
-              Cg.GetNamedParameter(myCgVertexProgram, "acceleration");
+                Cg.GetNamedParameter(myCgVertexProgram, "acceleration");
 
             this.myCgVertexParamModelViewProj =
-              Cg.GetNamedParameter(myCgVertexProgram, "modelViewProj");
+                Cg.GetNamedParameter(myCgVertexProgram, "modelViewProj");
 
             myCgFragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
             CgGL.SetOptimalOptions(myCgFragmentProfile);
 
             myCgFragmentProgram =
-              Cg.CreateProgramFromFile(
-              this.MyCgContext,                /* Cg runtime context */
-              ProgramType.Source,                  /* Program in human-readable form */
-              MyFragmentProgramFileName,  /* Name of file containing program */
-              myCgFragmentProfile,        /* Profile: OpenGL ARB vertex program */
-              MyFragmentProgramName,      /* Entry function name */
-              null);                      /* No extra compiler options */
+                Cg.CreateProgramFromFile(
+                    this.MyCgContext, /* Cg runtime context */
+                    ProgramType.Source, /* Program in human-readable form */
+                    MyFragmentProgramFileName, /* Name of file containing program */
+                    myCgFragmentProfile, /* Profile: OpenGL ARB vertex program */
+                    MyFragmentProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
             CgGL.LoadProgram(myCgFragmentProgram);
         }
 
@@ -155,12 +150,12 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             GL.LoadIdentity();
             Glu.LookAt((float)Math.Cos(viewAngle), 0.3f, (float)Math.Sin(viewAngle),
-                                     0, 0, 0, 0, 1, 0);
+                       0, 0, 0, 0, 1, 0);
             /* Set uniforms before glGLProgram bind. */
             Cg.SetParameter(this.myCgVertexParamGlobalTime, myGlobalTime);
             Cg.SetParameter(this.myCgVertexParamAcceleration, 0, Acceleration, 0, 0);
             CgGL.SetStateMatrixParameter(this.myCgVertexParamModelViewProj,
-                MatrixType.ModelviewProjectionMatrix,
+                                         MatrixType.ModelviewProjectionMatrix,
                                          MatrixTransform.MatrixIdentity);
 
             CgGL.BindProgram(myCgVertexProgram);
@@ -227,14 +222,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.AdvanceParticles();
 
             if (this.Keyboard[Key.Escape])
+            {
                 this.Exit();
+            }
         }
 
         #endregion Protected Methods
 
         #region Private Methods
 
-        void AdvanceParticles()
+        private void AdvanceParticles()
         {
             Random r = new Random();
             float deathTime = myGlobalTime - 1.0f;
@@ -266,7 +263,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             }
         }
 
-        void ResetParticles()
+        private void ResetParticles()
         {
             int i;
 

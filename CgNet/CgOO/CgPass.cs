@@ -18,9 +18,11 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
  */
-namespace CgNet.CgOO
+namespace CgOO
 {
     using System;
+
+    using CgNet;
 
     public sealed class CgPass : WrapperObject
     {
@@ -36,6 +38,30 @@ namespace CgNet.CgOO
         #region Properties
 
         #region Public Properties
+
+        public CgAnnotation FirstAnnotation
+        {
+            get
+            {
+                var ptr = Cg.GetFirstPassAnnotation(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
+
+        public CgStateAssignment FirstStateAssignment
+        {
+            get
+            {
+                var ptr = Cg.GetFirstStateAssignment(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgStateAssignment(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
 
         public bool IsPass
         {
@@ -73,9 +99,9 @@ namespace CgNet.CgOO
                 var ptr = Cg.GetPassTechnique(this.Handle);
 
                 return ptr == IntPtr.Zero ? null : new CgTechnique(ptr)
-                {
-                    OwnsHandle = false
-                };
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -96,14 +122,52 @@ namespace CgNet.CgOO
 
         #region Public Methods
 
+        public CgAnnotation CreateAnnotation(string name, ParameterType type)
+        {
+            return new CgAnnotation(Cg.CreatePassAnnotation(this.Handle, name, type));
+        }
+
+        public CgStateAssignment CreateSamplerStateAssignment(CgState state)
+        {
+            return new CgStateAssignment(Cg.CreateSamplerStateAssignment(this.Handle, state.Handle));
+        }
+
+        public CgStateAssignment CreateStateAssignment(CgState state)
+        {
+            return new CgStateAssignment(Cg.CreateStateAssignment(this.Handle, state.Handle));
+        }
+
+        public CgStateAssignment CreateStateAssignmentIndex(CgState state, int index)
+        {
+            return new CgStateAssignment(Cg.CreateStateAssignmentIndex(this.Handle, state.Handle, index));
+        }
+
+        public CgAnnotation GetNamedAnnotation(string name)
+        {
+            var ptr = Cg.GetNamedPassAnnotation(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
+        public CgStateAssignment GetNamedStateAssignment(string name)
+        {
+            var ptr = Cg.GetNamedStateAssignment(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgStateAssignment(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
         public CgProgram GetProgram(Domain domain)
         {
             var ptr = Cg.GetPassProgram(this.Handle, domain);
 
             return ptr == IntPtr.Zero ? null : new CgProgram(ptr)
-            {
-                OwnsHandle = false
-            };
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public void ResetState()

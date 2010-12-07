@@ -18,9 +18,11 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
  */
-namespace CgNet.CgOO
+namespace CgOO
 {
     using System;
+
+    using CgNet;
 
     public sealed class CgEffect : WrapperObject
     {
@@ -48,15 +50,51 @@ namespace CgNet.CgOO
             }
         }
 
+        public CgAnnotation FirstAnnotation
+        {
+            get
+            {
+                var ptr = Cg.GetFirstEffectAnnotation(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
+
+        public CgParameter FirstLeafParameter
+        {
+            get
+            {
+                var ptr = Cg.GetFirstLeafEffectParameter(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
+
+        public CgParameter FirstParameter
+        {
+            get
+            {
+                var ptr = Cg.GetFirstEffectParameter(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
+
         public CgTechnique FirstTechnique
         {
             get
             {
                 var ptr = Cg.GetFirstTechnique(this.Handle);
                 return ptr == IntPtr.Zero ? null : new CgTechnique(ptr)
-                {
-                    OwnsHandle = false
-                };
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -129,6 +167,21 @@ namespace CgNet.CgOO
             return ptr == IntPtr.Zero ? null : new CgEffect(ptr);
         }
 
+        public CgAnnotation CreateAnnotation(string name, ParameterType type)
+        {
+            return new CgAnnotation(Cg.CreateEffectAnnotation(this.Handle, name, type));
+        }
+
+        public CgParameter CreateParameterArray(string name, ParameterType type, int length)
+        {
+            return new CgParameter(Cg.CreateEffectParameterArray(this.Handle, name, type, length));
+        }
+
+        public CgParameter CreateParameterMultiDimArray(string name, ParameterType type, int dim, int[] lengths)
+        {
+            return new CgParameter(Cg.CreateEffectParameterMultiDimArray(this.Handle, name, type, dim, lengths));
+        }
+
         public CgProgram CreateProgram(ProfileType profile, string entry, params string[] args)
         {
             var ptr = Cg.CreateProgramFromEffect(this.Handle, profile, entry, args);
@@ -140,13 +193,22 @@ namespace CgNet.CgOO
             return new CgTechnique(Cg.CreateTechnique(this.Handle, name));
         }
 
+        public CgAnnotation GetNamedAnnotation(string name)
+        {
+            var ptr = Cg.GetNamedEffectAnnotation(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
         public CgParameter GetNamedParameter(string name)
         {
             var ptr = Cg.GetNamedEffectParameter(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
-            {
-                OwnsHandle = false
-            };
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public CgTechnique GetNamedTechnique(string name)
@@ -161,6 +223,15 @@ namespace CgNet.CgOO
         public ParameterType GetNamedUserType(string name)
         {
             return Cg.GetNamedUserType(this.Handle, name);
+        }
+
+        public CgParameter GetParameterBySemantic(string name)
+        {
+            var ptr = Cg.GetEffectParameterBySemantic(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public ParameterType GetUserType(int index)

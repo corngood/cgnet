@@ -21,10 +21,8 @@
 namespace CgNet.GL
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.InteropServices;
-    using System.Text;
 
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
@@ -95,7 +93,7 @@ namespace CgNet.GL
             return CgGLNativeMethods.cgGLGetLatestProfile(profileClass);
         }
 
-        public static int GetManageTextureParameters(IntPtr context)
+        public static bool GetManageTextureParameters(IntPtr context)
         {
             return CgGLNativeMethods.cgGLGetManageTextureParameters(context);
         }

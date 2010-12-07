@@ -18,7 +18,7 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
  */
-namespace CgNet.CgOO
+namespace CgOO
 {
     using System;
 
@@ -108,10 +108,10 @@ namespace CgNet.CgOO
             get
             {
                 var ptr = Cg.GetFirstSamplerState(this.Handle);
-                return ptr != IntPtr.Zero ? null : new CgState(ptr)
-                                   {
-                                       OwnsHandle = false
-                                   };
+                return ptr == IntPtr.Zero ? null : new CgState(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -121,9 +121,9 @@ namespace CgNet.CgOO
             {
                 var ptr = Cg.GetFirstState(this.Handle);
                 return ptr == IntPtr.Zero ? null : new CgState(ptr)
-                {
-                    OwnsHandle = false
-                };
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -165,6 +165,16 @@ namespace CgNet.CgOO
 
         #region Public Methods
 
+        public CgState CreateArraySamplerState(string name, ParameterType type, int elementCount)
+        {
+            return new CgState(Cg.CreateArraySamplerState(this.Handle, name, type, elementCount));
+        }
+
+        public CgState CreateArrayState(string name, ParameterType type, int elementCount)
+        {
+            return new CgState(Cg.CreateArrayState(this.Handle, name, type, elementCount));
+        }
+
         public CgBuffer CreateBuffer(int size, IntPtr data, BufferUsage bufferUsage)
         {
             return new CgBuffer(Cg.CreateBuffer(this.Handle, size, data, bufferUsage));
@@ -178,6 +188,36 @@ namespace CgNet.CgOO
         public CgEffect CreateEffectFromFile(string filename, params string[] args)
         {
             return new CgEffect(Cg.CreateEffectFromFile(this.Handle, filename, args));
+        }
+
+        public CgParameter CreateEffectParameter(string name, ParameterType type)
+        {
+            return new CgParameter(Cg.CreateEffectParameter(this.Handle, name, type));
+        }
+
+        public CgObj CreateObj(ProgramType programType, string source, ProfileType profile, params string[] args)
+        {
+            return new CgObj(Cg.CreateObj(this.Handle, programType, source, profile, args));
+        }
+
+        public CgObj CreateObjFromFile(ProgramType programType, string sourceFile, ProfileType profile, params string[] args)
+        {
+            return new CgObj(Cg.CreateObjFromFile(this.Handle, programType, sourceFile, profile, args));
+        }
+
+        public CgParameter CreateParameter(ParameterType type)
+        {
+            return new CgParameter(Cg.CreateParameter(this.Handle, type));
+        }
+
+        public CgParameter CreateParameterArray(ParameterType type, int length)
+        {
+            return new CgParameter(Cg.CreateParameterArray(this.Handle, type, length));
+        }
+
+        public CgParameter CreateParameterMultiDimArray(ParameterType type, int dim, int[] lengths)
+        {
+            return new CgParameter(Cg.CreateParameterMultiDimArray(this.Handle, type, dim, lengths));
         }
 
         public CgProgram CreateProgram(ProgramType type, string source, ProfileType profile, string entry, params string[] args)
@@ -194,6 +234,11 @@ namespace CgNet.CgOO
                    {
                        Type = type,
                    };
+        }
+
+        public CgState CreateSamplerState(string name, ParameterType type)
+        {
+            return new CgState(Cg.CreateSamplerState(this.Handle, name, type));
         }
 
         public CgState CreateState(string name, ParameterType type)
