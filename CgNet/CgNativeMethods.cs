@@ -1090,7 +1090,7 @@ namespace CgNet
         /// <returns>Base resource of a given parameter.</returns>
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetParameterBaseResource(IntPtr param);
+        internal static extern ResourceType cgGetParameterBaseResource(IntPtr param);
 
         /// <summary>
         /// 
@@ -1120,7 +1120,7 @@ namespace CgNet
         // CGDLL_API CGparameterclass cgGetParameterClass(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetParameterClass(IntPtr param);
+        internal static extern ParameterClass cgGetParameterClass(IntPtr param);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -1182,7 +1182,7 @@ namespace CgNet
         // CGDLL_API CGenum cgGetParameterDirection(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetParameterDirection(IntPtr param);
+        internal static extern ParameterDirection cgGetParameterDirection(IntPtr param);
 
         //CG_API CGeffect CGENTRY cgGetParameterEffect(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -1244,7 +1244,7 @@ namespace CgNet
         /// <returns>Resource of a given parameter.</returns>
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetParameterResource(IntPtr param);
+        internal static extern ResourceType cgGetParameterResource(IntPtr param);
 
         /// <summary>
         ///    Retrieves the index of the specifed parameter according to its type and variability.
@@ -1499,7 +1499,7 @@ namespace CgNet
         // CGDLL_API char const * const *cgGetProgramOptions(CGprogram prog);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern string[] cgGetProgramOptions(IntPtr prog);
+        internal static extern IntPtr cgGetProgramOptions(IntPtr prog);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]

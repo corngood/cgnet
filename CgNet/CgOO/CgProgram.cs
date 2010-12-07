@@ -43,12 +43,19 @@ namespace CgNet.CgOO
         {
             get
             {
-                var retValue = new CgContext(Cg.GetProgramContext(this.Handle))
-                {
-                    OwnsHandle = false
-                };
+                var ptr = Cg.GetProgramContext(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgContext(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
 
-                return retValue;
+        public int DomainsCount
+        {
+            get
+            {
+                return Cg.GetNumProgramDomains(this.Handle);
             }
         }
 
@@ -72,18 +79,11 @@ namespace CgNet.CgOO
         {
             get
             {
-                return new CgProgram(Cg.GetNextProgram(this.Handle))
-                               {
-                                   OwnsHandle = false
-                               };
-            }
-        }
-
-        public int NumProgramDomains
-        {
-            get
-            {
-                return Cg.GetNumProgramDomains(this.Handle);
+                var ptr = Cg.GetNextProgram(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgProgram(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -138,6 +138,14 @@ namespace CgNet.CgOO
             internal set;
         }
 
+        public int UserTypesCount
+        {
+            get
+            {
+                return Cg.GetNumUserTypes(this.Handle);
+            }
+        }
+
         #endregion Public Properties
 
         #endregion Properties
@@ -145,26 +153,6 @@ namespace CgNet.CgOO
         #region Methods
 
         #region Public Static Methods
-
-        public static CgProgram CombinePrograms(CgProgram exe1, CgProgram exe2)
-        {
-            return new CgProgram(Cg.CombinePrograms(exe1.Handle, exe2.Handle));
-        }
-
-        public static CgProgram CombinePrograms(CgProgram exe1, CgProgram exe2, CgProgram exe3)
-        {
-            return new CgProgram(Cg.CombinePrograms(exe1.Handle, exe2.Handle, exe3.Handle));
-        }
-
-        public static CgProgram CombinePrograms(CgProgram exe1, CgProgram exe2, CgProgram exe3, CgProgram exe4)
-        {
-            return new CgProgram(Cg.CombinePrograms(exe1.Handle, exe2.Handle, exe3.Handle, exe4.Handle));
-        }
-
-        public static CgProgram CombinePrograms(CgProgram exe1, CgProgram exe2, CgProgram exe3, CgProgram exe4, CgProgram exe5)
-        {
-            return new CgProgram(Cg.CombinePrograms(exe1.Handle, exe2.Handle, exe3.Handle, exe4.Handle, exe5.Handle));
-        }
 
         public static CgProgram CombinePrograms(params CgProgram[] programs)
         {
@@ -174,7 +162,8 @@ namespace CgNet.CgOO
                 buf[i] = programs[i].Handle;
             }
 
-            return new CgProgram(Cg.CombinePrograms(buf));
+            var ptr = Cg.CombinePrograms(buf);
+            return ptr == IntPtr.Zero ? null : new CgProgram(ptr);
         }
 
         public static CgProgram Create(CgContext context, ProgramType type, string source, ProfileType profile, string entry, params string[] args)
@@ -199,7 +188,8 @@ namespace CgNet.CgOO
 
         public CgProgram Combine(CgProgram exe1)
         {
-            return new CgProgram(Cg.CombinePrograms(this.Handle, exe1.Handle));
+            var ptr = Cg.CombinePrograms(this.Handle, exe1.Handle);
+            return ptr == IntPtr.Zero ? null : new CgProgram(ptr);
         }
 
         public void Compile()
@@ -209,12 +199,22 @@ namespace CgNet.CgOO
 
         public CgProgram Copy()
         {
-            return new CgProgram(Cg.CopyProgram(this.Handle));
+            var ptr = Cg.CopyProgram(this.Handle);
+            return ptr == IntPtr.Zero ? null : new CgProgram(ptr);
         }
 
         public float[] EvaluateProgram(int ncomps, int nx, int ny, int nz)
         {
             return Cg.EvaluateProgram(this.Handle, ncomps, nx, ny, nz);
+        }
+
+        public CgBuffer GetBuffer(int bufferIndex)
+        {
+            var ptr = Cg.GetProgramBuffer(this.Handle, bufferIndex);
+            return ptr == IntPtr.Zero ? null : new CgBuffer(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public ParameterType GetNamedUserType(string name)
@@ -229,10 +229,11 @@ namespace CgNet.CgOO
 
         public CgProgram GetProgramDomainProgram(int index)
         {
-            return new CgProgram(Cg.GetProgramDomainProgram(this.Handle, index))
-                   {
-                       OwnsHandle = false
-                   };
+            var ptr = Cg.GetProgramDomainProgram(this.Handle, index);
+            return ptr == IntPtr.Zero ? null : new CgProgram(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
         }
 
         public string GetProgramString(SourceType sourceType)
@@ -253,6 +254,11 @@ namespace CgNet.CgOO
         public void SetPassProgramParameters()
         {
             Cg.SetPassProgramParameters(this.Handle);
+        }
+
+        public void SetProgramBuffer(int bufferIndex, CgBuffer buffer)
+        {
+            Cg.SetProgramBuffer(this.Handle, bufferIndex, buffer.Handle);
         }
 
         public void UpdateProgramParameters()

@@ -30,34 +30,9 @@ namespace CgNet.CgOO
 
         #region Public Static Methods
 
-        public static void AddStateEnumerant(IntPtr state, string name, int value)
-        {
-            Cg.AddStateEnumerant(state, name, value);
-        }
-
-        public static bool CallStateResetCallback(IntPtr stateassignment)
-        {
-            return Cg.CallStateResetCallback(stateassignment);
-        }
-
-        public static bool CallStateSetCallback(IntPtr stateassignment)
-        {
-            return Cg.CallStateSetCallback(stateassignment);
-        }
-
-        public static bool CallStateValidateCallback(IntPtr stateassignment)
-        {
-            return Cg.CallStateValidateCallback(stateassignment);
-        }
-
         public static void ConnectParameter(IntPtr from, IntPtr to)
         {
             Cg.ConnectParameter(from, to);
-        }
-
-        public static IntPtr CopyEffect(IntPtr effect)
-        {
-            return Cg.CopyEffect(effect);
         }
 
         public static IntPtr CreateArraySamplerState(CgContext context, string name, ParameterType type, int elementCount)
@@ -70,24 +45,9 @@ namespace CgNet.CgOO
             return Cg.CreateArrayState(context.Handle, name, type, elementCount);
         }
 
-        public static IntPtr CreateBuffer(CgContext context, int size, IntPtr data, BufferUsage bufferUsage)
+        public static IntPtr CreateEffectAnnotation(CgEffect effect, string name, ParameterType type)
         {
-            return Cg.CreateBuffer(context.Handle, size, data, bufferUsage);
-        }
-
-        public static IntPtr CreateEffect(CgContext context, string code, params string[] args)
-        {
-            return Cg.CreateEffect(context.Handle, code, args);
-        }
-
-        public static IntPtr CreateEffectAnnotation(IntPtr effect, string name, ParameterType type)
-        {
-            return Cg.CreateEffectAnnotation(effect, name, type);
-        }
-
-        public static IntPtr CreateEffectFromFile(CgContext context, string filename, params string[] args)
-        {
-            return Cg.CreateEffectFromFile(context.Handle, filename, args);
+            return Cg.CreateEffectAnnotation(effect.Handle, name, type);
         }
 
         public static IntPtr CreateEffectParameter(CgContext context, string name, ParameterType type)
@@ -95,14 +55,14 @@ namespace CgNet.CgOO
             return Cg.CreateEffectParameter(context.Handle, name, type);
         }
 
-        public static IntPtr CreateEffectParameterArray(IntPtr effect, string name, ParameterType type, int length)
+        public static IntPtr CreateEffectParameterArray(CgEffect effect, string name, ParameterType type, int length)
         {
-            return Cg.CreateEffectParameterArray(effect, name, type, length);
+            return Cg.CreateEffectParameterArray(effect.Handle, name, type, length);
         }
 
-        public static IntPtr CreateEffectParameterMultiDimArray(IntPtr effect, string name, ParameterType type, int dim, int[] lengths)
+        public static IntPtr CreateEffectParameterMultiDimArray(CgEffect effect, string name, ParameterType type, int dim, int[] lengths)
         {
-            return Cg.CreateEffectParameterMultiDimArray(effect, name, type, dim, lengths);
+            return Cg.CreateEffectParameterMultiDimArray(effect.Handle, name, type, dim, lengths);
         }
 
         public static IntPtr CreateObj(CgContext context, ProgramType programType, string source, ProfileType profile, params string[] args)
@@ -120,9 +80,9 @@ namespace CgNet.CgOO
             return Cg.CreateParameter(context.Handle, type);
         }
 
-        public static IntPtr CreateParameterAnnotation(IntPtr param, string name, ParameterType type)
+        public static IntPtr CreateParameterAnnotation(CgParameter param, string name, ParameterType type)
         {
-            return Cg.CreateParameterAnnotation(param, name, type);
+            return Cg.CreateParameterAnnotation(param.Handle, name, type);
         }
 
         public static IntPtr CreateParameterArray(CgContext context, ParameterType type, int length)
@@ -135,14 +95,9 @@ namespace CgNet.CgOO
             return Cg.CreateParameterMultiDimArray(context.Handle, type, dim, lengths);
         }
 
-        public static IntPtr CreatePass(IntPtr tech, string name)
+        public static IntPtr CreatePassAnnotation(CgPass pass, string name, ParameterType type)
         {
-            return Cg.CreatePass(tech, name);
-        }
-
-        public static IntPtr CreatePassAnnotation(IntPtr pass, string name, ParameterType type)
-        {
-            return Cg.CreatePassAnnotation(pass, name, type);
+            return Cg.CreatePassAnnotation(pass.Handle, name, type);
         }
 
         public static IntPtr CreateProgramAnnotation(CgProgram prog, string name, ParameterType type)
@@ -150,69 +105,34 @@ namespace CgNet.CgOO
             return Cg.CreateProgramAnnotation(prog.Handle, name, type);
         }
 
-        public static CgProgram CreateProgramFromEffect(IntPtr effect, ProfileType profile, string entry, params string[] args)
-        {
-            return new CgProgram(Cg.CreateProgramFromEffect(effect, profile, entry, args));
-        }
-
         public static IntPtr CreateSamplerState(CgContext context, string name, ParameterType type)
         {
             return Cg.CreateSamplerState(context.Handle, name, type);
         }
 
-        public static IntPtr CreateSamplerStateAssignment(IntPtr pass, IntPtr state)
+        public static IntPtr CreateSamplerStateAssignment(CgPass pass, CgState state)
         {
-            return Cg.CreateSamplerStateAssignment(pass, state);
+            return Cg.CreateSamplerStateAssignment(pass.Handle, state.Handle);
         }
 
-        public static IntPtr CreateState(CgContext context, string name, ParameterType type)
+        public static IntPtr CreateStateAssignment(CgPass pass, CgState state)
         {
-            return Cg.CreateState(context.Handle, name, type);
+            return Cg.CreateStateAssignment(pass.Handle, state.Handle);
         }
 
-        public static IntPtr CreateStateAssignment(IntPtr pass, IntPtr state)
+        public static IntPtr CreateStateAssignmentIndex(CgPass pass, CgState state, int index)
         {
-            return Cg.CreateStateAssignment(pass, state);
+            return Cg.CreateStateAssignmentIndex(pass.Handle, state.Handle, index);
         }
 
-        public static IntPtr CreateStateAssignmentIndex(IntPtr pass, IntPtr state, int index)
+        public static IntPtr CreateTechniqueAnnotation(CgTechnique technique, string name, ParameterType type)
         {
-            return Cg.CreateStateAssignmentIndex(pass, state, index);
-        }
-
-        public static IntPtr CreateTechnique(IntPtr effect, string name)
-        {
-            return Cg.CreateTechnique(effect, name);
-        }
-
-        public static IntPtr CreateTechniqueAnnotation(IntPtr tech, string name, ParameterType type)
-        {
-            return Cg.CreateTechniqueAnnotation(tech, name, type);
-        }
-
-        public static void DestroyBuffer(IntPtr buffer)
-        {
-            Cg.DestroyBuffer(buffer);
-        }
-
-        public static void DestroyEffect(IntPtr effect)
-        {
-            Cg.DestroyEffect(effect);
+            return Cg.CreateTechniqueAnnotation(technique.Handle, name, type);
         }
 
         public static void DestroyObj(IntPtr obj)
         {
             Cg.DestroyObj(obj);
-        }
-
-        public static void DestroyParameter(IntPtr param)
-        {
-            Cg.DestroyParameter(param);
-        }
-
-        public static void DisconnectParameter(IntPtr param)
-        {
-            Cg.DisconnectParameter(param);
         }
 
         public static string GetAnnotationName(IntPtr annotation)
@@ -225,29 +145,9 @@ namespace CgNet.CgOO
             return Cg.GetAnnotationType(annotation);
         }
 
-        public static int GetArrayDimension(IntPtr param)
-        {
-            return Cg.GetArrayDimension(param);
-        }
-
         public static IntPtr GetArrayParameter(IntPtr aparam, int index)
         {
             return Cg.GetArrayParameter(aparam, index);
-        }
-
-        public static int GetArraySize(IntPtr param, int dimension)
-        {
-            return Cg.GetArraySize(param, dimension);
-        }
-
-        public static int GetArrayTotalSize(IntPtr param)
-        {
-            return Cg.GetArrayTotalSize(param);
-        }
-
-        public static ParameterType GetArrayType(IntPtr param)
-        {
-            return Cg.GetArrayType(param);
         }
 
         public static bool[] GetBoolAnnotationValues(IntPtr annotation)
@@ -260,24 +160,9 @@ namespace CgNet.CgOO
             return Cg.GetBoolStateAssignmentValues(stateassignment);
         }
 
-        public static int GetBufferSize(IntPtr buffer)
-        {
-            return Cg.GetBufferSize(buffer);
-        }
-
-        public static IntPtr GetConnectedParameter(IntPtr param)
-        {
-            return Cg.GetConnectedParameter(param);
-        }
-
         public static IntPtr GetConnectedStateAssignmentParameter(IntPtr sa)
         {
             return Cg.GetConnectedStateAssignmentParameter(sa);
-        }
-
-        public static IntPtr GetConnectedToParameter(IntPtr param, int index)
-        {
-            return Cg.GetConnectedToParameter(param, index);
         }
 
         public static IntPtr GetDependentAnnotationParameter(IntPtr annotation, int index)
@@ -295,49 +180,24 @@ namespace CgNet.CgOO
             return Cg.GetDependentStateAssignmentParameter(stateassignment, index);
         }
 
-        public static IntPtr GetEffectContext(IntPtr effect)
+        public static IntPtr GetEffectParameterBySemantic(CgEffect effect, string name)
         {
-            return Cg.GetEffectContext(effect);
+            return Cg.GetEffectParameterBySemantic(effect.Handle, name);
         }
 
-        public static string GetEffectName(IntPtr effect)
+        public static IntPtr GetFirstEffectAnnotation(CgEffect effect)
         {
-            return Cg.GetEffectName(effect);
+            return Cg.GetFirstEffectAnnotation(effect.Handle);
         }
 
-        public static IntPtr GetEffectParameterBuffer(IntPtr param)
+        public static IntPtr GetFirstEffectParameter(CgEffect effect)
         {
-            return Cg.GetEffectParameterBuffer(param);
+            return Cg.GetFirstEffectParameter(effect.Handle);
         }
 
-        public static IntPtr GetEffectParameterBySemantic(IntPtr effect, string name)
+        public static IntPtr GetFirstLeafEffectParameter(CgEffect effect)
         {
-            return Cg.GetEffectParameterBySemantic(effect, name);
-        }
-
-        public static IntPtr GetFirstDependentParameter(IntPtr param)
-        {
-            return Cg.GetFirstDependentParameter(param);
-        }
-
-        public static IntPtr GetFirstEffect(CgContext context)
-        {
-            return Cg.GetFirstEffect(context.Handle);
-        }
-
-        public static IntPtr GetFirstEffectAnnotation(IntPtr effect)
-        {
-            return Cg.GetFirstEffectAnnotation(effect);
-        }
-
-        public static IntPtr GetFirstEffectParameter(IntPtr effect)
-        {
-            return Cg.GetFirstEffectParameter(effect);
-        }
-
-        public static IntPtr GetFirstLeafEffectParameter(IntPtr effect)
-        {
-            return Cg.GetFirstLeafEffectParameter(effect);
+            return Cg.GetFirstLeafEffectParameter(effect.Handle);
         }
 
         public static IntPtr GetFirstLeafParameter(CgProgram program, int nameSpace)
@@ -350,19 +210,14 @@ namespace CgNet.CgOO
             return Cg.GetFirstParameter(prog.Handle, nameSpace);
         }
 
-        public static IntPtr GetFirstParameterAnnotation(IntPtr param)
+        public static IntPtr GetFirstParameterAnnotation(CgParameter param)
         {
-            return Cg.GetFirstParameterAnnotation(param);
+            return Cg.GetFirstParameterAnnotation(param.Handle);
         }
 
-        public static IntPtr GetFirstPass(IntPtr technique)
+        public static IntPtr GetFirstPassAnnotation(CgPass pass)
         {
-            return Cg.GetFirstPass(technique);
-        }
-
-        public static IntPtr GetFirstPassAnnotation(IntPtr pass)
-        {
-            return Cg.GetFirstPassAnnotation(pass);
+            return Cg.GetFirstPassAnnotation(pass.Handle);
         }
 
         public static IntPtr GetFirstProgramAnnotation(CgProgram prog)
@@ -370,39 +225,19 @@ namespace CgNet.CgOO
             return Cg.GetFirstProgramAnnotation(prog.Handle);
         }
 
-        public static IntPtr GetFirstSamplerState(CgContext context)
+        public static IntPtr GetFirstSamplerStateAssignment(CgParameter param)
         {
-            return Cg.GetFirstSamplerState(context.Handle);
+            return Cg.GetFirstSamplerStateAssignment(param.Handle);
         }
 
-        public static IntPtr GetFirstSamplerStateAssignment(IntPtr param)
+        public static IntPtr GetFirstStateAssignment(CgPass pass)
         {
-            return Cg.GetFirstSamplerStateAssignment(param);
+            return Cg.GetFirstStateAssignment(pass.Handle);
         }
 
-        public static IntPtr GetFirstState(CgContext context)
+        public static IntPtr GetFirstTechniqueAnnotation(CgTechnique technique)
         {
-            return Cg.GetFirstState(context.Handle);
-        }
-
-        public static IntPtr GetFirstStateAssignment(IntPtr pass)
-        {
-            return Cg.GetFirstStateAssignment(pass);
-        }
-
-        public static IntPtr GetFirstStructParameter(IntPtr param)
-        {
-            return Cg.GetFirstStructParameter(param);
-        }
-
-        public static IntPtr GetFirstTechnique(IntPtr effect)
-        {
-            return Cg.GetFirstTechnique(effect);
-        }
-
-        public static IntPtr GetFirstTechniqueAnnotation(IntPtr technique)
-        {
-            return Cg.GetFirstTechniqueAnnotation(technique);
+            return Cg.GetFirstTechniqueAnnotation(technique.Handle);
         }
 
         public static float[] GetFloatAnnotationValues(IntPtr annotation, out int nvalues)
@@ -425,51 +260,9 @@ namespace CgNet.CgOO
             return Cg.GetIntStateAssignmentValues(stateassignment, nVals);
         }
 
-        public static void GetMatrixParameter(IntPtr param, out int[] values)
+        public static IntPtr GetNamedEffectAnnotation(CgEffect effect, string name)
         {
-            Cg.GetMatrixParameter(param, out values);
-        }
-
-        public static void GetMatrixParameter(IntPtr param, out float[] values)
-        {
-            Cg.GetMatrixParameter(param, out values);
-        }
-
-        public static void GetMatrixParameter(IntPtr param, out double[] values)
-        {
-            Cg.GetMatrixParameter(param, out values);
-        }
-
-        public static T[] GetMatrixParameter<T>(IntPtr param)
-            where T : struct
-        {
-            return Cg.GetMatrixParameter<T>(param);
-        }
-
-        public static T[] GetMatrixParameter<T>(IntPtr param, Order order)
-            where T : struct
-        {
-            return Cg.GetMatrixParameter<T>(param, order);
-        }
-
-        public static Order GetMatrixParameterOrder(IntPtr param)
-        {
-            return Cg.GetMatrixParameterOrder(param);
-        }
-
-        public static IntPtr GetNamedEffect(CgContext context, string name)
-        {
-            return Cg.GetNamedEffect(context.Handle, name);
-        }
-
-        public static IntPtr GetNamedEffectAnnotation(IntPtr effect, string name)
-        {
-            return Cg.GetNamedEffectAnnotation(effect, name);
-        }
-
-        public static IntPtr GetNamedEffectParameter(IntPtr effect, string name)
-        {
-            return Cg.GetNamedEffectParameter(effect, name);
+            return Cg.GetNamedEffectAnnotation(effect.Handle, name);
         }
 
         public static IntPtr GetNamedParameter(CgProgram program, string parameter)
@@ -477,19 +270,14 @@ namespace CgNet.CgOO
             return Cg.GetNamedParameter(program.Handle, parameter);
         }
 
-        public static IntPtr GetNamedParameterAnnotation(IntPtr param, string name)
+        public static IntPtr GetNamedParameterAnnotation(CgParameter param, string name)
         {
-            return Cg.GetNamedParameterAnnotation(param, name);
+            return Cg.GetNamedParameterAnnotation(param.Handle, name);
         }
 
-        public static IntPtr GetNamedPass(IntPtr technique, string name)
+        public static IntPtr GetNamedPassAnnotation(CgPass pass, string name)
         {
-            return Cg.GetNamedPass(technique, name);
-        }
-
-        public static IntPtr GetNamedPassAnnotation(IntPtr pass, string name)
-        {
-            return Cg.GetNamedPassAnnotation(pass, name);
+            return Cg.GetNamedPassAnnotation(pass.Handle, name);
         }
 
         public static IntPtr GetNamedProgramAnnotation(CgProgram prog, string name)
@@ -502,59 +290,24 @@ namespace CgNet.CgOO
             return Cg.GetNamedProgramParameter(prog.Handle, nameSpace, name);
         }
 
-        public static IntPtr GetNamedSamplerState(CgContext context, string name)
+        public static IntPtr GetNamedSamplerStateAssignment(CgParameter param, string name)
         {
-            return Cg.GetNamedSamplerState(context.Handle, name);
+            return Cg.GetNamedSamplerStateAssignment(param.Handle, name);
         }
 
-        public static IntPtr GetNamedSamplerStateAssignment(IntPtr param, string name)
+        public static IntPtr GetNamedStateAssignment(CgPass pass, string name)
         {
-            return Cg.GetNamedSamplerStateAssignment(param, name);
+            return Cg.GetNamedStateAssignment(pass.Handle, name);
         }
 
-        public static IntPtr GetNamedState(CgContext context, string name)
+        public static IntPtr GetNamedTechniqueAnnotation(CgTechnique technique, string name)
         {
-            return Cg.GetNamedState(context.Handle, name);
-        }
-
-        public static IntPtr GetNamedStateAssignment(IntPtr pass, string name)
-        {
-            return Cg.GetNamedStateAssignment(pass, name);
-        }
-
-        public static IntPtr GetNamedStructParameter(IntPtr param, string name)
-        {
-            return Cg.GetNamedStructParameter(param, name);
-        }
-
-        public static IntPtr GetNamedSubParameter(IntPtr param, string name)
-        {
-            return Cg.GetNamedSubParameter(param, name);
-        }
-
-        public static IntPtr GetNamedTechnique(IntPtr effect, string name)
-        {
-            return Cg.GetNamedTechnique(effect, name);
-        }
-
-        public static IntPtr GetNamedTechniqueAnnotation(IntPtr technique, string name)
-        {
-            return Cg.GetNamedTechniqueAnnotation(technique, name);
-        }
-
-        public static ParameterType GetNamedUserType(IntPtr effect, string name)
-        {
-            return Cg.GetNamedUserType(effect, name);
+            return Cg.GetNamedTechniqueAnnotation(technique.Handle, name);
         }
 
         public static IntPtr GetNextAnnotation(IntPtr annotation)
         {
             return Cg.GetNextAnnotation(annotation);
-        }
-
-        public static IntPtr GetNextEffect(IntPtr effect)
-        {
-            return Cg.GetNextEffect(effect);
         }
 
         public static IntPtr GetNextLeafParameter(IntPtr currentParam)
@@ -567,29 +320,9 @@ namespace CgNet.CgOO
             return Cg.GetNextParameter(currentParam);
         }
 
-        public static IntPtr GetNextPass(IntPtr pass)
-        {
-            return Cg.GetNextPass(pass);
-        }
-
-        public static IntPtr GetNextState(IntPtr state)
-        {
-            return Cg.GetNextState(state);
-        }
-
         public static IntPtr GetNextStateAssignment(IntPtr stateassignment)
         {
             return Cg.GetNextStateAssignment(stateassignment);
-        }
-
-        public static IntPtr GetNextTechnique(IntPtr technique)
-        {
-            return Cg.GetNextTechnique(technique);
-        }
-
-        public static int GetNumConnectedToParameters(IntPtr param)
-        {
-            return Cg.GetNumConnectedToParameters(param);
         }
 
         public static int GetNumDependentAnnotationParameters(IntPtr annotation)
@@ -605,214 +338,6 @@ namespace CgNet.CgOO
         public static int GetNumDependentStateAssignmentParameters(IntPtr stateassignment)
         {
             return Cg.GetNumDependentStateAssignmentParameters(stateassignment);
-        }
-
-        public static int GetNumStateEnumerants(IntPtr state)
-        {
-            return Cg.GetNumStateEnumerants(state);
-        }
-
-        public static int GetNumUserTypes(IntPtr handle)
-        {
-            return Cg.GetNumUserTypes(handle);
-        }
-
-        public static int GetParameterBaseResource(IntPtr param)
-        {
-            return Cg.GetParameterBaseResource(param);
-        }
-
-        public static ParameterType GetParameterBaseType(IntPtr param)
-        {
-            return Cg.GetParameterBaseType(param);
-        }
-
-        public static int GetParameterBufferIndex(IntPtr param)
-        {
-            return Cg.GetParameterBufferIndex(param);
-        }
-
-        public static int GetParameterBufferOffset(IntPtr param)
-        {
-            return Cg.GetParameterBufferOffset(param);
-        }
-
-        public static int GetParameterClass(IntPtr param)
-        {
-            return Cg.GetParameterClass(param);
-        }
-
-        public static int GetParameterColumns(IntPtr param)
-        {
-            return Cg.GetParameterColumns(param);
-        }
-
-        public static IntPtr GetParameterContext(IntPtr param)
-        {
-            return Cg.GetParameterContext(param);
-        }
-
-        public static int GetParameterDefaultValue(IntPtr param, ref double[] values)
-        {
-            return Cg.GetParameterDefaultValue(param, ref values, Order.RowMajor);
-        }
-
-        public static int GetParameterDefaultValue(IntPtr param, ref double[] values, Order order)
-        {
-            return Cg.GetParameterDefaultValue(param, ref values, order);
-        }
-
-        public static int GetParameterDefaultValue(IntPtr param, ref int[] values)
-        {
-            return Cg.GetParameterDefaultValue(param, ref values, Order.RowMajor);
-        }
-
-        public static int GetParameterDefaultValue(IntPtr param, ref int[] values, Order order)
-        {
-            return Cg.GetParameterDefaultValue(param, ref values, order);
-        }
-
-        public static int GetParameterDefaultValue(IntPtr param, ref float[] values)
-        {
-            return Cg.GetParameterDefaultValue(param, ref values, Order.RowMajor);
-        }
-
-        public static int GetParameterDefaultValue(IntPtr param, ref float[] values, Order order)
-        {
-            return Cg.GetParameterDefaultValue(param, ref values, order);
-        }
-
-        public static int GetParameterDirection(IntPtr param)
-        {
-            return Cg.GetParameterDirection(param);
-        }
-
-        public static IntPtr GetParameterEffect(IntPtr param)
-        {
-            return Cg.GetParameterEffect(param);
-        }
-
-        public static int GetParameterIndex(IntPtr param)
-        {
-            return Cg.GetParameterIndex(param);
-        }
-
-        public static string GetParameterName(IntPtr param)
-        {
-            return Cg.GetParameterName(param);
-        }
-
-        public static ParameterType GetParameterNamedType(IntPtr param)
-        {
-            return Cg.GetParameterNamedType(param);
-        }
-
-        public static int GetParameterOrdinalNumber(IntPtr param)
-        {
-            return Cg.GetParameterOrdinalNumber(param);
-        }
-
-        public static IntPtr GetParameterProgram(IntPtr param)
-        {
-            return Cg.GetParameterProgram(param);
-        }
-
-        public static int GetParameterResource(IntPtr param)
-        {
-            return Cg.GetParameterResource(param);
-        }
-
-        public static int GetParameterResourceIndex(IntPtr param)
-        {
-            return Cg.GetParameterResourceIndex(param);
-        }
-
-        public static string GetParameterResourceName(IntPtr param)
-        {
-            return Cg.GetParameterResourceName(param);
-        }
-
-        public static int GetParameterResourceSize(IntPtr param)
-        {
-            return Cg.GetParameterResourceSize(param);
-        }
-
-        public static ParameterType GetParameterResourceType(IntPtr param)
-        {
-            return Cg.GetParameterResourceType(param);
-        }
-
-        public static int GetParameterRows(IntPtr param)
-        {
-            return Cg.GetParameterRows(param);
-        }
-
-        public static string GetParameterSemantic(IntPtr param)
-        {
-            return Cg.GetParameterSemantic(param);
-        }
-
-        public static ParameterType GetParameterType(IntPtr param)
-        {
-            return Cg.GetParameterType(param);
-        }
-
-        public static void GetParameterValue(IntPtr param, ref int[] values)
-        {
-            Cg.GetParameterValue(param, ref values, Order.RowMajor);
-        }
-
-        public static void GetParameterValue(IntPtr param, ref double[] values)
-        {
-            Cg.GetParameterValue(param, ref values, Order.RowMajor);
-        }
-
-        public static void GetParameterValue(IntPtr param, ref float[] values)
-        {
-            Cg.GetParameterValue(param, ref values, Order.RowMajor);
-        }
-
-        public static T GetParameterValue<T>(IntPtr param)
-            where T : struct
-        {
-            return Cg.GetParameterValue<T>(param);
-        }
-
-        public static void GetParameterValue<T>(IntPtr param, ref T[] values)
-            where T : struct
-        {
-            Cg.GetParameterValue(param, ref values, Order.RowMajor);
-        }
-
-        public static void GetParameterValue<T>(IntPtr param, ref T[] values, Order order)
-            where T : struct
-        {
-            Cg.GetParameterValue(param, ref values, order);
-        }
-
-        public static int GetParameterVariability(IntPtr param)
-        {
-            return Cg.GetParameterVariability(param);
-        }
-
-        public static string GetPassName(IntPtr pass)
-        {
-            return Cg.GetPassName(pass);
-        }
-
-        public static IntPtr GetPassProgram(IntPtr pass, Domain domain)
-        {
-            return Cg.GetPassProgram(pass, domain);
-        }
-
-        public static IntPtr GetPassTechnique(IntPtr pass)
-        {
-            return Cg.GetPassTechnique(pass);
-        }
-
-        public static IntPtr GetProgramBuffer(CgProgram program, int bufferIndex)
-        {
-            return Cg.GetProgramBuffer(program.Handle, bufferIndex);
         }
 
         public static IntPtr GetProgramStateAssignmentValue(IntPtr stateassignment)
@@ -850,56 +375,6 @@ namespace CgNet.CgOO
             return Cg.GetStateAssignmentState(stateassignment);
         }
 
-        public static IntPtr GetStateContext(IntPtr state)
-        {
-            return Cg.GetStateContext(state);
-        }
-
-        public static string GetStateEnumerant(IntPtr state, int index, out int value)
-        {
-            return Cg.GetStateEnumerant(state, index, out value);
-        }
-
-        public static string GetStateEnumerantName(IntPtr state, int index)
-        {
-            return Cg.GetStateEnumerantName(state, index);
-        }
-
-        public static int GetStateEnumerantValue(IntPtr state, string name)
-        {
-            return Cg.GetStateEnumerantValue(state, name);
-        }
-
-        public static ProfileType GetStateLatestProfile(IntPtr state)
-        {
-            return Cg.GetStateLatestProfile(state);
-        }
-
-        public static string GetStateName(IntPtr state)
-        {
-            return Cg.GetStateName(state);
-        }
-
-        public static Cg.CgStateCallbackDelegate GetStateResetCallback(IntPtr state)
-        {
-            return Cg.GetStateResetCallback(state);
-        }
-
-        public static Cg.CgStateCallbackDelegate GetStateSetCallback(IntPtr state)
-        {
-            return Cg.GetStateSetCallback(state);
-        }
-
-        public static ParameterType GetStateType(IntPtr state)
-        {
-            return Cg.GetStateType(state);
-        }
-
-        public static Cg.CgStateCallbackDelegate GetStateValidateCallback(IntPtr state)
-        {
-            return Cg.GetStateValidateCallback(state);
-        }
-
         public static string GetStringAnnotationValue(IntPtr annotation)
         {
             return Cg.GetStringAnnotationValue(annotation);
@@ -910,24 +385,9 @@ namespace CgNet.CgOO
             return Cg.GetStringAnnotationValues(ann);
         }
 
-        public static string GetStringParameterValue(IntPtr param)
-        {
-            return Cg.GetStringParameterValue(param);
-        }
-
         public static string GetStringStateAssignmentValue(IntPtr stateassignment)
         {
             return Cg.GetStringStateAssignmentValue(stateassignment);
-        }
-
-        public static IntPtr GetTechniqueEffect(IntPtr technique)
-        {
-            return Cg.GetTechniqueEffect(technique);
-        }
-
-        public static string GetTechniqueName(IntPtr technique)
-        {
-            return Cg.GetTechniqueName(technique);
         }
 
         public static IntPtr GetTextureStateAssignmentValue(IntPtr stateassignment)
@@ -935,74 +395,19 @@ namespace CgNet.CgOO
             return Cg.GetTextureStateAssignmentValue(stateassignment);
         }
 
-        public static ParameterType GetUserType(IntPtr effect, int index)
-        {
-            return Cg.GetUserType(effect, index);
-        }
-
         public static bool IsAnnotation(IntPtr annotation)
         {
             return Cg.IsAnnotation(annotation);
         }
 
-        public static bool IsEffect(IntPtr effect)
+        public static bool IsParameterUsed(CgParameter param, IntPtr handle)
         {
-            return Cg.IsEffect(effect);
-        }
-
-        public static bool IsParameter(IntPtr param)
-        {
-            return Cg.IsParameter(param);
-        }
-
-        public static bool IsParameterGlobal(IntPtr param)
-        {
-            return Cg.IsParameterGlobal(param);
-        }
-
-        public static bool IsParameterReferenced(IntPtr param)
-        {
-            return Cg.IsParameterReferenced(param);
-        }
-
-        public static bool IsParameterUsed(IntPtr param, IntPtr handle)
-        {
-            return Cg.IsParameterUsed(param, handle);
-        }
-
-        public static bool IsPass(IntPtr pass)
-        {
-            return Cg.IsPass(pass);
-        }
-
-        public static bool IsState(IntPtr state)
-        {
-            return Cg.IsState(state);
+            return Cg.IsParameterUsed(param.Handle, handle);
         }
 
         public static bool IsStateAssignment(IntPtr stateassignment)
         {
             return Cg.IsStateAssignment(stateassignment);
-        }
-
-        public static bool IsTechnique(IntPtr technique)
-        {
-            return Cg.IsTechnique(technique);
-        }
-
-        public static bool IsTechniqueValidated(IntPtr technique)
-        {
-            return Cg.IsTechniqueValidated(technique);
-        }
-
-        public static IntPtr MapBuffer(IntPtr buffer, BufferAccess access)
-        {
-            return Cg.MapBuffer(buffer, access);
-        }
-
-        public static void ResetPassState(IntPtr pass)
-        {
-            Cg.ResetPassState(pass);
         }
 
         public static bool SetAnnotation(IntPtr ann, int value)
@@ -1020,199 +425,9 @@ namespace CgNet.CgOO
             return Cg.SetAnnotation(ann, value);
         }
 
-        public static void SetArraySize(IntPtr param, int size)
-        {
-            Cg.SetArraySize(param, size);
-        }
-
         public static bool SetBoolAnnotation(IntPtr annotation, bool value)
         {
             return Cg.SetBoolAnnotation(annotation, value);
-        }
-
-        public static void SetBufferData(IntPtr buffer, int size, IntPtr data)
-        {
-            Cg.SetBufferData(buffer, size, data);
-        }
-
-        public static void SetBufferSubData(IntPtr buffer, int offset, int size, IntPtr data)
-        {
-            Cg.SetBufferSubData(buffer, offset, size, data);
-        }
-
-        public static bool SetEffectName(IntPtr effect, string name)
-        {
-            return Cg.SetEffectName(effect, name);
-        }
-
-        public static void SetEffectParameterBuffer(IntPtr param, IntPtr buffer)
-        {
-            Cg.SetEffectParameterBuffer(param, buffer);
-        }
-
-        public static void SetLastListing(IntPtr effect, string listing)
-        {
-            Cg.SetLastListing(effect, listing);
-        }
-
-        public static void SetMatrixParameter(IntPtr param, float[] matrix)
-        {
-            Cg.SetMatrixParameter(param, matrix, Order.RowMajor);
-        }
-
-        public static void SetMatrixParameter(IntPtr param, float[] matrix, Order order)
-        {
-            Cg.SetMatrixParameter(param, matrix, order);
-        }
-
-        public static void SetMatrixParameter(IntPtr param, double[] matrix)
-        {
-            Cg.SetMatrixParameter(param, matrix, Order.RowMajor);
-        }
-
-        public static void SetMatrixParameter(IntPtr param, double[] matrix, Order order)
-        {
-            Cg.SetMatrixParameter(param, matrix, order);
-        }
-
-        public static void SetMatrixParameter(IntPtr param, int[] matrix)
-        {
-            Cg.SetMatrixParameter(param, matrix, Order.RowMajor);
-        }
-
-        public static void SetMatrixParameter(IntPtr param, int[] matrix, Order order)
-        {
-            Cg.SetMatrixParameter(param, matrix, order);
-        }
-
-        public static void SetMultiDimArraySize(IntPtr param, int[] sizes)
-        {
-            Cg.SetMultiDimArraySize(param, sizes);
-        }
-
-        public static void SetParameter(IntPtr param, float x)
-        {
-            Cg.SetParameter(param, x);
-        }
-
-        public static void SetParameter(IntPtr param, float x, float y, float z)
-        {
-            Cg.SetParameter(param, x, y, z);
-        }
-
-        public static void SetParameter(IntPtr param, int[] v)
-        {
-            Cg.SetParameter(param, v);
-        }
-
-        public static void SetParameter(IntPtr param, double[] v)
-        {
-            Cg.SetParameter(param, v);
-        }
-
-        public static void SetParameter(IntPtr param, float[] v)
-        {
-            Cg.SetParameter(param, v);
-        }
-
-        public static void SetParameter(IntPtr param, float x, float y)
-        {
-            Cg.SetParameter(param, x, y);
-        }
-
-        public static void SetParameter(IntPtr param, float x, float y, float z, float w)
-        {
-            Cg.SetParameter(param, x, y, z, w);
-        }
-
-        public static void SetParameter(IntPtr param, double x)
-        {
-            Cg.SetParameter(param, x);
-        }
-
-        public static void SetParameter(IntPtr param, int x)
-        {
-            Cg.SetParameter(param, x);
-        }
-
-        public static void SetParameter(IntPtr param, double x, double y)
-        {
-            Cg.SetParameter(param, x, y);
-        }
-
-        public static void SetParameter(IntPtr param, int x, int y)
-        {
-            Cg.SetParameter(param, x, y);
-        }
-
-        public static void SetParameter(IntPtr param, double x, double y, double z)
-        {
-            Cg.SetParameter(param, x, y, z);
-        }
-
-        public static void SetParameter(IntPtr param, int x, int y, int z)
-        {
-            Cg.SetParameter(param, x, y, z);
-        }
-
-        public static void SetParameter(IntPtr param, double x, double y, double z, double w)
-        {
-            Cg.SetParameter(param, x, y, z, w);
-        }
-
-        public static void SetParameter(IntPtr param, int x, int y, int z, int w)
-        {
-            Cg.SetParameter(param, x, y, z, w);
-        }
-
-        public static void SetParameterSemantic(IntPtr param, string semantic)
-        {
-            Cg.SetParameterSemantic(param, semantic);
-        }
-
-        public static void SetParameterValue(IntPtr param, double[] vals)
-        {
-            Cg.SetParameterValue(param, vals, Order.RowMajor);
-        }
-
-        public static void SetParameterValue(IntPtr param, double[] vals, Order order)
-        {
-            Cg.SetParameterValue(param, vals, order);
-        }
-
-        public static void SetParameterValue(IntPtr param, float[] vals)
-        {
-            Cg.SetParameterValue(param, vals, Order.RowMajor);
-        }
-
-        public static void SetParameterValue(IntPtr param, float[] vals, Order order)
-        {
-            Cg.SetParameterValue(param, vals, order);
-        }
-
-        public static void SetParameterValue(IntPtr param, int[] vals)
-        {
-            Cg.SetParameterValue(param, vals, Order.RowMajor);
-        }
-
-        public static void SetParameterValue(IntPtr param, int[] vals, Order order)
-        {
-            Cg.SetParameterValue(param, vals, order);
-        }
-
-        public static void SetParameterVariability(IntPtr param, int vary)
-        {
-            Cg.SetParameterVariability(param, vary);
-        }
-
-        public static void SetPassState(IntPtr pass)
-        {
-            Cg.SetPassState(pass);
-        }
-
-        public static void SetProgramBuffer(CgProgram program, int bufferIndex, IntPtr buffer)
-        {
-            Cg.SetProgramBuffer(program.Handle, bufferIndex, buffer);
         }
 
         public static bool SetProgramStateAssignment(IntPtr stateassignment, CgProgram program)
@@ -1220,14 +435,9 @@ namespace CgNet.CgOO
             return Cg.SetProgramStateAssignment(stateassignment, program.Handle);
         }
 
-        public static void SetSamplerState(IntPtr param)
+        public static bool SetSamplerStateAssignment(IntPtr stateassignment, CgParameter param)
         {
-            Cg.SetSamplerState(param);
-        }
-
-        public static bool SetSamplerStateAssignment(IntPtr stateassignment, IntPtr param)
-        {
-            return Cg.SetSamplerStateAssignment(stateassignment, param);
+            return Cg.SetSamplerStateAssignment(stateassignment, param.Handle);
         }
 
         public static bool SetStateAssignment(IntPtr stateassignment, float value)
@@ -1265,39 +475,9 @@ namespace CgNet.CgOO
             return Cg.SetStateAssignment(stateassignment, value);
         }
 
-        public static void SetStateCallbacks(IntPtr state, Cg.CgStateCallbackDelegate set, Cg.CgStateCallbackDelegate reset, Cg.CgStateCallbackDelegate validate)
+        public static bool SetTextureStateAssignment(IntPtr stateassignment, CgParameter param)
         {
-            Cg.SetStateCallbacks(state, set, reset, validate);
-        }
-
-        public static void SetStateLatestProfile(IntPtr state, ProfileType profile)
-        {
-            Cg.SetStateLatestProfile(state, profile);
-        }
-
-        public static void SetStringParameterValue(IntPtr param, string str)
-        {
-            Cg.SetStringParameterValue(param, str);
-        }
-
-        public static bool SetTextureStateAssignment(IntPtr stateassignment, IntPtr param)
-        {
-            return Cg.SetTextureStateAssignment(stateassignment, param);
-        }
-
-        public static void UnmapBuffer(IntPtr buffer)
-        {
-            Cg.UnmapBuffer(buffer);
-        }
-
-        public static void UpdatePassParameters(IntPtr pass)
-        {
-            Cg.UpdatePassParameters(pass);
-        }
-
-        public static bool ValidateTechnique(IntPtr technique)
-        {
-            return Cg.ValidateTechnique(technique);
+            return Cg.SetTextureStateAssignment(stateassignment, param.Handle);
         }
 
         #endregion Public Static Methods

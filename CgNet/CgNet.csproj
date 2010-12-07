@@ -40,9 +40,15 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CgOO\CgBuffer.cs" />
     <Compile Include="CgOO\CgContext.cs" />
+    <Compile Include="CgOO\CgEffect.cs" />
     <Compile Include="CgOO\CgOO.cs" />
+    <Compile Include="CgOO\CgParameter.cs" />
+    <Compile Include="CgOO\CgPass.cs" />
     <Compile Include="CgOO\CgProgram.cs" />
+    <Compile Include="CgOO\CgState.cs" />
+    <Compile Include="CgOO\CgTechnique.cs" />
     <Compile Include="CgOO\WrapperObject.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="GL\Enums.cs" />

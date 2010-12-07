@@ -891,7 +891,7 @@ namespace CgNet
             return CgNativeMethods.cgGetNumUserTypes(handle);
         }
 
-        public static int GetParameterBaseResource(IntPtr param)
+        public static ResourceType GetParameterBaseResource(IntPtr param)
         {
             return CgNativeMethods.cgGetParameterBaseResource(param);
         }
@@ -911,7 +911,7 @@ namespace CgNet
             return CgNativeMethods.cgGetParameterBufferOffset(param);
         }
 
-        public static int GetParameterClass(IntPtr param)
+        public static ParameterClass GetParameterClass(IntPtr param)
         {
             return CgNativeMethods.cgGetParameterClass(param);
         }
@@ -990,7 +990,7 @@ namespace CgNet
             }
         }
 
-        public static int GetParameterDirection(IntPtr param)
+        public static ParameterDirection GetParameterDirection(IntPtr param)
         {
             return CgNativeMethods.cgGetParameterDirection(param);
         }
@@ -1025,7 +1025,7 @@ namespace CgNet
             return CgNativeMethods.cgGetParameterProgram(param);
         }
 
-        public static int GetParameterResource(IntPtr param)
+        public static ResourceType GetParameterResource(IntPtr param)
         {
             return CgNativeMethods.cgGetParameterResource(param);
         }
@@ -1241,7 +1241,7 @@ namespace CgNet
 
         public static string[] GetProgramOptions(IntPtr prog)
         {
-            return CgNativeMethods.cgGetProgramOptions(prog);
+            return IntPtrToStringArray(CgNativeMethods.cgGetProgramOptions(prog));
         }
 
         public static ProgramOutput GetProgramOutput(IntPtr program)
@@ -2032,6 +2032,49 @@ namespace CgNet
         }
 
         #endregion Public Static Methods
+
+        #region Internal Static Methods
+
+        internal static unsafe string[] IntPtrToStringArray(IntPtr ptr)
+        {
+            if (ptr == IntPtr.Zero)
+            {
+                return null;
+            }
+
+            var byteArray = (byte**)ptr;
+            var lines = new List<string>();
+            var buffer = new List<byte>();
+
+            for (;;)
+            {
+                byte* b = *byteArray;
+                for (;;)
+                {
+                    if (*b == '\0')
+                    {
+                        char[] cc = Encoding.ASCII.GetChars(buffer.ToArray());
+                        lines.Add(new string(cc));
+                        buffer.Clear();
+                        break;
+                    }
+
+                    buffer.Add(*b);
+                    b++;
+                }
+
+                byteArray++;
+
+                if (*byteArray == null)
+                {
+                    break;
+                }
+            }
+
+            return lines.ToArray();
+        }
+
+        #endregion Internal Static Methods
 
         #region Private Static Methods
 

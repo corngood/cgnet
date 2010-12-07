@@ -78,6 +78,55 @@ namespace CgNet.CgOO
             }
         }
 
+        public CgEffect FirstEffect
+        {
+            get
+            {
+                var ptr = Cg.GetFirstEffect(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgEffect(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
+
+        public CgProgram FirstProgram
+        {
+            get
+            {
+                var ptr = Cg.GetFirstProgram(this.Handle);
+
+                return ptr == IntPtr.Zero ? null : new CgProgram(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+            }
+        }
+
+        public CgState FirstSamplerState
+        {
+            get
+            {
+                var ptr = Cg.GetFirstSamplerState(this.Handle);
+                return ptr != IntPtr.Zero ? null : new CgState(ptr)
+                                   {
+                                       OwnsHandle = false
+                                   };
+            }
+        }
+
+        public CgState FirstState
+        {
+            get
+            {
+                var ptr = Cg.GetFirstState(this.Handle);
+                return ptr == IntPtr.Zero ? null : new CgState(ptr)
+                {
+                    OwnsHandle = false
+                };
+            }
+        }
+
         public bool IsContext
         {
             get
@@ -116,6 +165,21 @@ namespace CgNet.CgOO
 
         #region Public Methods
 
+        public CgBuffer CreateBuffer(int size, IntPtr data, BufferUsage bufferUsage)
+        {
+            return new CgBuffer(Cg.CreateBuffer(this.Handle, size, data, bufferUsage));
+        }
+
+        public CgEffect CreateEffect(string code, params string[] args)
+        {
+            return new CgEffect(Cg.CreateEffect(this.Handle, code, args));
+        }
+
+        public CgEffect CreateEffectFromFile(string filename, params string[] args)
+        {
+            return new CgEffect(Cg.CreateEffectFromFile(this.Handle, filename, args));
+        }
+
         public CgProgram CreateProgram(ProgramType type, string source, ProfileType profile, string entry, params string[] args)
         {
             return new CgProgram(Cg.CreateProgram(this.Handle, type, source, profile, entry, args))
@@ -132,14 +196,30 @@ namespace CgNet.CgOO
                    };
         }
 
-        public CgProgram GetFirstProgram()
+        public CgState CreateState(string name, ParameterType type)
         {
-            return new CgProgram(Cg.GetFirstProgram(this.Handle));
+            return new CgState(Cg.CreateState(this.Handle, name, type));
         }
 
         public string GetLastListing()
         {
             return Cg.GetLastListing(this.Handle);
+        }
+
+        public CgEffect GetNamedEffect(string name)
+        {
+            var ptr = Cg.GetNamedEffect(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgEffect(ptr);
+        }
+
+        public CgState GetNamedSamplerState(string name)
+        {
+            return new CgState(Cg.GetNamedSamplerState(this.Handle, name));
+        }
+
+        public CgState GetNamedState(string name)
+        {
+            return new CgState(Cg.GetNamedState(this.Handle, name));
         }
 
         public void SetCompilerIncludeFile(string name, string filename)

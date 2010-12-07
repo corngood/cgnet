@@ -229,6 +229,14 @@ namespace CgNet
         Object = 7
     }
 
+    public enum ParameterDirection
+    {
+        In = 4097,
+        Out = 4098,
+        Inout = 4099,
+        Error = 4111,
+    }
+
     public enum ParameterSettingMode
     {
         Immediate = 4132,

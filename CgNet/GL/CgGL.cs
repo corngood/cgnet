@@ -407,40 +407,7 @@ namespace CgNet.GL
 
         public static string[] GLGetOptimalOptions(ProfileType profile)
         {
-            var ptr = CgGLNativeMethods.cgGLGetOptimalOptions(profile);
-            unsafe
-            {
-                var byteArray = (byte**)ptr;
-                var lines = new List<string>();
-                var buffer = new List<byte>();
-
-                for (; ; )
-                {
-                    byte* b = *byteArray;
-                    for (; ; )
-                    {
-                        if (*b == '\0')
-                        {
-                            char[] cc = Encoding.ASCII.GetChars(buffer.ToArray());
-                            lines.Add(new string(cc));
-                            buffer.Clear();
-                            break;
-                        }
-
-                        buffer.Add(*b);
-                        b++;
-                    }
-
-                    byteArray++;
-
-                    if (*byteArray == null)
-                    {
-                        break;
-                    }
-                }
-
-                return lines.ToArray();
-            }
+            return Cg.IntPtrToStringArray(CgGLNativeMethods.cgGLGetOptimalOptions(profile));
         }
 
         public static bool IsProfileSupported(ProfileType profile)

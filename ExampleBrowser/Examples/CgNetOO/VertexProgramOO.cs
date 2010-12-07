@@ -50,7 +50,7 @@ namespace ExampleBrowser.Examples.CgNetOO
             GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
 
             this.cgContext = CgContext.Create();
-          
+
             CgGL.SetDebugMode(false);
             this.cgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
@@ -65,7 +65,7 @@ namespace ExampleBrowser.Examples.CgNetOO
                     VertexProgramName,      /* Entry function name */
                     null);                    /* No extra compiler options */
 
-            CgGL.LoadProgram(this.cgVertexProgram);
+            CgGL.LoadProgram(this.cgVertexProgram.Handle);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace ExampleBrowser.Examples.CgNetOO
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            CgGL.BindProgram(this.cgVertexProgram);
+            CgGL.BindProgram(this.cgVertexProgram.Handle);
 
             CgGL.EnableProfile(this.cgVertexProfile);
 
