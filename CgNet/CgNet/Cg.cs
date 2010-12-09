@@ -1391,7 +1391,7 @@ namespace CgNet
                 for (int i = 0; i < nvalues; i++)
                 {
                     byte* b = *byteArray;
-                    for (;;)
+                    for (; ; )
                     {
                         if (*b == '\0')
                         {
@@ -1845,6 +1845,66 @@ namespace CgNet
             CgNativeMethods.cgSetParameter4i(param, x, y, z, w);
         }
 
+        public static void SetParameter1(IntPtr param, int[] v)
+        {
+            CgNativeMethods.cgSetParameter1iv(param, v);
+        }
+
+        public static void SetParameter1(IntPtr param, float[] v)
+        {
+            CgNativeMethods.cgSetParameter1fv(param, v);
+        }
+
+        public static void SetParameter1(IntPtr param, double[] v)
+        {
+            CgNativeMethods.cgSetParameter1dv(param, v);
+        }
+
+        public static void SetParameter2(IntPtr param, int[] v)
+        {
+            CgNativeMethods.cgSetParameter2iv(param, v);
+        }
+
+        public static void SetParameter2(IntPtr param, float[] v)
+        {
+            CgNativeMethods.cgSetParameter2fv(param, v);
+        }
+
+        public static void SetParameter2(IntPtr param, double[] v)
+        {
+            CgNativeMethods.cgSetParameter2dv(param, v);
+        }
+
+        public static void SetParameter3(IntPtr param, int[] v)
+        {
+            CgNativeMethods.cgSetParameter3iv(param, v);
+        }
+
+        public static void SetParameter3(IntPtr param, float[] v)
+        {
+            CgNativeMethods.cgSetParameter3fv(param, v);
+        }
+
+        public static void SetParameter3(IntPtr param, double[] v)
+        {
+            CgNativeMethods.cgSetParameter3dv(param, v);
+        }
+
+        public static void SetParameter4(IntPtr param, int[] v)
+        {
+            CgNativeMethods.cgSetParameter4iv(param, v);
+        }
+
+        public static void SetParameter4(IntPtr param, float[] v)
+        {
+            CgNativeMethods.cgSetParameter4fv(param, v);
+        }
+
+        public static void SetParameter4(IntPtr param, double[] v)
+        {
+            CgNativeMethods.cgSetParameter4dv(param, v);
+        }
+
         public static void SetParameterSemantic(IntPtr param, string semantic)
         {
             CgNativeMethods.cgSetParameterSemantic(param, semantic);
@@ -2050,10 +2110,10 @@ namespace CgNet
             var lines = new List<string>();
             var buffer = new List<byte>();
 
-            for (;;)
+            for (; ; )
             {
                 byte* b = *byteArray;
-                for (;;)
+                for (; ; )
                 {
                     if (*b == '\0')
                     {

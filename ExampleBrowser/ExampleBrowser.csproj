@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Examples\BrickImage.cs" />
+    <Compile Include="Examples\CgNet\OpenTK\Basic\Bulge.cs" />
     <Compile Include="Examples\CgOO\OpenTK\Example.cs" />
     <Compile Include="Examples\ExampleAttribute.cs" />
     <Compile Include="Examples\IExample.cs" />
@@ -110,6 +111,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\C5E1v_basicLight.cg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\C6E1v_bulge.cg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\C6E2v_particle.cg">

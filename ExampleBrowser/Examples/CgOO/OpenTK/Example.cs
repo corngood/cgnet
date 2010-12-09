@@ -5,6 +5,8 @@
 
     using global::CgNet;
 
+    using global::CgOO;
+
     using global::OpenTK;
 
     public abstract class Example : GameWindow, IExample
@@ -23,7 +25,7 @@
 
         #region Protected Properties
 
-        protected IntPtr MyCgContext
+        protected CgContext CgContext
         {
             get;
             set;
@@ -57,7 +59,7 @@
                 MessageBox.Show(s);
                 this.Close();
 
-                var x = Cg.GetLastListing(this.MyCgContext);
+                var x = this.CgContext.GetLastListing();
             }
             //  printf("%s: %s: %s\n",
             //    myProgramName, situation, string);

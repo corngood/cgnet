@@ -2,10 +2,10 @@ namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
 {
     using System;
 
+    using ExampleBrowser.Examples.CgNet.OpenTK;
+
     using global::CgNet;
     using global::CgNet.GL;
-
-    using ExampleBrowser.Examples.CgNet.OpenTK;
 
     using global::Examples.Helper;
 
@@ -29,10 +29,8 @@ namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
         private IntPtr myCgFragmentProgram;
         private ProfileType myCgVertexProfile;
         private IntPtr myCgVertexProgram;
-
         private float myTwisting = 2.9f, /* Twisting angle in radians. */
                       myTwistDirection = 0.1f; /* Animation delta for twist. */
-
         private bool wireframe;
 
         #endregion Fields
@@ -209,7 +207,6 @@ namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
         /* Large vertex displacements such as are possible with C3E4v_twist
            require a high degree of tessellation.  This routine draws a
            triangle recursively subdivided to provide sufficient tessellation. */
-
         private void DrawSubDividedTriangle(int subdivisions)
         {
             float[] a = { -0.8f, 0.8f },

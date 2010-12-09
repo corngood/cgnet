@@ -25,35 +25,18 @@ namespace CgOO.GL
     using CgNet;
     using CgNet.GL;
 
-    using CgOO;
-
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
 
-    public static class CgOOGL
+    public static class CgGLParameter
     {
         #region Methods
 
         #region Public Static Methods
 
-        public static void BindProgram(this CgProgram program)
-        {
-            CgGL.BindProgram(program.Handle);
-        }
-
-        public static CgBuffer CreateBuffer(this CgContext context, int size, IntPtr data, BufferUsageHint bufferUsage)
-        {
-            return new CgBuffer(CgGL.CreateBuffer(context.Handle, size, data, bufferUsage));
-        }
-
         public static void DisableClientState(this CgParameter param)
         {
             CgGL.DisableClientState(param.Handle);
-        }
-
-        public static void DisableProgramProfiles(this CgProgram program)
-        {
-            CgGL.DisableProgramProfiles(program.Handle);
         }
 
         public static void DisableTextureParameter(this CgParameter param)
@@ -66,24 +49,9 @@ namespace CgOO.GL
             CgGL.EnableClientState(param.Handle);
         }
 
-        public static void EnableProgramProfiles(this CgProgram program)
-        {
-            CgGL.EnableProgramProfiles(program.Handle);
-        }
-
         public static void EnableTextureParameter(this CgParameter param)
         {
             CgGL.EnableTextureParameter(param.Handle);
-        }
-
-        public static int GetBufferObject(this CgBuffer buffer)
-        {
-            return CgGL.GetBufferObject(buffer.Handle);
-        }
-
-        public static bool GetManageTextureParameters(this CgContext context)
-        {
-            return CgGL.GetManageTextureParameters(context.Handle);
         }
 
         public static void GetMatrixParameter(this CgParameter param, out Matrix4 value)
@@ -156,11 +124,6 @@ namespace CgOO.GL
             CgGL.GetParameterArray(param.Handle, offset, nelements, ref values);
         }
 
-        public static int GetProgramID(this CgProgram program)
-        {
-            return CgGL.GetProgramID(program.Handle);
-        }
-
         public static int GetTextureEnum(this CgParameter param)
         {
             return CgGL.GetTextureEnum(param.Handle);
@@ -169,21 +132,6 @@ namespace CgOO.GL
         public static int GetTextureParameter(this CgParameter param)
         {
             return CgGL.GetTextureParameter(param.Handle);
-        }
-
-        public static bool IsLoaded(this CgProgram program)
-        {
-            return CgGL.IsProgramLoaded(program.Handle);
-        }
-
-        public static void Load(this CgProgram program)
-        {
-            CgGL.LoadProgram(program.Handle);
-        }
-
-        public static void RegisterStates(this CgContext context)
-        {
-            CgGL.RegisterStates(context.Handle);
         }
 
         public static void Set(this CgParameter param, double x)
@@ -276,11 +224,6 @@ namespace CgOO.GL
             CgGL.SetParameterArray(param.Handle, offset, nelements, values);
         }
 
-        public static void SetManageTextureParameters(this CgContext context, bool flag)
-        {
-            CgGL.SetManageTextureParameters(context.Handle, flag);
-        }
-
         public static void SetMatrixParameter(this CgParameter param, Matrix4 matrix)
         {
             CgGL.SetMatrixParameter(param.Handle, matrix);
@@ -339,11 +282,6 @@ namespace CgOO.GL
         public static void SetupSampler(this CgParameter param, int texobj)
         {
             CgGL.SetupSampler(param.Handle, texobj);
-        }
-
-        public static void Unload(this CgProgram program)
-        {
-            CgGL.UnloadProgram(program.Handle);
         }
 
         #endregion Public Static Methods

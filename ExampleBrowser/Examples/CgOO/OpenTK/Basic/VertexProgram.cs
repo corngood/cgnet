@@ -24,7 +24,6 @@ namespace ExampleBrowser.Examples.CgOO.OpenTK.Basic
 
         private ProfileType cgVertexProfile;
         private CgProgram cgVertexProgram;
-        private CgContext cgContext;
 
         #endregion Fields
 
@@ -49,16 +48,16 @@ namespace ExampleBrowser.Examples.CgOO.OpenTK.Basic
         {
             GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
 
-            this.cgContext = CgContext.Create();
+            this.CgContext = CgContext.Create();
 
             CgGL.SetDebugMode(false);
-            this.cgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
+            this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
             this.cgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(this.cgVertexProfile);
 
             this.cgVertexProgram =
-                cgContext.CreateProgramFromFile(
+                CgContext.CreateProgramFromFile(
                     ProgramType.Source,                /* Program in human-readable form */
                     VertexProgramFileName,  /* Name of file containing program */
                     this.cgVertexProfile,        /* Profile: OpenGL ARB vertex program */
@@ -88,7 +87,7 @@ namespace ExampleBrowser.Examples.CgOO.OpenTK.Basic
             GL.Vertex2(0.8f, 0.8f);
             GL.Vertex2(0.0f, -0.8f);
             GL.End();
-            
+
             CgGL.DisableProfile(this.cgVertexProfile);
             this.SwapBuffers();
         }
@@ -111,7 +110,7 @@ namespace ExampleBrowser.Examples.CgOO.OpenTK.Basic
         {
             base.OnUnload(e);
             this.cgVertexProgram.Dispose();
-            this.cgContext.Dispose();
+            this.CgContext.Dispose();
         }
 
         /// <summary>

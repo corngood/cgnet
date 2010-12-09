@@ -2,10 +2,10 @@ namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
 {
     using System;
 
+    using ExampleBrowser.Examples.CgNet.OpenTK;
+
     using global::CgNet;
     using global::CgNet.GL;
-
-    using ExampleBrowser.Examples.CgNet.OpenTK;
 
     using global::Examples.Helper;
 
@@ -29,7 +29,6 @@ namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
         private IntPtr myCgVertexParamLeftSeparation, myCgVertexParamRightSeparation;
         private ProfileType myCgVertexProfile;
         private IntPtr myCgVertexProgram;
-
         private float mySeparation = 0.1f,
                       mySeparationVelocity = 0.005f;
 

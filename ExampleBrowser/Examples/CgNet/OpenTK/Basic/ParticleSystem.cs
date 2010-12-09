@@ -2,10 +2,22 @@ namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
 {
     using System;
 
-    using global::CgNet;
-    using global::CgNet.GL;
+    using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
+
+    using BlendingFactorDest = global::OpenTK.Graphics.OpenGL.BlendingFactorDest;
+
+    using BlendingFactorSrc = global::OpenTK.Graphics.OpenGL.BlendingFactorSrc;
+
+    using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
+
+    using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
 
     using ExampleBrowser.Examples.CgNet.OpenTK;
+
+    using GL = global::OpenTK.Graphics.OpenGL.GL;
+
+    using global::CgNet;
+    using global::CgNet.GL;
 
     using global::Examples.Helper;
 
@@ -13,13 +25,8 @@ namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
     using global::OpenTK.Graphics;
     using global::OpenTK.Input;
 
-    using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
-    using BlendingFactorDest = global::OpenTK.Graphics.OpenGL.BlendingFactorDest;
-    using BlendingFactorSrc = global::OpenTK.Graphics.OpenGL.BlendingFactorSrc;
-    using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
-    using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
-    using GL = global::OpenTK.Graphics.OpenGL.GL;
     using MatrixMode = global::OpenTK.Graphics.OpenGL.MatrixMode;
+
     using TextureUnit = global::OpenTK.Graphics.OpenGL.TextureUnit;
 
     [Example(NodePath = "CgNet/OpenTK/Basic/15 Particle System")]

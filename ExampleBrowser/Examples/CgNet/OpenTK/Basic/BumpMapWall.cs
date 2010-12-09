@@ -3,29 +3,39 @@ namespace ExampleBrowser.Examples.CgNet.OpenTK.Basic
     using System;
     using System.Runtime.InteropServices;
 
-    using global::CgNet;
-    using global::CgNet.GL;
+    using All = global::OpenTK.Graphics.OpenGL.All;
+
+    using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
+
+    using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
+
+    using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
 
     using ExampleBrowser.Examples.CgNet.OpenTK;
 
+    using GL = global::OpenTK.Graphics.OpenGL.GL;
+
+    using global::CgNet;
+    using global::CgNet.GL;
+
     using global::Examples.Helper;
 
-    using global::OpenTK.Graphics;
-
-    using GL = global::OpenTK.Graphics.OpenGL.GL;
     using global::OpenTK;
+    using global::OpenTK.Graphics;
     using global::OpenTK.Input;
 
-    using All = global::OpenTK.Graphics.OpenGL.All;
-    using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
-    using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
-    using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
     using MatrixMode = global::OpenTK.Graphics.OpenGL.MatrixMode;
+
     using PixelFormat = global::OpenTK.Graphics.OpenGL.PixelFormat;
+
     using PixelInternalFormat = global::OpenTK.Graphics.OpenGL.PixelInternalFormat;
+
     using PixelStoreParameter = global::OpenTK.Graphics.OpenGL.PixelStoreParameter;
+
     using PixelType = global::OpenTK.Graphics.OpenGL.PixelType;
+
     using TextureParameterName = global::OpenTK.Graphics.OpenGL.TextureParameterName;
+
     using TextureTarget = global::OpenTK.Graphics.OpenGL.TextureTarget;
 
     [Example(NodePath = "CgNet/OpenTK/Basic/21 Bump Map Wall")]

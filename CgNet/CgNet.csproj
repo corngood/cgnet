@@ -51,7 +51,10 @@
     <Compile Include="CgOO\CgState.cs" />
     <Compile Include="CgOO\CgStateAssignment.cs" />
     <Compile Include="CgOO\CgTechnique.cs" />
-    <Compile Include="CgOO\GL\CgOOGL.cs" />
+    <Compile Include="CgOO\GL\CgGLBuffer.cs" />
+    <Compile Include="CgOO\GL\CgGLContext.cs" />
+    <Compile Include="CgOO\GL\CgGLParameter.cs" />
+    <Compile Include="CgOO\GL\CgGLProgram.cs" />
     <Compile Include="CgOO\WrapperObject.cs" />
     <Compile Include="CgNet\CgEnums.cs" />
     <Compile Include="CgNet\GL\CgGLEnums.cs" />

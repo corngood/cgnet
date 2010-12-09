@@ -2,10 +2,10 @@
 {
     using System;
 
+    using ExampleBrowser.Examples.CgNet.OpenTK;
+
     using global::CgNet;
     using global::CgNet.GL;
-
-    using ExampleBrowser.Examples.CgNet.OpenTK;
 
     using global::Examples.Helper;
 
