@@ -164,8 +164,7 @@ namespace CgNet.GL
         /// <param name="matrices">The array of values retreived from parameter.. This must be a contiguous set of values that total nelements times the number of elements in the matrix.</param>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLGetMatrixParameterArraydr(IntPtr param, int offset, int nelements,
-            [In, Out] IntPtr matrices);
+        internal static extern void cgGLGetMatrixParameterArraydr(IntPtr param, int offset, int nelements, IntPtr matrices);
 
         /// <summary>
         /// Gets an array matrix parameters (float) in column order.

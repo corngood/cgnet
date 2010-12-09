@@ -459,7 +459,7 @@ namespace CgNet
 
         public static string GetEnumString(int en)
         {
-            return CgNativeMethods.cgGetEnumString(en);
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetEnumString(en));
         }
 
         public static ErrorType GetError()
@@ -1170,7 +1170,7 @@ namespace CgNet
 
         public static string GetPassName(IntPtr pass)
         {
-            return CgNativeMethods.cgGetPassName(pass);
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetPassName(pass));
         }
 
         public static IntPtr GetPassProgram(IntPtr pass, Domain domain)
@@ -1340,7 +1340,7 @@ namespace CgNet
 
         public static string GetStateName(IntPtr state)
         {
-            return CgNativeMethods.cgGetStateName(state);
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStateName(state));
         }
 
         public static CgStateCallbackDelegate GetStateResetCallback(IntPtr state)
@@ -1370,7 +1370,7 @@ namespace CgNet
 
         public static string GetStringAnnotationValue(IntPtr annotation)
         {
-            return CgNativeMethods.cgGetStringAnnotationValue(annotation);
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStringAnnotationValue(annotation));
         }
 
         public static string[] GetStringAnnotationValues(IntPtr ann)
@@ -1414,12 +1414,12 @@ namespace CgNet
 
         public static string GetStringParameterValue(IntPtr param)
         {
-            return CgNativeMethods.cgGetStringParameterValue(param);
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStringParameterValue(param));
         }
 
         public static string GetStringStateAssignmentValue(IntPtr stateassignment)
         {
-            return CgNativeMethods.cgGetStringStateAssignmentValue(stateassignment);
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStringStateAssignmentValue(stateassignment));
         }
 
         public static ProfileType GetSupportedProfile(int index)
@@ -1434,7 +1434,7 @@ namespace CgNet
 
         public static string GetTechniqueName(IntPtr technique)
         {
-            return CgNativeMethods.cgGetTechniqueName(technique);
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetTechniqueName(technique));
         }
 
         public static IntPtr GetTextureStateAssignmentValue(IntPtr stateassignment)
@@ -2115,11 +2115,14 @@ namespace CgNet
                 byte* b = *byteArray;
                 for (; ; )
                 {
-                    if (*b == '\0')
+                    if (b == null || *b == '\0')
                     {
-                        char[] cc = Encoding.ASCII.GetChars(buffer.ToArray());
-                        lines.Add(new string(cc));
-                        buffer.Clear();
+                        if (buffer.Count > 0)
+                        {
+                            char[] cc = Encoding.ASCII.GetChars(buffer.ToArray());
+                            lines.Add(new string(cc));
+                            buffer.Clear();
+                        }
                         break;
                     }
 
@@ -2129,13 +2132,13 @@ namespace CgNet
 
                 byteArray++;
 
-                if (*byteArray == null)
+                if (b == null)
                 {
                     break;
                 }
             }
 
-            return lines.ToArray();
+            return lines.Count == 0 ? null : lines.ToArray();
         }
 
         #endregion Internal Static Methods

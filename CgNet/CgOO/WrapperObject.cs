@@ -21,6 +21,7 @@
 namespace CgOO
 {
     using System;
+    using System.Collections.Generic;
 
     public abstract class WrapperObject : IDisposable
     {
@@ -28,6 +29,11 @@ namespace CgOO
 
         protected WrapperObject(IntPtr handle)
         {
+            if (handle == IntPtr.Zero)
+            {
+                throw new ArgumentException("handle is invalid", "handle");
+            }
+
             this.OwnsHandle = true;
             this.Handle = handle;
         }
@@ -82,6 +88,11 @@ namespace CgOO
         /// <returns>The result of the operator.</returns>
         public static bool operator !=(WrapperObject left, WrapperObject right)
         {
+            if (ReferenceEquals(left, null))
+            {
+                return !ReferenceEquals(right, null);
+            }
+
             return !left.Equals(right);
         }
 
@@ -93,7 +104,7 @@ namespace CgOO
         /// <returns>The result of the operator.</returns>
         public static bool operator ==(WrapperObject left, WrapperObject right)
         {
-            return left.Equals(right);
+            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.Equals(right);
         }
 
         #endregion Public Static Methods
@@ -113,12 +124,12 @@ namespace CgOO
 
         public bool Equals(WrapperObject other)
         {
-            return other != null && this.Handle == other.Handle;
+            return !ReferenceEquals(other, null) && this.Handle == other.Handle;
         }
 
         public override bool Equals(object obj)
         {
-            return obj != null && (obj is WrapperObject && this.Equals((WrapperObject)obj));
+            return !ReferenceEquals(obj, null) && (obj is WrapperObject && this.Equals((WrapperObject)obj));
         }
 
         /// <summary>
@@ -133,6 +144,21 @@ namespace CgOO
         }
 
         #endregion Public Methods
+
+        #region Protected Static Methods
+
+        protected static IEnumerable<T> Enumerate<T>(Func<T> first, Func<T, T> next)
+            where T : WrapperObject
+        {
+            T t = first();
+            while (t != null)
+            {
+                yield return t;
+                t = next(t);
+            }
+        }
+
+        #endregion Protected Static Methods
 
         #region Protected Methods
 

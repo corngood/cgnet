@@ -41,12 +41,12 @@ namespace CgOO
 
         public static CgObj Create(CgContext context, ProgramType programType, string source, ProfileType profile, params string[] args)
         {
-            return new CgObj(Cg.CreateObj(context.Handle, programType, source, profile, args));
+            return context.CreateObj(programType, source, profile, args);
         }
 
         public static CgObj CreateFromFile(CgContext context, ProgramType programType, string sourceFile, ProfileType profile, params string[] args)
         {
-            return new CgObj(Cg.CreateObjFromFile(context.Handle, programType, sourceFile, profile, args));
+            return context.CreateObjFromFile(programType, sourceFile, profile, args);
         }
 
         #endregion Public Static Methods

@@ -21,6 +21,7 @@
 namespace CgOO
 {
     using System;
+    using System.Collections.Generic;
 
     using CgNet;
 
@@ -38,6 +39,14 @@ namespace CgOO
         #region Properties
 
         #region Public Properties
+
+        public IEnumerable<CgAnnotation> Annotations
+        {
+            get
+            {
+                return Enumerate(() => this.FirstAnnotation, t => t.NextAnnotation);
+            }
+        }
 
         public CgEffect Effect
         {
@@ -106,11 +115,18 @@ namespace CgOO
             get
             {
                 var ptr = Cg.GetNextTechnique(this.Handle);
-
                 return ptr == IntPtr.Zero ? null : new CgTechnique(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
+            }
+        }
+
+        public IEnumerable<CgPass> Passes
+        {
+            get
+            {
+                return Enumerate(() => this.FirstPass, t => t.NextPass);
             }
         }
 
@@ -124,7 +140,7 @@ namespace CgOO
 
         public static CgTechnique Create(CgEffect effect, string name)
         {
-            return new CgTechnique(Cg.CreateTechnique(effect.Handle, name));
+            return effect.CreateTechnique(name);
         }
 
         #endregion Public Static Methods
@@ -133,12 +149,14 @@ namespace CgOO
 
         public CgPass CreatePass(string name)
         {
-            return new CgPass(Cg.CreatePass(this.Handle, name));
+            var ptr = Cg.CreatePass(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgPass(ptr);
         }
 
         public CgAnnotation CreateTechniqueAnnotation(string name, ParameterType type)
         {
-            return new CgAnnotation(Cg.CreateTechniqueAnnotation(this.Handle, name, type));
+            var ptr = Cg.CreateTechniqueAnnotation(this.Handle, name, type);
+            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr);
         }
 
         public CgAnnotation GetNamedAnnotation(string name)
@@ -153,7 +171,6 @@ namespace CgOO
         public CgPass GetNamedPass(string name)
         {
             var ptr = Cg.GetNamedPass(this.Handle, name);
-
             return ptr == IntPtr.Zero ? null : new CgPass(ptr)
                                                {
                                                    OwnsHandle = false

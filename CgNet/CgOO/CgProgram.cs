@@ -21,6 +21,7 @@
 namespace CgOO
 {
     using System;
+    using System.Collections.Generic;
 
     using CgNet;
 
@@ -38,6 +39,14 @@ namespace CgOO
         #region Properties
 
         #region Public Properties
+
+        public IEnumerable<CgAnnotation> Annotations
+        {
+            get
+            {
+                return Enumerate(() => this.FirstAnnotation, t => t.NextAnnotation);
+            }
+        }
 
         public CgContext Context
         {
@@ -180,18 +189,12 @@ namespace CgOO
 
         public static CgProgram Create(CgContext context, ProgramType type, string source, ProfileType profile, string entry, params string[] args)
         {
-            return new CgProgram(Cg.CreateProgram(context.Handle, type, source, profile, entry, args))
-                   {
-                       Type = type,
-                   };
+            return context.CreateProgram(type, source, profile, entry, args);
         }
 
         public static CgProgram CreateFromFile(CgContext context, ProgramType type, string file, ProfileType profile, string entry, params string[] args)
         {
-            return new CgProgram(Cg.CreateProgramFromFile(context.Handle, type, file, profile, entry, args))
-                   {
-                       Type = type,
-                   };
+            return context.CreateProgramFromFile(type, file, profile, entry, args);
         }
 
         #endregion Public Static Methods
@@ -217,7 +220,8 @@ namespace CgOO
 
         public CgAnnotation CreateAnnotation(string name, ParameterType type)
         {
-            return new CgAnnotation(Cg.CreateProgramAnnotation(this.Handle, name, type));
+            var ptr = Cg.CreateProgramAnnotation(this.Handle, name, type);
+            return new CgAnnotation(ptr);
         }
 
         public float[] EvaluateProgram(int ncomps, int nx, int ny, int nz)

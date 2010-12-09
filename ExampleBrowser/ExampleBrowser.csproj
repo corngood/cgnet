@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
     <Reference Include="OpenTK.Compatibility, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
+    <Reference Include="SlimDX, Version=2.0.10.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -46,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Examples\BrickImage.cs" />
     <Compile Include="Examples\CgNet\OpenTK\Basic\Bulge.cs" />
+    <Compile Include="Examples\CgNet\SlimDX\Basic\VertexFragmentProgram.cs" />
+    <Compile Include="Examples\CgNet\SlimDX\Example.cs" />
     <Compile Include="Examples\CgOO\OpenTK\Example.cs" />
     <Compile Include="Examples\ExampleAttribute.cs" />
     <Compile Include="Examples\IExample.cs" />

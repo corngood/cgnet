@@ -21,6 +21,7 @@
 namespace CgOO
 {
     using System;
+    using System.Collections.Generic;
 
     using CgNet;
 
@@ -38,6 +39,14 @@ namespace CgOO
         #region Properties
 
         #region Public Properties
+
+        public IEnumerable<CgAnnotation> Annotations
+        {
+            get
+            {
+                return Enumerate(() => this.FirstAnnotation, t => t.NextAnnotation);
+            }
+        }
 
         public ResourceType BaseResourceType
         {
@@ -352,7 +361,7 @@ namespace CgOO
 
         public static CgParameter Create(CgContext context, ParameterType type)
         {
-            return new CgParameter(Cg.CreateParameter(context.Handle, type));
+            return context.CreateParameter(type);
         }
 
         #endregion Public Static Methods
@@ -366,7 +375,8 @@ namespace CgOO
 
         public CgAnnotation CreateAnnotation(string name, ParameterType type)
         {
-            return new CgAnnotation(Cg.CreateParameterAnnotation(this.Handle, name, type));
+            var ptr = Cg.CreateParameterAnnotation(this.Handle, name, type);
+            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr);
         }
 
         public void Disconnect()

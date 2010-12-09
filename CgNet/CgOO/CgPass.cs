@@ -21,6 +21,7 @@
 namespace CgOO
 {
     using System;
+    using System.Collections.Generic;
 
     using CgNet;
 
@@ -38,6 +39,14 @@ namespace CgOO
         #region Properties
 
         #region Public Properties
+
+        public IEnumerable<CgAnnotation> Annotations
+        {
+            get
+            {
+                return Enumerate(() => this.FirstAnnotation, t => t.NextAnnotation);
+            }
+        }
 
         public CgAnnotation FirstAnnotation
         {
@@ -115,7 +124,7 @@ namespace CgOO
 
         public static CgPass Create(CgTechnique technique, string name)
         {
-            return new CgPass(Cg.CreatePass(technique.Handle, name));
+            return technique.CreatePass(name);
         }
 
         #endregion Public Static Methods
@@ -124,22 +133,26 @@ namespace CgOO
 
         public CgAnnotation CreateAnnotation(string name, ParameterType type)
         {
-            return new CgAnnotation(Cg.CreatePassAnnotation(this.Handle, name, type));
+            var ptr = Cg.CreatePassAnnotation(this.Handle, name, type);
+            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr);
         }
 
         public CgStateAssignment CreateSamplerStateAssignment(CgState state)
         {
-            return new CgStateAssignment(Cg.CreateSamplerStateAssignment(this.Handle, state.Handle));
+            var ptr = Cg.CreateSamplerStateAssignment(this.Handle, state.Handle);
+            return ptr == IntPtr.Zero ? null : new CgStateAssignment(ptr);
         }
 
         public CgStateAssignment CreateStateAssignment(CgState state)
         {
-            return new CgStateAssignment(Cg.CreateStateAssignment(this.Handle, state.Handle));
+            var ptr = Cg.CreateStateAssignment(this.Handle, state.Handle);
+            return ptr == IntPtr.Zero ? null : new CgStateAssignment(ptr);
         }
 
         public CgStateAssignment CreateStateAssignmentIndex(CgState state, int index)
         {
-            return new CgStateAssignment(Cg.CreateStateAssignmentIndex(this.Handle, state.Handle, index));
+            var ptr = Cg.CreateStateAssignmentIndex(this.Handle, state.Handle, index);
+            return ptr == IntPtr.Zero ? null : new CgStateAssignment(ptr);
         }
 
         public CgAnnotation GetNamedAnnotation(string name)

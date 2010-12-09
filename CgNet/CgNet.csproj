@@ -36,10 +36,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
+    <Reference Include="SlimDX, Version=2.0.10.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\SlimDX SDK (June 2010)\Bin\net20\x64\SlimDX.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CgNet\D3D9\CgD3D9.cs" />
+    <Compile Include="CgNet\D3D9\CgD3D9NativeMethods.cs" />
     <Compile Include="CgOO\CgAnnotation.cs" />
     <Compile Include="CgOO\CgBuffer.cs" />
     <Compile Include="CgOO\CgContext.cs" />

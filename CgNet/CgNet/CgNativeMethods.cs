@@ -406,7 +406,7 @@ namespace CgNet
         // CGDLL_API const char *cgGetEnumString(CGenum en);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern string cgGetEnumString(int en);
+        internal static extern IntPtr cgGetEnumString(int en);
 
         /// <summary>
         ///    Returns an error enum if an error has occured in the last Cg method call.
@@ -1414,7 +1414,7 @@ namespace CgNet
         // CGDLL_API const char *cgGetPassName(CGpass);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern string cgGetPassName(IntPtr pass);
+        internal static extern IntPtr cgGetPassName(IntPtr pass);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -1657,7 +1657,7 @@ namespace CgNet
         // CGDLL_API const char *cgGetStateName(CGstate);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern string cgGetStateName(IntPtr state);
+        internal static extern IntPtr cgGetStateName(IntPtr state);
 
         /// <summary>
         /// 
@@ -1711,7 +1711,7 @@ namespace CgNet
         // CGDLL_API const char *cgGetStringAnnotationValue(CGannotation);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern string cgGetStringAnnotationValue(IntPtr annotation);
+        internal static extern IntPtr cgGetStringAnnotationValue(IntPtr annotation);
 
         //CG_API const char * const * CGENTRY cgGetStringAnnotationValues(CGannotation ann, int *nvalues);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -1726,7 +1726,7 @@ namespace CgNet
         // CGDLL_API const char *cgGetStringParameterValue(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern string cgGetStringParameterValue(IntPtr param);
+        internal static extern IntPtr cgGetStringParameterValue(IntPtr param);
 
         /// <summary>
         /// 
@@ -1736,7 +1736,7 @@ namespace CgNet
         // CGDLL_API const char *cgGetStringStateAssignmentValue(CGstateassignment);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern string cgGetStringStateAssignmentValue(IntPtr stateassignment);
+        internal static extern IntPtr cgGetStringStateAssignmentValue(IntPtr stateassignment);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -1760,7 +1760,7 @@ namespace CgNet
         // CGDLL_API const char *cgGetTechniqueName(CGtechnique);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern string cgGetTechniqueName(IntPtr technique);
+        internal static extern IntPtr cgGetTechniqueName(IntPtr technique);
 
         /// <summary>
         /// 

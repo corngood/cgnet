@@ -21,6 +21,7 @@
 namespace CgOO
 {
     using System;
+    using System.Collections.Generic;
 
     using CgNet;
 
@@ -38,6 +39,14 @@ namespace CgOO
         #region Properties
 
         #region Public Properties
+
+        public IEnumerable<CgAnnotation> Annotations
+        {
+            get
+            {
+                return Enumerate(() => this.FirstAnnotation, t => t.NextAnnotation);
+            }
+        }
 
         public CgContext Context
         {
@@ -131,6 +140,22 @@ namespace CgOO
             }
         }
 
+        public IEnumerable<CgParameter> Parameters
+        {
+            get
+            {
+                return Enumerate(() => this.FirstParameter, t => t.NextParameter);
+            }
+        }
+
+        public IEnumerable<CgTechnique> Techniques
+        {
+            get
+            {
+                return Enumerate(() => this.FirstTechnique, t => t.NextTechnique);
+            }
+        }
+
         public int UserTypesCount
         {
             get
@@ -149,12 +174,12 @@ namespace CgOO
 
         public static CgEffect Create(CgContext context, string code, params string[] args)
         {
-            return new CgEffect(Cg.CreateEffect(context.Handle, code, args));
+            return context.CreateEffect(code, args);
         }
 
         public static CgEffect CreateFromFile(CgContext context, string filename, params string[] args)
         {
-            return new CgEffect(Cg.CreateEffectFromFile(context.Handle, filename, args));
+            return context.CreateEffectFromFile(filename, args);
         }
 
         #endregion Public Static Methods
@@ -169,17 +194,20 @@ namespace CgOO
 
         public CgAnnotation CreateAnnotation(string name, ParameterType type)
         {
-            return new CgAnnotation(Cg.CreateEffectAnnotation(this.Handle, name, type));
+            var ptr = Cg.CreateEffectAnnotation(this.Handle, name, type);
+            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr);
         }
 
         public CgParameter CreateParameterArray(string name, ParameterType type, int length)
         {
-            return new CgParameter(Cg.CreateEffectParameterArray(this.Handle, name, type, length));
+            var ptr = Cg.CreateEffectParameterArray(this.Handle, name, type, length);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr);
         }
 
         public CgParameter CreateParameterMultiDimArray(string name, ParameterType type, int dim, int[] lengths)
         {
-            return new CgParameter(Cg.CreateEffectParameterMultiDimArray(this.Handle, name, type, dim, lengths));
+            var ptr = Cg.CreateEffectParameterMultiDimArray(this.Handle, name, type, dim, lengths);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr);
         }
 
         public CgProgram CreateProgram(ProfileType profile, string entry, params string[] args)
@@ -190,7 +218,8 @@ namespace CgOO
 
         public CgTechnique CreateTechnique(string name)
         {
-            return new CgTechnique(Cg.CreateTechnique(this.Handle, name));
+            var ptr = Cg.CreateTechnique(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgTechnique(ptr);
         }
 
         public CgAnnotation GetNamedAnnotation(string name)

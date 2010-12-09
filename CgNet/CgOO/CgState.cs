@@ -137,12 +137,12 @@ namespace CgOO
 
         public static CgState Create(CgContext context, string name, ParameterType type)
         {
-            return new CgState(Cg.CreateState(context.Handle, name, type));
+            return context.CreateState(name, type);
         }
 
         public static CgState CreateArrayState(CgContext context, string name, ParameterType type, int elementCount)
         {
-            return new CgState(Cg.CreateArrayState(context.Handle, name, type, elementCount));
+            return context.CreateArrayState(name, type, elementCount);
         }
 
         #endregion Public Static Methods

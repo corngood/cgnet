@@ -21,6 +21,7 @@
 namespace CgOO
 {
     using System;
+    using System.Collections.Generic;
 
     using CgNet;
 
@@ -75,6 +76,14 @@ namespace CgOO
             set
             {
                 Cg.SetCompilerIncludeCallback(this.Handle, value);
+            }
+        }
+
+        public IEnumerable<CgEffect> Effects
+        {
+            get
+            {
+                return Enumerate(() => this.FirstEffect, t => t.NextEffect);
             }
         }
 
@@ -148,6 +157,22 @@ namespace CgOO
             }
         }
 
+        public IEnumerable<CgProgram> Programs
+        {
+            get
+            {
+                return Enumerate(() => this.FirstProgram, t => t.NextProgram);
+            }
+        }
+
+        public IEnumerable<CgState> States
+        {
+            get
+            {
+                return Enumerate(() => this.FirstState, t => t.NextState);
+            }
+        }
+
         #endregion Public Properties
 
         #endregion Properties
@@ -158,7 +183,8 @@ namespace CgOO
 
         public static CgContext Create()
         {
-            return new CgContext(Cg.CreateContext());
+            var ptr = Cg.CreateContext();
+            return ptr == IntPtr.Zero ? null : new CgContext(ptr);
         }
 
         #endregion Public Static Methods
@@ -167,62 +193,74 @@ namespace CgOO
 
         public CgState CreateArraySamplerState(string name, ParameterType type, int elementCount)
         {
-            return new CgState(Cg.CreateArraySamplerState(this.Handle, name, type, elementCount));
+            var ptr = Cg.CreateArraySamplerState(this.Handle, name, type, elementCount);
+            return ptr == IntPtr.Zero ? null : new CgState(ptr);
         }
 
         public CgState CreateArrayState(string name, ParameterType type, int elementCount)
         {
-            return new CgState(Cg.CreateArrayState(this.Handle, name, type, elementCount));
+            var ptr = Cg.CreateArrayState(this.Handle, name, type, elementCount);
+            return ptr == IntPtr.Zero ? null : new CgState(ptr);
         }
 
         public CgBuffer CreateBuffer(int size, IntPtr data, BufferUsage bufferUsage)
         {
-            return new CgBuffer(Cg.CreateBuffer(this.Handle, size, data, bufferUsage));
+            var ptr = Cg.CreateBuffer(this.Handle, size, data, bufferUsage);
+            return ptr == IntPtr.Zero ? null : new CgBuffer(ptr);
         }
 
         public CgEffect CreateEffect(string code, params string[] args)
         {
-            return new CgEffect(Cg.CreateEffect(this.Handle, code, args));
+            var ptr = Cg.CreateEffect(this.Handle, code, args);
+            return ptr == IntPtr.Zero ? null : new CgEffect(ptr);
         }
 
         public CgEffect CreateEffectFromFile(string filename, params string[] args)
         {
-            return new CgEffect(Cg.CreateEffectFromFile(this.Handle, filename, args));
+            var ptr = Cg.CreateEffectFromFile(this.Handle, filename, args);
+            return ptr == IntPtr.Zero ? null : new CgEffect(ptr);
         }
 
         public CgParameter CreateEffectParameter(string name, ParameterType type)
         {
-            return new CgParameter(Cg.CreateEffectParameter(this.Handle, name, type));
+            var ptr = Cg.CreateEffectParameter(this.Handle, name, type);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr);
         }
 
         public CgObj CreateObj(ProgramType programType, string source, ProfileType profile, params string[] args)
         {
-            return new CgObj(Cg.CreateObj(this.Handle, programType, source, profile, args));
+            var ptr = Cg.CreateObj(this.Handle, programType, source, profile, args);
+            return ptr == IntPtr.Zero ? null : new CgObj(ptr);
         }
 
         public CgObj CreateObjFromFile(ProgramType programType, string sourceFile, ProfileType profile, params string[] args)
         {
-            return new CgObj(Cg.CreateObjFromFile(this.Handle, programType, sourceFile, profile, args));
+            var ptr = Cg.CreateObjFromFile(this.Handle, programType, sourceFile, profile, args);
+            return ptr == IntPtr.Zero ? null : new CgObj(ptr);
         }
 
         public CgParameter CreateParameter(ParameterType type)
         {
-            return new CgParameter(Cg.CreateParameter(this.Handle, type));
+            var ptr = Cg.CreateParameter(this.Handle, type);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr);
         }
 
         public CgParameter CreateParameterArray(ParameterType type, int length)
         {
-            return new CgParameter(Cg.CreateParameterArray(this.Handle, type, length));
+            var ptr = Cg.CreateParameterArray(this.Handle, type, length);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr);
         }
 
         public CgParameter CreateParameterMultiDimArray(ParameterType type, int dim, int[] lengths)
         {
-            return new CgParameter(Cg.CreateParameterMultiDimArray(this.Handle, type, dim, lengths));
+            var ptr = Cg.CreateParameterMultiDimArray(this.Handle, type, dim, lengths);
+            return ptr == IntPtr.Zero ? null : new CgParameter(ptr);
         }
 
         public CgProgram CreateProgram(ProgramType type, string source, ProfileType profile, string entry, params string[] args)
         {
-            return new CgProgram(Cg.CreateProgram(this.Handle, type, source, profile, entry, args))
+            var ptr = Cg.CreateProgram(this.Handle, type, source, profile, entry, args);
+            return ptr == IntPtr.Zero ? null : new CgProgram(ptr)
                    {
                        Type = type,
                    };
@@ -230,20 +268,23 @@ namespace CgOO
 
         public CgProgram CreateProgramFromFile(ProgramType type, string file, ProfileType profile, string entry, params string[] args)
         {
-            return new CgProgram(Cg.CreateProgramFromFile(this.Handle, type, file, profile, entry, args))
-                   {
-                       Type = type,
-                   };
+            var ptr = Cg.CreateProgramFromFile(this.Handle, type, file, profile, entry, args);
+            return ptr == IntPtr.Zero ? null : new CgProgram(ptr)
+            {
+                Type = type,
+            };
         }
 
         public CgState CreateSamplerState(string name, ParameterType type)
         {
-            return new CgState(Cg.CreateSamplerState(this.Handle, name, type));
+            var ptr = Cg.CreateSamplerState(this.Handle, name, type);
+            return ptr == IntPtr.Zero ? null : new CgState(ptr);
         }
 
         public CgState CreateState(string name, ParameterType type)
         {
-            return new CgState(Cg.CreateState(this.Handle, name, type));
+            var ptr = Cg.CreateState(this.Handle, name, type);
+            return ptr == IntPtr.Zero ? null : new CgState(ptr);
         }
 
         public string GetLastListing()
@@ -254,17 +295,19 @@ namespace CgOO
         public CgEffect GetNamedEffect(string name)
         {
             var ptr = Cg.GetNamedEffect(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgEffect(ptr);
+            return ptr == IntPtr.Zero ? null : new CgEffect(ptr) { OwnsHandle = false };
         }
 
         public CgState GetNamedSamplerState(string name)
         {
-            return new CgState(Cg.GetNamedSamplerState(this.Handle, name));
+            var ptr = Cg.GetNamedSamplerState(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgState(ptr) { OwnsHandle = false };
         }
 
         public CgState GetNamedState(string name)
         {
-            return new CgState(Cg.GetNamedState(this.Handle, name));
+            var ptr = Cg.GetNamedState(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new CgState(ptr) { OwnsHandle = false };
         }
 
         public void SetCompilerIncludeFile(string name, string filename)

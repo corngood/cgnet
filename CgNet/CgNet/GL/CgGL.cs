@@ -227,6 +227,11 @@ namespace CgNet.GL
             }
         }
 
+        public static string[] GetOptimalOptions(ProfileType profile)
+        {
+            return Cg.IntPtrToStringArray(CgGLNativeMethods.cgGLGetOptimalOptions(profile));
+        }
+
         public static T GetParameter<T>(IntPtr param)
             where T : struct
         {
@@ -401,11 +406,6 @@ namespace CgNet.GL
         public static int GetTextureParameter(IntPtr param)
         {
             return CgGLNativeMethods.cgGLGetTextureParameter(param);
-        }
-
-        public static string[] GLGetOptimalOptions(ProfileType profile)
-        {
-            return Cg.IntPtrToStringArray(CgGLNativeMethods.cgGLGetOptimalOptions(profile));
         }
 
         public static bool IsProfileSupported(ProfileType profile)
