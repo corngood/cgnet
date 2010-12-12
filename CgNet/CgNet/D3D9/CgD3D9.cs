@@ -36,14 +36,29 @@ namespace CgNet.CgNet.D3D9
 
         #region Public Static Methods
 
-        public static Result BindProgram(IntPtr program)
+        public static int BindProgram(IntPtr program)
         {
-            return FromHResult(CgD3D9NativeMethods.cgD3D9BindProgram(program));
+            return CgD3D9NativeMethods.cgD3D9BindProgram(program);
+        }
+
+        public static void EnableDebugTracing(bool enable)
+        {
+            CgD3D9NativeMethods.cgD3D9EnableDebugTracing(enable);
+        }
+
+        public static int EnableParameterShadowing(IntPtr prog, [MarshalAs(UnmanagedType.Bool)]bool enable)
+        {
+            return CgD3D9NativeMethods.cgD3D9EnableParameterShadowing(prog, enable);
         }
 
         public static Device GetDevice()
         {
             return Device.FromPointer(CgD3D9NativeMethods.cgD3D9GetDevice());
+        }
+
+        public static int GetLastError()
+        {
+            return CgD3D9NativeMethods.cgD3D9GetLastError();
         }
 
         public static ProfileType GetLatestPixelProfile()
@@ -56,9 +71,19 @@ namespace CgNet.CgNet.D3D9
             return CgD3D9NativeMethods.cgD3D9GetLatestVertexProfile();
         }
 
+        public static bool GetManageTextureParameters(IntPtr context)
+        {
+            return CgD3D9NativeMethods.cgD3D9GetManageTextureParameters(context);
+        }
+
         public static string[] GetOptimalOptions(ProfileType profile)
         {
             return Cg.IntPtrToStringArray(CgD3D9NativeMethods.cgD3D9GetOptimalOptions(profile));
+        }
+
+        public static BaseTexture GetTextureParameter(IntPtr param)
+        {
+            return (BaseTexture)Resource.FromPointer(CgD3D9NativeMethods.cgD3D9GetTextureParameter(param));
         }
 
         public static VertexElement[] GetVertexDeclaration(IntPtr program)
@@ -67,9 +92,29 @@ namespace CgNet.CgNet.D3D9
             return CgD3D9NativeMethods.cgD3D9GetVertexDeclaration(program, buf) ? buf : null;
         }
 
-        public static Result LoadProgram(IntPtr program, bool paramShadowing, int assemFlags)
+        public static bool IsParameterShadowingEnabled(IntPtr program)
         {
-            return FromHResult(CgD3D9NativeMethods.cgD3D9LoadProgram(program, paramShadowing, (uint)assemFlags));
+            return CgD3D9NativeMethods.cgD3D9IsParameterShadowingEnabled(program);
+        }
+
+        public static bool IsProfileSupported(ProfileType profile)
+        {
+            return CgD3D9NativeMethods.cgD3D9IsProfileSupported(profile);
+        }
+
+        public static bool IsProgramLoaded(IntPtr program)
+        {
+            return CgD3D9NativeMethods.cgD3D9IsProgramLoaded(program);
+        }
+
+        public static int LoadProgram(IntPtr program, bool paramShadowing, int assemFlags)
+        {
+            return CgD3D9NativeMethods.cgD3D9LoadProgram(program, paramShadowing, (uint)assemFlags);
+        }
+
+        public static void RegisterStates(IntPtr ctx)
+        {
+            CgD3D9NativeMethods.cgD3D9RegisterStates(ctx);
         }
 
         public static DeclarationUsage ResourceTypeToDeclarationUsage(ResourceType resourceType)
@@ -77,14 +122,84 @@ namespace CgNet.CgNet.D3D9
             return (DeclarationUsage)CgD3D9NativeMethods.cgD3D9ResourceToDeclUsage(resourceType);
         }
 
-        public static Result SetDevice(Device device)
+        public static int SetDevice(Device device)
         {
-            return FromHResult(CgD3D9NativeMethods.cgD3D9SetDevice(device != null ? device.ComPointer : IntPtr.Zero));
+            return CgD3D9NativeMethods.cgD3D9SetDevice(device != null ? device.ComPointer : IntPtr.Zero);
+        }
+
+        public static void SetManageTextureParameters(IntPtr ctx, bool flag)
+        {
+            CgD3D9NativeMethods.cgD3D9SetManageTextureParameters(ctx, flag);
+        }
+
+        public static int SetSamplerState(IntPtr param, SlimDX.Direct3D9.SamplerState type, int value)
+        {
+            return CgD3D9NativeMethods.cgD3D9SetSamplerState(param, type, (uint)value);
+        }
+
+        public static int SetTexture(IntPtr param, BaseTexture tex)
+        {
+            return CgD3D9NativeMethods.cgD3D9SetTexture(param, tex.ComPointer);
+        }
+
+        public static void SetTextureParameter(IntPtr param, BaseTexture tex)
+        {
+            CgD3D9NativeMethods.cgD3D9SetTextureParameter(param, tex.ComPointer);
+        }
+
+        public static int SetTextureWrapMode(IntPtr param, int value)
+        {
+            return CgD3D9NativeMethods.cgD3D9SetTextureWrapMode(param, (uint)value);
+        }
+
+        public static int SetUniform(IntPtr param, float[] floats)
+        {
+            return CgD3D9NativeMethods.cgD3D9SetUniform(param, floats);
+        }
+
+        public static int SetUniformArray(IntPtr param, int offset, int numItems, IntPtr values)
+        {
+            return CgD3D9NativeMethods.cgD3D9SetUniformArray(param, (uint)offset, (uint)numItems, values);
+        }
+
+        public static int SetUniformMatrix(IntPtr param, SlimDX.Matrix matrix)
+        {
+            return CgD3D9NativeMethods.cgD3D9SetUniformMatrix(param, matrix);
+        }
+
+        public static int SetUniformMatrixArray(IntPtr param, int offset, SlimDX.Matrix[] matrices)
+        {
+            return CgD3D9NativeMethods.cgD3D9SetUniformMatrixArray(param, (uint)offset, (uint)matrices.Length, matrices);
+        }
+
+        public static string TranslateCgError(ErrorType error)
+        {
+            return Marshal.PtrToStringAnsi(CgD3D9NativeMethods.cgD3D9TranslateCGerror(error));
+        }
+
+        public static string TranslateResult(Result result)
+        {
+            return Marshal.PtrToStringAnsi(CgD3D9NativeMethods.cgD3D9TranslateHRESULT(result.Code));
         }
 
         public static int TypeToSize(ParameterType type)
         {
             return (int)CgD3D9NativeMethods.cgD3D9TypeToSize(type);
+        }
+
+        public static int UnbindProgram(IntPtr prog)
+        {
+            return CgD3D9NativeMethods.cgD3D9UnbindProgram(prog);
+        }
+
+        public static void UnloadAllPrograms()
+        {
+            CgD3D9NativeMethods.cgD3D9UnloadAllPrograms();
+        }
+
+        public static int UnloadProgram(IntPtr program)
+        {
+            return CgD3D9NativeMethods.cgD3D9UnloadProgram(program);
         }
 
         public static bool ValidateVertexDeclaration(IntPtr program, VertexElement[] decl)
@@ -93,29 +208,6 @@ namespace CgNet.CgNet.D3D9
         }
 
         #endregion Public Static Methods
-
-        #region Private Static Methods
-
-        private static Result FromHResult(int h)
-        {
-            unsafe
-            {
-                IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Result)));
-                try
-                {
-                    Marshal.StructureToPtr(new Result(), ptr, true);
-                    *(int*)ptr = h;
-                    var retValue = (Result)Marshal.PtrToStructure(ptr, typeof(Result));
-                    return retValue;
-                }
-                finally
-                {
-                    Marshal.FreeHGlobal(ptr);
-                }
-            }
-        }
-
-        #endregion Private Static Methods
 
         #endregion Methods
     }
