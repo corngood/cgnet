@@ -18,7 +18,7 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  DEALINGS IN THE SOFTWARE.
  */
-namespace CgNet.CgNet.D3D9
+namespace CgNet.D3D9
 {
     using System;
     using System.Runtime.InteropServices;

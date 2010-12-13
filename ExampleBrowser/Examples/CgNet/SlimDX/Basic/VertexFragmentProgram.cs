@@ -4,7 +4,7 @@
     using System.Windows.Forms;
 
     using global::CgNet;
-    using global::CgNet.CgNet.D3D9;
+    using global::CgNet.D3D9;
 
     using global::Examples.Helper;
 

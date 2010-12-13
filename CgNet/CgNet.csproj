@@ -56,6 +56,9 @@
     <Compile Include="CgOO\CgState.cs" />
     <Compile Include="CgOO\CgStateAssignment.cs" />
     <Compile Include="CgOO\CgTechnique.cs" />
+    <Compile Include="CgOO\D3D9\CgD3D9Parameter.cs" />
+    <Compile Include="CgOO\D3D9\CgD3D9Context.cs" />
+    <Compile Include="CgOO\D3D9\CgD3D9Program.cs" />
     <Compile Include="CgOO\GL\CgGLBuffer.cs" />
     <Compile Include="CgOO\GL\CgGLContext.cs" />
     <Compile Include="CgOO\GL\CgGLParameter.cs" />
