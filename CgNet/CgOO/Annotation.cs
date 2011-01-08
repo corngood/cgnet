@@ -24,11 +24,11 @@ namespace CgOO
 
     using CgNet;
 
-    public sealed class CgAnnotation : WrapperObject
+    public sealed class Annotation : WrapperObject
     {
         #region Constructors
 
-        internal CgAnnotation(IntPtr handle)
+        internal Annotation(IntPtr handle)
             : base(handle)
         {
         }
@@ -63,12 +63,12 @@ namespace CgOO
             }
         }
 
-        public CgAnnotation NextAnnotation
+        public Annotation NextAnnotation
         {
             get
             {
                 var ptr = Cg.GetNextAnnotation(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -96,10 +96,10 @@ namespace CgOO
             return Cg.GetBoolAnnotationValues(this.Handle);
         }
 
-        public CgParameter GetDependentParameter(int index)
+        public Parameter GetDependentParameter(int index)
         {
             var ptr = Cg.GetDependentAnnotationParameter(this.Handle, index);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };

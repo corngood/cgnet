@@ -13,7 +13,7 @@
     {
         #region Fields
 
-        private readonly CgContext context;
+        private readonly Context context;
         private readonly TreeView treeView;
 
         #endregion Fields
@@ -23,7 +23,7 @@
         public Analyzer(TreeView treeView)
         {
             this.treeView = treeView;
-            this.context = CgContext.Create();
+            this.context = Context.Create();
             this.context.ParameterSettingMode = ParameterSettingMode.Deferred;
             this.context.RegisterStates();
         }

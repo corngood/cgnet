@@ -1,6 +1,5 @@
 ﻿namespace ExampleBrowser.Examples.CgOO.OpenTK
 {
-    using System;
     using System.Windows.Forms;
 
     using global::CgNet;
@@ -25,7 +24,7 @@
 
         #region Protected Properties
 
-        protected CgContext CgContext
+        protected Context CgContext
         {
             get;
             set;

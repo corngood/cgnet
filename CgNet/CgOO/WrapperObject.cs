@@ -76,10 +76,6 @@ namespace CgOO
 
         #region Public Static Methods
 
-        //public static implicit operator IntPtr(WrapperObject obj)
-        //{
-        //    return obj.Handle;
-        //}
         /// <summary>
         /// Implements the operator !=.
         /// </summary>

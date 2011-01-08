@@ -24,11 +24,11 @@ namespace CgOO
 
     using CgNet;
 
-    public sealed class CgState : WrapperObject
+    public sealed class State : WrapperObject
     {
         #region Constructors
 
-        internal CgState(IntPtr handle)
+        internal State(IntPtr handle)
             : base(handle)
         {
         }
@@ -39,12 +39,12 @@ namespace CgOO
 
         #region Public Properties
 
-        public CgContext Context
+        public Context Context
         {
             get
             {
                 var ptr = Cg.GetStateContext(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgContext(ptr)
+                return ptr == IntPtr.Zero ? null : new Context(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -83,12 +83,12 @@ namespace CgOO
             }
         }
 
-        public CgState NextState
+        public State NextState
         {
             get
             {
                 var ptr = Cg.GetNextState(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgState(ptr)
+                return ptr == IntPtr.Zero ? null : new State(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -135,12 +135,12 @@ namespace CgOO
 
         #region Public Static Methods
 
-        public static CgState Create(CgContext context, string name, ParameterType type)
+        public static State Create(Context context, string name, ParameterType type)
         {
             return context.CreateState(name, type);
         }
 
-        public static CgState CreateArrayState(CgContext context, string name, ParameterType type, int elementCount)
+        public static State CreateArrayState(Context context, string name, ParameterType type, int elementCount)
         {
             return context.CreateArrayState(name, type, elementCount);
         }

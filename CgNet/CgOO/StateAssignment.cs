@@ -24,11 +24,11 @@ namespace CgOO
 
     using CgNet;
 
-    public sealed class CgStateAssignment : WrapperObject
+    public sealed class StateAssignment : WrapperObject
     {
         #region Constructors
 
-        internal CgStateAssignment(IntPtr handle)
+        internal StateAssignment(IntPtr handle)
             : base(handle)
         {
         }
@@ -39,12 +39,12 @@ namespace CgOO
 
         #region Public Properties
 
-        public CgParameter ConnectedParameter
+        public Parameter ConnectedParameter
         {
             get
             {
                 var ptr = Cg.GetConnectedStateAssignmentParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -83,36 +83,36 @@ namespace CgOO
             }
         }
 
-        public CgStateAssignment NextStateAssignment
+        public StateAssignment NextStateAssignment
         {
             get
             {
                 var ptr = Cg.GetNextStateAssignment(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgStateAssignment(ptr)
+                return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public CgPass Pass
+        public Pass Pass
         {
             get
             {
                 var ptr = Cg.GetStateAssignmentPass(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgPass(ptr)
+                return ptr == IntPtr.Zero ? null : new Pass(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public CgState State
+        public State State
         {
             get
             {
                 var ptr = Cg.GetStateAssignmentState(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgState(ptr)
+                return ptr == IntPtr.Zero ? null : new State(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -132,19 +132,19 @@ namespace CgOO
             return Cg.GetBoolStateAssignmentValues(this.Handle);
         }
 
-        public CgParameter GetDependentParameter(int index)
+        public Parameter GetDependentParameter(int index)
         {
             var ptr = Cg.GetDependentStateAssignmentParameter(this.Handle, index);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetDependentProgramArrayParameter(int index)
+        public Parameter GetDependentProgramArrayParameter(int index)
         {
             var ptr = Cg.GetDependentProgramArrayStateAssignmentParameter(this.Handle, index);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
@@ -160,37 +160,37 @@ namespace CgOO
             return Cg.GetIntStateAssignmentValues(this.Handle);
         }
 
-        public CgProgram GetProgramValue()
+        public Program GetProgramValue()
         {
             var ptr = Cg.GetProgramStateAssignmentValue(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgProgram(ptr)
+            return ptr == IntPtr.Zero ? null : new Program(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetSamplerParameter()
+        public Parameter GetSamplerParameter()
         {
             var ptr = Cg.GetSamplerStateAssignmentParameter(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgState GetSamplerState()
+        public State GetSamplerState()
         {
             var ptr = Cg.GetSamplerStateAssignmentState(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgState(ptr)
+            return ptr == IntPtr.Zero ? null : new State(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetSamplerStateAssignmentValue()
+        public Parameter GetSamplerStateAssignmentValue()
         {
             var ptr = Cg.GetSamplerStateAssignmentValue(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
@@ -201,10 +201,10 @@ namespace CgOO
             return Cg.GetStringStateAssignmentValue(this.Handle);
         }
 
-        public CgParameter GetTextureStateAssignmentValue()
+        public Parameter GetTextureStateAssignmentValue()
         {
             var ptr = Cg.GetTextureStateAssignmentValue(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
@@ -245,17 +245,17 @@ namespace CgOO
             return Cg.SetStateAssignment(this.Handle, value);
         }
 
-        public bool SetProgram(CgProgram program)
+        public bool SetProgram(Program program)
         {
             return Cg.SetProgramStateAssignment(this.Handle, program.Handle);
         }
 
-        public bool SetSampler(CgParameter param)
+        public bool SetSampler(Parameter param)
         {
             return Cg.SetSamplerStateAssignment(this.Handle, param.Handle);
         }
 
-        public bool SetTexture(CgParameter param)
+        public bool SetTexture(Parameter param)
         {
             return Cg.SetTextureStateAssignment(this.Handle, param.Handle);
         }

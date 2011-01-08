@@ -24,32 +24,67 @@ namespace CgOO
 
     using CgNet;
 
-    public sealed class CgObj : WrapperObject
+    public sealed class Buffer : WrapperObject
     {
         #region Constructors
 
-        internal CgObj(IntPtr handle)
+        internal Buffer(IntPtr handle)
             : base(handle)
         {
         }
 
         #endregion Constructors
 
+        #region Properties
+
+        #region Public Properties
+
+        public int Size
+        {
+            get
+            {
+                return Cg.GetBufferSize(this.Handle);
+            }
+        }
+
+        #endregion Public Properties
+
+        #endregion Properties
+
         #region Methods
 
         #region Public Static Methods
 
-        public static CgObj Create(CgContext context, ProgramType programType, string source, ProfileType profile, params string[] args)
+        public static Buffer Create(Context context, int size, IntPtr data, BufferUsage bufferUsage)
         {
-            return context.CreateObj(programType, source, profile, args);
-        }
-
-        public static CgObj CreateFromFile(CgContext context, ProgramType programType, string sourceFile, ProfileType profile, params string[] args)
-        {
-            return context.CreateObjFromFile(programType, sourceFile, profile, args);
+            return new Buffer(Cg.CreateBuffer(context.Handle, size, data, bufferUsage));
         }
 
         #endregion Public Static Methods
+
+        #region Public Methods
+
+        public IntPtr Map(BufferAccess access)
+        {
+            return Cg.MapBuffer(this.Handle, access);
+        }
+
+        public void SetData(int size, IntPtr data)
+        {
+            Cg.SetBufferData(this.Handle, size, data);
+        }
+
+        public void SetSubData(int offset, int size, IntPtr data)
+        {
+            Cg.SetBufferSubData(this.Handle, offset, size, data);
+        }
+
+        public void Unmap()
+        {
+            Cg.UnmapBuffer(this.Handle);
+        }
+
+        #endregion Public Methods
 
         #region Protected Methods
 
@@ -57,7 +92,7 @@ namespace CgOO
         {
             if (this.Handle != IntPtr.Zero)
             {
-                Cg.DestroyObj(this.Handle);
+                Cg.DestroyBuffer(this.Handle);
             }
         }
 

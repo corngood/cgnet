@@ -34,252 +34,252 @@ namespace CgOO.GL
 
         #region Public Static Methods
 
-        public static void DisableClientState(this CgParameter param)
+        public static void DisableClientState(this Parameter param)
         {
             CgGL.DisableClientState(param.Handle);
         }
 
-        public static void DisableTextureParameter(this CgParameter param)
+        public static void DisableTextureParameter(this Parameter param)
         {
             CgGL.DisableTextureParameter(param.Handle);
         }
 
-        public static void EnableClientState(this CgParameter param)
+        public static void EnableClientState(this Parameter param)
         {
             CgGL.EnableClientState(param.Handle);
         }
 
-        public static void EnableTextureParameter(this CgParameter param)
+        public static void EnableTextureParameter(this Parameter param)
         {
             CgGL.EnableTextureParameter(param.Handle);
         }
 
-        public static void GetMatrixParameter(this CgParameter param, out Matrix4 value)
+        public static void GetMatrixParameter(this Parameter param, out Matrix4 value)
         {
             CgGL.GetMatrixParameter(param.Handle, out value);
         }
 
-        public static void GetMatrixParameter(this CgParameter param, out Matrix4d value)
+        public static void GetMatrixParameter(this Parameter param, out Matrix4d value)
         {
             CgGL.GetMatrixParameter(param.Handle, out value);
         }
 
-        public static T GetMatrixParameter<T>(this CgParameter param)
+        public static T GetMatrixParameter<T>(this Parameter param)
             where T : struct
         {
             return CgGL.GetMatrixParameter<T>(param.Handle);
         }
 
-        public static T GetMatrixParameter<T>(this CgParameter param, Order order)
+        public static T GetMatrixParameter<T>(this Parameter param, Order order)
             where T : struct
         {
             return CgGL.GetMatrixParameter<T>(param.Handle, order);
         }
 
-        public static void GetMatrixParameterArray(this CgParameter param, int offset, int nelements, out Matrix4[] values)
+        public static void GetMatrixParameterArray(this Parameter param, int offset, int nelements, out Matrix4[] values)
         {
             CgGL.GetMatrixParameterArray(param.Handle, offset, nelements, out values);
         }
 
-        public static void GetMatrixParameterArray(this CgParameter param, int offset, int nelements, out Matrix4d[] values)
+        public static void GetMatrixParameterArray(this Parameter param, int offset, int nelements, out Matrix4d[] values)
         {
             CgGL.GetMatrixParameterArray(param.Handle, offset, nelements, out values);
         }
 
-        public static T[] GetMatrixParameterArray<T>(this CgParameter param, int offset, int nelements)
+        public static T[] GetMatrixParameterArray<T>(this Parameter param, int offset, int nelements)
             where T : struct
         {
             return CgGL.GetMatrixParameterArray<T>(param.Handle, offset, nelements, Order.RowMajor);
         }
 
-        public static T[] GetMatrixParameterArray<T>(this CgParameter param, int offset, int nelements, Order order)
+        public static T[] GetMatrixParameterArray<T>(this Parameter param, int offset, int nelements, Order order)
             where T : struct
         {
             return CgGL.GetMatrixParameterArray<T>(param.Handle, offset, nelements, order);
         }
 
-        public static T GetParameter<T>(this CgParameter param)
+        public static T GetParameter<T>(this Parameter param)
             where T : struct
         {
             return CgGL.GetParameter<T>(param.Handle);
         }
 
-        public static void GetParameter(this CgParameter param, ref float[] values)
+        public static void GetParameter(this Parameter param, ref float[] values)
         {
             CgGL.GetParameter(param.Handle, ref values);
         }
 
-        public static void GetParameter(this CgParameter param, ref double[] values)
+        public static void GetParameter(this Parameter param, ref double[] values)
         {
             CgGL.GetParameter(param.Handle, ref values);
         }
 
-        public static void GetParameterArray(this CgParameter param, int offset, int nelements, ref float[] values)
+        public static void GetParameterArray(this Parameter param, int offset, int nelements, ref float[] values)
         {
             CgGL.GetParameterArray(param.Handle, offset, nelements, ref values);
         }
 
-        public static void GetParameterArray(this CgParameter param, int offset, int nelements, ref double[] values)
+        public static void GetParameterArray(this Parameter param, int offset, int nelements, ref double[] values)
         {
             CgGL.GetParameterArray(param.Handle, offset, nelements, ref values);
         }
 
-        public static int GetTextureEnum(this CgParameter param)
+        public static int GetTextureEnum(this Parameter param)
         {
             return CgGL.GetTextureEnum(param.Handle);
         }
 
-        public static int GetTextureParameter(this CgParameter param)
+        public static int GetTextureParameter(this Parameter param)
         {
             return CgGL.GetTextureParameter(param.Handle);
         }
 
-        public static void Set(this CgParameter param, double x)
+        public static void Set(this Parameter param, double x)
         {
             CgGL.SetParameter(param.Handle, x);
         }
 
-        public static void Set(this CgParameter param, double[] v)
+        public static void Set(this Parameter param, double[] v)
         {
             CgGL.SetParameter(param.Handle, v);
         }
 
-        public static void Set(this CgParameter param, float[] v)
+        public static void Set(this Parameter param, float[] v)
         {
             CgGL.SetParameter(param.Handle, v);
         }
 
-        public static void Set(this CgParameter param, float x)
+        public static void Set(this Parameter param, float x)
         {
             CgGL.SetParameter(param.Handle, x);
         }
 
-        public static void Set(this CgParameter param, double x, double y)
+        public static void Set(this Parameter param, double x, double y)
         {
             CgGL.SetParameter(param.Handle, x, y);
         }
 
-        public static void Set(this CgParameter param, float x, float y)
+        public static void Set(this Parameter param, float x, float y)
         {
             CgGL.SetParameter(param.Handle, x, y);
         }
 
-        public static void Set(this CgParameter param, double x, double y, double z)
+        public static void Set(this Parameter param, double x, double y, double z)
         {
             CgGL.SetParameter(param.Handle, x, y, z);
         }
 
-        public static void Set(this CgParameter param, float x, float y, float z)
+        public static void Set(this Parameter param, float x, float y, float z)
         {
             CgGL.SetParameter(param.Handle, x, y, z);
         }
 
-        public static void Set(this CgParameter param, double x, double y, double z, double w)
+        public static void Set(this Parameter param, double x, double y, double z, double w)
         {
             CgGL.SetParameter(param.Handle, x, y, z, w);
         }
 
-        public static void Set(this CgParameter param, float x, float y, float z, float w)
+        public static void Set(this Parameter param, float x, float y, float z, float w)
         {
             CgGL.SetParameter(param.Handle, x, y, z, w);
         }
 
-        public static void Set(this CgParameter param, Vector2 v)
+        public static void Set(this Parameter param, Vector2 v)
         {
             CgGL.SetParameter(param.Handle, v);
         }
 
-        public static void Set(this CgParameter param, Vector2d v)
+        public static void Set(this Parameter param, Vector2d v)
         {
             CgGL.SetParameter(param.Handle, v);
         }
 
-        public static void Set(this CgParameter param, Vector3 v)
+        public static void Set(this Parameter param, Vector3 v)
         {
             CgGL.SetParameter(param.Handle, v);
         }
 
-        public static void Set(this CgParameter param, Vector3d v)
+        public static void Set(this Parameter param, Vector3d v)
         {
             CgGL.SetParameter(param.Handle, v);
         }
 
-        public static void Set(this CgParameter param, Vector4 v)
+        public static void Set(this Parameter param, Vector4 v)
         {
             CgGL.SetParameter(param.Handle, v);
         }
 
-        public static void Set(this CgParameter param, Vector4d v)
+        public static void Set(this Parameter param, Vector4d v)
         {
             CgGL.SetParameter(param.Handle, v);
         }
 
-        public static void SetArray(this CgParameter param, int offset, int nelements, float[] values)
+        public static void SetArray(this Parameter param, int offset, int nelements, float[] values)
         {
             CgGL.SetParameterArray(param.Handle, offset, nelements, values);
         }
 
-        public static void SetArray(this CgParameter param, int offset, int nelements, double[] values)
+        public static void SetArray(this Parameter param, int offset, int nelements, double[] values)
         {
             CgGL.SetParameterArray(param.Handle, offset, nelements, values);
         }
 
-        public static void SetMatrixParameter(this CgParameter param, Matrix4 matrix)
+        public static void SetMatrixParameter(this Parameter param, Matrix4 matrix)
         {
             CgGL.SetMatrixParameter(param.Handle, matrix);
         }
 
-        public static void SetMatrixParameter(this CgParameter param, Matrix4 matrix, Order order)
+        public static void SetMatrixParameter(this Parameter param, Matrix4 matrix, Order order)
         {
             CgGL.SetMatrixParameter(param.Handle, matrix, order);
         }
 
-        public static void SetMatrixParameter(this CgParameter param, Matrix4d matrix)
+        public static void SetMatrixParameter(this Parameter param, Matrix4d matrix)
         {
             CgGL.SetMatrixParameter(param.Handle, matrix);
         }
 
-        public static void SetMatrixParameter(this CgParameter param, Matrix4d matrix, Order order)
+        public static void SetMatrixParameter(this Parameter param, Matrix4d matrix, Order order)
         {
             CgGL.SetMatrixParameter(param.Handle, matrix, order);
         }
 
-        public static void SetMatrixParameterArray(this CgParameter param, int offset, int nelements, Matrix4d[] matrices)
+        public static void SetMatrixParameterArray(this Parameter param, int offset, int nelements, Matrix4d[] matrices)
         {
             CgGL.SetMatrixParameterArray(param.Handle, offset, nelements, matrices);
         }
 
-        public static void SetMatrixParameterArray(this CgParameter param, int offset, int nelements, Matrix4[] matrices)
+        public static void SetMatrixParameterArray(this Parameter param, int offset, int nelements, Matrix4[] matrices)
         {
             CgGL.SetMatrixParameterArray(param.Handle, offset, nelements, matrices);
         }
 
-        public static void SetMatrixParameterArray(this CgParameter param, int offset, int nelements, Matrix4d[] matrices, Order order)
+        public static void SetMatrixParameterArray(this Parameter param, int offset, int nelements, Matrix4d[] matrices, Order order)
         {
             CgGL.SetMatrixParameterArray(param.Handle, offset, nelements, matrices, order);
         }
 
-        public static void SetMatrixParameterArray(this CgParameter param, int offset, int nelements, Matrix4[] matrices, Order order)
+        public static void SetMatrixParameterArray(this Parameter param, int offset, int nelements, Matrix4[] matrices, Order order)
         {
             CgGL.SetMatrixParameterArray(param.Handle, offset, nelements, matrices, order);
         }
 
-        public static void SetPointer(this CgParameter param, int fsize, DataType type, int stride, IntPtr pointer)
+        public static void SetPointer(this Parameter param, int fsize, DataType type, int stride, IntPtr pointer)
         {
             CgGL.SetParameterPointer(param.Handle, fsize, type, stride, pointer);
         }
 
-        public static void SetStateMatrix(this CgParameter param, MatrixType matrix, MatrixTransform transform)
+        public static void SetStateMatrix(this Parameter param, MatrixType matrix, MatrixTransform transform)
         {
             CgGL.SetStateMatrixParameter(param.Handle, matrix, transform);
         }
 
-        public static void SetTexture(this CgParameter param, int texobj)
+        public static void SetTexture(this Parameter param, int texobj)
         {
             CgGL.SetTextureParameter(param.Handle, texobj);
         }
 
-        public static void SetupSampler(this CgParameter param, int texobj)
+        public static void SetupSampler(this Parameter param, int texobj)
         {
             CgGL.SetupSampler(param.Handle, texobj);
         }

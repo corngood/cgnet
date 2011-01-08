@@ -30,37 +30,37 @@ namespace CgOO.GL
 
         #region Public Static Methods
 
-        public static void BindProgram(this CgProgram program)
+        public static void BindProgram(this Program program)
         {
             CgGL.BindProgram(program.Handle);
         }
 
-        public static void DisableProgramProfiles(this CgProgram program)
+        public static void DisableProgramProfiles(this Program program)
         {
             CgGL.DisableProgramProfiles(program.Handle);
         }
 
-        public static void EnableProgramProfiles(this CgProgram program)
+        public static void EnableProgramProfiles(this Program program)
         {
             CgGL.EnableProgramProfiles(program.Handle);
         }
 
-        public static int GetProgramID(this CgProgram program)
+        public static int GetProgramID(this Program program)
         {
             return CgGL.GetProgramID(program.Handle);
         }
 
-        public static bool IsLoaded(this CgProgram program)
+        public static bool IsLoaded(this Program program)
         {
             return CgGL.IsProgramLoaded(program.Handle);
         }
 
-        public static void Load(this CgProgram program)
+        public static void Load(this Program program)
         {
             CgGL.LoadProgram(program.Handle);
         }
 
-        public static void Unload(this CgProgram program)
+        public static void Unload(this Program program)
         {
             CgGL.UnloadProgram(program.Handle);
         }

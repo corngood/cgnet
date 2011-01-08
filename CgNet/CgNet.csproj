@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\Debug\CgNet.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\Release\CgNet.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
@@ -45,17 +47,17 @@
   <ItemGroup>
     <Compile Include="CgNet\D3D9\CgD3D9.cs" />
     <Compile Include="CgNet\D3D9\CgD3D9NativeMethods.cs" />
-    <Compile Include="CgOO\CgAnnotation.cs" />
-    <Compile Include="CgOO\CgBuffer.cs" />
-    <Compile Include="CgOO\CgContext.cs" />
-    <Compile Include="CgOO\CgEffect.cs" />
-    <Compile Include="CgOO\CgObj.cs" />
-    <Compile Include="CgOO\CgParameter.cs" />
-    <Compile Include="CgOO\CgPass.cs" />
-    <Compile Include="CgOO\CgProgram.cs" />
-    <Compile Include="CgOO\CgState.cs" />
-    <Compile Include="CgOO\CgStateAssignment.cs" />
-    <Compile Include="CgOO\CgTechnique.cs" />
+    <Compile Include="CgOO\Annotation.cs" />
+    <Compile Include="CgOO\Buffer.cs" />
+    <Compile Include="CgOO\Context.cs" />
+    <Compile Include="CgOO\Effect.cs" />
+    <Compile Include="CgOO\Obj.cs" />
+    <Compile Include="CgOO\Parameter.cs" />
+    <Compile Include="CgOO\Pass.cs" />
+    <Compile Include="CgOO\Program.cs" />
+    <Compile Include="CgOO\State.cs" />
+    <Compile Include="CgOO\StateAssignment.cs" />
+    <Compile Include="CgOO\Technique.cs" />
     <Compile Include="CgOO\D3D9\CgD3D9Parameter.cs" />
     <Compile Include="CgOO\D3D9\CgD3D9Context.cs" />
     <Compile Include="CgOO\D3D9\CgD3D9Program.cs" />

@@ -25,11 +25,11 @@ namespace CgOO
 
     using CgNet;
 
-    public sealed class CgProgram : WrapperObject
+    public sealed class Program : WrapperObject
     {
         #region Constructors
 
-        internal CgProgram(IntPtr handle)
+        internal Program(IntPtr handle)
             : base(handle)
         {
         }
@@ -40,7 +40,7 @@ namespace CgOO
 
         #region Public Properties
 
-        public IEnumerable<CgAnnotation> Annotations
+        public IEnumerable<Annotation> Annotations
         {
             get
             {
@@ -48,12 +48,12 @@ namespace CgOO
             }
         }
 
-        public CgContext Context
+        public Context Context
         {
             get
             {
                 var ptr = Cg.GetProgramContext(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgContext(ptr)
+                return ptr == IntPtr.Zero ? null : new Context(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -68,12 +68,12 @@ namespace CgOO
             }
         }
 
-        public CgAnnotation FirstAnnotation
+        public Annotation FirstAnnotation
         {
             get
             {
                 var ptr = Cg.GetFirstProgramAnnotation(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -96,12 +96,12 @@ namespace CgOO
             }
         }
 
-        public CgProgram NextProgram
+        public Program NextProgram
         {
             get
             {
                 var ptr = Cg.GetNextProgram(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgProgram(ptr)
+                return ptr == IntPtr.Zero ? null : new Program(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -175,7 +175,7 @@ namespace CgOO
 
         #region Public Static Methods
 
-        public static CgProgram CombinePrograms(params CgProgram[] programs)
+        public static Program CombinePrograms(params Program[] programs)
         {
             var buf = new IntPtr[programs.Length];
             for (int i = 0; i < programs.Length; i++)
@@ -184,15 +184,15 @@ namespace CgOO
             }
 
             var ptr = Cg.CombinePrograms(buf);
-            return ptr == IntPtr.Zero ? null : new CgProgram(ptr);
+            return ptr == IntPtr.Zero ? null : new Program(ptr);
         }
 
-        public static CgProgram Create(CgContext context, ProgramType type, string source, ProfileType profile, string entry, params string[] args)
+        public static Program Create(Context context, ProgramType type, string source, ProfileType profile, string entry, params string[] args)
         {
             return context.CreateProgram(type, source, profile, entry, args);
         }
 
-        public static CgProgram CreateFromFile(CgContext context, ProgramType type, string file, ProfileType profile, string entry, params string[] args)
+        public static Program CreateFromFile(Context context, ProgramType type, string file, ProfileType profile, string entry, params string[] args)
         {
             return context.CreateProgramFromFile(type, file, profile, entry, args);
         }
@@ -201,10 +201,10 @@ namespace CgOO
 
         #region Public Methods
 
-        public CgProgram Combine(CgProgram exe1)
+        public Program Combine(Program exe1)
         {
             var ptr = Cg.CombinePrograms(this.Handle, exe1.Handle);
-            return ptr == IntPtr.Zero ? null : new CgProgram(ptr);
+            return ptr == IntPtr.Zero ? null : new Program(ptr);
         }
 
         public void Compile()
@@ -212,16 +212,16 @@ namespace CgOO
             Cg.CompileProgram(this.Handle);
         }
 
-        public CgProgram Copy()
+        public Program Copy()
         {
             var ptr = Cg.CopyProgram(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgProgram(ptr);
+            return ptr == IntPtr.Zero ? null : new Program(ptr);
         }
 
-        public CgAnnotation CreateAnnotation(string name, ParameterType type)
+        public Annotation CreateAnnotation(string name, ParameterType type)
         {
             var ptr = Cg.CreateProgramAnnotation(this.Handle, name, type);
-            return new CgAnnotation(ptr);
+            return new Annotation(ptr);
         }
 
         public float[] EvaluateProgram(int ncomps, int nx, int ny, int nz)
@@ -229,55 +229,55 @@ namespace CgOO
             return Cg.EvaluateProgram(this.Handle, ncomps, nx, ny, nz);
         }
 
-        public CgBuffer GetBuffer(int bufferIndex)
+        public Buffer GetBuffer(int bufferIndex)
         {
             var ptr = Cg.GetProgramBuffer(this.Handle, bufferIndex);
-            return ptr == IntPtr.Zero ? null : new CgBuffer(ptr)
+            return ptr == IntPtr.Zero ? null : new Buffer(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetFirstLeafParameter(int nameSpace)
+        public Parameter GetFirstLeafParameter(int nameSpace)
         {
             var ptr = Cg.GetFirstLeafParameter(this.Handle, nameSpace);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetFirstParameter(int nameSpace)
+        public Parameter GetFirstParameter(int nameSpace)
         {
             var ptr = Cg.GetFirstParameter(this.Handle, nameSpace);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgAnnotation GetNamedAnnotation(string name)
+        public Annotation GetNamedAnnotation(string name)
         {
             var ptr = Cg.GetNamedProgramAnnotation(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetNamedParameter(ProgramNamespace nameSpace, string name)
+        public Parameter GetNamedParameter(ProgramNamespace nameSpace, string name)
         {
             var ptr = Cg.GetNamedProgramParameter(this.Handle, nameSpace, name);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetNamedParameter(string parameter)
+        public Parameter GetNamedParameter(string parameter)
         {
             var ptr = Cg.GetNamedParameter(this.Handle, parameter);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
@@ -293,10 +293,10 @@ namespace CgOO
             return Cg.GetProgramDomainProfile(this.Handle, index);
         }
 
-        public CgProgram GetProgramDomainProgram(int index)
+        public Program GetProgramDomainProgram(int index)
         {
             var ptr = Cg.GetProgramDomainProgram(this.Handle, index);
-            return ptr == IntPtr.Zero ? null : new CgProgram(ptr)
+            return ptr == IntPtr.Zero ? null : new Program(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
@@ -322,7 +322,7 @@ namespace CgOO
             Cg.SetPassProgramParameters(this.Handle);
         }
 
-        public void SetProgramBuffer(int bufferIndex, CgBuffer buffer)
+        public void SetProgramBuffer(int bufferIndex, Buffer buffer)
         {
             Cg.SetProgramBuffer(this.Handle, bufferIndex, buffer.Handle);
         }

@@ -28,7 +28,7 @@ namespace CgOO.GL
 
         #region Public Static Methods
 
-        public static int GetBufferObject(this CgBuffer buffer)
+        public static int GetBufferObject(this Buffer buffer)
         {
             return CgGL.GetBufferObject(buffer.Handle);
         }

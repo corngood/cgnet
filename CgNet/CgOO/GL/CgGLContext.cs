@@ -26,28 +26,30 @@ namespace CgOO.GL
 
     using OpenTK.Graphics.OpenGL;
 
+    using Buffer = CgOO.Buffer;
+
     public static class CgGLContext
     {
         #region Methods
 
         #region Public Static Methods
 
-        public static CgBuffer CreateBuffer(this CgContext context, int size, IntPtr data, BufferUsageHint bufferUsage)
+        public static Buffer CreateBuffer(this Context context, int size, IntPtr data, BufferUsageHint bufferUsage)
         {
-            return new CgBuffer(CgGL.CreateBuffer(context.Handle, size, data, bufferUsage));
+            return new Buffer(CgGL.CreateBuffer(context.Handle, size, data, bufferUsage));
         }
 
-        public static bool GetManageTextureParameters(this CgContext context)
+        public static bool GetManageTextureParameters(this Context context)
         {
             return CgGL.GetManageTextureParameters(context.Handle);
         }
 
-        public static void RegisterStates(this CgContext context)
+        public static void RegisterStates(this Context context)
         {
             CgGL.RegisterStates(context.Handle);
         }
 
-        public static void SetManageTextureParameters(this CgContext context, bool flag)
+        public static void SetManageTextureParameters(this Context context, bool flag)
         {
             CgGL.SetManageTextureParameters(context.Handle, flag);
         }

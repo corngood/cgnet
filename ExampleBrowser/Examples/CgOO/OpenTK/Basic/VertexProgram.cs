@@ -23,7 +23,7 @@ namespace ExampleBrowser.Examples.CgOO.OpenTK.Basic
         private const string VertexProgramName = "C2E1v_green";
 
         private ProfileType cgVertexProfile;
-        private CgProgram cgVertexProgram;
+        private Program cgVertexProgram;
 
         #endregion Fields
 
@@ -48,7 +48,7 @@ namespace ExampleBrowser.Examples.CgOO.OpenTK.Basic
         {
             GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
 
-            this.CgContext = CgContext.Create();
+            this.CgContext = global::CgOO.Context.Create();
 
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;

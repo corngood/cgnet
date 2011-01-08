@@ -25,11 +25,11 @@ namespace CgOO
 
     using CgNet;
 
-    public sealed class CgTechnique : WrapperObject
+    public sealed class Pass : WrapperObject
     {
         #region Constructors
 
-        internal CgTechnique(IntPtr handle)
+        internal Pass(IntPtr handle)
             : base(handle)
         {
         }
@@ -40,7 +40,7 @@ namespace CgOO
 
         #region Public Properties
 
-        public IEnumerable<CgAnnotation> Annotations
+        public IEnumerable<Annotation> Annotations
         {
             get
             {
@@ -48,57 +48,35 @@ namespace CgOO
             }
         }
 
-        public CgEffect Effect
+        public Annotation FirstAnnotation
         {
             get
             {
-                var ptr = Cg.GetTechniqueEffect(this.Handle);
-
-                return ptr == IntPtr.Zero ? null : new CgEffect(ptr)
+                var ptr = Cg.GetFirstPassAnnotation(this.Handle);
+                return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public CgAnnotation FirstAnnotation
+        public StateAssignment FirstStateAssignment
         {
             get
             {
-                var ptr = Cg.GetFirstTechniqueAnnotation(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                var ptr = Cg.GetFirstStateAssignment(this.Handle);
+                return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public CgPass FirstPass
+        public bool IsPass
         {
             get
             {
-                var ptr = Cg.GetFirstPass(this.Handle);
-
-                return ptr == IntPtr.Zero ? null : new CgPass(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
-            }
-        }
-
-        public bool IsTechnique
-        {
-            get
-            {
-                return Cg.IsTechnique(this.Handle);
-            }
-        }
-
-        public bool IsValidated
-        {
-            get
-            {
-                return Cg.IsTechniqueValidated(this.Handle);
+                return Cg.IsPass(this.Handle);
             }
         }
 
@@ -106,27 +84,33 @@ namespace CgOO
         {
             get
             {
-                return Cg.GetTechniqueName(this.Handle);
+                return Cg.GetPassName(this.Handle);
             }
         }
 
-        public CgTechnique NextTechnique
+        public Pass NextPass
         {
             get
             {
-                var ptr = Cg.GetNextTechnique(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgTechnique(ptr)
+                var ptr = Cg.GetNextPass(this.Handle);
+
+                return ptr == IntPtr.Zero ? null : new Pass(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public IEnumerable<CgPass> Passes
+        public Technique Technique
         {
             get
             {
-                return Enumerate(() => this.FirstPass, t => t.NextPass);
+                var ptr = Cg.GetPassTechnique(this.Handle);
+
+                return ptr == IntPtr.Zero ? null : new Technique(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
             }
         }
 
@@ -138,48 +122,80 @@ namespace CgOO
 
         #region Public Static Methods
 
-        public static CgTechnique Create(CgEffect effect, string name)
+        public static Pass Create(Technique technique, string name)
         {
-            return effect.CreateTechnique(name);
+            return technique.CreatePass(name);
         }
 
         #endregion Public Static Methods
 
         #region Public Methods
 
-        public CgPass CreatePass(string name)
+        public Annotation CreateAnnotation(string name, ParameterType type)
         {
-            var ptr = Cg.CreatePass(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgPass(ptr);
+            var ptr = Cg.CreatePassAnnotation(this.Handle, name, type);
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr);
         }
 
-        public CgAnnotation CreateTechniqueAnnotation(string name, ParameterType type)
+        public StateAssignment CreateSamplerStateAssignment(State state)
         {
-            var ptr = Cg.CreateTechniqueAnnotation(this.Handle, name, type);
-            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr);
+            var ptr = Cg.CreateSamplerStateAssignment(this.Handle, state.Handle);
+            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr);
         }
 
-        public CgAnnotation GetNamedAnnotation(string name)
+        public StateAssignment CreateStateAssignment(State state)
         {
-            var ptr = Cg.GetNamedTechniqueAnnotation(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+            var ptr = Cg.CreateStateAssignment(this.Handle, state.Handle);
+            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr);
+        }
+
+        public StateAssignment CreateStateAssignmentIndex(State state, int index)
+        {
+            var ptr = Cg.CreateStateAssignmentIndex(this.Handle, state.Handle, index);
+            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr);
+        }
+
+        public Annotation GetNamedAnnotation(string name)
+        {
+            var ptr = Cg.GetNamedPassAnnotation(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgPass GetNamedPass(string name)
+        public StateAssignment GetNamedStateAssignment(string name)
         {
-            var ptr = Cg.GetNamedPass(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgPass(ptr)
+            var ptr = Cg.GetNamedStateAssignment(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public bool Validate()
+        public Program GetProgram(Domain domain)
         {
-            return Cg.ValidateTechnique(this.Handle);
+            var ptr = Cg.GetPassProgram(this.Handle, domain);
+
+            return ptr == IntPtr.Zero ? null : new Program(ptr)
+                                               {
+                                                   OwnsHandle = false
+                                               };
+        }
+
+        public void ResetState()
+        {
+            Cg.ResetPassState(this.Handle);
+        }
+
+        public void SetState()
+        {
+            Cg.SetPassState(this.Handle);
+        }
+
+        public void UpdateParameters(Pass pass)
+        {
+            Cg.UpdatePassParameters(this.Handle);
         }
 
         #endregion Public Methods

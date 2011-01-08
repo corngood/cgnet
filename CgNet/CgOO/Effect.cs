@@ -25,11 +25,11 @@ namespace CgOO
 
     using CgNet;
 
-    public sealed class CgEffect : WrapperObject
+    public sealed class Effect : WrapperObject
     {
         #region Constructors
 
-        internal CgEffect(IntPtr handle)
+        internal Effect(IntPtr handle)
             : base(handle)
         {
         }
@@ -40,7 +40,7 @@ namespace CgOO
 
         #region Public Properties
 
-        public IEnumerable<CgAnnotation> Annotations
+        public IEnumerable<Annotation> Annotations
         {
             get
             {
@@ -48,59 +48,59 @@ namespace CgOO
             }
         }
 
-        public CgContext Context
+        public Context Context
         {
             get
             {
-                return new CgContext(Cg.GetEffectContext(this.Handle))
+                return new Context(Cg.GetEffectContext(this.Handle))
                        {
                            OwnsHandle = false
                        };
             }
         }
 
-        public CgAnnotation FirstAnnotation
+        public Annotation FirstAnnotation
         {
             get
             {
                 var ptr = Cg.GetFirstEffectAnnotation(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public CgParameter FirstLeafParameter
+        public Parameter FirstLeafParameter
         {
             get
             {
                 var ptr = Cg.GetFirstLeafEffectParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public CgParameter FirstParameter
+        public Parameter FirstParameter
         {
             get
             {
                 var ptr = Cg.GetFirstEffectParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public CgTechnique FirstTechnique
+        public Technique FirstTechnique
         {
             get
             {
                 var ptr = Cg.GetFirstTechnique(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgTechnique(ptr)
+                return ptr == IntPtr.Zero ? null : new Technique(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -128,19 +128,19 @@ namespace CgOO
             }
         }
 
-        public CgEffect NextEffect
+        public Effect NextEffect
         {
             get
             {
                 var ptr = Cg.GetNextEffect(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgEffect(ptr)
+                return ptr == IntPtr.Zero ? null : new Effect(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public IEnumerable<CgParameter> Parameters
+        public IEnumerable<Parameter> Parameters
         {
             get
             {
@@ -148,7 +148,7 @@ namespace CgOO
             }
         }
 
-        public IEnumerable<CgTechnique> Techniques
+        public IEnumerable<Technique> Techniques
         {
             get
             {
@@ -172,12 +172,12 @@ namespace CgOO
 
         #region Public Static Methods
 
-        public static CgEffect Create(CgContext context, string code, params string[] args)
+        public static Effect Create(Context context, string code, params string[] args)
         {
             return context.CreateEffect(code, args);
         }
 
-        public static CgEffect CreateFromFile(CgContext context, string filename, params string[] args)
+        public static Effect CreateFromFile(Context context, string filename, params string[] args)
         {
             return context.CreateEffectFromFile(filename, args);
         }
@@ -186,64 +186,64 @@ namespace CgOO
 
         #region Public Methods
 
-        public CgEffect Copy()
+        public Effect Copy()
         {
             var ptr = Cg.CopyEffect(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgEffect(ptr);
+            return ptr == IntPtr.Zero ? null : new Effect(ptr);
         }
 
-        public CgAnnotation CreateAnnotation(string name, ParameterType type)
+        public Annotation CreateAnnotation(string name, ParameterType type)
         {
             var ptr = Cg.CreateEffectAnnotation(this.Handle, name, type);
-            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr);
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr);
         }
 
-        public CgParameter CreateParameterArray(string name, ParameterType type, int length)
+        public Parameter CreateParameterArray(string name, ParameterType type, int length)
         {
             var ptr = Cg.CreateEffectParameterArray(this.Handle, name, type, length);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr);
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr);
         }
 
-        public CgParameter CreateParameterMultiDimArray(string name, ParameterType type, int dim, int[] lengths)
+        public Parameter CreateParameterMultiDimArray(string name, ParameterType type, int dim, int[] lengths)
         {
             var ptr = Cg.CreateEffectParameterMultiDimArray(this.Handle, name, type, dim, lengths);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr);
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr);
         }
 
-        public CgProgram CreateProgram(ProfileType profile, string entry, params string[] args)
+        public Program CreateProgram(ProfileType profile, string entry, params string[] args)
         {
             var ptr = Cg.CreateProgramFromEffect(this.Handle, profile, entry, args);
-            return ptr == IntPtr.Zero ? null : new CgProgram(ptr);
+            return ptr == IntPtr.Zero ? null : new Program(ptr);
         }
 
-        public CgTechnique CreateTechnique(string name)
+        public Technique CreateTechnique(string name)
         {
             var ptr = Cg.CreateTechnique(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgTechnique(ptr);
+            return ptr == IntPtr.Zero ? null : new Technique(ptr);
         }
 
-        public CgAnnotation GetNamedAnnotation(string name)
+        public Annotation GetNamedAnnotation(string name)
         {
             var ptr = Cg.GetNamedEffectAnnotation(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetNamedParameter(string name)
+        public Parameter GetNamedParameter(string name)
         {
             var ptr = Cg.GetNamedEffectParameter(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgTechnique GetNamedTechnique(string name)
+        public Technique GetNamedTechnique(string name)
         {
             var ptr = Cg.GetNamedTechnique(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgTechnique(ptr)
+            return ptr == IntPtr.Zero ? null : new Technique(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
@@ -254,10 +254,10 @@ namespace CgOO
             return Cg.GetNamedUserType(this.Handle, name);
         }
 
-        public CgParameter GetParameterBySemantic(string name)
+        public Parameter GetParameterBySemantic(string name)
         {
             var ptr = Cg.GetEffectParameterBySemantic(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };

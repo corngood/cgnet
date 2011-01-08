@@ -26,6 +26,9 @@ namespace CgNet
     using System.Runtime.InteropServices;
     using System.Text;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static class Cg
     {
         #region Delegates
@@ -44,12 +47,15 @@ namespace CgNet
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void CgErrorHandlerFuncDelegate(IntPtr context, ErrorType err, IntPtr data);
 
+       /// <summary>
+        /// 
+        /// </summary>
         // typedef void (*CGIncludeCallbackFunc)( CGcontext context, const char *filename );
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void CgIncludeCallbackFunc(IntPtr context, string filename);
 
         /// <summary>
-        ///    
+        /// 
         /// </summary>
         // typedef CGbool (*CGstatecallback)(CGstateassignment);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -61,51 +67,117 @@ namespace CgNet
 
         #region Public Static Methods
 
+        /// <summary>
+        /// cgAddStateEnumerant - associates an integer enumerant value as a possible value for a state
+        /// </summary>
+        /// <param name="state">The state to which to associate the name and value.</param>
+        /// <param name="name">The name of the enumerant.</param>
+        /// <param name="value">The value of the enumerant.</param>
         public static void AddStateEnumerant(IntPtr state, string name, int value)
         {
             CgNativeMethods.cgAddStateEnumerant(state, name, value);
         }
 
+        /// <summary>
+        /// cgCallStateResetCallback - calls the state resetting callback function for a state assignment 
+        /// </summary>
+        /// <param name="stateassignment">The state assignment handle.</param>
+        /// <returns>Returns the boolean value returned by the callback function. It should be CG_TRUE upon success. Returns CG_TRUE if no callback function was defined. </returns>
         public static bool CallStateResetCallback(IntPtr stateassignment)
         {
             return CgNativeMethods.cgCallStateResetCallback(stateassignment);
         }
 
+        /// <summary>
+        /// cgCallStateSetCallback - calls the state setting callback function for a state assignment.
+        /// </summary>
+        /// <param name="stateassignment">The state assignment handle.</param>
+        /// <returns>Returns the boolean value returned by the callback function. It should be CG_TRUE upon success. Returns CG_TRUE if no callback function was defined. </returns>
         public static bool CallStateSetCallback(IntPtr stateassignment)
         {
             return CgNativeMethods.cgCallStateSetCallback(stateassignment);
         }
 
+        /// <summary>
+        /// cgCallStateValidateCallback - calls the state validation callback function for a state assignment.
+        /// </summary>
+        /// <param name="stateassignment">The state assignment handle.</param>
+        /// <returns>Returns the boolean value returned by the callback function. It should be CG_TRUE upon success. Returns CG_TRUE if no callback function was defined. </returns>
         public static bool CallStateValidateCallback(IntPtr stateassignment)
         {
             return CgNativeMethods.cgCallStateValidateCallback(stateassignment);
         }
 
+        /// <summary>
+        /// cgCombinePrograms2 - combine programs from two different domains.
+        /// </summary>
+        /// <param name="exe1">An executable program from one domain.</param>
+        /// <param name="exe2">An executable program from a different domain.</param>
+        /// <returns>Returns a handle to the newly created program on success. Returns NULL if an error occurs.</returns>
         public static IntPtr CombinePrograms(IntPtr exe1, IntPtr exe2)
         {
             return CgNativeMethods.cgCombinePrograms2(exe1, exe2);
         }
 
+        /// <summary>
+        /// cgCombinePrograms3 - combine programs from three different domains 
+        /// </summary>
+        /// <param name="exe1">An executable program from one domain.</param>
+        /// <param name="exe2">An executable program from a second domain.</param>
+        /// <param name="exe3">An executable program from a third domain.</param>
+        /// <returns>Returns a handle to the newly created program on success. Returns NULL if an error occurs.</returns>
         public static IntPtr CombinePrograms(IntPtr exe1, IntPtr exe2, IntPtr exe3)
         {
             return CgNativeMethods.cgCombinePrograms3(exe1, exe2, exe3);
         }
 
+        /// <summary>
+        /// cgCombinePrograms4 - combine programs from four different domains
+        /// </summary>
+        /// <param name="exe1">An executable program from one domain.</param>
+        /// <param name="exe2">An executable program from a second domain.</param>
+        /// <param name="exe3">An executable program from a third domain.</param>
+        /// <param name="exe4">An executable program from a fourth domain.</param>
+        /// <returns>
+        /// Returns a handle to the newly created program on success. Returns NULL if an error occurs.
+        /// </returns>
         public static IntPtr CombinePrograms(IntPtr exe1, IntPtr exe2, IntPtr exe3, IntPtr exe4)
         {
             return CgNativeMethods.cgCombinePrograms4(exe1, exe2, exe3, exe4);
         }
 
+        /// <summary>
+        /// cgCombinePrograms5 - combine programs from five different domains
+        /// </summary>
+        /// <param name="exe1">An executable program from one domain.</param>
+        /// <param name="exe2">An executable program from a second domain.</param>
+        /// <param name="exe3">An executable program from a third domain.</param>
+        /// <param name="exe4">An executable program from a fourth domain.</param>
+        /// <param name="exe5">An executable program from a fifth domain.</param>
+        /// <returns>
+        /// Returns a handle to the newly created program on success. Returns NULL if an error occurs.
+        /// </returns>
         public static IntPtr CombinePrograms(IntPtr exe1, IntPtr exe2, IntPtr exe3, IntPtr exe4, IntPtr exe5)
         {
             return CgNativeMethods.cgCombinePrograms5(exe1, exe2, exe3, exe4, exe5);
         }
 
+        /// <summary>
+        /// cgCombinePrograms - combine programs from different domains
+        /// </summary>
+        /// <param name="programs">An array of two or more executable programs, each from a different domain.</param>
+        /// <returns>
+        /// Returns a handle to the newly created program on success. Returns NULL if an error occurs.
+        /// </returns>
         public static IntPtr CombinePrograms(params IntPtr[] programs)
         {
             return CgNativeMethods.cgCombinePrograms(programs.Length, programs);
         }
 
+        /// <summary>
+        /// cgCompileProgram - compile a program object.
+        /// </summary>
+        /// <param name="program">The program object to compile.</param>
         public static void CompileProgram(IntPtr program)
         {
             CgNativeMethods.cgCompileProgram(program);

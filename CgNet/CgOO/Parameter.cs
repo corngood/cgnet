@@ -25,11 +25,11 @@ namespace CgOO
 
     using CgNet;
 
-    public sealed class CgParameter : WrapperObject
+    public sealed class Parameter : WrapperObject
     {
         #region Constructors
 
-        internal CgParameter(IntPtr handle)
+        internal Parameter(IntPtr handle)
             : base(handle)
         {
         }
@@ -40,7 +40,7 @@ namespace CgOO
 
         #region Public Properties
 
-        public IEnumerable<CgAnnotation> Annotations
+        public IEnumerable<Annotation> Annotations
         {
             get
             {
@@ -96,12 +96,12 @@ namespace CgOO
             }
         }
 
-        public CgParameter ConnectedParameter
+        public Parameter ConnectedParameter
         {
             get
             {
                 var ptr = Cg.GetConnectedParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -116,48 +116,48 @@ namespace CgOO
             }
         }
 
-        public CgContext Context
+        public Context Context
         {
             get
             {
                 var ptr = Cg.GetParameterContext(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgContext(ptr)
+                return ptr == IntPtr.Zero ? null : new Context(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public CgEffect Effect
+        public Effect Effect
         {
             get
             {
                 var ptr = Cg.GetParameterEffect(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgEffect(ptr)
+                return ptr == IntPtr.Zero ? null : new Effect(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public CgAnnotation FirstAnnotation
+        public Annotation FirstAnnotation
         {
             get
             {
                 var ptr = Cg.GetFirstParameterAnnotation(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+                return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public CgStateAssignment FirstStateAssignment
+        public StateAssignment FirstStateAssignment
         {
             get
             {
                 var ptr = Cg.GetFirstSamplerStateAssignment(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgStateAssignment(ptr)
+                return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -212,24 +212,24 @@ namespace CgOO
             }
         }
 
-        public CgParameter NextLeafParameter
+        public Parameter NextLeafParameter
         {
             get
             {
                 var ptr = Cg.GetNextLeafParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
             }
         }
 
-        public CgParameter NextParameter
+        public Parameter NextParameter
         {
             get
             {
                 var ptr = Cg.GetNextParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -252,12 +252,12 @@ namespace CgOO
             }
         }
 
-        public CgProgram Program
+        public Program Program
         {
             get
             {
                 var ptr = Cg.GetParameterProgram(this.Handle);
-                return ptr == IntPtr.Zero ? null : new CgProgram(ptr)
+                return ptr == IntPtr.Zero ? null : new Program(ptr)
                                                    {
                                                        OwnsHandle = false
                                                    };
@@ -354,12 +354,12 @@ namespace CgOO
 
         #region Public Static Methods
 
-        public static void ConnectParameters(CgParameter from, CgParameter to)
+        public static void ConnectParameters(Parameter from, Parameter to)
         {
             Cg.ConnectParameter(from.Handle, to.Handle);
         }
 
-        public static CgParameter Create(CgContext context, ParameterType type)
+        public static Parameter Create(Context context, ParameterType type)
         {
             return context.CreateParameter(type);
         }
@@ -368,15 +368,15 @@ namespace CgOO
 
         #region Public Methods
 
-        public void Connect(CgParameter to)
+        public void Connect(Parameter to)
         {
             Cg.ConnectParameter(this.Handle, to.Handle);
         }
 
-        public CgAnnotation CreateAnnotation(string name, ParameterType type)
+        public Annotation CreateAnnotation(string name, ParameterType type)
         {
             var ptr = Cg.CreateParameterAnnotation(this.Handle, name, type);
-            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr);
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr);
         }
 
         public void Disconnect()
@@ -389,10 +389,10 @@ namespace CgOO
             return Cg.GetArrayDimension(this.Handle);
         }
 
-        public CgParameter GetArrayParameter(IntPtr aparam, int index)
+        public Parameter GetArrayParameter(IntPtr aparam, int index)
         {
             var ptr = Cg.GetArrayParameter(this.Handle, index);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
@@ -413,10 +413,10 @@ namespace CgOO
             return Cg.GetArrayType(this.Handle);
         }
 
-        public CgParameter GetConnectedToParameter(int index)
+        public Parameter GetConnectedToParameter(int index)
         {
             var ptr = Cg.GetConnectedToParameter(this.Handle, index);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
@@ -452,28 +452,28 @@ namespace CgOO
             return Cg.GetParameterDefaultValue(this.Handle, ref values, order);
         }
 
-        public CgBuffer GetEffectParameterBuffer()
+        public Buffer GetEffectParameterBuffer()
         {
             var ptr = Cg.GetEffectParameterBuffer(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgBuffer(ptr)
+            return ptr == IntPtr.Zero ? null : new Buffer(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetFirstDependentParameter()
+        public Parameter GetFirstDependentParameter()
         {
             var ptr = Cg.GetFirstDependentParameter(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetFirstStructParameter()
+        public Parameter GetFirstStructParameter()
         {
             var ptr = Cg.GetFirstStructParameter(this.Handle);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
@@ -511,37 +511,37 @@ namespace CgOO
             return Cg.GetMatrixParameterOrder(this.Handle);
         }
 
-        public CgAnnotation GetNamedAnnotation(string name)
+        public Annotation GetNamedAnnotation(string name)
         {
             var ptr = Cg.GetNamedParameterAnnotation(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgAnnotation(ptr)
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgStateAssignment GetNamedStateAssignment(string name)
+        public StateAssignment GetNamedStateAssignment(string name)
         {
             var ptr = Cg.GetNamedSamplerStateAssignment(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgStateAssignment(ptr)
+            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetNamedStructParameter(string name)
+        public Parameter GetNamedStructParameter(string name)
         {
             var ptr = Cg.GetNamedStructParameter(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
-        public CgParameter GetNamedSubParameter(string name)
+        public Parameter GetNamedSubParameter(string name)
         {
             var ptr = Cg.GetNamedSubParameter(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new CgParameter(ptr)
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
@@ -670,7 +670,7 @@ namespace CgOO
             Cg.SetArraySize(this.Handle, size);
         }
 
-        public void SetEffectParameterBuffer(CgBuffer buffer)
+        public void SetEffectParameterBuffer(Buffer buffer)
         {
             Cg.SetEffectParameterBuffer(this.Handle, buffer.Handle);
         }
