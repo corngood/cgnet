@@ -84,12 +84,7 @@ namespace CgOO
         /// <returns>The result of the operator.</returns>
         public static bool operator !=(WrapperObject left, WrapperObject right)
         {
-            if (ReferenceEquals(left, null))
-            {
-                return !ReferenceEquals(right, null);
-            }
-
-            return !left.Equals(right);
+            return !ReferenceEquals(left, null) && !left.Equals(right);
         }
 
         /// <summary>
@@ -100,7 +95,7 @@ namespace CgOO
         /// <returns>The result of the operator.</returns>
         public static bool operator ==(WrapperObject left, WrapperObject right)
         {
-            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.Equals(right);
+            return !ReferenceEquals(left, null) && left.Equals(right);
         }
 
         #endregion Public Static Methods
