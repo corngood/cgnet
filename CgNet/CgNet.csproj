@@ -22,7 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DocumentationFile>bin\Debug\CgNet.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -38,41 +38,39 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
-    <Reference Include="SlimDX, Version=2.0.10.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\SlimDX SDK (June 2010)\Bin\net20\x64\SlimDX.dll</HintPath>
-    </Reference>
+    <Reference Include="SlimDX, Version=2.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CgNet\D3D9\CgD3D9.cs" />
-    <Compile Include="CgNet\D3D9\CgD3D9NativeMethods.cs" />
-    <Compile Include="CgOO\Annotation.cs" />
-    <Compile Include="CgOO\Buffer.cs" />
-    <Compile Include="CgOO\Context.cs" />
-    <Compile Include="CgOO\Effect.cs" />
-    <Compile Include="CgOO\Obj.cs" />
-    <Compile Include="CgOO\Parameter.cs" />
-    <Compile Include="CgOO\Pass.cs" />
-    <Compile Include="CgOO\Program.cs" />
-    <Compile Include="CgOO\State.cs" />
-    <Compile Include="CgOO\StateAssignment.cs" />
-    <Compile Include="CgOO\Technique.cs" />
-    <Compile Include="CgOO\D3D9\CgD3D9Parameter.cs" />
-    <Compile Include="CgOO\D3D9\CgD3D9Context.cs" />
-    <Compile Include="CgOO\D3D9\CgD3D9Program.cs" />
-    <Compile Include="CgOO\GL\CgGLBuffer.cs" />
-    <Compile Include="CgOO\GL\CgGLContext.cs" />
-    <Compile Include="CgOO\GL\CgGLParameter.cs" />
-    <Compile Include="CgOO\GL\CgGLProgram.cs" />
-    <Compile Include="CgOO\WrapperObject.cs" />
-    <Compile Include="CgNet\CgEnums.cs" />
-    <Compile Include="CgNet\GL\CgGLEnums.cs" />
+    <Compile Include="D3D9\CgD3D9.cs" />
+    <Compile Include="D3D9\CgD3D9NativeMethods.cs" />
+    <Compile Include="Annotation.cs" />
+    <Compile Include="Buffer.cs" />
+    <Compile Include="Context.cs" />
+    <Compile Include="Effect.cs" />
+    <Compile Include="Obj.cs" />
+    <Compile Include="Parameter.cs" />
+    <Compile Include="Pass.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="State.cs" />
+    <Compile Include="StateAssignment.cs" />
+    <Compile Include="Technique.cs" />
+    <Compile Include="D3D9\CgD3D9Parameter.cs" />
+    <Compile Include="D3D9\CgD3D9Context.cs" />
+    <Compile Include="D3D9\CgD3D9Program.cs" />
+    <Compile Include="GL\CgGLBuffer.cs" />
+    <Compile Include="GL\CgGLContext.cs" />
+    <Compile Include="GL\CgGLParameter.cs" />
+    <Compile Include="GL\CgGLProgram.cs" />
+    <Compile Include="WrapperObject.cs" />
+    <Compile Include="CgEnums.cs" />
+    <Compile Include="GL\CgGLEnums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CgNet\Cg.cs" />
-    <Compile Include="CgNet\GL\CgGL.cs" />
-    <Compile Include="CgNet\CgNativeMethods.cs" />
-    <Compile Include="CgNet\GL\CgGLNativeMethods.cs" />
+    <Compile Include="Cg.cs" />
+    <Compile Include="GL\CgGL.cs" />
+    <Compile Include="CgNativeMethods.cs" />
+    <Compile Include="GL\CgGLNativeMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\App.config" />

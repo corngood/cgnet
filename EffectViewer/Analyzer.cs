@@ -6,8 +6,7 @@
 
     using CgNet;
 
-    using CgOO;
-    using CgOO.GL;
+    using CgNet.GL;
 
     class Analyzer
     {

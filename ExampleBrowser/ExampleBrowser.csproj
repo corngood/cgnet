@@ -14,7 +14,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -37,7 +37,7 @@
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
     <Reference Include="OpenTK.Compatibility, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
-    <Reference Include="SlimDX, Version=2.0.10.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
+    <Reference Include="SlimDX, Version=2.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -46,23 +46,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Examples\BrickImage.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Basic\Bulge.cs" />
-    <Compile Include="Examples\CgNet\SlimDX\Basic\VertexFragmentProgram.cs" />
-    <Compile Include="Examples\CgNet\SlimDX\Example.cs" />
-    <Compile Include="Examples\CgOO\OpenTK\Example.cs" />
+    <Compile Include="Examples\OpenTK\Basic\Bulge.cs" />
+    <Compile Include="Examples\SlimDX\Basic\VertexFragmentProgram.cs" />
+    <Compile Include="Examples\OpenTK\Example.cs" />
+    <Compile Include="Examples\SlimDX\Example.cs" />
     <Compile Include="Examples\ExampleAttribute.cs" />
     <Compile Include="Examples\IExample.cs" />
     <Compile Include="Examples\DemonPic.cs" />
     <Compile Include="Examples\NormcmImage.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Basic\BumpMapWall.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Basic\ParticleSystem.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Basic\TwoTextureAccesses.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Basic\VaryingParameter.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Basic\VertexProgram.cs" />
-    <Compile Include="Examples\CgOO\OpenTK\Basic\VertexProgram.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Basic\VertexTransform.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Basic\VertexTwisting.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Example.cs" />
+    <Compile Include="Examples\OpenTK\Basic\BumpMapWall.cs" />
+    <Compile Include="Examples\OpenTK\Basic\ParticleSystem.cs" />
+    <Compile Include="Examples\OpenTK\Basic\TwoTextureAccesses.cs" />
+    <Compile Include="Examples\OpenTK\Basic\VaryingParameter.cs" />
+    <Compile Include="Examples\OpenTK\Basic\VertexProgram.cs" />
+    <Compile Include="Examples\OpenTK\Basic\VertexTransform.cs" />
+    <Compile Include="Examples\OpenTK\Basic\VertexTwisting.cs" />
     <Compile Include="ExampleSelector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,9 +69,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Basic\UniformParameter.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Basic\VertexAndFragmentProgram.cs" />
-    <Compile Include="Examples\CgNet\OpenTK\Basic\TextureSampling.cs" />
+    <Compile Include="Examples\OpenTK\Basic\UniformParameter.cs" />
+    <Compile Include="Examples\OpenTK\Basic\VertexAndFragmentProgram.cs" />
+    <Compile Include="Examples\OpenTK\Basic\TextureSampling.cs" />
     <EmbeddedResource Include="ExampleSelector.resx">
       <DependentUpon>ExampleSelector.cs</DependentUpon>
     </EmbeddedResource>
