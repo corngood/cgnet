@@ -1,8 +1,8 @@
-﻿namespace Examples.Helper
+﻿namespace ExampleBrowser.Examples
 {
     using System;
 
-    public class ExampleAttribute : Attribute
+    public class ExampleDescriptionAttribute : Attribute
     {
         #region Properties
 

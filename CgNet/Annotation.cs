@@ -25,6 +25,9 @@ namespace CgNet
     using System.Runtime.InteropServices;
     using System.Text;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class Annotation : WrapperObject
     {
         #region Constructors
@@ -40,6 +43,9 @@ namespace CgNet
 
         #region Public Properties
 
+        /// <summary>
+        /// Gets the number of effect parameters on which an annotation depends.
+        /// </summary>
         public int DependentParametersCount
         {
             get
@@ -48,6 +54,9 @@ namespace CgNet
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is a valid annotation.
+        /// </summary>
         public bool IsAnnotation
         {
             get
@@ -56,6 +65,9 @@ namespace CgNet
             }
         }
 
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
         public string Name
         {
             get
@@ -64,6 +76,9 @@ namespace CgNet
             }
         }
 
+        /// <summary>
+        /// Gets the next annotation.
+        /// </summary>
         public Annotation NextAnnotation
         {
             get
@@ -76,6 +91,9 @@ namespace CgNet
             }
         }
 
+        /// <summary>
+        /// Gets the type.
+        /// </summary>
         public ParameterType Type
         {
             get
@@ -92,6 +110,10 @@ namespace CgNet
 
         #region Public Methods
 
+        /// <summary>
+        /// Get the values from a boolean-valued annotation.
+        /// </summary>
+        /// <returns>Returns an array of bool values.</returns>
         public bool[] GetBoolValues()
         {
             int count;
@@ -99,6 +121,11 @@ namespace CgNet
             return Cg.IntPtrToBoolArray(values, count);
         }
 
+        /// <summary>
+        /// Get one of the parameters that an annotation's value depends on.
+        /// </summary>
+        /// <param name="index">The index of the parameter to return.</param>
+        /// <returns>Returns the selected dependent annotation on success.</returns>
         public Parameter GetDependentParameter(int index)
         {
             var ptr = CgNativeMethods.cgGetDependentAnnotationParameter(this.Handle, index);
@@ -108,19 +135,40 @@ namespace CgNet
                                                };
         }
 
+        /// <summary>
+        /// Get the values from a float-valued annotation.
+        /// </summary>
+        /// <returns>Returns an array of float values.</returns>
         public float[] GetFloatValues()
         {
             int nvalues;
             return CgNativeMethods.cgGetFloatAnnotationValues(this.Handle, out nvalues);
         }
 
+        /// <summary>
+        /// Get the values from a integer-valued annotation.
+        /// </summary>
+        /// <returns>Returns an array of integer values.</returns>
         public int[] GetIntValues()
         {
             int nvalues;
             return CgNativeMethods.cgGetIntAnnotationValues(this.Handle, out nvalues);
         }
 
-        public string[] GetStringAnnotationValues()
+        /// <summary>
+        /// Get a string-valued annotation's value.
+        /// </summary>
+        /// <returns>Returns a string contained by the annotation. </returns>
+        public string GetStringValue()
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStringAnnotationValue(this.Handle));
+        }
+
+        /// <summary>
+        /// Get the values from a string-valued annotation.
+        /// </summary>
+        /// <returns>Returns an array of string values.</returns>
+        public string[] GetStringValues()
         {
             int nvalues;
             var ptr = CgNativeMethods.cgGetStringAnnotationValues(this.Handle, out nvalues);
@@ -159,26 +207,41 @@ namespace CgNet
             }
         }
 
-        public string GetStringValue()
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStringAnnotationValue(this.Handle));
-        }
-
+        /// <summary>
+        /// Set the value of an annotation.
+        /// </summary>
+        /// <param name="value">The value to which the annotation will be set.</param>
+        /// <returns>Returns <c>true</c> if it succeeds in setting the annotation; <c>false</c> otherwise.</returns>
         public bool Set(int value)
         {
             return CgNativeMethods.cgSetIntAnnotation(this.Handle, value);
         }
 
+        /// <summary>
+        /// Set the value of an annotation.
+        /// </summary>
+        /// <param name="value">The value to which the annotation will be set.</param>
+        /// <returns>Returns <c>true</c> if it succeeds in setting the annotation; <c>false</c> otherwise.</returns>
         public bool Set(float value)
         {
             return CgNativeMethods.cgSetFloatAnnotation(this.Handle, value);
         }
 
+        /// <summary>
+        /// Set the value of an annotation.
+        /// </summary>
+        /// <param name="value">The value to which the annotation will be set.</param>
+        /// <returns>Returns <c>true</c> if it succeeds in setting the annotation; <c>false</c> otherwise.</returns>
         public bool Set(string value)
         {
             return CgNativeMethods.cgSetStringAnnotation(this.Handle, value);
         }
 
+        /// <summary>
+        /// Set the value of an annotation.
+        /// </summary>
+        /// <param name="value">The value to which the annotation will be set.</param>
+        /// <returns>Returns <c>true</c> if it succeeds in setting the annotation; <c>false</c> otherwise.</returns>
         public bool Set(bool value)
         {
             return CgNativeMethods.cgSetBoolAnnotation(this.Handle, value);

@@ -2,15 +2,14 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 {
     using System;
 
-    using global::CgNet;
-    using global::CgNet.GL;
-    using global::Examples.Helper;
+    using CgNet;
+    using CgNet.GL;
 
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/01 Vertex Program")]
+    [ExampleDescription(NodePath = "OpenTK/Basic/01 Vertex Program")]
     public class VertexProgram : Example
     {
         #region Fields

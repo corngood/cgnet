@@ -7,18 +7,17 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
     using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
 
+    using CgNet;
+    using CgNet.GL;
+
     using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
 
     using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
 
+    using ExampleBrowser.Data;
     using ExampleBrowser.Examples.OpenTK;
 
     using GL = global::OpenTK.Graphics.OpenGL.GL;
-
-    using global::CgNet;
-    using global::CgNet.GL;
-
-    using global::Examples.Helper;
 
     using global::OpenTK;
     using global::OpenTK.Graphics;
@@ -38,7 +37,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
     using TextureTarget = global::OpenTK.Graphics.OpenGL.TextureTarget;
 
-    [Example(NodePath = "OpenTK/Basic/21 Bump Map Wall")]
+    [ExampleDescription(NodePath = "OpenTK/Basic/21 Bump Map Wall")]
     public class BumpMapWall : Example
     {
         #region Fields
@@ -50,16 +49,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         private readonly int[] texObj = new int[2];
 
-        private float my2Pi = 2.0f * 3.14159265358979323846f;
         private Parameter fragmentParamNormalizeCube;
         private Parameter fragmentParamNormalMap;
         private ProfileType fragmentProfile;
         private Program fragmentProgram;
+        private float my2Pi = 2.0f * 3.14159265358979323846f;
+        private float myLightAngle = 4.0f; /* Angle light rotates around scene. */
         private Parameter vertexParamLightPosition;
         private Parameter vertexParamModelViewProj;
         private ProfileType vertexProfile;
         private Program vertexProgram;
-        private float myLightAngle = 4.0f; /* Angle light rotates around scene. */
 
         #endregion Fields
 
@@ -94,7 +93,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                map texture. */
             unsafe
             {
-                fixed (byte* b = BrickImage.Array)
+                fixed (byte* b = ImageBrick.Array)
                 {
                     byte* image = b;
 
@@ -118,7 +117,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                vector" cube map. */
             unsafe
             {
-                fixed (byte* b = NormcmImage.Array)
+                fixed (byte* b = ImageNormcm.Array)
                 {
                     byte* image = b;
 

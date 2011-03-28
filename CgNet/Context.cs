@@ -190,6 +190,13 @@ namespace CgNet
 
         #region Public Methods
 
+        /// <summary>
+        /// Create an array-typed sampler state definition.
+        /// </summary>
+        /// <param name="name">The name of the new sampler state.</param>
+        /// <param name="type">The type of the new sampler state.</param>
+        /// <param name="elementCount">The number of elements in the array.</param>
+        /// <returns>Returns the newly created State.</returns>
         public State CreateArraySamplerState(string name, ParameterType type, int elementCount)
         {
             var ptr = CgNativeMethods.cgCreateArraySamplerState(this.Handle, name, type, elementCount);

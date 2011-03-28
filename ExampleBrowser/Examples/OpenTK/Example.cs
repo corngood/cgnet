@@ -5,7 +5,7 @@
     using System.Diagnostics;
     using System.Windows.Forms;
 
-    using global::CgNet;
+    using CgNet;
 
     using global::OpenTK;
 

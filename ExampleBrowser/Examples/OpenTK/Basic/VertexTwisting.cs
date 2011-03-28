@@ -2,23 +2,19 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 {
     using System;
 
+    using CgNet;
+    using CgNet.GL;
+
     using ExampleBrowser.Examples.OpenTK;
-
-    using global::CgNet;
-    using global::CgNet.GL;
-
-    using global::Examples.Helper;
 
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/06 Vertex Twisting")]
+    [ExampleDescription(NodePath = "OpenTK/Basic/06 Vertex Twisting")]
     public class VertexTwisting : Example
     {
         #region Fields
-
-        private Parameter vertexParam_twisting;
 
         private const string MyFragmentProgramFileName = "Data/C2E2f_passthru.cg";
         private const string MyFragmentProgramName = "C2E2f_passthru";
@@ -27,10 +23,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         private ProfileType fragmentProfile;
         private Program fragmentProgram;
-        private ProfileType vertexProfile;
-        private Program vertexProgram;
         private float myTwisting = 2.9f, /* Twisting angle in radians. */
                       myTwistDirection = 0.1f; /* Animation delta for twist. */
+        private Parameter vertexParam_twisting;
+        private ProfileType vertexProfile;
+        private Program vertexProgram;
         private bool wireframe;
 
         #endregion Fields

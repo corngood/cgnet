@@ -2,18 +2,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 {
     using System;
 
+    using CgNet;
+    using CgNet.GL;
+
     using ExampleBrowser.Examples.OpenTK;
-
-    using global::CgNet;
-    using global::CgNet.GL;
-
-    using global::Examples.Helper;
 
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/04 Varying Parameter")]
+    [ExampleDescription(NodePath = "OpenTK/Basic/04 Varying Parameter")]
     public class VaryingParameter : Example
     {
         #region Fields

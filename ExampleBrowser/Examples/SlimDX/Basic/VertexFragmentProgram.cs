@@ -3,19 +3,23 @@
     using System;
     using System.Windows.Forms;
 
-    using global::CgNet;
-    using global::CgNet.D3D9;
-
-    using global::Examples.Helper;
+    using CgNet;
+    using CgNet.D3D9;
 
     using global::SlimDX;
     using global::SlimDX.Direct3D9;
     using global::SlimDX.Windows;
 
-    [Example(NodePath = "SlimDX/Basic/02 Vertex And Fragment Program")]
+    [ExampleDescription(NodePath = "SlimDX/Basic/02 Vertex And Fragment Program")]
     public class VertexFragmentProgram : Example
     {
         #region Fields
+
+        private const string MyFragmentProgramFileName = "Data/C2E2f_passthru.cg";
+        private const string MyFragmentProgramName = "C2E2f_passthru";
+        private const int MyStarCount = 6;
+        private const string MyVertexProgramFileName = "Data/C2E1v_green.cg";
+        private const string MyVertexProgramName = "C2E1v_green";
 
         private readonly StarList[] myStarList = {
                                                      /*                star    outer   inner  */
@@ -29,21 +33,11 @@
                                                      new StarList(-0.97f, -0.8f, 5, 0.6f, 0.2f)
                                                  };
 
-        private Device device;
         private Context CgContext;
+        private Device device;
+        private VertexBuffer vertexBuffer;
         private ProfileType vertexProfile, fragmentProfile;
         private Program vertexProgram, fragmentProgram;
-
-        private const string MyVertexProgramFileName = "Data/C2E1v_green.cg";
-
-        private const string MyVertexProgramName = "C2E1v_green";
-
-        private const string MyFragmentProgramFileName = "Data/C2E2f_passthru.cg";
-
-        private const string MyFragmentProgramName = "C2E2f_passthru";
-
-        private const int MyStarCount = 6;
-        private VertexBuffer vertexBuffer;
 
         #endregion Fields
 
@@ -176,8 +170,8 @@
         {
             #region Fields
 
-            public readonly float OuterRadius;
             public readonly float InnerRadius;
+            public readonly float OuterRadius;
             public readonly int Points;
             public readonly float X;
             public readonly float Y;

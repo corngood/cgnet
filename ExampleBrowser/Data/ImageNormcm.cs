@@ -1,6 +1,6 @@
-namespace ExampleBrowser.Examples
+namespace ExampleBrowser.Data
 {
-    class NormcmImage
+    class ImageNormcm
     {
         #region Fields
 

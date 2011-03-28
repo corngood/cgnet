@@ -2,18 +2,17 @@
 {
     using System;
 
+    using CgNet;
+    using CgNet.GL;
+
+    using ExampleBrowser.Data;
     using ExampleBrowser.Examples.OpenTK;
-
-    using global::CgNet;
-    using global::CgNet.GL;
-
-    using global::Examples.Helper;
 
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/05 Texture Sampling")]
+    [ExampleDescription(NodePath = "OpenTK/Basic/05 Texture Sampling")]
     public class TextureSampling : Example
     {
         #region Fields
@@ -57,7 +56,7 @@
             GL.BindTexture(TextureTarget.Texture2D, 666);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb8, 128, 128, 0,
-                          PixelFormat.Rgb, PixelType.UnsignedByte, DemonPic.Array);
+                          PixelFormat.Rgb, PixelType.UnsignedByte, ImageDemon.Array);
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 

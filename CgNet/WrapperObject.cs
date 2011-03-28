@@ -23,11 +23,14 @@ namespace CgNet
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class WrapperObject : IDisposable
     {
         #region Constructors
 
-        protected WrapperObject(IntPtr handle)
+        internal WrapperObject(IntPtr handle)
         {
             if (handle == IntPtr.Zero)
             {
@@ -38,6 +41,10 @@ namespace CgNet
             this.Handle = handle;
         }
 
+        /// <summary>
+        /// Releases unmanaged resources and performs other cleanup operations before the
+        /// <see cref="WrapperObject"/> is reclaimed by garbage collection.
+        /// </summary>
         ~WrapperObject()
         {
             if (this.OwnsHandle)
@@ -52,6 +59,10 @@ namespace CgNet
 
         #region Public Properties
 
+        /// <summary>
+        /// Gets or sets the handle.
+        /// </summary>
+        /// <value>The handle.</value>
         public IntPtr Handle
         {
             get;
@@ -62,6 +73,9 @@ namespace CgNet
 
         #region Protected Internal Properties
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the WrapperObject owns the handle.
+        /// </summary>
         protected internal bool OwnsHandle
         {
             get;
@@ -84,7 +98,22 @@ namespace CgNet
         /// <returns>The result of the operator.</returns>
         public static bool operator !=(WrapperObject left, WrapperObject right)
         {
-            return !ReferenceEquals(left, null) && !left.Equals(right);
+            if (ReferenceEquals(left, null) && !ReferenceEquals(right, null))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(right, null) && !ReferenceEquals(left, null))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(right, null) && ReferenceEquals(left, null))
+            {
+                return false;
+            }
+
+            return !left.Equals(right);
         }
 
         /// <summary>
@@ -95,7 +124,22 @@ namespace CgNet
         /// <returns>The result of the operator.</returns>
         public static bool operator ==(WrapperObject left, WrapperObject right)
         {
-            return !ReferenceEquals(left, null) && left.Equals(right);
+            if (ReferenceEquals(left, null) && !ReferenceEquals(right, null))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(right, null) && !ReferenceEquals(left, null))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(right, null) && ReferenceEquals(left, null))
+            {
+                return true;
+            }
+
+            return left.Equals(right);
         }
 
         #endregion Public Static Methods
@@ -113,14 +157,44 @@ namespace CgNet
             GC.SuppressFinalize(this);
         }
 
-        public bool Equals(WrapperObject other)
+        /// <summary>
+        /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+        /// </summary>
+        /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
+        /// <returns>
+        /// true if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, false.
+        /// </returns>
+        /// <exception cref="T:System.NullReferenceException">
+        /// The <paramref name="obj"/> parameter is null.
+        /// </exception>
+        public bool Equals(WrapperObject obj)
         {
-            return !ReferenceEquals(other, null) && this.Handle == other.Handle;
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj");
+            }
+
+            return this.Handle == obj.Handle;
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+        /// </summary>
+        /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
+        /// <returns>
+        /// true if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, false.
+        /// </returns>
+        /// <exception cref="T:System.NullReferenceException">
+        /// The <paramref name="obj"/> parameter is null.
+        /// </exception>
         public override bool Equals(object obj)
         {
-            return !ReferenceEquals(obj, null) && (obj is WrapperObject && this.Equals((WrapperObject)obj));
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj");
+            }
+
+            return (obj is WrapperObject && this.Equals((WrapperObject)obj));
         }
 
         /// <summary>

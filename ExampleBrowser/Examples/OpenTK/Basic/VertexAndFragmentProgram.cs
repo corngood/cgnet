@@ -2,18 +2,16 @@
 {
     using System;
 
+    using CgNet;
+    using CgNet.GL;
+
     using ExampleBrowser.Examples.OpenTK;
-
-    using global::CgNet;
-    using global::CgNet.GL;
-
-    using global::Examples.Helper;
 
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/02 Vertex And Fragment Program")]
+    [ExampleDescription(NodePath = "OpenTK/Basic/02 Vertex And Fragment Program")]
     public class VertexAndFragmentProgram : Example
     {
         #region Fields

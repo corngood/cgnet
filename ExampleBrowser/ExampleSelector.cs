@@ -7,8 +7,6 @@
 
     using ExampleBrowser.Examples;
 
-    using global::Examples.Helper;
-
     public partial class ExampleSelector : Form
     {
         #region Constructors
@@ -34,7 +32,7 @@
             {
                 if (type.GetInterface(typeof(IExample).Name) != null && !type.IsAbstract)
                 {
-                    var example = (ExampleAttribute)type.GetCustomAttributes(typeof(ExampleAttribute), false)[0];
+                    var example = (ExampleDescriptionAttribute)type.GetCustomAttributes(typeof(ExampleDescriptionAttribute), false)[0];
 
                     var paths = example.NodePath.Split(';');
                     foreach (var path in paths)

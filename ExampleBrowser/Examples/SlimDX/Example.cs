@@ -1,12 +1,8 @@
 ﻿namespace ExampleBrowser.Examples.SlimDX
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Windows.Forms;
 
-    using global::CgNet;
+    using CgNet;
 
     public abstract class Example : IExample
     {
@@ -35,7 +31,7 @@
         {
             ErrorType error;
             string s = Cg.GetLastErrorString(out error);
-        
+
             if (error != ErrorType.NoError)
             {
                 MessageBox.Show(s);

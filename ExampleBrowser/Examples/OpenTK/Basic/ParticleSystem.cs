@@ -8,6 +8,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
     using BlendingFactorSrc = global::OpenTK.Graphics.OpenGL.BlendingFactorSrc;
 
+    using CgNet;
+    using CgNet.GL;
+
     using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
 
     using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
@@ -15,11 +18,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using ExampleBrowser.Examples.OpenTK;
 
     using GL = global::OpenTK.Graphics.OpenGL.GL;
-
-    using global::CgNet;
-    using global::CgNet.GL;
-
-    using global::Examples.Helper;
 
     using global::OpenTK;
     using global::OpenTK.Graphics;
@@ -29,7 +27,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
     using TextureUnit = global::OpenTK.Graphics.OpenGL.TextureUnit;
 
-    [Example(NodePath = "OpenTK/Basic/15 Particle System")]
+    [ExampleDescription(NodePath = "OpenTK/Basic/15 Particle System")]
     public class ParticleSystem : Example
     {
         #region Fields
@@ -43,11 +41,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         private static bool useComputedPointSize;
 
+        private float myGlobalTime;
+        private int myPass;
         private Parameter vertexParamGlobalTime, vertexParamAcceleration, vertexParamModelViewProj;
         private ProfileType vertexProfile, fragmentProfile;
         private Program vertexProgram, fragmentProgram;
-        private float myGlobalTime;
-        private int myPass;
 
         #endregion Fields
 
@@ -164,7 +162,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             vertexProgram.Bind();
 
             CgGL.EnableProfile(vertexProfile);
-
 
             CgGL.EnableProfile(fragmentProfile);
 

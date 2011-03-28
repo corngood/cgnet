@@ -2,18 +2,17 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 {
     using System;
 
+    using CgNet;
+    using CgNet.GL;
+
+    using ExampleBrowser.Data;
     using ExampleBrowser.Examples.OpenTK;
-
-    using global::CgNet;
-    using global::CgNet.GL;
-
-    using global::Examples.Helper;
 
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/07 Two Texture Accesses")]
+    [ExampleDescription(NodePath = "OpenTK/Basic/07 Two Texture Accesses")]
     public class TwoTextureAccesses : Example
     {
         #region Fields
@@ -26,11 +25,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         private Parameter fragmentParamDecal;
         private ProfileType fragmentProfile;
         private Program fragmentProgram;
+        private float mySeparation = 0.1f,
+                      mySeparationVelocity = 0.005f;
         private Parameter vertexParamLeftSeparation, vertexParamRightSeparation;
         private ProfileType vertexProfile;
         private Program vertexProgram;
-        private float mySeparation = 0.1f,
-                      mySeparationVelocity = 0.005f;
 
         #endregion Fields
 
@@ -60,7 +59,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.BindTexture(TextureTarget.Texture2D, 666);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb8, 128, 128, 0,
-                          PixelFormat.Rgb, PixelType.UnsignedByte, DemonPic.Array);
+                          PixelFormat.Rgb, PixelType.UnsignedByte, ImageDemon.Array);
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 

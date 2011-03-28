@@ -1,6 +1,6 @@
-namespace ExampleBrowser.Examples
+namespace ExampleBrowser.Data
 {
-    class DemonPic
+    class ImageDemon
     {
         #region Fields
 

@@ -3,18 +3,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using System;
     using System.Runtime.InteropServices;
 
+    using CgNet;
+    using CgNet.GL;
+
     using ExampleBrowser.Examples.OpenTK;
-
-    using global::CgNet;
-    using global::CgNet.GL;
-
-    using global::Examples.Helper;
 
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/08 Vertex Transform")]
+    [ExampleDescription(NodePath = "OpenTK/Basic/08 Vertex Transform")]
     public class VertexTransform : Example
     {
         #region Fields
@@ -178,6 +176,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         {
             base.OnUnload(e);
             this.vertexProgram.Dispose();
+            fragmentProgram.Dispose();
             this.CgContext.Dispose();
         }
 

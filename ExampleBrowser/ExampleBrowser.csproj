@@ -45,15 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Examples\BrickImage.cs" />
+    <Compile Include="Data\ImageBrick.cs" />
     <Compile Include="Examples\OpenTK\Basic\Bulge.cs" />
     <Compile Include="Examples\SlimDX\Basic\VertexFragmentProgram.cs" />
     <Compile Include="Examples\OpenTK\Example.cs" />
     <Compile Include="Examples\SlimDX\Example.cs" />
-    <Compile Include="Examples\ExampleAttribute.cs" />
+    <Compile Include="Examples\ExampleDescriptionAttribute.cs" />
     <Compile Include="Examples\IExample.cs" />
-    <Compile Include="Examples\DemonPic.cs" />
-    <Compile Include="Examples\NormcmImage.cs" />
+    <Compile Include="Data\ImageDemon.cs" />
+    <Compile Include="Data\ImageNormcm.cs" />
     <Compile Include="Examples\OpenTK\Basic\BumpMapWall.cs" />
     <Compile Include="Examples\OpenTK\Basic\ParticleSystem.cs" />
     <Compile Include="Examples\OpenTK\Basic\TwoTextureAccesses.cs" />

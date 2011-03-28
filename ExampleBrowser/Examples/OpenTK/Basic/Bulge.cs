@@ -6,13 +6,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using CgNet;
     using CgNet.GL;
 
-    using global::Examples.Helper;
-
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    [Example(NodePath = "OpenTK/Basic/14 Bulge")]
+    [ExampleDescription(NodePath = "OpenTK/Basic/14 Bulge")]
     public class Bulge : Example
     {
         #region Fields
@@ -21,16 +19,17 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         private const string MyVertexProgramFileName = "Data/C6E1v_bulge.cg";
         private const string MyVertexProgramName = "C6E1v_bulge";
 
+        private readonly float[] myLightColor = { 0.95f, 0.95f, 0.95f }; /* White */
+        private readonly float[] myProjectionMatrix = new float[16];
+
         private static float lightVelocity = 0.008f;
         private static float timeFlow = 0.01f;
 
+        private float myLightAngle = -0.4f; /* Angle light rotates around scene. */
+        private float myTime; /* Timing of bulge. */
         private Parameter vertexParamModelViewProj, vertexParamTime, vertexParamFrequency, vertexParamScaleFactor, vertexParamKd, vertexParamShininess, vertexParamEyePosition, vertexParamLightPosition, vertexParamLightColor, lightVertexParamModelViewProj;
         private ProfileType vertexProfile, fragmentProfile;
         private Program vertexProgram, fragmentProgram, lightVertexProgram;
-        private float myLightAngle = -0.4f; /* Angle light rotates around scene. */
-        private readonly float[] myLightColor = { 0.95f, 0.95f, 0.95f }; /* White */
-        private readonly float[] myProjectionMatrix = new float[16];
-        private float myTime; /* Timing of bulge. */
 
         #endregion Fields
 
