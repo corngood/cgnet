@@ -33,6 +33,22 @@ namespace CgNet
 
         #endregion Constructors
 
+        #region Properties
+
+        #region Public Properties
+
+        public int UserTypesCount
+        {
+            get
+            {
+                return CgNativeMethods.cgGetNumUserTypes(this.Handle);
+            }
+        }
+
+        #endregion Public Properties
+
+        #endregion Properties
+
         #region Methods
 
         #region Public Static Methods
@@ -48,6 +64,20 @@ namespace CgNet
         }
 
         #endregion Public Static Methods
+
+        #region Public Methods
+
+        public ParameterType GetNamedUserType(string name)
+        {
+            return CgNativeMethods.cgGetNamedUserType(this.Handle, name);
+        }
+
+        public ParameterType GetUserType(int index)
+        {
+            return CgNativeMethods.cgGetUserType(this.Handle, index);
+        }
+
+        #endregion Public Methods
 
         #region Protected Methods
 

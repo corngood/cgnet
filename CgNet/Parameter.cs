@@ -22,6 +22,7 @@ namespace CgNet
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Runtime.InteropServices;
 
     public sealed class Parameter : WrapperObject
@@ -423,32 +424,59 @@ namespace CgNet
 
         public int GetDefaultValue(ref double[] values)
         {
-            return Cg.GetParameterDefaultValue(this.Handle, ref values, Order.RowMajor);
+            return this.GetDefaultValue(ref values, Order.RowMajor);
         }
 
         public int GetDefaultValue(ref double[] values, Order order)
         {
-            return Cg.GetParameterDefaultValue(this.Handle, ref values, order);
+            IntPtr param = this.Handle;
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValuedc(param, values.Length, values);
+                case Order.RowMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValuedr(param, values.Length, values);
+                default:
+                    throw new ArgumentOutOfRangeException("order");
+            }
         }
 
         public int GetDefaultValue(ref int[] values)
         {
-            return Cg.GetParameterDefaultValue(this.Handle, ref values, Order.RowMajor);
+            return this.GetDefaultValue(ref values, Order.RowMajor);
         }
 
         public int GetDefaultValue(ref int[] values, Order order)
         {
-            return Cg.GetParameterDefaultValue(this.Handle, ref values, order);
+            IntPtr param = this.Handle;
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValueic(param, values.Length, values);
+                case Order.RowMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValueir(param, values.Length, values);
+                default:
+                    throw new ArgumentOutOfRangeException("order");
+            }
         }
 
         public int GetDefaultValue(ref float[] values)
         {
-            return Cg.GetParameterDefaultValue(this.Handle, ref values, Order.RowMajor);
+            return this.GetDefaultValue(ref values, Order.RowMajor);
         }
 
         public int GetDefaultValue(ref float[] values, Order order)
         {
-            return Cg.GetParameterDefaultValue(this.Handle, ref values, order);
+            IntPtr param = this.Handle;
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValuefc(param, values.Length, values);
+                case Order.RowMajor:
+                    return CgNativeMethods.cgGetParameterDefaultValuefr(param, values.Length, values);
+                default:
+                    throw new ArgumentOutOfRangeException("order");
+            }
         }
 
         public Buffer GetEffectParameterBuffer()
@@ -478,34 +506,92 @@ namespace CgNet
                                                };
         }
 
-        public void GetMatrixParameter(out int[] values)
+        public void GetMatrix(out int[] values)
         {
-            values = Cg.GetMatrixParameter<int>(this.Handle, Order.RowMajor);
+            values = this.GetMatrix<int>(Order.RowMajor);
         }
 
-        public void GetMatrixParameter(out float[] values)
+        public void GetMatrix(out float[] values)
         {
-            values = Cg.GetMatrixParameter<float>(this.Handle, Order.RowMajor);
+            values = this.GetMatrix<float>(Order.RowMajor);
         }
 
-        public void GetMatrixParameter(out double[] values)
+        public void GetMatrix(out double[] values)
         {
-            values = Cg.GetMatrixParameter<double>(this.Handle, Order.RowMajor);
+            values = this.GetMatrix<double>(Order.RowMajor);
         }
 
-        public T[] GetMatrixParameter<T>()
+        public T[] GetMatrix<T>()
             where T : struct
         {
-            return Cg.GetMatrixParameter<T>(this.Handle, Order.RowMajor);
+            return this.GetMatrix<T>(Order.RowMajor);
         }
 
-        public T[] GetMatrixParameter<T>(Order order)
+        public T[] GetMatrix<T>(Order order)
             where T : struct
         {
-            return Cg.GetMatrixParameter<T>(this.Handle, order);
+            IntPtr param = this.Handle;
+            var retValue = new T[16];
+            GCHandle handle = GCHandle.Alloc(retValue, GCHandleType.Pinned);
+
+            try
+            {
+                if (typeof(T) == typeof(double))
+                {
+                    switch (order)
+                    {
+                        case Order.ColumnMajor:
+                            CgNativeMethods.cgGetMatrixParameterdc(param, handle.AddrOfPinnedObject());
+                            break;
+                        case Order.RowMajor:
+                            CgNativeMethods.cgGetMatrixParameterdr(param, handle.AddrOfPinnedObject());
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException("order");
+                    }
+                }
+                else if (typeof(T) == typeof(float))
+                {
+                    switch (order)
+                    {
+                        case Order.ColumnMajor:
+                            CgNativeMethods.cgGetMatrixParameterfc(param, handle.AddrOfPinnedObject());
+                            break;
+                        case Order.RowMajor:
+                            CgNativeMethods.cgGetMatrixParameterfr(param, handle.AddrOfPinnedObject());
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException("order");
+                    }
+                }
+                else if (typeof(T) == typeof(int))
+                {
+                    switch (order)
+                    {
+                        case Order.ColumnMajor:
+                            CgNativeMethods.cgGetMatrixParameteric(param, handle.AddrOfPinnedObject());
+                            break;
+                        case Order.RowMajor:
+                            CgNativeMethods.cgGetMatrixParameterir(param, handle.AddrOfPinnedObject());
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException("order");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
+
+                return retValue;
+            }
+            finally
+            {
+                handle.Free();
+            }
         }
 
-        public Order GetMatrixParameterOrder()
+        public Order GetMatrixOrder()
         {
             return CgNativeMethods.cgGetMatrixParameterOrder(this.Handle);
         }
@@ -553,35 +639,114 @@ namespace CgNet
 
         public void GetValue(ref int[] values)
         {
-            Cg.GetParameterValue(this.Handle, ref values, Order.RowMajor);
+            this.GetValue(ref values, Order.RowMajor);
+        }
+
+        public void GetValue(ref int[] values, Order order)
+        {
+            GCHandle handle = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
+            {
+                switch (order)
+                {
+                    case Order.ColumnMajor:
+                        CgNativeMethods.cgGetParameterValueic(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        break;
+                    case Order.RowMajor:
+                        CgNativeMethods.cgGetParameterValueir(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        break;
+                    default:
+                        throw new InvalidEnumArgumentException("order");
+                }
+            }
+            finally
+            {
+                handle.Free();
+            }
         }
 
         public void GetValue(ref double[] values)
         {
-            Cg.GetParameterValue(this.Handle, ref values, Order.RowMajor);
+            this.GetValue(ref values, Order.RowMajor);
+        }
+
+        public void GetValue(ref double[] values, Order order)
+        {
+            GCHandle handle = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
+            {
+                switch (order)
+                {
+                    case Order.ColumnMajor:
+                        CgNativeMethods.cgGetParameterValuedc(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        break;
+                    case Order.RowMajor:
+                        CgNativeMethods.cgGetParameterValuedr(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        break;
+                    default:
+                        throw new InvalidEnumArgumentException("order");
+                }
+            }
+            finally
+            {
+                handle.Free();
+            }
         }
 
         public void GetValue(ref float[] values)
         {
-            Cg.GetParameterValue(this.Handle, ref values, Order.RowMajor);
+            this.GetValue(ref values, Order.RowMajor);
+        }
+
+        public void GetValue(ref float[] values, Order order)
+        {
+            GCHandle handle = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
+            {
+                switch (order)
+                {
+                    case Order.ColumnMajor:
+                        CgNativeMethods.cgGetParameterValuefc(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        break;
+                    case Order.RowMajor:
+                        CgNativeMethods.cgGetParameterValuefr(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        break;
+                    default:
+                        throw new InvalidEnumArgumentException("order");
+                }
+            }
+            finally
+            {
+                handle.Free();
+            }
         }
 
         public T GetValue<T>()
             where T : struct
         {
-            return Cg.GetParameterValue<T>(this.Handle);
-        }
+            var f = new T[1];
+            GCHandle handle = GCHandle.Alloc(f, GCHandleType.Pinned);
+            try
+            {
+                if (typeof(T) == typeof(int))
+                {
+                    CgNativeMethods.cgGetParameterValueir(this.Handle, f.Length, handle.AddrOfPinnedObject());
+                }
+                else if (typeof(T) == typeof(double))
+                {
+                    CgNativeMethods.cgGetParameterValuedr(this.Handle, f.Length, handle.AddrOfPinnedObject());
+                }
+                else if (typeof(T) == typeof(float))
+                {
+                    CgNativeMethods.cgGetParameterValuefr(this.Handle, f.Length, handle.AddrOfPinnedObject());
+                }
+            }
+            finally
+            {
+                handle.Free();
+            }
 
-        public void GetValue<T>(ref T[] values)
-            where T : struct
-        {
-            Cg.GetParameterValue(this.Handle, ref values, Order.RowMajor);
-        }
-
-        public void GetValue<T>(ref T[] values, Order order)
-            where T : struct
-        {
-            Cg.GetParameterValue(this.Handle, ref values, order);
+            return f[0];
         }
 
         public bool IsParameterUsed(WrapperObject container)
@@ -594,53 +759,19 @@ namespace CgNet
             CgNativeMethods.cgSetParameter1f(this.Handle, x);
         }
 
+        public void Set(float x, float y)
+        {
+            CgNativeMethods.cgSetParameter2f(this.Handle, x, y);
+        }
+
         public void Set(float x, float y, float z)
         {
             CgNativeMethods.cgSetParameter3f(this.Handle, x, y, z);
         }
 
-        public void Set(int[] v)
+        public void Set(float x, float y, float z, float w)
         {
-            IntPtr param = this.Handle;
-            switch (v.Length)
-            {
-                case 1:
-                    CgNativeMethods.cgSetParameter1iv(param, v);
-                    break;
-                case 2:
-                    CgNativeMethods.cgSetParameter2iv(param, v);
-                    break;
-                case 3:
-                    CgNativeMethods.cgSetParameter3iv(param, v);
-                    break;
-                case 4:
-                    CgNativeMethods.cgSetParameter4iv(param, v);
-                    break;
-                default:
-                    throw new ArgumentException();
-            }
-        }
-
-        public void Set(double[] v)
-        {
-            IntPtr param = this.Handle;
-            switch (v.Length)
-            {
-                case 1:
-                    CgNativeMethods.cgSetParameter1dv(param, v);
-                    break;
-                case 2:
-                    CgNativeMethods.cgSetParameter2dv(param, v);
-                    break;
-                case 3:
-                    CgNativeMethods.cgSetParameter3dv(param, v);
-                    break;
-                case 4:
-                    CgNativeMethods.cgSetParameter4dv(param, v);
-                    break;
-                default:
-                    throw new ArgumentException();
-            }
+            CgNativeMethods.cgSetParameter4f(this.Handle, x, y, z, w);
         }
 
         public void Set(float[] v)
@@ -665,29 +796,9 @@ namespace CgNet
             }
         }
 
-        public void Set(float x, float y)
-        {
-            CgNativeMethods.cgSetParameter2f(this.Handle, x, y);
-        }
-
-        public void Set(float x, float y, float z, float w)
-        {
-            CgNativeMethods.cgSetParameter4f(this.Handle, x, y, z, w);
-        }
-
-        public void Set(double x)
-        {
-            CgNativeMethods.cgSetParameter1d(this.Handle, x);
-        }
-
         public void Set(int x)
         {
             CgNativeMethods.cgSetParameter1i(this.Handle, x);
-        }
-
-        public void Set(double x, double y)
-        {
-            CgNativeMethods.cgSetParameter2d(this.Handle, x, y);
         }
 
         public void Set(int x, int y)
@@ -695,14 +806,51 @@ namespace CgNet
             CgNativeMethods.cgSetParameter2i(this.Handle, x, y);
         }
 
-        public void Set(double x, double y, double z)
-        {
-            CgNativeMethods.cgSetParameter3d(this.Handle, x, y, z);
-        }
-
         public void Set(int x, int y, int z)
         {
             CgNativeMethods.cgSetParameter3i(this.Handle, x, y, z);
+        }
+
+        public void Set(int x, int y, int z, int w)
+        {
+            CgNativeMethods.cgSetParameter4i(this.Handle, x, y, z, w);
+        }
+
+        public void Set(int[] v)
+        {
+            IntPtr param = this.Handle;
+            switch (v.Length)
+            {
+                case 1:
+                    CgNativeMethods.cgSetParameter1iv(param, v);
+                    break;
+                case 2:
+                    CgNativeMethods.cgSetParameter2iv(param, v);
+                    break;
+                case 3:
+                    CgNativeMethods.cgSetParameter3iv(param, v);
+                    break;
+                case 4:
+                    CgNativeMethods.cgSetParameter4iv(param, v);
+                    break;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        public void Set(double x)
+        {
+            CgNativeMethods.cgSetParameter1d(this.Handle, x);
+        }
+
+        public void Set(double x, double y)
+        {
+            CgNativeMethods.cgSetParameter2d(this.Handle, x, y);
+        }
+
+        public void Set(double x, double y, double z)
+        {
+            CgNativeMethods.cgSetParameter3d(this.Handle, x, y, z);
         }
 
         public void Set(double x, double y, double z, double w)
@@ -710,9 +858,26 @@ namespace CgNet
             CgNativeMethods.cgSetParameter4d(this.Handle, x, y, z, w);
         }
 
-        public void Set(int x, int y, int z, int w)
+        public void Set(double[] v)
         {
-            CgNativeMethods.cgSetParameter4i(this.Handle, x, y, z, w);
+            IntPtr param = this.Handle;
+            switch (v.Length)
+            {
+                case 1:
+                    CgNativeMethods.cgSetParameter1dv(param, v);
+                    break;
+                case 2:
+                    CgNativeMethods.cgSetParameter2dv(param, v);
+                    break;
+                case 3:
+                    CgNativeMethods.cgSetParameter3dv(param, v);
+                    break;
+                case 4:
+                    CgNativeMethods.cgSetParameter4dv(param, v);
+                    break;
+                default:
+                    throw new ArgumentException();
+            }
         }
 
         public void Set1(int[] v)
@@ -787,32 +952,65 @@ namespace CgNet
 
         public void SetMatrix(float[] matrix)
         {
-            Cg.SetMatrixParameter(this.Handle, matrix, Order.RowMajor);
+            this.SetMatrix(matrix, Order.RowMajor);
         }
 
         public void SetMatrix(float[] matrix, Order order)
         {
-            Cg.SetMatrixParameter(this.Handle, matrix, order);
+            IntPtr param = this.Handle;
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    CgNativeMethods.cgSetMatrixParameterfc(param, matrix);
+                    break;
+                case Order.RowMajor:
+                    CgNativeMethods.cgSetMatrixParameterfr(param, matrix);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
+            }
         }
 
         public void SetMatrix(double[] matrix)
         {
-            Cg.SetMatrixParameter(this.Handle, matrix, Order.RowMajor);
+            this.SetMatrix(matrix, Order.RowMajor);
         }
 
         public void SetMatrix(double[] matrix, Order order)
         {
-            Cg.SetMatrixParameter(this.Handle, matrix, order);
+            IntPtr param = this.Handle;
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    CgNativeMethods.cgSetMatrixParameterdc(param, matrix);
+                    break;
+                case Order.RowMajor:
+                    CgNativeMethods.cgSetMatrixParameterdr(param, matrix);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
+            }
         }
 
         public void SetMatrix(int[] matrix)
         {
-            Cg.SetMatrixParameter(this.Handle, matrix, Order.RowMajor);
+            this.SetMatrix(matrix, Order.RowMajor);
         }
 
         public void SetMatrix(int[] matrix, Order order)
         {
-            Cg.SetMatrixParameter(this.Handle, matrix, order);
+            IntPtr param = this.Handle;
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    CgNativeMethods.cgSetMatrixParameteric(param, matrix);
+                    break;
+                case Order.RowMajor:
+                    CgNativeMethods.cgSetMatrixParameterir(param, matrix);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
+            }
         }
 
         public void SetMultiDimArraySize(int[] sizes)
@@ -832,32 +1030,65 @@ namespace CgNet
 
         public void SetValue(double[] vals)
         {
-            Cg.SetParameterValue(this.Handle, vals, Order.RowMajor);
+            this.SetValue(vals, Order.RowMajor);
         }
 
         public void SetValue(double[] vals, Order order)
         {
-            Cg.SetParameterValue(this.Handle, vals, order);
+            IntPtr param = this.Handle;
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    CgNativeMethods.cgSetParameterValuedc(param, vals.Length, vals);
+                    break;
+                case Order.RowMajor:
+                    CgNativeMethods.cgSetParameterValuedr(param, vals.Length, vals);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
+            }
         }
 
         public void SetValue(float[] vals)
         {
-            Cg.SetParameterValue(this.Handle, vals, Order.RowMajor);
+            this.SetValue(vals, Order.RowMajor);
         }
 
         public void SetValue(float[] vals, Order order)
         {
-            Cg.SetParameterValue(this.Handle, vals, order);
+            IntPtr param = this.Handle;
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    CgNativeMethods.cgSetParameterValuefc(param, vals.Length, vals);
+                    break;
+                case Order.RowMajor:
+                    CgNativeMethods.cgSetParameterValuefr(param, vals.Length, vals);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
+            }
         }
 
         public void SetValue(int[] vals)
         {
-            Cg.SetParameterValue(this.Handle, vals, Order.RowMajor);
+            this.SetValue(vals, Order.RowMajor);
         }
 
         public void SetValue(int[] vals, Order order)
         {
-            Cg.SetParameterValue(this.Handle, vals, order);
+            IntPtr param = this.Handle;
+            switch (order)
+            {
+                case Order.ColumnMajor:
+                    CgNativeMethods.cgSetParameterValueic(param, vals.Length, vals);
+                    break;
+                case Order.RowMajor:
+                    CgNativeMethods.cgSetParameterValueir(param, vals.Length, vals);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
+            }
         }
 
         #endregion Public Methods

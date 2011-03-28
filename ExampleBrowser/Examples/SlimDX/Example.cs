@@ -24,7 +24,7 @@
 
         public virtual void Start()
         {
-            Cg.SetErrorCallback(CheckForCgError);
+            Cg.ErrorCallback = this.CheckForCgError;
         }
 
         #endregion Public Methods

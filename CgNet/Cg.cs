@@ -63,6 +63,61 @@ namespace CgNet
 
         #endregion Delegates
 
+        #region Properties
+
+        #region Public Static Properties
+
+        public static CgErrorCallbackFuncDelegate ErrorCallback
+        {
+            get
+            {
+                return CgNativeMethods.cgGetErrorCallback();
+            }
+
+            set
+            {
+                CgNativeMethods.cgSetErrorCallback(value);
+            }
+        }
+
+        public static LockingPolicy LockingPolicy
+        {
+            get
+            {
+                return CgNativeMethods.cgGetLockingPolicy();
+            }
+
+            set
+            {
+                CgNativeMethods.cgSetLockingPolicy(value);
+            }
+        }
+
+        public static CasePolicy SemanticCasePolicy
+        {
+            get
+            {
+                return CgNativeMethods.cgGetSemanticCasePolicy();
+            }
+
+            set
+            {
+                CgNativeMethods.cgSetSemanticCasePolicy(value);
+            }
+        }
+
+        public static int SupportedProfilesCount
+        {
+            get
+            {
+                return CgNativeMethods.cgGetNumSupportedProfiles();
+            }
+        }
+
+        #endregion Public Static Properties
+
+        #endregion Properties
+
         #region Methods
 
         #region Public Static Methods
@@ -92,9 +147,9 @@ namespace CgNet
             return CgNativeMethods.cgGetEnum(enumString);
         }
 
-        public static string GetEnumString(int en)
+        public static string GetEnumString(int @enum)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetEnumString(en));
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetEnumString(@enum));
         }
 
         public static ErrorType GetError()
@@ -102,19 +157,14 @@ namespace CgNet
             return CgNativeMethods.cgGetError();
         }
 
-        public static CgErrorCallbackFuncDelegate GetErrorCallback()
-        {
-            return CgNativeMethods.cgGetErrorCallback();
-        }
-
         public static CgErrorHandlerFuncDelegate GetErrorHandler(IntPtr data)
         {
             return CgNativeMethods.cgGetErrorHandler(data);
         }
 
-        public static IntPtr GetErrorString(ErrorType error)
+        public static string GetErrorString(ErrorType error)
         {
-            return CgNativeMethods.cgGetErrorString(error);
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetErrorString(error));
         }
 
         public static ErrorType GetFirstError()
@@ -127,11 +177,6 @@ namespace CgNet
             return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetLastErrorString(out error));
         }
 
-        public static LockingPolicy GetLockingPolicy()
-        {
-            return CgNativeMethods.cgGetLockingPolicy();
-        }
-
         public static ParameterType GetMatrixSize(ParameterType type, out int nrows, out int ncols)
         {
             return CgNativeMethods.cgGetMatrixSize(type, out nrows, out ncols);
@@ -140,11 +185,6 @@ namespace CgNet
         public static int GetNumParentTypes(ParameterType type)
         {
             return CgNativeMethods.cgGetNumParentTypes(type);
-        }
-
-        public static int GetNumSupportedProfiles()
-        {
-            return CgNativeMethods.cgGetNumSupportedProfiles();
         }
 
         public static ParameterClass GetParameterClassEnum(string pString)
@@ -202,11 +242,6 @@ namespace CgNet
             return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetResourceString(resource));
         }
 
-        public static CasePolicy GetSemanticCasePolicy()
-        {
-            return CgNativeMethods.cgGetSemanticCasePolicy();
-        }
-
         public static string GetString(CgAll sname)
         {
             return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetString(sname));
@@ -257,200 +292,14 @@ namespace CgNet
             return CgNativeMethods.cgIsProfileSupported(profile);
         }
 
-        public static void SetErrorCallback(CgErrorCallbackFuncDelegate func)
-        {
-            CgNativeMethods.cgSetErrorCallback(func);
-        }
-
         public static void SetErrorHandler(CgErrorHandlerFuncDelegate func, IntPtr data)
         {
             CgNativeMethods.cgSetErrorHandler(func, data);
         }
 
-        public static LockingPolicy SetLockingPolicy(LockingPolicy lockingPolicy)
-        {
-            return CgNativeMethods.cgSetLockingPolicy(lockingPolicy);
-        }
-
-        public static CasePolicy SetSemanticCasePolicy(CasePolicy casePolicy)
-        {
-            return CgNativeMethods.cgSetSemanticCasePolicy(casePolicy);
-        }
-
         #endregion Public Static Methods
 
         #region Internal Static Methods
-
-        internal static T[] GetMatrixParameter<T>(IntPtr param, Order order)
-            where T : struct
-        {
-            var retValue = new T[16];
-            GCHandle handle = GCHandle.Alloc(retValue, GCHandleType.Pinned);
-
-            try
-            {
-                if (typeof(T) == typeof(double))
-                {
-                    switch (order)
-                    {
-                        case Order.ColumnMajor:
-                            CgNativeMethods.cgGetMatrixParameterdc(param, handle.AddrOfPinnedObject());
-                            break;
-                        case Order.RowMajor:
-                            CgNativeMethods.cgGetMatrixParameterdr(param, handle.AddrOfPinnedObject());
-                            break;
-                        default:
-                            throw new InvalidEnumArgumentException("order");
-                    }
-                }
-                else if (typeof(T) == typeof(float))
-                {
-                    switch (order)
-                    {
-                        case Order.ColumnMajor:
-                            CgNativeMethods.cgGetMatrixParameterfc(param, handle.AddrOfPinnedObject());
-                            break;
-                        case Order.RowMajor:
-                            CgNativeMethods.cgGetMatrixParameterfr(param, handle.AddrOfPinnedObject());
-                            break;
-                        default:
-                            throw new InvalidEnumArgumentException("order");
-                    }
-                }
-                else if (typeof(T) == typeof(int))
-                {
-                    switch (order)
-                    {
-                        case Order.ColumnMajor:
-                            CgNativeMethods.cgGetMatrixParameteric(param, handle.AddrOfPinnedObject());
-                            break;
-                        case Order.RowMajor:
-                            CgNativeMethods.cgGetMatrixParameterir(param, handle.AddrOfPinnedObject());
-                            break;
-                        default:
-                            throw new InvalidEnumArgumentException("order");
-                    }
-                }
-                else
-                {
-                    throw new ArgumentException();
-                }
-
-                return retValue;
-            }
-            finally
-            {
-                handle.Free();
-            }
-        }
-
-        internal static int GetParameterDefaultValue(IntPtr param, ref double[] values, Order order)
-        {
-            switch (order)
-            {
-                case Order.ColumnMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValuedc(param, values.Length, values);
-                case Order.RowMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValuedr(param, values.Length, values);
-                default:
-                    throw new ArgumentOutOfRangeException("order");
-            }
-        }
-
-        internal static int GetParameterDefaultValue(IntPtr param, ref int[] values, Order order)
-        {
-            switch (order)
-            {
-                case Order.ColumnMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValueic(param, values.Length, values);
-                case Order.RowMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValueir(param, values.Length, values);
-                default:
-                    throw new ArgumentOutOfRangeException("order");
-            }
-        }
-
-        internal static int GetParameterDefaultValue(IntPtr param, ref float[] values, Order order)
-        {
-            switch (order)
-            {
-                case Order.ColumnMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValuefc(param, values.Length, values);
-                case Order.RowMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValuefr(param, values.Length, values);
-                default:
-                    throw new ArgumentOutOfRangeException("order");
-            }
-        }
-
-        internal static T GetParameterValue<T>(IntPtr param)
-            where T : struct
-        {
-            var f = new T[1];
-            GetParameterValue(param, ref f);
-            return f[0];
-        }
-
-        internal static void GetParameterValue<T>(IntPtr param, ref T[] values)
-            where T : struct
-        {
-            GetParameterValue(param, ref values, Order.RowMajor);
-        }
-
-        internal static void GetParameterValue<T>(IntPtr param, ref T[] values, Order order)
-            where T : struct
-        {
-            GCHandle handle = GCHandle.Alloc(values, GCHandleType.Pinned);
-            try
-            {
-                if (typeof(T) == typeof(int))
-                {
-                    switch (order)
-                    {
-                        case Order.ColumnMajor:
-                            CgNativeMethods.cgGetParameterValueic(param, values.Length, handle.AddrOfPinnedObject());
-                            break;
-                        case Order.RowMajor:
-                            CgNativeMethods.cgGetParameterValueir(param, values.Length, handle.AddrOfPinnedObject());
-                            break;
-                        default:
-                            throw new InvalidEnumArgumentException("order");
-                    }
-                }
-                else if (typeof(T) == typeof(double))
-                {
-                    switch (order)
-                    {
-                        case Order.ColumnMajor:
-                            CgNativeMethods.cgGetParameterValuedc(param, values.Length, handle.AddrOfPinnedObject());
-                            break;
-                        case Order.RowMajor:
-                            CgNativeMethods.cgGetParameterValuedr(param, values.Length, handle.AddrOfPinnedObject());
-                            break;
-                        default:
-                            throw new InvalidEnumArgumentException("order");
-                    }
-                }
-                else if (typeof(T) == typeof(float))
-                {
-                    switch (order)
-                    {
-                        case Order.ColumnMajor:
-                            CgNativeMethods.cgGetParameterValuefc(param, values.Length, handle.AddrOfPinnedObject());
-                            break;
-                        case Order.RowMajor:
-                            CgNativeMethods.cgGetParameterValuefr(param, values.Length, handle.AddrOfPinnedObject());
-                            break;
-                        default:
-                            throw new InvalidEnumArgumentException("order");
-                    }
-                }
-            }
-            finally
-            {
-                handle.Free();
-            }
-        }
 
         internal static bool[] IntPtrToBoolArray(IntPtr values, int count)
         {
@@ -512,96 +361,6 @@ namespace CgNet
             }
 
             return lines.Count == 0 ? null : lines.ToArray();
-        }
-
-        internal static void SetMatrixParameter(IntPtr param, float[] matrix, Order order)
-        {
-            switch (order)
-            {
-                case Order.ColumnMajor:
-                    CgNativeMethods.cgSetMatrixParameterfc(param, matrix);
-                    break;
-                case Order.RowMajor:
-                    CgNativeMethods.cgSetMatrixParameterfr(param, matrix);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException("order");
-            }
-        }
-
-        internal static void SetMatrixParameter(IntPtr param, double[] matrix, Order order)
-        {
-            switch (order)
-            {
-                case Order.ColumnMajor:
-                    CgNativeMethods.cgSetMatrixParameterdc(param, matrix);
-                    break;
-                case Order.RowMajor:
-                    CgNativeMethods.cgSetMatrixParameterdr(param, matrix);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException("order");
-            }
-        }
-
-        internal static void SetMatrixParameter(IntPtr param, int[] matrix, Order order)
-        {
-            switch (order)
-            {
-                case Order.ColumnMajor:
-                    CgNativeMethods.cgSetMatrixParameteric(param, matrix);
-                    break;
-                case Order.RowMajor:
-                    CgNativeMethods.cgSetMatrixParameterir(param, matrix);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException("order");
-            }
-        }
-
-        internal static void SetParameterValue(IntPtr param, double[] vals, Order order)
-        {
-            switch (order)
-            {
-                case Order.ColumnMajor:
-                    CgNativeMethods.cgSetParameterValuedc(param, vals.Length, vals);
-                    break;
-                case Order.RowMajor:
-                    CgNativeMethods.cgSetParameterValuedr(param, vals.Length, vals);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException("order");
-            }
-        }
-
-        internal static void SetParameterValue(IntPtr param, float[] vals, Order order)
-        {
-            switch (order)
-            {
-                case Order.ColumnMajor:
-                    CgNativeMethods.cgSetParameterValuefc(param, vals.Length, vals);
-                    break;
-                case Order.RowMajor:
-                    CgNativeMethods.cgSetParameterValuefr(param, vals.Length, vals);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException("order");
-            }
-        }
-
-        internal static void SetParameterValue(IntPtr param, int[] vals, Order order)
-        {
-            switch (order)
-            {
-                case Order.ColumnMajor:
-                    CgNativeMethods.cgSetParameterValueic(param, vals.Length, vals);
-                    break;
-                case Order.RowMajor:
-                    CgNativeMethods.cgSetParameterValueir(param, vals.Length, vals);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException("order");
-            }
         }
 
         #endregion Internal Static Methods

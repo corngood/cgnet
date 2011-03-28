@@ -47,7 +47,7 @@
 
         public void Start()
         {
-            Cg.SetErrorCallback(CheckForCgError);
+            Cg.ErrorCallback = this.CheckForCgError;
             this.Run(30.0, 0.0);
         }
 
