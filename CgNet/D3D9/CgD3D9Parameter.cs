@@ -22,8 +22,6 @@ namespace CgNet.D3D9
 {
     using System;
 
-    using CgNet.D3D9;
-
     using SlimDX.Direct3D9;
 
     public static class CgD3D9Parameter

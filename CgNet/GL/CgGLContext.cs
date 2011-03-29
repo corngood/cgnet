@@ -22,9 +22,7 @@ namespace CgNet.GL
 {
     using System;
 
-    using Buffer = Buffer;
-
-    using CgNet.GL;
+    using Buffer = CgNet.Buffer;
 
     using OpenTK.Graphics.OpenGL;
 

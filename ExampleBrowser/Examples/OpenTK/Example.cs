@@ -13,16 +13,21 @@
     {
         #region Fields
 
-        protected const double MyPi = 3.14159265358979323846;
+        protected const float Pi = 3.14159265358979323846f;
 
         #endregion Fields
 
         #region Constructors
 
-        protected Example(string programName)
-            : base(400, 400)
+        protected Example(string programName, int width, int height)
+            : base(width, height)
         {
             this.Title = programName;
+        }
+
+        protected Example(string programName)
+            : this(programName, 400, 400)
+        {
         }
 
         #endregion Constructors
@@ -135,7 +140,7 @@
             double zNear, double zFar,
             float[] m)
         {
-            double radians = fieldOfView / 2.0 * MyPi / 180.0;
+            double radians = fieldOfView / 2.0 * Pi / 180.0;
 
             double deltaZ = zFar - zNear;
             double sine = Math.Sin(radians);
@@ -172,64 +177,136 @@
             double m0, m1, m2, m3, s;
             double[] r0 = new double[8], r1 = new double[8], r2 = new double[8], r3 = new double[8];
 
-            r0[0] = MatGet(m, 0, 0); r0[1] = MatGet(m, 0, 1);
-            r0[2] = MatGet(m, 0, 2); r0[3] = MatGet(m, 0, 3);
-            r0[4] = 1.0; r0[5] = r0[6] = r0[7] = 0.0;
+            r0[0] = MatGet(m, 0, 0);
+            r0[1] = MatGet(m, 0, 1);
+            r0[2] = MatGet(m, 0, 2);
+            r0[3] = MatGet(m, 0, 3);
+            r0[4] = 1.0;
+            r0[5] = r0[6] = r0[7] = 0.0;
 
-            r1[0] = MatGet(m, 1, 0); r1[1] = MatGet(m, 1, 1);
-            r1[2] = MatGet(m, 1, 2); r1[3] = MatGet(m, 1, 3);
-            r1[5] = 1.0; r1[4] = r1[6] = r1[7] = 0.0;
+            r1[0] = MatGet(m, 1, 0);
+            r1[1] = MatGet(m, 1, 1);
+            r1[2] = MatGet(m, 1, 2);
+            r1[3] = MatGet(m, 1, 3);
+            r1[5] = 1.0;
+            r1[4] = r1[6] = r1[7] = 0.0;
 
-            r2[0] = MatGet(m, 2, 0); r2[1] = MatGet(m, 2, 1);
-            r2[2] = MatGet(m, 2, 2); r2[3] = MatGet(m, 2, 3);
-            r2[6] = 1.0; r2[4] = r2[5] = r2[7] = 0.0;
+            r2[0] = MatGet(m, 2, 0);
+            r2[1] = MatGet(m, 2, 1);
+            r2[2] = MatGet(m, 2, 2);
+            r2[3] = MatGet(m, 2, 3);
+            r2[6] = 1.0;
+            r2[4] = r2[5] = r2[7] = 0.0;
 
-            r3[0] = MatGet(m, 3, 0); r3[1] = MatGet(m, 3, 1);
-            r3[2] = MatGet(m, 3, 2); r3[3] = MatGet(m, 3, 3);
-            r3[7] = 1.0; r3[4] = r3[5] = r3[6] = 0.0;
+            r3[0] = MatGet(m, 3, 0);
+            r3[1] = MatGet(m, 3, 1);
+            r3[2] = MatGet(m, 3, 2);
+            r3[3] = MatGet(m, 3, 3);
+            r3[7] = 1.0;
+            r3[4] = r3[5] = r3[6] = 0.0;
 
             /* Choose myPivot, or die. */
-            if (Math.Abs(r3[0]) > Math.Abs(r2[0])) SwapRows(ref r3, ref r2);
-            if (Math.Abs(r2[0]) > Math.Abs(r1[0])) SwapRows(ref r2, ref r1);
-            if (Math.Abs(r1[0]) > Math.Abs(r0[0])) SwapRows(ref r1, ref r0);
+            if (Math.Abs(r3[0]) > Math.Abs(r2[0]))
+                SwapRows(ref r3, ref r2);
+            if (Math.Abs(r2[0]) > Math.Abs(r1[0]))
+                SwapRows(ref r2, ref r1);
+            if (Math.Abs(r1[0]) > Math.Abs(r0[0]))
+                SwapRows(ref r1, ref r0);
             if (0.0 == r0[0])
             {
                 Debug.Assert(false, "could not invert matrix");
             }
 
             /* Eliminate first variable. */
-            m1 = r1[0] / r0[0]; m2 = r2[0] / r0[0]; m3 = r3[0] / r0[0];
-            s = r0[1]; r1[1] -= m1 * s; r2[1] -= m2 * s; r3[1] -= m3 * s;
-            s = r0[2]; r1[2] -= m1 * s; r2[2] -= m2 * s; r3[2] -= m3 * s;
-            s = r0[3]; r1[3] -= m1 * s; r2[3] -= m2 * s; r3[3] -= m3 * s;
+            m1 = r1[0] / r0[0];
+            m2 = r2[0] / r0[0];
+            m3 = r3[0] / r0[0];
+            s = r0[1];
+            r1[1] -= m1 * s;
+            r2[1] -= m2 * s;
+            r3[1] -= m3 * s;
+            s = r0[2];
+            r1[2] -= m1 * s;
+            r2[2] -= m2 * s;
+            r3[2] -= m3 * s;
+            s = r0[3];
+            r1[3] -= m1 * s;
+            r2[3] -= m2 * s;
+            r3[3] -= m3 * s;
             s = r0[4];
-            if (s != 0.0) { r1[4] -= m1 * s; r2[4] -= m2 * s; r3[4] -= m3 * s; }
+            if (s != 0.0)
+            {
+                r1[4] -= m1 * s;
+                r2[4] -= m2 * s;
+                r3[4] -= m3 * s;
+            }
             s = r0[5];
-            if (s != 0.0) { r1[5] -= m1 * s; r2[5] -= m2 * s; r3[5] -= m3 * s; }
+            if (s != 0.0)
+            {
+                r1[5] -= m1 * s;
+                r2[5] -= m2 * s;
+                r3[5] -= m3 * s;
+            }
             s = r0[6];
-            if (s != 0.0) { r1[6] -= m1 * s; r2[6] -= m2 * s; r3[6] -= m3 * s; }
+            if (s != 0.0)
+            {
+                r1[6] -= m1 * s;
+                r2[6] -= m2 * s;
+                r3[6] -= m3 * s;
+            }
             s = r0[7];
-            if (s != 0.0) { r1[7] -= m1 * s; r2[7] -= m2 * s; r3[7] -= m3 * s; }
+            if (s != 0.0)
+            {
+                r1[7] -= m1 * s;
+                r2[7] -= m2 * s;
+                r3[7] -= m3 * s;
+            }
 
             /* Choose myPivot, or die. */
-            if (Math.Abs(r3[1]) > Math.Abs(r2[1])) SwapRows(ref r3, ref r2);
-            if (Math.Abs(r2[1]) > Math.Abs(r1[1])) SwapRows(ref r2, ref r1);
+            if (Math.Abs(r3[1]) > Math.Abs(r2[1]))
+                SwapRows(ref r3, ref r2);
+            if (Math.Abs(r2[1]) > Math.Abs(r1[1]))
+                SwapRows(ref r2, ref r1);
             if (0.0 == r1[1])
             {
                 Debug.Assert(false, "could not invert matrix");
             }
 
             /* Eliminate second variable. */
-            m2 = r2[1] / r1[1]; m3 = r3[1] / r1[1];
-            r2[2] -= m2 * r1[2]; r3[2] -= m3 * r1[2];
-            r2[3] -= m2 * r1[3]; r3[3] -= m3 * r1[3];
-            s = r1[4]; if (0.0 != s) { r2[4] -= m2 * s; r3[4] -= m3 * s; }
-            s = r1[5]; if (0.0 != s) { r2[5] -= m2 * s; r3[5] -= m3 * s; }
-            s = r1[6]; if (0.0 != s) { r2[6] -= m2 * s; r3[6] -= m3 * s; }
-            s = r1[7]; if (0.0 != s) { r2[7] -= m2 * s; r3[7] -= m3 * s; }
+            m2 = r2[1] / r1[1];
+            m3 = r3[1] / r1[1];
+            r2[2] -= m2 * r1[2];
+            r3[2] -= m3 * r1[2];
+            r2[3] -= m2 * r1[3];
+            r3[3] -= m3 * r1[3];
+            s = r1[4];
+            if (0.0 != s)
+            {
+                r2[4] -= m2 * s;
+                r3[4] -= m3 * s;
+            }
+            s = r1[5];
+            if (0.0 != s)
+            {
+                r2[5] -= m2 * s;
+                r3[5] -= m3 * s;
+            }
+            s = r1[6];
+            if (0.0 != s)
+            {
+                r2[6] -= m2 * s;
+                r3[6] -= m3 * s;
+            }
+            s = r1[7];
+            if (0.0 != s)
+            {
+                r2[7] -= m2 * s;
+                r3[7] -= m3 * s;
+            }
 
             /* Choose myPivot, or die. */
-            if (Math.Abs(r3[2]) > Math.Abs(r2[2])) SwapRows(ref r3, ref r2);
+            if (Math.Abs(r3[2]) > Math.Abs(r2[2]))
+                SwapRows(ref r3, ref r2);
             if (0.0 == r2[2])
             {
                 Debug.Assert(false, "could not invert matrix");
@@ -237,8 +314,10 @@
 
             /* Eliminate third variable. */
             m3 = r3[2] / r2[2];
-            r3[3] -= m3 * r2[3]; r3[4] -= m3 * r2[4];
-            r3[5] -= m3 * r2[5]; r3[6] -= m3 * r2[6];
+            r3[3] -= m3 * r2[3];
+            r3[4] -= m3 * r2[4];
+            r3[5] -= m3 * r2[5];
+            r3[6] -= m3 * r2[6];
             r3[7] -= m3 * r2[7];
 
             /* Last check. */
@@ -247,41 +326,64 @@
                 Debug.Assert(false, "could not invert matrix");
             }
 
-            s = 1.0 / r3[3];              /* Now back substitute row 3. */
-            r3[4] *= s; r3[5] *= s; r3[6] *= s; r3[7] *= s;
+            s = 1.0 / r3[3]; /* Now back substitute row 3. */
+            r3[4] *= s;
+            r3[5] *= s;
+            r3[6] *= s;
+            r3[7] *= s;
 
-            m2 = r2[3];                 /* Now back substitute row 2. */
+            m2 = r2[3]; /* Now back substitute row 2. */
             s = 1.0 / r2[2];
-            r2[4] = s * (r2[4] - r3[4] * m2); r2[5] = s * (r2[5] - r3[5] * m2);
-            r2[6] = s * (r2[6] - r3[6] * m2); r2[7] = s * (r2[7] - r3[7] * m2);
+            r2[4] = s * (r2[4] - r3[4] * m2);
+            r2[5] = s * (r2[5] - r3[5] * m2);
+            r2[6] = s * (r2[6] - r3[6] * m2);
+            r2[7] = s * (r2[7] - r3[7] * m2);
             m1 = r1[3];
-            r1[4] -= r3[4] * m1; r1[5] -= r3[5] * m1;
-            r1[6] -= r3[6] * m1; r1[7] -= r3[7] * m1;
+            r1[4] -= r3[4] * m1;
+            r1[5] -= r3[5] * m1;
+            r1[6] -= r3[6] * m1;
+            r1[7] -= r3[7] * m1;
             m0 = r0[3];
-            r0[4] -= r3[4] * m0; r0[5] -= r3[5] * m0;
-            r0[6] -= r3[6] * m0; r0[7] -= r3[7] * m0;
+            r0[4] -= r3[4] * m0;
+            r0[5] -= r3[5] * m0;
+            r0[6] -= r3[6] * m0;
+            r0[7] -= r3[7] * m0;
 
-            m1 = r1[2];                 /* Now back substitute row 1. */
+            m1 = r1[2]; /* Now back substitute row 1. */
             s = 1.0 / r1[1];
-            r1[4] = s * (r1[4] - r2[4] * m1); r1[5] = s * (r1[5] - r2[5] * m1);
-            r1[6] = s * (r1[6] - r2[6] * m1); r1[7] = s * (r1[7] - r2[7] * m1);
+            r1[4] = s * (r1[4] - r2[4] * m1);
+            r1[5] = s * (r1[5] - r2[5] * m1);
+            r1[6] = s * (r1[6] - r2[6] * m1);
+            r1[7] = s * (r1[7] - r2[7] * m1);
             m0 = r0[2];
-            r0[4] -= r2[4] * m0; r0[5] -= r2[5] * m0;
-            r0[6] -= r2[6] * m0; r0[7] -= r2[7] * m0;
+            r0[4] -= r2[4] * m0;
+            r0[5] -= r2[5] * m0;
+            r0[6] -= r2[6] * m0;
+            r0[7] -= r2[7] * m0;
 
-            m0 = r0[1];                 /* Now back substitute row 0. */
+            m0 = r0[1]; /* Now back substitute row 0. */
             s = 1.0 / r0[0];
-            r0[4] = s * (r0[4] - r1[4] * m0); r0[5] = s * (r0[5] - r1[5] * m0);
-            r0[6] = s * (r0[6] - r1[6] * m0); r0[7] = s * (r0[7] - r1[7] * m0);
+            r0[4] = s * (r0[4] - r1[4] * m0);
+            r0[5] = s * (r0[5] - r1[5] * m0);
+            r0[6] = s * (r0[6] - r1[6] * m0);
+            r0[7] = s * (r0[7] - r1[7] * m0);
 
-            MatSet(output, 0, 0, r0[4]); MatSet(output, 0, 1, r0[5]);
-            MatSet(output, 0, 2, r0[6]); MatSet(output, 0, 3, r0[7]);
-            MatSet(output, 1, 0, r1[4]); MatSet(output, 1, 1, r1[5]);
-            MatSet(output, 1, 2, r1[6]); MatSet(output, 1, 3, r1[7]);
-            MatSet(output, 2, 0, r2[4]); MatSet(output, 2, 1, r2[5]);
-            MatSet(output, 2, 2, r2[6]); MatSet(output, 2, 3, r2[7]);
-            MatSet(output, 3, 0, r3[4]); MatSet(output, 3, 1, r3[5]);
-            MatSet(output, 3, 2, r3[6]); MatSet(output, 3, 3, r3[7]);
+            MatSet(output, 0, 0, r0[4]);
+            MatSet(output, 0, 1, r0[5]);
+            MatSet(output, 0, 2, r0[6]);
+            MatSet(output, 0, 3, r0[7]);
+            MatSet(output, 1, 0, r1[4]);
+            MatSet(output, 1, 1, r1[5]);
+            MatSet(output, 1, 2, r1[6]);
+            MatSet(output, 1, 3, r1[7]);
+            MatSet(output, 2, 0, r2[4]);
+            MatSet(output, 2, 1, r2[5]);
+            MatSet(output, 2, 2, r2[6]);
+            MatSet(output, 2, 3, r2[7]);
+            MatSet(output, 3, 0, r3[4]);
+            MatSet(output, 3, 1, r3[5]);
+            MatSet(output, 3, 2, r3[6]);
+            MatSet(output, 3, 3, r3[7]);
         }
 
         protected static void MakeRotateMatrix(float angle,
@@ -301,7 +403,7 @@
                 axis[2] /= mag;
             }
 
-            float radians = (float)(angle * MyPi / 180.0f);
+            float radians = (angle * Pi / 180.0f);
             float sine = (float)Math.Sin(radians);
             float cosine = (float)Math.Cos(radians);
             float ab = axis[0] * axis[1] * (1 - cosine);
@@ -394,7 +496,9 @@
             }
             /* Apply perspective divide and copy to dst (so dst can vec). */
             for (i = 0; i < 3; i++)
+            {
                 dst[i] = (float)(tmp[i] * tmp[3]);
+            }
             dst[3] = 1;
         }
 
@@ -412,7 +516,7 @@
                 MessageBox.Show(s);
                 this.Close();
 
-                var x = this.CgContext.GetLastListing();
+                var x = this.CgContext.LastListing;
             }
             //  printf("%s: %s: %s\n",
             //    myProgramName, situation, string);
@@ -434,7 +538,7 @@
         /// <param name="r">Row</param>
         /// <param name="c">Column</param>
         /// <returns>Value</returns>
-        static float MatGet(IList<float> m, int r, int c)
+        private static float MatGet(IList<float> m, int r, int c)
         {
             return m[r * 4 + c];
         }
@@ -446,7 +550,7 @@
         /// <param name="r">Row</param>
         /// <param name="c">Column</param>
         /// <param name="value">Value</param>
-        static void MatSet(IList<float> m, int r, int c, double value)
+        private static void MatSet(IList<float> m, int r, int c, double value)
         {
             m[r * 4 + c] = (float)value;
         }
@@ -457,7 +561,7 @@
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
-        static void SwapRows(ref double[] a, ref double[] b)
+        private static void SwapRows(ref double[] a, ref double[] b)
         {
             double[] temp = a;
             a = b;

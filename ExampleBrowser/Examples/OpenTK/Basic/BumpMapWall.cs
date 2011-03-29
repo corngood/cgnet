@@ -1,7 +1,6 @@
 namespace ExampleBrowser.Examples.OpenTK.Basic
 {
     using System;
-    using System.Runtime.InteropServices;
 
     using All = global::OpenTK.Graphics.OpenGL.All;
 
@@ -15,7 +14,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
 
     using ExampleBrowser.Data;
-    using ExampleBrowser.Examples.OpenTK;
 
     using GL = global::OpenTK.Graphics.OpenGL.GL;
 
@@ -241,7 +239,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             GL.Translate(lightPosition[0], lightPosition[1], lightPosition[2]);
             GL.Color3(0.8f, 0.8f, 0.1f); /* yellow */
-            glutSolidSphere(0.4, 12, 12);
+            NativeMethods.glutSolidSphere(0.4, 12, 12);
 
             this.SwapBuffers();
         }
@@ -294,13 +292,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         }
 
         #endregion Protected Methods
-
-        #region Private Static Methods
-
-        [DllImport("glut32.dll")]
-        private static extern void glutSolidSphere(double radius, int slices, int stacks);
-
-        #endregion Private Static Methods
 
         #endregion Methods
     }

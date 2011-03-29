@@ -1,12 +1,9 @@
 namespace ExampleBrowser.Examples.OpenTK.Basic
 {
     using System;
-    using System.Runtime.InteropServices;
 
     using CgNet;
     using CgNet.GL;
-
-    using ExampleBrowser.Examples.OpenTK;
 
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
@@ -67,7 +64,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     null); /* No extra compiler options */
             this.vertexProgram.Load();
 
-            this.vertexParamModelViewProj =vertexProgram.GetNamedParameter("modelViewProj");
+            this.vertexParamModelViewProj = vertexProgram.GetNamedParameter("modelViewProj");
 
             fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
             CgGL.SetOptimalOptions(fragmentProfile);
@@ -130,7 +127,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.fragmentParamC.Set(0.1f, 0.7f, 0.1f, 1f); /* Green */
             vertexProgram.UpdateParameters();
             fragmentProgram.UpdateParameters();
-            glutWireSphere(2.0, 30, 30);
+            NativeMethods.glutWireSphere(2.0, 30, 30);
 
             /*** Render red wireframe cone ***/
             MakeTranslateMatrix(-2, -1.5f, 0, translateMatrix);
@@ -148,7 +145,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.fragmentParamC.Set(0.8f, 0.1f, 0.1f, 1); /* Red */
             vertexProgram.UpdateParameters();
             fragmentProgram.UpdateParameters();
-            glutWireCone(1.5, 3.5, 20, 20);
+            NativeMethods.glutWireCone(1.5, 3.5, 20, 20);
 
             CgGL.DisableProfile(vertexProfile);
 
@@ -188,9 +185,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             myEyeAngle += 0.008f; /* Add a small angle (in radians). */
-            if (myEyeAngle > 2 * MyPi)
+            if (myEyeAngle > 2 * Pi)
             {
-                myEyeAngle -= (float)(2 * MyPi);
+                myEyeAngle -= (2 * Pi);
             }
 
             if (this.Keyboard[Key.Escape])
@@ -205,12 +202,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         /* Build a row-major (C-style) 4x4 matrix transform based on the
            parameters for gluLookAt. */
-        [DllImport("glut32.dll")]
-        private static extern void glutWireCone(double bse, double height, int slices, int stacks);
-
-        [DllImport("glut32.dll")]
-        private static extern void glutWireSphere(double radius, int slices, int stacks);
-
         private static void Reshape(int width, int height)
         {
             double aspectRatio = (float)width / height;

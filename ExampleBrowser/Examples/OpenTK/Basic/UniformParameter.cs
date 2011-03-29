@@ -5,8 +5,6 @@
     using CgNet;
     using CgNet.GL;
 
-    using ExampleBrowser.Examples.OpenTK;
-
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;

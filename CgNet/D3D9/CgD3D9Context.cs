@@ -20,8 +20,6 @@
  */
 namespace CgNet.D3D9
 {
-    using CgNet.D3D9;
-
     public static class CgD3D9Context
     {
         #region Methods

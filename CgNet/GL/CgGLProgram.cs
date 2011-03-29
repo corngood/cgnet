@@ -20,11 +20,6 @@
  */
 namespace CgNet.GL
 {
-    using System;
-
-    using CgNet;
-    using CgNet.GL;
-
     public static class CgGLProgram
     {
         #region Methods

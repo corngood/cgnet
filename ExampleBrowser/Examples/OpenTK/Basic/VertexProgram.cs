@@ -17,8 +17,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         private const string VertexProgramFileName = "Data/C2E1v_green.cg";
         private const string VertexProgramName = "C2E1v_green";
 
-        private ProfileType cgVertexProfile;
-        private Program cgVertexProgram;
+        private ProfileType vertexProfile;
+        private Program vertexProgram;
 
         #endregion Fields
 
@@ -41,25 +41,25 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// <param name="e">Not used.</param>
         protected override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f);  /* Blue background */
+            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
 
             this.CgContext = CgNet.Context.Create();
 
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            this.cgVertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.cgVertexProfile);
+            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(this.vertexProfile);
 
-            this.cgVertexProgram =
+            this.vertexProgram =
                 CgContext.CreateProgramFromFile(
-                    ProgramType.Source,                /* Program in human-readable form */
-                    VertexProgramFileName,  /* Name of file containing program */
-                    this.cgVertexProfile,        /* Profile: OpenGL ARB vertex program */
-                    VertexProgramName,      /* Entry function name */
-                    null);                    /* No extra compiler options */
+                    ProgramType.Source, /* Program in human-readable form */
+                    VertexProgramFileName, /* Name of file containing program */
+                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    VertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
 
-            this.cgVertexProgram.Load();
+            this.vertexProgram.Load();
         }
 
         /// <summary>
@@ -71,9 +71,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            this.cgVertexProgram.Bind();
+            this.vertexProgram.Bind();
 
-            CgGL.EnableProfile(this.cgVertexProfile);
+            CgGL.EnableProfile(this.vertexProfile);
 
             /* Rendering code verbatim from Chapter 1, Section 2.4.1 "Rendering
                a Triangle with OpenGL" (page 57). */
@@ -83,7 +83,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.Vertex2(0.0f, -0.8f);
             GL.End();
 
-            CgGL.DisableProfile(this.cgVertexProfile);
+            CgGL.DisableProfile(this.vertexProfile);
             this.SwapBuffers();
         }
 
@@ -104,7 +104,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.cgVertexProgram.Dispose();
+            this.vertexProgram.Dispose();
             this.CgContext.Dispose();
         }
 

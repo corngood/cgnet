@@ -176,6 +176,11 @@ namespace CgNet
                                                };
         }
 
+        public void SetLastListing(string listing)
+        {
+            CgNativeMethods.cgSetLastListing(this.Handle, listing);
+        }
+
         public bool Validate()
         {
             return CgNativeMethods.cgValidateTechnique(this.Handle);

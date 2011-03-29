@@ -2,7 +2,7 @@
 {
     using System;
 
-    interface IExample : IDisposable
+    internal interface IExample : IDisposable
     {
         #region Methods
 

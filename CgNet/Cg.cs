@@ -331,10 +331,10 @@ namespace CgNet
             var lines = new List<string>();
             var buffer = new List<byte>();
 
-            for (; ; )
+            for (;;)
             {
                 byte* b = *byteArray;
-                for (; ; )
+                for (;;)
                 {
                     if (b == null || *b == '\0')
                     {

@@ -187,6 +187,11 @@ namespace CgNet
             CgNativeMethods.cgResetPassState(this.Handle);
         }
 
+        public void SetLastListing(string listing)
+        {
+            CgNativeMethods.cgSetLastListing(this.Handle, listing);
+        }
+
         public void SetState()
         {
             CgNativeMethods.cgSetPassState(this.Handle);

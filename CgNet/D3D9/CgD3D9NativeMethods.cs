@@ -45,12 +45,12 @@ namespace CgNet.D3D9
         //CGD3D9DLL_API void CGD3D9ENTRY cgD3D9EnableDebugTracing(CGbool enable);
         [DllImport(CgD3D9NativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgD3D9EnableDebugTracing([MarshalAs(UnmanagedType.Bool)]bool enable);
+        internal static extern void cgD3D9EnableDebugTracing([MarshalAs(UnmanagedType.Bool)] bool enable);
 
         //CGD3D9DLL_API HRESULT CGD3D9ENTRY cgD3D9EnableParameterShadowing(CGprogram prog, CGbool enable);
         [DllImport(CgD3D9NativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgD3D9EnableParameterShadowing(IntPtr prog, [MarshalAs(UnmanagedType.Bool)]bool enable);
+        internal static extern int cgD3D9EnableParameterShadowing(IntPtr prog, [MarshalAs(UnmanagedType.Bool)] bool enable);
 
         //CGD3D9DLL_API IDirect3DDevice9 * CGD3D9ENTRY cgD3D9GetDevice(void);
         [DllImport(CgD3D9NativeLibrary, CallingConvention = Convention)]
@@ -115,7 +115,7 @@ namespace CgNet.D3D9
         //CGD3D9DLL_API HRESULT CGD3D9ENTRY cgD3D9LoadProgram(CGprogram prog, CGbool paramShadowing, DWORD assemFlags);
         [DllImport(CgD3D9NativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgD3D9LoadProgram(IntPtr prog, [MarshalAs(UnmanagedType.Bool)]bool paramShadowing, uint assemFlags);
+        internal static extern int cgD3D9LoadProgram(IntPtr prog, [MarshalAs(UnmanagedType.Bool)] bool paramShadowing, uint assemFlags);
 
         //CGD3D9DLL_API void CGD3D9ENTRY cgD3D9RegisterStates(CGcontext ctx);
         [DllImport(CgD3D9NativeLibrary, CallingConvention = Convention)]
@@ -135,7 +135,7 @@ namespace CgNet.D3D9
         //CGD3D9DLL_API void CGD3D9ENTRY cgD3D9SetManageTextureParameters(CGcontext ctx, CGbool flag);
         [DllImport(CgD3D9NativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgD3D9SetManageTextureParameters(IntPtr ctx, [MarshalAs(UnmanagedType.Bool)]bool flag);
+        internal static extern void cgD3D9SetManageTextureParameters(IntPtr ctx, [MarshalAs(UnmanagedType.Bool)] bool flag);
 
         //CGD3D9DLL_API HRESULT CGD3D9ENTRY cgD3D9SetSamplerState(CGparameter param, D3DSAMPLERSTATETYPE type, DWORD value);
         [DllImport(CgD3D9NativeLibrary, CallingConvention = Convention)]

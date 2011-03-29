@@ -5,8 +5,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using CgNet;
     using CgNet.GL;
 
-    using ExampleBrowser.Examples.OpenTK;
-
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
@@ -92,7 +90,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.SetOptimalOptions(this.fragmentProfile);
 
             this.fragmentProgram =
-                 this.CgContext.CreateProgramFromFile(
+                this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     MyFragmentProgramFileName, /* Name of file containing program */
                     this.fragmentProfile, /* Profile: OpenGL ARB vertex program */

@@ -248,6 +248,11 @@ namespace CgNet
             return CgNativeMethods.cgSetBoolArrayStateAssignment(this.Handle, value);
         }
 
+        public void SetLastListing(string listing)
+        {
+            CgNativeMethods.cgSetLastListing(this.Handle, listing);
+        }
+
         public bool SetProgram(Program program)
         {
             return CgNativeMethods.cgSetProgramStateAssignment(this.Handle, program.Handle);

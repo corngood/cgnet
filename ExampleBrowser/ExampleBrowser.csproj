@@ -14,7 +14,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -47,6 +47,9 @@
   <ItemGroup>
     <Compile Include="Data\ImageBrick.cs" />
     <Compile Include="Examples\OpenTK\Basic\Bulge.cs" />
+    <Compile Include="Examples\OpenTK\Basic\FragmentLighting.cs" />
+    <Compile Include="Examples\OpenTK\Basic\ProjectiveTexturing.cs" />
+    <Compile Include="Examples\OpenTK\Basic\VertexLighting.cs" />
     <Compile Include="Examples\SlimDX\Basic\VertexFragmentProgram.cs" />
     <Compile Include="Examples\OpenTK\Example.cs" />
     <Compile Include="Examples\SlimDX\Example.cs" />
@@ -67,6 +70,7 @@
     <Compile Include="ExampleSelector.Designer.cs">
       <DependentUpon>ExampleSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Examples\OpenTK\Basic\UniformParameter.cs" />
@@ -114,6 +118,12 @@
     <None Include="Data\C5E1v_basicLight.cg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\C5E2v_fragmentLighting.cg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\C5E3f_basicLight.cg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\C6E1v_bulge.cg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -124,6 +134,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\C8E2f_bumpSurf.cg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\C9E5v_projTex.cg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\C9E6f_projTex.cg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">

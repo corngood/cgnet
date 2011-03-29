@@ -23,9 +23,6 @@ namespace CgNet.GL
     using System;
     using System.Runtime.InteropServices;
 
-    using CgNet;
-    using CgNet.GL;
-
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
 

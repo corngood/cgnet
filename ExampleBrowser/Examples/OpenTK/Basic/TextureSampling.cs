@@ -6,7 +6,6 @@
     using CgNet.GL;
 
     using ExampleBrowser.Data;
-    using ExampleBrowser.Examples.OpenTK;
 
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;

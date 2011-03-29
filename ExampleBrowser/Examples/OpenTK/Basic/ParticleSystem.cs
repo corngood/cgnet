@@ -15,8 +15,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
     using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
 
-    using ExampleBrowser.Examples.OpenTK;
-
     using GL = global::OpenTK.Graphics.OpenGL.GL;
 
     using global::OpenTK;

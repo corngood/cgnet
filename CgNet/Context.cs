@@ -143,6 +143,19 @@ namespace CgNet
             }
         }
 
+        public string LastListing
+        {
+            get
+            {
+                return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetLastListing(this.Handle));
+            }
+
+            set
+            {
+                CgNativeMethods.cgSetLastListing(this.Handle, value);
+            }
+        }
+
         public ParameterSettingMode ParameterSettingMode
         {
             get
@@ -291,11 +304,6 @@ namespace CgNet
         {
             var ptr = CgNativeMethods.cgCreateState(this.Handle, name, type);
             return ptr == IntPtr.Zero ? null : new State(ptr);
-        }
-
-        public string GetLastListing()
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetLastListing(this.Handle));
         }
 
         public Effect GetNamedEffect(string name)

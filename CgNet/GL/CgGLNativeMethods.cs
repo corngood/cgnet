@@ -31,12 +31,6 @@ namespace CgNet.GL
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
 
-    /// <summary>
-    ///     Cg core runtime binding for .NET, implementing Cg 1.4.1.
-    /// </summary>
-    /// <remarks>
-    ///     Binds functions and definitions in cgGL.dll or libcgGL.so.
-    /// </remarks>
     internal static class CgGLNativeMethods
     {
         #region Fields

@@ -20,12 +20,6 @@
  */
 namespace CgNet.GL
 {
-    using System;
-
-    using Buffer = Buffer;
-
-    using CgNet.GL;
-
     public static class CgGLBuffer
     {
         #region Methods

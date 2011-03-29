@@ -23,9 +23,9 @@ namespace CgNet.D3D9
     using System;
     using System.Runtime.InteropServices;
 
-    using ParameterType = global::CgNet.ParameterType;
+    using ParameterType = CgNet.ParameterType;
 
-    using ResourceType = global::CgNet.ResourceType;
+    using ResourceType = CgNet.ResourceType;
 
     using SlimDX;
     using SlimDX.Direct3D9;
