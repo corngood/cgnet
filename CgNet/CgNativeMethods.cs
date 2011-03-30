@@ -512,7 +512,7 @@ namespace CgNet
         // CGDLL_API CGparameter cgGetFirstLeafParameter(CGprogram prog, CGenum name_space);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetFirstLeafParameter(IntPtr program, int nameSpace);
+        internal static extern IntPtr cgGetFirstLeafParameter(IntPtr program, NameSpace nameSpace);
 
         /// <summary>
         /// Gets the first parameter in specified program.
@@ -522,7 +522,7 @@ namespace CgNet
         /// <returns>First parameter in specified program.</returns>
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetFirstParameter(IntPtr prog, int nameSpace);
+        internal static extern IntPtr cgGetFirstParameter(IntPtr prog, NameSpace nameSpace);
 
         /// <summary>
         /// 
@@ -842,7 +842,7 @@ namespace CgNet
         // CGDLL_API CGparameter cgGetNamedProgramParameter(CGprogram prog,  CGenum name_space,  const char *name);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern IntPtr cgGetNamedProgramParameter(IntPtr prog, ProgramNamespace nameSpace, string name);
+        internal static extern IntPtr cgGetNamedProgramParameter(IntPtr prog, NameSpace nameSpace, string name);
 
         // CGDLL_API CGstate cgGetNamedSamplerState(CGcontext, string name);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]

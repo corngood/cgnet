@@ -191,6 +191,11 @@ namespace CgNet
             return context.CreateProgram(type, source, profile, entry, args);
         }
 
+        public static Program CreateFromEffect(Effect effect, ProfileType profile, string entry, params string[] args)
+        {
+            return effect.CreateProgram(profile, entry, args);
+        }
+
         public static Program CreateFromFile(Context context, ProgramType type, string file, ProfileType profile, string entry, params string[] args)
         {
             return context.CreateProgramFromFile(type, file, profile, entry, args);
@@ -239,7 +244,7 @@ namespace CgNet
                                                };
         }
 
-        public Parameter GetFirstLeafParameter(int nameSpace)
+        public Parameter GetFirstLeafParameter(NameSpace nameSpace)
         {
             var ptr = CgNativeMethods.cgGetFirstLeafParameter(this.Handle, nameSpace);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
@@ -248,7 +253,7 @@ namespace CgNet
                                                };
         }
 
-        public Parameter GetFirstParameter(int nameSpace)
+        public Parameter GetFirstParameter(NameSpace nameSpace)
         {
             var ptr = CgNativeMethods.cgGetFirstParameter(this.Handle, nameSpace);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
@@ -266,7 +271,7 @@ namespace CgNet
                                                };
         }
 
-        public Parameter GetNamedParameter(ProgramNamespace nameSpace, string name)
+        public Parameter GetNamedParameter(NameSpace nameSpace, string name)
         {
             var ptr = CgNativeMethods.cgGetNamedProgramParameter(this.Handle, nameSpace, name);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)

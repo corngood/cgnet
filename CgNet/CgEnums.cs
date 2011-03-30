@@ -211,6 +211,12 @@ namespace CgNet
         ThreadSafePolicy = 4135,
     }
 
+    public enum NameSpace
+    {
+        Global = 4108,
+        Program = 4109,
+    }
+
     public enum Order
     {
         ColumnMajor = 4121,
@@ -607,12 +613,6 @@ namespace CgNet
         LineOut = 4130, /* Geometry program GetProgramOutput      */
         TriangleOut = 4131, /* Geometry program GetProgramOutput      */
         Patch = 4152, /* GetProgramInput and GetProgramOutput */
-    }
-
-    public enum ProgramNamespace
-    {
-        Global = 4108,
-        Program = 4109,
     }
 
     public enum ProgramOutput
