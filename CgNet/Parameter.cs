@@ -424,7 +424,7 @@ namespace CgNet
 
         public int GetDefaultValue(ref double[] values)
         {
-            return this.GetDefaultValue(ref values, Order.RowMajor);
+            return this.GetDefaultValue(ref values, Cg.DefaultOrder);
         }
 
         public int GetDefaultValue(ref double[] values, Order order)
@@ -443,7 +443,7 @@ namespace CgNet
 
         public int GetDefaultValue(ref int[] values)
         {
-            return this.GetDefaultValue(ref values, Order.RowMajor);
+            return this.GetDefaultValue(ref values, Cg.DefaultOrder);
         }
 
         public int GetDefaultValue(ref int[] values, Order order)
@@ -462,7 +462,7 @@ namespace CgNet
 
         public int GetDefaultValue(ref float[] values)
         {
-            return this.GetDefaultValue(ref values, Order.RowMajor);
+            return this.GetDefaultValue(ref values, Cg.DefaultOrder);
         }
 
         public int GetDefaultValue(ref float[] values, Order order)
@@ -508,23 +508,23 @@ namespace CgNet
 
         public void GetMatrix(out int[] values)
         {
-            values = this.GetMatrix<int>(Order.RowMajor);
+            values = this.GetMatrix<int>(Cg.DefaultOrder);
         }
 
         public void GetMatrix(out float[] values)
         {
-            values = this.GetMatrix<float>(Order.RowMajor);
+            values = this.GetMatrix<float>(Cg.DefaultOrder);
         }
 
         public void GetMatrix(out double[] values)
         {
-            values = this.GetMatrix<double>(Order.RowMajor);
+            values = this.GetMatrix<double>(Cg.DefaultOrder);
         }
 
         public T[] GetMatrix<T>()
             where T : struct
         {
-            return this.GetMatrix<T>(Order.RowMajor);
+            return this.GetMatrix<T>(Cg.DefaultOrder);
         }
 
         public T[] GetMatrix<T>(Order order)
@@ -639,7 +639,7 @@ namespace CgNet
 
         public void GetValue(ref int[] values)
         {
-            this.GetValue(ref values, Order.RowMajor);
+            this.GetValue(ref values, Cg.DefaultOrder);
         }
 
         public void GetValue(ref int[] values, Order order)
@@ -667,7 +667,7 @@ namespace CgNet
 
         public void GetValue(ref double[] values)
         {
-            this.GetValue(ref values, Order.RowMajor);
+            this.GetValue(ref values, Cg.DefaultOrder);
         }
 
         public void GetValue(ref double[] values, Order order)
@@ -695,7 +695,7 @@ namespace CgNet
 
         public void GetValue(ref float[] values)
         {
-            this.GetValue(ref values, Order.RowMajor);
+            this.GetValue(ref values, Cg.DefaultOrder);
         }
 
         public void GetValue(ref float[] values, Order order)
@@ -952,7 +952,7 @@ namespace CgNet
 
         public void SetMatrix(float[] matrix)
         {
-            this.SetMatrix(matrix, Order.RowMajor);
+            this.SetMatrix(matrix, Cg.DefaultOrder);
         }
 
         public void SetMatrix(float[] matrix, Order order)
@@ -973,7 +973,7 @@ namespace CgNet
 
         public void SetMatrix(double[] matrix)
         {
-            this.SetMatrix(matrix, Order.RowMajor);
+            this.SetMatrix(matrix, Cg.DefaultOrder);
         }
 
         public void SetMatrix(double[] matrix, Order order)
@@ -994,7 +994,7 @@ namespace CgNet
 
         public void SetMatrix(int[] matrix)
         {
-            this.SetMatrix(matrix, Order.RowMajor);
+            this.SetMatrix(matrix, Cg.DefaultOrder);
         }
 
         public void SetMatrix(int[] matrix, Order order)
@@ -1030,7 +1030,7 @@ namespace CgNet
 
         public void SetValue(double[] vals)
         {
-            this.SetValue(vals, Order.RowMajor);
+            this.SetValue(vals, Cg.DefaultOrder);
         }
 
         public void SetValue(double[] vals, Order order)
@@ -1051,7 +1051,7 @@ namespace CgNet
 
         public void SetValue(float[] vals)
         {
-            this.SetValue(vals, Order.RowMajor);
+            this.SetValue(vals, Cg.DefaultOrder);
         }
 
         public void SetValue(float[] vals, Order order)
@@ -1072,7 +1072,7 @@ namespace CgNet
 
         public void SetValue(int[] vals)
         {
-            this.SetValue(vals, Order.RowMajor);
+            this.SetValue(vals, Cg.DefaultOrder);
         }
 
         public void SetValue(int[] vals, Order order)

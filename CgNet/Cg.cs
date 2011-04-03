@@ -118,8 +118,18 @@ namespace CgNet
         #endregion Properties
 
         #region Methods
+        static Cg()
+        {
+            DefaultOrder = Order.RowMajor;
+        }
 
         #region Public Static Methods
+
+        public static Order DefaultOrder
+        {
+            get;
+            set;
+        }
 
         public static Behavior GetBehavior(string behaviorString)
         {

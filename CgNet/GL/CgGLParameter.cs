@@ -222,18 +222,18 @@ namespace CgNet.GL
 
         public static void GetMatrix(this Parameter param, out Matrix4 value)
         {
-            value = CgGL.GetMatrixParameter<Matrix4>(param.Handle, Order.RowMajor);
+            value = CgGL.GetMatrixParameter<Matrix4>(param.Handle, Cg.DefaultOrder);
         }
 
         public static void GetMatrix(this Parameter param, out Matrix4d value)
         {
-            value = CgGL.GetMatrixParameter<Matrix4d>(param.Handle, Order.RowMajor);
+            value = CgGL.GetMatrixParameter<Matrix4d>(param.Handle, Cg.DefaultOrder);
         }
 
         public static T GetMatrix<T>(this Parameter param)
             where T : struct
         {
-            return CgGL.GetMatrixParameter<T>(param.Handle, Order.RowMajor);
+            return CgGL.GetMatrixParameter<T>(param.Handle, Cg.DefaultOrder);
         }
 
         public static T GetMatrix<T>(this Parameter param, Order order)
@@ -244,18 +244,18 @@ namespace CgNet.GL
 
         public static void GetMatrixArray(this Parameter param, int offset, int nelements, out Matrix4[] values)
         {
-            values = CgGL.GetMatrixParameterArray<Matrix4>(param.Handle, offset, nelements, Order.RowMajor);
+            values = CgGL.GetMatrixParameterArray<Matrix4>(param.Handle, offset, nelements, Cg.DefaultOrder);
         }
 
         public static void GetMatrixArray(this Parameter param, int offset, int nelements, out Matrix4d[] values)
         {
-            values = CgGL.GetMatrixParameterArray<Matrix4d>(param.Handle, offset, nelements, Order.RowMajor);
+            values = CgGL.GetMatrixParameterArray<Matrix4d>(param.Handle, offset, nelements, Cg.DefaultOrder);
         }
 
         public static T[] GetMatrixArray<T>(this Parameter param, int offset, int nelements)
             where T : struct
         {
-            return CgGL.GetMatrixParameterArray<T>(param.Handle, offset, nelements, Order.RowMajor);
+            return CgGL.GetMatrixParameterArray<T>(param.Handle, offset, nelements, Cg.DefaultOrder);
         }
 
         public static T[] GetMatrixArray<T>(this Parameter param, int offset, int nelements, Order order)
@@ -436,19 +436,7 @@ namespace CgNet.GL
 
         public static void SetMatrix(this Parameter param, Matrix4 matrix)
         {
-            IntPtr param1 = param.Handle;
-            Order order = Order.RowMajor;
-            switch (order)
-            {
-                case Order.ColumnMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterfc(param1, matrix);
-                    break;
-                case Order.RowMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterfr(param1, matrix);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("order");
-            }
+            SetMatrix(param, matrix, Cg.DefaultOrder);
         }
 
         public static void SetMatrix(this Parameter param, Matrix4 matrix, Order order)
@@ -469,7 +457,7 @@ namespace CgNet.GL
 
         public static void SetMatrix(this Parameter param, Matrix4d matrix)
         {
-            CgGL.SetMatrixParameter(param.Handle, matrix, Order.RowMajor);
+            CgGL.SetMatrixParameter(param.Handle, matrix, Cg.DefaultOrder);
         }
 
         public static void SetMatrix(this Parameter param, Matrix4d matrix, Order order)
@@ -479,12 +467,12 @@ namespace CgNet.GL
 
         public static void SetMatrixArray(this Parameter param, int offset, int nelements, Matrix4d[] matrices)
         {
-            CgGL.SetMatrixParameterArray(param.Handle, offset, nelements, matrices, Order.RowMajor);
+            CgGL.SetMatrixParameterArray(param.Handle, offset, nelements, matrices, Cg.DefaultOrder);
         }
 
         public static void SetMatrixArray(this Parameter param, int offset, int nelements, Matrix4[] matrices)
         {
-            CgGL.SetMatrixParameterArray(param.Handle, offset, nelements, matrices, Order.RowMajor);
+            CgGL.SetMatrixParameterArray(param.Handle, offset, nelements, matrices, Cg.DefaultOrder);
         }
 
         public static void SetMatrixArray(this Parameter param, int offset, int nelements, Matrix4d[] matrices, Order order)

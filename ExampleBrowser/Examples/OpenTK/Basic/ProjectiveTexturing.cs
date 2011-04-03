@@ -2,49 +2,42 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 {
     using System;
 
-    using All = global::OpenTK.Graphics.OpenGL.All;
-
-    using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
-
     using CgNet;
     using CgNet.GL;
 
-    using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
-
-    using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
-
     using ExampleBrowser.Data;
 
-    using GL = global::OpenTK.Graphics.OpenGL.GL;
-
     using global::OpenTK;
-    using global::OpenTK.Graphics;
+    using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
 
-    using MatrixMode = global::OpenTK.Graphics.OpenGL.MatrixMode;
-
-    using PixelStoreParameter = global::OpenTK.Graphics.OpenGL.PixelStoreParameter;
-
-    using TextureParameterName = global::OpenTK.Graphics.OpenGL.TextureParameterName;
-
-    using TextureTarget = global::OpenTK.Graphics.OpenGL.TextureTarget;
+    using OpenTK = global::OpenTK;
 
     [ExampleDescription(NodePath = "OpenTK/Basic/27 Projective Texturing")]
     public class ProjectiveTexturing : Example
     {
         #region Fields
 
-        private float eyeAngle = 0.53f; /* Angle in radians eye rotates around scene. */
-        private float eyeHeight = 5.0f; /* Vertical height of light. */
-        private float[] Kd = { 1, 1, 1 }; /* White. */
+        private const float EyeAngle = 0.53f; /* Angle in radians eye rotates around scene. */
+        private const float EyeHeight = 5.0f; /* Vertical height of light. */
+        private const float LightHeight = 2.0f; /* Vertical height of light. */
+
+        /* Page 254 */
+        private const string MyFragmentProgramFileName = "Data/C9E6f_projTex.cg";
+
+        /* Page 254 */
+        /* Page 254 */
+        private const string MyFragmentProgramName = "C9E6f_projTex";
+        private const string MyVertexProgramFileName = "Data/C9E5v_projTex.cg";
+
+        /* Page 254 */
+        private const string MyVertexProgramName = "C9E5v_projTex";
+
+        private readonly float[] kd = { 1, 1, 1 }; /* White. */
+        private readonly float[] projectionMatrix = new float[16];
+
         private float lightAngle = -0.4f; /* Angle light rotates around scene. */
-        private float lightHeight = 2.0f; /* Vertical height of light. */
-        private Parameter myCgVertexParam_modelViewProj, myCgVertexParam_Kd, myCgVertexParam_lightPosition, myCgVertexParam_textureMatrix;
-        string myVertexProgramFileName = "Data/C9E5v_projTex.cg",
-            /* Page 254 */    myVertexProgramName = "C9E5v_projTex",
-                          myFragmentProgramFileName = "Data/C9E6f_projTex.cg",
-            /* Page 254 */    myFragmentProgramName = "C9E6f_projTex";
-        private float[] projectionMatrix = new float[16];
+        private Parameter myCgVertexParamModelViewProj, myCgVertexParamKd, myCgVertexParamLightPosition, myCgVertexParamTextureMatrix;
         private ProfileType vertexProfile, fragmentProfile;
         private Program vertexProgram, fragmentProgram;
 
@@ -83,19 +76,19 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    this.myVertexProgramFileName, /* Name of file containing program */
+                    MyVertexProgramFileName, /* Name of file containing program */
                     this.vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    this.myVertexProgramName, /* Entry function name */
+                    MyVertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.vertexProgram.Load();
 
-            this.myCgVertexParam_modelViewProj = this.vertexProgram.GetNamedParameter("modelViewProj");
-            this.myCgVertexParam_lightPosition = this.vertexProgram.GetNamedParameter("lightPosition");
-            this.myCgVertexParam_Kd = this.vertexProgram.GetNamedParameter("Kd");
-            this.myCgVertexParam_textureMatrix = this.vertexProgram.GetNamedParameter("textureMatrix");
+            this.myCgVertexParamModelViewProj = this.vertexProgram.GetNamedParameter("modelViewProj");
+            this.myCgVertexParamLightPosition = this.vertexProgram.GetNamedParameter("lightPosition");
+            this.myCgVertexParamKd = this.vertexProgram.GetNamedParameter("Kd");
+            this.myCgVertexParamTextureMatrix = this.vertexProgram.GetNamedParameter("textureMatrix");
 
             /* Set light source color parameters once. */
-            this.myCgVertexParam_Kd.Set(this.Kd);
+            this.myCgVertexParamKd.Set(this.kd);
 
             this.fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
             CgGL.SetOptimalOptions(this.fragmentProfile);
@@ -104,12 +97,12 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.fragmentProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    myFragmentProgramFileName,
+                    MyFragmentProgramFileName,
                     this.fragmentProfile, /* Profile: latest fragment profile */
-                    myFragmentProgramName, /* Entry function name */
+                    MyFragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.fragmentProgram.Load();
-            setupDemonSampler();
+            this.SetupDemonSampler();
         }
 
         /// <summary>
@@ -123,14 +116,14 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             /* World-space positions for light and eye. */
             float[] eyePosition = {
-                                      10*(float)Math.Sin(eyeAngle),
-                                      eyeHeight,
-                                      10*(float)Math.Cos(eyeAngle),
+                                      10*(float)Math.Sin(EyeAngle),
+                                      EyeHeight,
+                                      10*(float)Math.Cos(EyeAngle),
                                       1
                                   };
             float[] lightPosition = {
                                         4.5f * (float)Math.Sin(this.lightAngle),
-                                        lightHeight,
+                                        LightHeight,
                                         4.5f * (float)Math.Cos(this.lightAngle),
                                         1
                                     };
@@ -174,7 +167,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             /* Transform world-space light positions to sphere's object-space. */
             Transform(objSpaceLightPosition, invModelMatrix, lightPosition);
-            this.myCgVertexParam_lightPosition.Set3(objSpaceLightPosition);
+            this.myCgVertexParamLightPosition.Set3(objSpaceLightPosition);
 
             /* modelViewMatrix = viewMatrix * modelMatrix */
             MultMatrix(modelViewMatrix, eyeViewMatrix, modelMatrix);
@@ -182,11 +175,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             /* modelViewProj = projectionMatrix * modelViewMatrix */
             MultMatrix(modelViewProjMatrix, projectionMatrix, modelViewMatrix);
 
-            buildTextureMatrix(lightViewMatrix, modelMatrix, textureMatrix);
+            BuildTextureMatrix(lightViewMatrix, modelMatrix, textureMatrix);
 
             /* Set matrix parameter with row-major matrix. */
-            this.myCgVertexParam_modelViewProj.SetMatrix(modelViewProjMatrix);
-            myCgVertexParam_textureMatrix.SetMatrix(textureMatrix);
+            this.myCgVertexParamModelViewProj.SetMatrix(modelViewProjMatrix);
+            this.myCgVertexParamTextureMatrix.SetMatrix(textureMatrix);
             this.vertexProgram.UpdateParameters();
             this.fragmentProgram.UpdateParameters();
             NativeMethods.glutSolidSphere(2.0, 40, 40);
@@ -203,7 +196,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             /* Transform world-space eye and light positions to sphere's object-space. */
             Transform(objSpaceLightPosition, invModelMatrix, lightPosition);
-            this.myCgVertexParam_lightPosition.Set3(objSpaceLightPosition);
+            this.myCgVertexParamLightPosition.Set3(objSpaceLightPosition);
 
             /* modelViewMatrix = viewMatrix * modelMatrix */
             MultMatrix(modelViewMatrix, eyeViewMatrix, modelMatrix);
@@ -211,11 +204,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             /* modelViewProj = projectionMatrix * modelViewMatrix */
             MultMatrix(modelViewProjMatrix, this.projectionMatrix, modelViewMatrix);
 
-            buildTextureMatrix(lightViewMatrix, modelMatrix, textureMatrix);
+            BuildTextureMatrix(lightViewMatrix, modelMatrix, textureMatrix);
 
             /* Set matrix parameter with row-major matrix. */
-            this.myCgVertexParam_modelViewProj.SetMatrix(modelViewProjMatrix);
-            this.myCgVertexParam_textureMatrix.SetMatrix(textureMatrix);
+            this.myCgVertexParamModelViewProj.SetMatrix(modelViewProjMatrix);
+            this.myCgVertexParamTextureMatrix.SetMatrix(textureMatrix);
             this.vertexProgram.UpdateParameters();
             this.fragmentProgram.UpdateParameters();
             NativeMethods.glutSolidCube(2.5);
@@ -225,11 +218,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             /* modelView = translateMatrix */
             MultMatrix(modelViewProjMatrix, projectionMatrix, eyeViewMatrix);
             MakeTranslateMatrix(0, 0, 0, modelMatrix);
-            buildTextureMatrix(lightViewMatrix, modelMatrix, textureMatrix);
+            BuildTextureMatrix(lightViewMatrix, modelMatrix, textureMatrix);
 
-            myCgVertexParam_lightPosition.Set3(lightPosition);
-            myCgVertexParam_modelViewProj.SetMatrix(modelViewProjMatrix);
-            myCgVertexParam_textureMatrix.SetMatrix(textureMatrix);
+            this.myCgVertexParamLightPosition.Set3(lightPosition);
+            this.myCgVertexParamModelViewProj.SetMatrix(modelViewProjMatrix);
+            this.myCgVertexParamTextureMatrix.SetMatrix(textureMatrix);
 
             vertexProgram.UpdateParameters();
             fragmentProgram.UpdateParameters();
@@ -295,7 +288,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             /* glLoadMatrixf expects a column-major matrix but Cg matrices are
                row-major (matching C/C++ arrays) so used loadMVP to transpose
                the Cg version. */
-            loadMVP(modelViewMatrix);
+            LoadMvp(modelViewMatrix);
             GL.Color3(1f, 1, 1); /* make sure current color is white */
             NativeMethods.glutSolidSphere(0.15, 30, 30);
             GL.PopMatrix();
@@ -343,7 +336,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         #region Private Static Methods
 
-        static void makeClipToTextureMatrix(float[] m)
+        private static void MakeClipToTextureMatrix(float[] m)
         {
             m[0] = 0.5f; m[1] = 0; m[2] = 0; m[3] = 0.5f;
             m[4] = 0; m[5] = 0.5f; m[6] = 0; m[7] = 0.5f;
@@ -355,22 +348,22 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         #region Private Methods
 
-        void buildTextureMatrix(float[] viewMatrix, float[] modelMatrix, float[] textureMatrix)
+        private static void BuildTextureMatrix(float[] viewMatrix, float[] modelMatrix, float[] textureMatrix)
         {
             float[] eyeToClipMatrix = new float[16];
             float[] modelViewMatrix = new float[16];
 
-            const float fieldOfView = 50.0f;
-            const float aspectRatio = 1;
+            const float FieldOfView = 50.0f;
+            const float AspectRatio = 1;
             float[] textureProjectionMatrix = new float[16];
             float[] clipToTextureMatrix = new float[16];
 
             /* Build texture projection matrix once. */
-            BuildPerspectiveMatrix(fieldOfView, aspectRatio,
+            BuildPerspectiveMatrix(FieldOfView, AspectRatio,
                                    0.25, 20.0,  /* Znear and Zfar */
                                    textureProjectionMatrix);
 
-            makeClipToTextureMatrix(clipToTextureMatrix);
+            MakeClipToTextureMatrix(clipToTextureMatrix);
 
             /* eyeToClip = clipToTexture * textureProjection */
             MultMatrix(eyeToClipMatrix,
@@ -382,14 +375,14 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             MultMatrix(textureMatrix, eyeToClipMatrix, modelViewMatrix);
         }
 
-        void loadMVP(float[] modelView)
+        public static void LoadMvp(float[] modelView)
         {
-            float[] transpose = new float[16];
-            int i, j;
+            var transpose = new float[16];
+            int i;
 
             for (i = 0; i < 4; i++)
             {
-                for (j = 0; j < 4; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     transpose[i * 4 + j] = modelView[j * 4 + i];
                 }
@@ -411,31 +404,30 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                projection matrix in fixed-function projection matrix. */
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            Glu.Perspective(FieldOfView, aspectRatio,
+            global::OpenTK.Graphics.Glu.Perspective(FieldOfView, aspectRatio,
                            1.0, 50.0);  /* Znear and Zfar */
             GL.MatrixMode(MatrixMode.Modelview);
         }
 
-        void setupDemonSampler()
+        private void SetupDemonSampler()
         {
-            int texobj = 666;
-            Parameter sampler;
+            const int Texobj = 666;
 
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1); /* Tightly packed texture data. */
 
-            GL.BindTexture(TextureTarget.Texture2D, texobj);
+            GL.BindTexture(TextureTarget.Texture2D, Texobj);
             /* Load demon decal texture with mipmaps. */
 
-            global::OpenTK.Graphics.Glu.Build2DMipmap(global::OpenTK.Graphics.TextureTarget.Texture2D, (int)All.Rgb8,
+            OpenTK.Graphics.Glu.Build2DMipmap(global::OpenTK.Graphics.TextureTarget.Texture2D, (int)All.Rgb8,
               128, 128, global::OpenTK.Graphics.PixelFormat.Rgb, global::OpenTK.Graphics.PixelType.UnsignedByte, ImageDemon.Array);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.LinearMipmapLinear);
 
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureBorderColor, Kd);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureBorderColor, this.kd);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, 0x812D);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, 0x812D);
 
-            sampler = fragmentProgram.GetNamedParameter("projectiveMap");
-            sampler.SetTexture(texobj);
+            Parameter sampler = this.fragmentProgram.GetNamedParameter("projectiveMap");
+            sampler.SetTexture(Texobj);
         }
 
         #endregion Private Methods
