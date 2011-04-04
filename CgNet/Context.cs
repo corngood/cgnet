@@ -103,7 +103,6 @@ namespace CgNet
             get
             {
                 var ptr = CgNativeMethods.cgGetFirstProgram(this.Handle);
-
                 return ptr == IntPtr.Zero ? null : new Program(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -349,7 +348,7 @@ namespace CgNet
 
         protected override void Dispose(bool disposing)
         {
-            if (this.Handle != IntPtr.Zero)
+            if (this.OwnsHandle && this.Handle != IntPtr.Zero && this.IsContext)
             {
                 CgNativeMethods.cgDestroyContext(this.Handle);
             }

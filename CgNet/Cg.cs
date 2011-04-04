@@ -30,6 +30,15 @@ namespace CgNet
     /// </summary>
     public static class Cg
     {
+        #region Constructors
+
+        static Cg()
+        {
+            DefaultOrder = Order.RowMajor;
+        }
+
+        #endregion Constructors
+
         #region Delegates
 
         /// <summary>
@@ -65,6 +74,12 @@ namespace CgNet
         #region Properties
 
         #region Public Static Properties
+
+        public static Order DefaultOrder
+        {
+            get;
+            set;
+        }
 
         public static CgErrorCallbackFuncDelegate ErrorCallback
         {
@@ -118,18 +133,8 @@ namespace CgNet
         #endregion Properties
 
         #region Methods
-        static Cg()
-        {
-            DefaultOrder = Order.RowMajor;
-        }
 
         #region Public Static Methods
-
-        public static Order DefaultOrder
-        {
-            get;
-            set;
-        }
 
         public static Behavior GetBehavior(string behaviorString)
         {

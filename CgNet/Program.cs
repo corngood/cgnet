@@ -348,7 +348,7 @@ namespace CgNet
         /// <filterpriority>2</filterpriority>
         protected override void Dispose(bool disposing)
         {
-            if (this.Handle != IntPtr.Zero)
+            if (this.OwnsHandle && this.Handle != IntPtr.Zero && this.IsProgram)
             {
                 CgNativeMethods.cgDestroyProgram(this.Handle);
             }

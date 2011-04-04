@@ -83,7 +83,7 @@ namespace CgNet
 
         protected override void Dispose(bool disposing)
         {
-            if (this.Handle != IntPtr.Zero)
+            if (this.OwnsHandle && this.Handle != IntPtr.Zero)
             {
                 CgNativeMethods.cgDestroyObj(this.Handle);
             }

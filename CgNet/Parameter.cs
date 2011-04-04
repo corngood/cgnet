@@ -48,7 +48,7 @@ namespace CgNet
             }
         }
 
-        public ResourceType BaseResourceType
+        public ResourceType BaseResource
         {
             get
             {
@@ -333,7 +333,7 @@ namespace CgNet
             }
         }
 
-        public int Variability
+        public Variabilty Variability
         {
             get
             {
@@ -1097,7 +1097,7 @@ namespace CgNet
 
         protected override void Dispose(bool disposing)
         {
-            if (this.Handle != IntPtr.Zero)
+            if (this.OwnsHandle && this.Handle != IntPtr.Zero && this.IsParameter)
             {
                 CgNativeMethods.cgDestroyParameter(this.Handle);
             }

@@ -978,5 +978,14 @@ namespace CgNet
         ProgramProfile = 4107, /* GetProgramString                       */
     }
 
+    public enum Variabilty
+    {
+        Varying = 4101,
+        Uniform = 4102,
+        Literal = 4118,
+        Constant = 4103,
+        Mixed = 4100,
+    }
+
     #endregion Enumerations
 }

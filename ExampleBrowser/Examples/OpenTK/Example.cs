@@ -513,10 +513,9 @@
 
             if (error != ErrorType.NoError)
             {
-                MessageBox.Show(s);
-                this.Close();
-
-                var x = this.CgContext.LastListing;
+                Console.WriteLine(error);
+                Console.WriteLine(s);
+                Console.WriteLine(this.CgContext.LastListing);
             }
             //  printf("%s: %s: %s\n",
             //    myProgramName, situation, string);

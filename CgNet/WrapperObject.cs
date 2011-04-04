@@ -47,10 +47,7 @@ namespace CgNet
         /// </summary>
         ~WrapperObject()
         {
-            if (this.OwnsHandle)
-            {
-                this.Dispose(false);
-            }
+            this.Dispose(false);
         }
 
         #endregion Constructors
@@ -71,18 +68,18 @@ namespace CgNet
 
         #endregion Public Properties
 
-        #region Protected Internal Properties
+        #region Internal Properties
 
         /// <summary>
         /// Gets or sets a value indicating whether the WrapperObject owns the handle.
         /// </summary>
-        protected internal bool OwnsHandle
+        internal bool OwnsHandle
         {
             get;
             set;
         }
 
-        #endregion Protected Internal Properties
+        #endregion Internal Properties
 
         #endregion Properties
 
