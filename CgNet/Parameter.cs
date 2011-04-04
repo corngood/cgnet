@@ -276,7 +276,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterResourceIndex(this.Handle);
+                return (int)CgNativeMethods.cgGetParameterResourceIndex(this.Handle);
             }
         }
 
@@ -321,6 +321,11 @@ namespace CgNet
 
             set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException("value");
+                }
+
                 CgNativeMethods.cgSetParameterSemantic(this.Handle, value);
             }
         }
@@ -333,7 +338,7 @@ namespace CgNet
             }
         }
 
-        public Variabilty Variability
+        public Variability Variability
         {
             get
             {
@@ -342,6 +347,11 @@ namespace CgNet
 
             set
             {
+                if (value != Variability.Literal && value != Variability.Uniform && value != Variability.Default)
+                {
+                    throw new ArgumentException("value must be CG_UNIFORM, CG_LITERAL, or CG_DEFAULT", "value");
+                }
+
                 CgNativeMethods.cgSetParameterVariability(this.Handle, value);
             }
         }

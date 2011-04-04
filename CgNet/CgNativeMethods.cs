@@ -1263,7 +1263,7 @@ namespace CgNet
         // CGDLL_API unsigned long cgGetParameterResourceIndex(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern int cgGetParameterResourceIndex(IntPtr param);
+        internal static extern uint cgGetParameterResourceIndex(IntPtr param);
 
         //CG_API const char * CGENTRY cgGetParameterResourceName(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -1393,7 +1393,7 @@ namespace CgNet
         // CGDLL_API CGenum cgGetParameterVariability(CGparameter param);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern Variabilty cgGetParameterVariability(IntPtr param);
+        internal static extern Variability cgGetParameterVariability(IntPtr param);
 
         /// <summary>
         /// 
@@ -2524,7 +2524,7 @@ namespace CgNet
         // CGDLL_API void cgSetParameterVariability(CGparameter param, CGenum vary);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgSetParameterVariability(IntPtr param, Variabilty vary);
+        internal static extern void cgSetParameterVariability(IntPtr param, Variability vary);
 
         /// <summary>
         /// 

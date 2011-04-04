@@ -978,8 +978,9 @@ namespace CgNet
         ProgramProfile = 4107, /* GetProgramString                       */
     }
 
-    public enum Variabilty
+    public enum Variability
     {
+        Default = 4110,
         Varying = 4101,
         Uniform = 4102,
         Literal = 4118,
