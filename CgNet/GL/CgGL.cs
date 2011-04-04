@@ -178,10 +178,10 @@ namespace CgNet.GL
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterdc(param, matrix);
+                    CgGLNativeMethods.cgGLSetMatrixParameterdc(param, ref matrix);
                     break;
                 case Order.RowMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterdr(param, matrix);
+                    CgGLNativeMethods.cgGLSetMatrixParameterdr(param, ref matrix);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("order");

@@ -441,14 +441,13 @@ namespace CgNet.GL
 
         public static void SetMatrix(this Parameter param, Matrix4 matrix, Order order)
         {
-            IntPtr param1 = param.Handle;
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterfc(param1, matrix);
+                    CgGLNativeMethods.cgGLSetMatrixParameterfc(param.Handle, ref matrix);
                     break;
                 case Order.RowMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterfr(param1, matrix);
+                    CgGLNativeMethods.cgGLSetMatrixParameterfr(param.Handle, ref matrix);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("order");

@@ -521,28 +521,28 @@ namespace CgNet.GL
         /// </summary>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLSetMatrixParameterdc(IntPtr param, [In] Matrix4d matrix);
+        internal static extern void cgGLSetMatrixParameterdc(IntPtr param, ref Matrix4d matrix);
 
         /// <summary>
         /// Sets the value of matrix parameters in row order.
         /// </summary>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLSetMatrixParameterdr(IntPtr param, [In] Matrix4d matrix);
+        internal static extern void cgGLSetMatrixParameterdr(IntPtr param, ref Matrix4d matrix);
 
         /// <summary>
         /// Sets the value of matrix parameters in column  order.
         /// </summary>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLSetMatrixParameterfc(IntPtr param, [In] Matrix4 matrix);
+        internal static extern void cgGLSetMatrixParameterfc(IntPtr param, ref Matrix4 matrix);
 
         /// <summary>
         /// Sets the value of matrix parameters in row order.
         /// </summary>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        internal static extern void cgGLSetMatrixParameterfr(IntPtr param, [In] Matrix4 matrix);
+        internal static extern void cgGLSetMatrixParameterfr(IntPtr param, ref Matrix4 matrix);
 
         /// <summary>
         /// Sets the best compiler options available by card, driver and selected profile.
