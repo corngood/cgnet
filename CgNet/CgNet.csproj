@@ -49,6 +49,8 @@
     <Compile Include="Buffer.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Effect.cs" />
+    <Compile Include="ErrorEventArgs.cs" />
+    <Compile Include="CompilerIncludeEventArgs.cs" />
     <Compile Include="Obj.cs" />
     <Compile Include="Parameter.cs" />
     <Compile Include="Pass.cs" />

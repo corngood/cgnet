@@ -54,6 +54,25 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         #region Methods
 
+        #region Public Static Methods
+
+        public static void LoadMvp(float[] modelView)
+        {
+            var transpose = new float[16];
+            int i;
+
+            for (i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    transpose[i * 4 + j] = modelView[j * 4 + i];
+                }
+            }
+            GL.LoadMatrix(transpose);
+        }
+
+        #endregion Public Static Methods
+
         #region Protected Methods
 
         /// <summary>
@@ -336,18 +355,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         #region Private Static Methods
 
-        private static void MakeClipToTextureMatrix(float[] m)
-        {
-            m[0] = 0.5f; m[1] = 0; m[2] = 0; m[3] = 0.5f;
-            m[4] = 0; m[5] = 0.5f; m[6] = 0; m[7] = 0.5f;
-            m[8] = 0; m[9] = 0; m[10] = 0.5f; m[11] = 0.5f;
-            m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
-        }
-
-        #endregion Private Static Methods
-
-        #region Private Methods
-
         private static void BuildTextureMatrix(float[] viewMatrix, float[] modelMatrix, float[] textureMatrix)
         {
             float[] eyeToClipMatrix = new float[16];
@@ -375,20 +382,17 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             MultMatrix(textureMatrix, eyeToClipMatrix, modelViewMatrix);
         }
 
-        public static void LoadMvp(float[] modelView)
+        private static void MakeClipToTextureMatrix(float[] m)
         {
-            var transpose = new float[16];
-            int i;
-
-            for (i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    transpose[i * 4 + j] = modelView[j * 4 + i];
-                }
-            }
-            GL.LoadMatrix(transpose);
+            m[0] = 0.5f; m[1] = 0; m[2] = 0; m[3] = 0.5f;
+            m[4] = 0; m[5] = 0.5f; m[6] = 0; m[7] = 0.5f;
+            m[8] = 0; m[9] = 0; m[10] = 0.5f; m[11] = 0.5f;
+            m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
         }
+
+        #endregion Private Static Methods
+
+        #region Private Methods
 
         private void Reshape(int width, int height)
         {

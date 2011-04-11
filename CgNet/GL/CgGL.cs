@@ -42,6 +42,11 @@ namespace CgNet.GL
             CgGLNativeMethods.cgGLEnableProfile(profile);
         }
 
+        /// <summary>
+        /// Gets the latest profile for a profile class.
+        /// </summary>
+        /// <param name="profileClass">The class of profile that will be returned.</param>
+        /// <returns>Returns a profile enumerant for the latest profile of the given class. Returns CG_PROFILE_UNKNOWN if no appropriate profile is available or an error occurs.</returns>
         public static ProfileType GetLatestProfile(ProfileClass profileClass)
         {
             return CgGLNativeMethods.cgGLGetLatestProfile(profileClass);

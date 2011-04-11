@@ -30,6 +30,12 @@ namespace CgNet
     /// </summary>
     public static class Cg
     {
+        #region Fields
+
+        private static readonly object PadLock = new object();
+
+        #endregion Fields
+
         #region Constructors
 
         static Cg()
@@ -44,32 +50,46 @@ namespace CgNet
         /// <summary>
         ///    
         /// </summary>
-        // typedef void (*CGerrorCallbackFunc)(void);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void CgErrorCallbackFuncDelegate();
-
-        /// <summary>
-        ///    
-        /// </summary>
         // typedef void (*CGerrorHandlerFunc)(CGcontext context, CGerror err, void *data);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void CgErrorHandlerFuncDelegate(IntPtr context, ErrorType err, IntPtr data);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        // typedef void (*CGIncludeCallbackFunc)( CGcontext context, const char *filename );
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void CgIncludeCallbackFunc(IntPtr context, string filename);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        // typedef CGbool (*CGstatecallback)(CGstateassignment);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate bool CgStateCallbackDelegate(IntPtr cGstateassignment);
-
         #endregion Delegates
+
+        #region Events
+
+        public static event EventHandler<ErrorEventArgs> Error
+        {
+            add
+            {
+                lock (PadLock)
+                {
+                    if (error == null)
+                    {
+                        CgNativeMethods.cgSetErrorCallback(OnError);
+                    }
+
+                    error += value;
+                }
+            }
+
+            remove
+            {
+                lock (PadLock)
+                {
+                    error -= value;
+
+                    if (error == null)
+                    {
+                        CgNativeMethods.cgSetErrorCallback(null);
+                    }
+                }
+            }
+        }
+
+        private static event EventHandler<ErrorEventArgs> error;
+
+        #endregion Events
 
         #region Properties
 
@@ -79,19 +99,6 @@ namespace CgNet
         {
             get;
             set;
-        }
-
-        public static CgErrorCallbackFuncDelegate ErrorCallback
-        {
-            get
-            {
-                return CgNativeMethods.cgGetErrorCallback();
-            }
-
-            set
-            {
-                CgNativeMethods.cgSetErrorCallback(value);
-            }
         }
 
         public static LockingPolicy LockingPolicy
@@ -120,6 +127,18 @@ namespace CgNet
             }
         }
 
+        public static IEnumerable<ProfileType> SupportedProfiles
+        {
+            get
+            {
+                int count = Cg.SupportedProfilesCount;
+                for (int i = 0; i < count; i++)
+                {
+                    yield return Cg.GetSupportedProfile(i);
+                }
+            }
+        }
+
         public static int SupportedProfilesCount
         {
             get
@@ -136,36 +155,6 @@ namespace CgNet
 
         #region Public Static Methods
 
-        public static Behavior GetBehavior(string behaviorString)
-        {
-            return CgNativeMethods.cgGetBehavior(behaviorString);
-        }
-
-        public static string GetBehaviorString(Behavior behavior)
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetBehaviorString(behavior));
-        }
-
-        public static Domain GetDomain(string domainString)
-        {
-            return CgNativeMethods.cgGetDomain(domainString);
-        }
-
-        public static string GetDomainString(Domain domain)
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetDomainString(domain));
-        }
-
-        public static int GetEnum(string enumString)
-        {
-            return CgNativeMethods.cgGetEnum(enumString);
-        }
-
-        public static string GetEnumString(int @enum)
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetEnumString(@enum));
-        }
-
         public static ErrorType GetError()
         {
             return CgNativeMethods.cgGetError();
@@ -174,11 +163,6 @@ namespace CgNet
         public static CgErrorHandlerFuncDelegate GetErrorHandler(IntPtr data)
         {
             return CgNativeMethods.cgGetErrorHandler(data);
-        }
-
-        public static string GetErrorString(ErrorType error)
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetErrorString(error));
         }
 
         public static ErrorType GetFirstError()
@@ -196,29 +180,14 @@ namespace CgNet
             return CgNativeMethods.cgGetMatrixSize(type, out nrows, out ncols);
         }
 
-        public static int GetNumParentTypes(ParameterType type)
-        {
-            return CgNativeMethods.cgGetNumParentTypes(type);
-        }
-
-        public static ParameterClass GetParameterClassEnum(string pString)
-        {
-            return CgNativeMethods.cgGetParameterClassEnum(pString);
-        }
-
-        public static string GetParameterClassString(ParameterClass pc)
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetParameterClassString(pc));
-        }
-
         public static ParameterType GetParentType(ParameterType type, int index)
         {
             return CgNativeMethods.cgGetParentType(type, index);
         }
 
-        public static ProfileType GetProfile(string profile)
+        public static int GetParentTypesCount(ParameterType type)
         {
-            return CgNativeMethods.cgGetProfile(profile);
+            return CgNativeMethods.cgGetNumParentTypes(type);
         }
 
         public static Domain GetProfileDomain(ProfileType profile)
@@ -231,11 +200,6 @@ namespace CgNet
             return CgNativeMethods.cgGetProfileProperty(profile, query);
         }
 
-        public static string GetProfileString(ProfileType profile)
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetProfileString(profile));
-        }
-
         public static int GetProgramBufferMaxIndex(ProfileType profile)
         {
             return CgNativeMethods.cgGetProgramBufferMaxIndex(profile);
@@ -246,49 +210,14 @@ namespace CgNet
             return CgNativeMethods.cgGetProgramBufferMaxSize(profile);
         }
 
-        public static ResourceType GetResource(string resourceName)
-        {
-            return CgNativeMethods.cgGetResource(resourceName);
-        }
-
-        public static string GetResourceString(ResourceType resource)
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetResourceString(resource));
-        }
-
-        public static string GetString(CgAll sname)
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetString(sname));
-        }
-
         public static ProfileType GetSupportedProfile(int index)
         {
             return CgNativeMethods.cgGetSupportedProfile(index);
         }
 
-        public static ParameterType GetType(string typeString)
-        {
-            return CgNativeMethods.cgGetType(typeString);
-        }
-
-        public static ParameterType GetTypeBase(ParameterType type)
-        {
-            return CgNativeMethods.cgGetTypeBase(type);
-        }
-
-        public static ParameterClass GetTypeClass(ParameterType type)
-        {
-            return CgNativeMethods.cgGetTypeClass(type);
-        }
-
         public static bool GetTypeSizes(ParameterType type, out int nrows, out int ncols)
         {
             return CgNativeMethods.cgGetTypeSizes(type, out nrows, out ncols);
-        }
-
-        public static string GetTypeString(ParameterType type)
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetTypeString(type));
         }
 
         public static bool IsInterfaceType(ParameterType type)
@@ -346,10 +275,10 @@ namespace CgNet
             var lines = new List<string>();
             var buffer = new List<byte>();
 
-            for (;;)
+            for (; ; )
             {
                 byte* b = *byteArray;
-                for (;;)
+                for (; ; )
                 {
                     if (b == null || *b == '\0')
                     {
@@ -378,6 +307,18 @@ namespace CgNet
         }
 
         #endregion Internal Static Methods
+
+        #region Private Static Methods
+
+        private static void OnError()
+        {
+            if (error != null)
+            {
+                error(null, new ErrorEventArgs(Cg.GetError()));
+            }
+        }
+
+        #endregion Private Static Methods
 
         #endregion Methods
     }

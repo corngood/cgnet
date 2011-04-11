@@ -26,6 +26,12 @@ namespace CgNet
 
     public sealed class Context : WrapperObject
     {
+        #region Fields
+
+        private static readonly object PadLock = new object();
+
+        #endregion Fields
+
         #region Constructors
 
         internal Context(IntPtr handle)
@@ -34,6 +40,41 @@ namespace CgNet
         }
 
         #endregion Constructors
+
+        #region Events
+
+        public event EventHandler<CompilerIncludeEventArgs> CompilerInclude
+        {
+            add
+            {
+                lock (PadLock)
+                {
+                    if (this.compilerInclude == null)
+                    {
+                        CgNativeMethods.cgSetCompilerIncludeCallback(this.Handle, this.OnInclude);
+                    }
+
+                    this.compilerInclude += value;
+                }
+            }
+
+            remove
+            {
+                lock (PadLock)
+                {
+                    this.compilerInclude -= value;
+
+                    if (this.compilerInclude == null)
+                    {
+                        CgNativeMethods.cgSetCompilerIncludeCallback(this.Handle, null);
+                    }
+                }
+            }
+        }
+
+        private event EventHandler<CompilerIncludeEventArgs> compilerInclude;
+
+        #endregion Events
 
         #region Properties
 
@@ -62,19 +103,6 @@ namespace CgNet
             set
             {
                 CgNativeMethods.cgSetContextBehavior(this.Handle, value);
-            }
-        }
-
-        public Cg.CgIncludeCallbackFunc CompilerIncludeCallback
-        {
-            get
-            {
-                return CgNativeMethods.cgGetCompilerIncludeCallback(this.Handle);
-            }
-
-            set
-            {
-                CgNativeMethods.cgSetCompilerIncludeCallback(this.Handle, value);
             }
         }
 
@@ -355,6 +383,18 @@ namespace CgNet
         }
 
         #endregion Protected Methods
+
+        #region Private Methods
+
+        private void OnInclude(IntPtr context, string filename)
+        {
+            if (this.compilerInclude != null && this.Handle == context)
+            {
+                this.compilerInclude(this, new CompilerIncludeEventArgs(filename));
+            }
+        }
+
+        #endregion Private Methods
 
         #endregion Methods
     }

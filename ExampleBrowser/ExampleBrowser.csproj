@@ -51,6 +51,7 @@
     <Compile Include="Data\ImageBrick.cs" />
     <Compile Include="Examples\OpenTK\Basic\Bulge.cs" />
     <Compile Include="Examples\OpenTK\Basic\FragmentLighting.cs" />
+    <Compile Include="Examples\OpenTK\Advanced\IncludeString.cs" />
     <Compile Include="Examples\OpenTK\Basic\ProjectiveTexturing.cs" />
     <Compile Include="Examples\OpenTK\Basic\VertexLighting.cs" />
     <Compile Include="Examples\SlimDX\Basic\VertexFragmentProgram.cs" />

@@ -20,6 +20,8 @@
  */
 namespace CgNet
 {
+    using System.Runtime.InteropServices;
+
     #region Enumerations
 
     public enum AutoCompileMode
@@ -989,4 +991,105 @@ namespace CgNet
     }
 
     #endregion Enumerations
+
+    public static class CgEnums
+    {
+        #region Methods
+
+        #region Public Static Methods
+
+        public static Behavior GetBehavior(string behaviorString)
+        {
+            return CgNativeMethods.cgGetBehavior(behaviorString);
+        }
+
+        public static string GetBehaviorString(Behavior behavior)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetBehaviorString(behavior));
+        }
+
+        public static Domain GetDomain(string domainString)
+        {
+            return CgNativeMethods.cgGetDomain(domainString);
+        }
+
+        public static string GetDomainString(Domain domain)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetDomainString(domain));
+        }
+
+        public static int GetEnum(string enumString)
+        {
+            return CgNativeMethods.cgGetEnum(enumString);
+        }
+
+        public static string GetEnumString(int @enum)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetEnumString(@enum));
+        }
+
+        public static string GetErrorString(ErrorType error)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetErrorString(error));
+        }
+
+        public static ParameterClass GetParameterClassEnum(string pString)
+        {
+            return CgNativeMethods.cgGetParameterClassEnum(pString);
+        }
+
+        public static string GetParameterClassString(ParameterClass pc)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetParameterClassString(pc));
+        }
+
+        public static ProfileType GetProfile(string profile)
+        {
+            return CgNativeMethods.cgGetProfile(profile);
+        }
+
+        public static string GetProfileString(ProfileType profile)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetProfileString(profile));
+        }
+
+        public static ResourceType GetResource(string resourceName)
+        {
+            return CgNativeMethods.cgGetResource(resourceName);
+        }
+
+        public static string GetResourceString(ResourceType resource)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetResourceString(resource));
+        }
+
+        public static string GetString(CgAll sname)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetString(sname));
+        }
+
+        public static ParameterType GetType(string typeString)
+        {
+            return CgNativeMethods.cgGetType(typeString);
+        }
+
+        public static ParameterType GetTypeBase(ParameterType type)
+        {
+            return CgNativeMethods.cgGetTypeBase(type);
+        }
+
+        public static ParameterClass GetTypeClass(ParameterType type)
+        {
+            return CgNativeMethods.cgGetTypeClass(type);
+        }
+
+        public static string GetTypeString(ParameterType type)
+        {
+            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetTypeString(type));
+        }
+
+        #endregion Public Static Methods
+
+        #endregion Methods
+    }
 }

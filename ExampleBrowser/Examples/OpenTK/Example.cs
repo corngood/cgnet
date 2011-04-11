@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Windows.Forms;
 
     using CgNet;
 
@@ -52,7 +51,7 @@
 
         public void Start()
         {
-            Cg.ErrorCallback = this.CheckForCgError;
+            Cg.Error += this.CheckForCgError;
             this.Run(30.0, 0.0);
         }
 
@@ -506,24 +505,9 @@
 
         #region Protected Methods
 
-        protected void CheckForCgError()
+        protected void CheckForCgError(object sender, ErrorEventArgs e)
         {
-            ErrorType error;
-            string s = Cg.GetLastErrorString(out error);
-
-            if (error != ErrorType.NoError)
-            {
-                Console.WriteLine(error);
-                Console.WriteLine(s);
-                Console.WriteLine(this.CgContext.LastListing);
-            }
-            //  printf("%s: %s: %s\n",
-            //    myProgramName, situation, string);
-            //  if (error == CG_COMPILER_ERROR) {
-            //    printf("%s\n", cgGetLastListing(myCgContext));
-            //  }
-            //  exit(1);
-            //}
+            Console.WriteLine("Cg Error: " + e.ErrorString);
         }
 
         #endregion Protected Methods

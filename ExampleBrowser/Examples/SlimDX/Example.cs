@@ -1,5 +1,6 @@
 ﻿namespace ExampleBrowser.Examples.SlimDX
 {
+    using System;
     using System.Windows.Forms;
 
     using CgNet;
@@ -20,29 +21,16 @@
 
         public virtual void Start()
         {
-            Cg.ErrorCallback = this.CheckForCgError;
+            Cg.Error += this.CheckForCgError;
         }
 
         #endregion Public Methods
 
         #region Protected Methods
 
-        protected void CheckForCgError()
+        protected void CheckForCgError(object sender, ErrorEventArgs e)
         {
-            ErrorType error;
-            string s = Cg.GetLastErrorString(out error);
-
-            if (error != ErrorType.NoError)
-            {
-                MessageBox.Show(s);
-            }
-            //  printf("%s: %s: %s\n",
-            //    myProgramName, situation, string);
-            //  if (error == CG_COMPILER_ERROR) {
-            //    printf("%s\n", cgGetLastListing(CgContext));
-            //  }
-            //  exit(1);
-            //}
+            Console.WriteLine("Cg Error: " + e.ErrorString);
         }
 
         #endregion Protected Methods
