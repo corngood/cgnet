@@ -15,7 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Header", "Header", "{7A1819
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleBrowser", "ExampleBrowser\ExampleBrowser.csproj", "{33E464A2-1599-4D09-9D07-E2FB1B82AD1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EffectViewer", "EffectViewer\EffectViewer.csproj", "{F4CADA35-B4DA-4C46-8B46-0A117FDB6197}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EffectViewer", "Tools\EffectViewer\EffectViewer.csproj", "{F4CADA35-B4DA-4C46-8B46-0A117FDB6197}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CgToCode", "Tools\CgToCode\CgToCode.csproj", "{C27B64E4-7E12-4CFB-A93C-94A858D4CA28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{5167FEBB-5201-444C-9115-F93471AC1EC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,8 +61,22 @@ Global
 		{F4CADA35-B4DA-4C46-8B46-0A117FDB6197}.Release|Mixed Platforms.Build.0 = Release|x86
 		{F4CADA35-B4DA-4C46-8B46-0A117FDB6197}.Release|x86.ActiveCfg = Release|x86
 		{F4CADA35-B4DA-4C46-8B46-0A117FDB6197}.Release|x86.Build.0 = Release|x86
+		{C27B64E4-7E12-4CFB-A93C-94A858D4CA28}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C27B64E4-7E12-4CFB-A93C-94A858D4CA28}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{C27B64E4-7E12-4CFB-A93C-94A858D4CA28}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{C27B64E4-7E12-4CFB-A93C-94A858D4CA28}.Debug|x86.ActiveCfg = Debug|x86
+		{C27B64E4-7E12-4CFB-A93C-94A858D4CA28}.Debug|x86.Build.0 = Debug|x86
+		{C27B64E4-7E12-4CFB-A93C-94A858D4CA28}.Release|Any CPU.ActiveCfg = Release|x86
+		{C27B64E4-7E12-4CFB-A93C-94A858D4CA28}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{C27B64E4-7E12-4CFB-A93C-94A858D4CA28}.Release|Mixed Platforms.Build.0 = Release|x86
+		{C27B64E4-7E12-4CFB-A93C-94A858D4CA28}.Release|x86.ActiveCfg = Release|x86
+		{C27B64E4-7E12-4CFB-A93C-94A858D4CA28}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C27B64E4-7E12-4CFB-A93C-94A858D4CA28} = {5167FEBB-5201-444C-9115-F93471AC1EC3}
+		{F4CADA35-B4DA-4C46-8B46-0A117FDB6197} = {5167FEBB-5201-444C-9115-F93471AC1EC3}
 	EndGlobalSection
 EndGlobal

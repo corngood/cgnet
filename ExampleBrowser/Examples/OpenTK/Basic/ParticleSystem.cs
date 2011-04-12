@@ -2,29 +2,13 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 {
     using System;
 
-    using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
-
-    using BlendingFactorDest = global::OpenTK.Graphics.OpenGL.BlendingFactorDest;
-
-    using BlendingFactorSrc = global::OpenTK.Graphics.OpenGL.BlendingFactorSrc;
-
     using CgNet;
     using CgNet.GL;
 
-    using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
-
-    using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
-
-    using GL = global::OpenTK.Graphics.OpenGL.GL;
-
     using global::OpenTK;
-    using global::OpenTK.Graphics;
+    using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
-
-    using MatrixMode = global::OpenTK.Graphics.OpenGL.MatrixMode;
-
-    using TextureUnit = global::OpenTK.Graphics.OpenGL.TextureUnit;
-
+    using Glu = global::OpenTK.Graphics.Glu;
     [ExampleDescription(NodePath = "OpenTK/Basic/15 Particle System")]
     public class ParticleSystem : Example
     {

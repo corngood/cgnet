@@ -2,38 +2,15 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 {
     using System;
 
-    using All = global::OpenTK.Graphics.OpenGL.All;
-
-    using BeginMode = global::OpenTK.Graphics.OpenGL.BeginMode;
-
     using CgNet;
     using CgNet.GL;
 
-    using ClearBufferMask = global::OpenTK.Graphics.OpenGL.ClearBufferMask;
-
-    using EnableCap = global::OpenTK.Graphics.OpenGL.EnableCap;
-
     using ExampleBrowser.Data;
 
-    using GL = global::OpenTK.Graphics.OpenGL.GL;
-
     using global::OpenTK;
-    using global::OpenTK.Graphics;
+    using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
-
-    using MatrixMode = global::OpenTK.Graphics.OpenGL.MatrixMode;
-
-    using PixelFormat = global::OpenTK.Graphics.OpenGL.PixelFormat;
-
-    using PixelInternalFormat = global::OpenTK.Graphics.OpenGL.PixelInternalFormat;
-
-    using PixelStoreParameter = global::OpenTK.Graphics.OpenGL.PixelStoreParameter;
-
-    using PixelType = global::OpenTK.Graphics.OpenGL.PixelType;
-
-    using TextureParameterName = global::OpenTK.Graphics.OpenGL.TextureParameterName;
-
-    using TextureTarget = global::OpenTK.Graphics.OpenGL.TextureTarget;
+    using Glu = global::OpenTK.Graphics.Glu;
 
     [ExampleDescription(NodePath = "OpenTK/Basic/21 Bump Map Wall")]
     public class BumpMapWall : Example

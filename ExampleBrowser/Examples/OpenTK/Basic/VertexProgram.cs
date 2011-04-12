@@ -52,7 +52,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.SetOptimalOptions(this.vertexProfile);
 
             this.vertexProgram =
-                CgContext.CreateProgramFromFile(
+                this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     VertexProgramFileName, /* Name of file containing program */
                     this.vertexProfile, /* Profile: OpenGL ARB vertex program */

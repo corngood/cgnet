@@ -1,4 +1,4 @@
-﻿namespace ExampleBrowser
+﻿namespace CgToCode
 {
     using System;
     using System.Windows.Forms;
@@ -15,10 +15,9 @@
         [STAThread]
         static void Main()
         {
-            OpenTK.Toolkit.Init();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ExampleSelector());
+            Application.Run(new Form1());
         }
 
         #endregion Private Static Methods

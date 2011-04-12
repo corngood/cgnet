@@ -30,7 +30,7 @@ namespace CgNet
     {
         #region Constructors
 
-        internal WrapperObject(IntPtr handle)
+        protected WrapperObject(IntPtr handle)
         {
             if (handle == IntPtr.Zero)
             {
