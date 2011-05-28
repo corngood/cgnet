@@ -59,7 +59,9 @@ namespace CgNet.GL
     {
         Vertex = 8,
         Fragment = 9,
-        Geometry = 10
+        Geometry = 10,
+        TessellationControl = 11,
+        TessellationEvaluation = 12
     }
 
     #endregion Enumerations
