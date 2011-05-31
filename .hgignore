@@ -34,3 +34,4 @@ glob:StyleCop.Cache
 glob:*.csproj.ReSharper
 glob:*.testsettings
 glob:CgReferenceManual.chw
+*.docstates
