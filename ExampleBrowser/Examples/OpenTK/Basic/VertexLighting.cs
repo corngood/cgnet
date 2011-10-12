@@ -20,8 +20,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         private Parameter myCgVertexParam_modelViewProj, myCgVertexParam_globalAmbient, myCgVertexParam_lightColor, myCgVertexParam_lightPosition, myCgVertexParam_eyePosition, myCgVertexParam_Ke, myCgVertexParam_Ka, myCgVertexParam_Kd, myCgVertexParam_Ks, myCgVertexParam_shininess;
         private double myLightAngle = -0.4f; /* Angle light rotates around scene. */
-        private string myVertexProgramFileName = "Data/C5E1v_basicLight.cg",
-                       /* Page 111 */ myVertexProgramName = "C5E1v_basicLight";
+        private string VertexProgramFileName = "Data/C5E1v_basicLight.cg",
+                       /* Page 111 */ VertexProgramName = "C5E1v_basicLight";
         private ProfileType vertexProfile, fragmentProfile;
         private Program vertexProgram, fragmentProgram;
 
@@ -59,9 +59,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             vertexProgram =
                 CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    myVertexProgramFileName, /* Name of file containing program */
+                    VertexProgramFileName, /* Name of file containing program */
                     vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    myVertexProgramName, /* Entry function name */
+                    VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             vertexProgram.Load();
 
@@ -99,7 +99,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// </summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnRenderFrame(FrameEventArgs e)
+        protected override void DoRender(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 

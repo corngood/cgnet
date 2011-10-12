@@ -21,20 +21,32 @@
 namespace CgNet.D3D9
 {
     using System;
+    using System.Collections.Generic;
     using System.Runtime.InteropServices;
-
-    using ParameterType = CgNet.ParameterType;
-
-    using ResourceType = CgNet.ResourceType;
-
     using SlimDX;
     using SlimDX.Direct3D9;
+    using ParameterType = CgNet.ParameterType;
+    using ResourceType = CgNet.ResourceType;
 
     public static class CgD3D9
     {
         #region Methods
 
         #region Public Static Methods
+
+        public static IEnumerable<ProfileType> SupportedProfiles
+        {
+            get
+            {
+                foreach (var profile in Cg.SupportedProfiles)
+                {
+                    if (IsProfileSupported(profile))
+                    {
+                        yield return profile;
+                    }
+                }
+            }
+        }
 
         public static void EnableDebugTracing(bool enable)
         {

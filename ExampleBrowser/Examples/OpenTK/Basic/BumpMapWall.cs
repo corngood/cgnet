@@ -17,10 +17,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     {
         #region Fields
 
-        private const string MyFragmentProgramFileName = "Data/C8E2f_bumpSurf.cg";
-        private const string MyFragmentProgramName = "C8E2f_bumpSurf";
-        private const string MyVertexProgramFileName = "Data/C8E1v_bumpWall.cg";
-        private const string MyVertexProgramName = "C8E1v_bumpWall";
+        private const string FragmentProgramFileName = "Data/C8E2f_bumpSurf.cg";
+        private const string FragmentProgramName = "C8E2f_bumpSurf";
+        private const string VertexProgramFileName = "Data/C8E1v_bumpWall.cg";
+        private const string VertexProgramName = "C8E1v_bumpWall";
 
         private readonly int[] texObj = new int[2];
 
@@ -122,9 +122,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    MyVertexProgramFileName, /* Name of file containing program */
+                    VertexProgramFileName, /* Name of file containing program */
                     this.vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName, /* Entry function name */
+                    VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.vertexProgram.Load();
 
@@ -140,9 +140,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.fragmentProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    MyFragmentProgramFileName, /* Name of file containing program */
+                    FragmentProgramFileName, /* Name of file containing program */
                     this.fragmentProfile, /* Profile: OpenGL ARB vertex program */
-                    MyFragmentProgramName, /* Entry function name */
+                    FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.fragmentProgram.Load();
 
@@ -162,7 +162,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// </summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnRenderFrame(FrameEventArgs e)
+        protected override void DoRender(FrameEventArgs e)
         {
             float[] lightPosition = {
                                         12.5f * (float)Math.Sin(this.myLightAngle),

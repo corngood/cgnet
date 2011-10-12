@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ImageBrick.cs" />
+    <Compile Include="Examples\OpenTK\Advanced\GsShrinky.cs" />
+    <Compile Include="Examples\OpenTK\Advanced\GsSimple.cs" />
     <Compile Include="Examples\OpenTK\Basic\Bulge.cs" />
     <Compile Include="Examples\OpenTK\Basic\FragmentLighting.cs" />
     <Compile Include="Examples\OpenTK\Advanced\IncludeString.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Data\C2E1v_green.cg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -144,6 +147,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\C9E6f_projTex.cg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\gs_shrinky.cg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\gs_simple.cg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">

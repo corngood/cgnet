@@ -14,10 +14,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     {
         #region Fields
 
-        private const string MyFragmentProgramFileName = "Data/C6E2v_particle.cg";
-        private const string MyFragmentProgramName = "texcoord2color";
-        private const string MyVertexProgramFileName = "Data/C6E2v_particle.cg";
-        private const string MyVertexProgramName = "C6E2v_particle";
+        private const string FragmentProgramFileName = "Data/C6E2v_particle.cg";
+        private const string FragmentProgramName = "texcoord2color";
+        private const string VertexProgramFileName = "Data/C6E2v_particle.cg";
+        private const string VertexProgramName = "C6E2v_particle";
 
         private readonly Particle[] myParticleSystem = new Particle[800];
 
@@ -91,9 +91,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    MyVertexProgramFileName, /* Name of file containing program */
+                    VertexProgramFileName, /* Name of file containing program */
                     vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName, /* Entry function name */
+                    VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
 
             vertexProgram.Load();
@@ -113,9 +113,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             fragmentProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    MyFragmentProgramFileName, /* Name of file containing program */
+                    FragmentProgramFileName, /* Name of file containing program */
                     fragmentProfile, /* Profile: OpenGL ARB vertex program */
-                    MyFragmentProgramName, /* Entry function name */
+                    FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.fragmentProgram.Load();
         }
@@ -125,7 +125,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// </summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnRenderFrame(FrameEventArgs e)
+        protected override void DoRender(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
 

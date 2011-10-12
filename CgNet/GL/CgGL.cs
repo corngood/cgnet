@@ -21,6 +21,7 @@
 namespace CgNet.GL
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.InteropServices;
 
@@ -28,6 +29,28 @@ namespace CgNet.GL
 
     public static class CgGL
     {
+        #region Properties
+
+        #region Public Static Properties
+
+        public static IEnumerable<ProfileType> SupportedProfiles
+        {
+            get
+            {
+                foreach (var profile in Cg.SupportedProfiles)
+                {
+                    if (IsProfileSupported(profile))
+                    {
+                        yield return profile;
+                    }
+                }
+            }
+        }
+
+        #endregion Public Static Properties
+
+        #endregion Properties
+
         #region Methods
 
         #region Public Static Methods

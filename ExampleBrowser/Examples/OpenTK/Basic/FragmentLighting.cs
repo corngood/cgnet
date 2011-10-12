@@ -20,10 +20,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         private Parameter myCgVertexParam_modelViewProj, myCgFragmentParam_globalAmbient, myCgFragmentParam_lightColor, myCgFragmentParam_lightPosition, myCgFragmentParam_eyePosition, myCgFragmentParam_Ke, myCgFragmentParam_Ka, myCgFragmentParam_Kd, myCgFragmentParam_Ks, myCgFragmentParam_shininess;
         private double myLightAngle = -0.4f; /* Angle light rotates around scene. */
-        private string myVertexProgramFileName = "Data/C5E2v_fragmentLighting.cg",
-            /* Page 124 */    myVertexProgramName = "C5E2v_fragmentLighting",
-                  myFragmentProgramFileName = "Data/C5E3f_basicLight.cg",
-            /* Page 125 */    myFragmentProgramName = "C5E3f_basicLight";
+        private string VertexProgramFileName = "Data/C5E2v_fragmentLighting.cg",
+            /* Page 124 */    VertexProgramName = "C5E2v_fragmentLighting",
+                  FragmentProgramFileName = "Data/C5E3f_basicLight.cg",
+            /* Page 125 */    FragmentProgramName = "C5E3f_basicLight";
         private ProfileType vertexProfile, fragmentProfile;
         private Program vertexProgram, fragmentProgram;
 
@@ -61,9 +61,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    this.myVertexProgramFileName, /* Name of file containing program */
+                    this.VertexProgramFileName, /* Name of file containing program */
                     this.vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    this.myVertexProgramName, /* Entry function name */
+                    this.VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.vertexProgram.Load();
 
@@ -76,9 +76,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.fragmentProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    this.myFragmentProgramFileName,
+                    this.FragmentProgramFileName,
                     this.fragmentProfile, /* Profile: latest fragment profile */
-                    this.myFragmentProgramName, /* Entry function name */
+                    this.FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.fragmentProgram.Load();
 
@@ -102,7 +102,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// </summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnRenderFrame(FrameEventArgs e)
+        protected override void DoRender(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 

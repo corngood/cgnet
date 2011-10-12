@@ -23,15 +23,15 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         private const float LightHeight = 2.0f; /* Vertical height of light. */
 
         /* Page 254 */
-        private const string MyFragmentProgramFileName = "Data/C9E6f_projTex.cg";
+        private const string FragmentProgramFileName = "Data/C9E6f_projTex.cg";
 
         /* Page 254 */
         /* Page 254 */
-        private const string MyFragmentProgramName = "C9E6f_projTex";
-        private const string MyVertexProgramFileName = "Data/C9E5v_projTex.cg";
+        private const string FragmentProgramName = "C9E6f_projTex";
+        private const string VertexProgramFileName = "Data/C9E5v_projTex.cg";
 
         /* Page 254 */
-        private const string MyVertexProgramName = "C9E5v_projTex";
+        private const string VertexProgramName = "C9E5v_projTex";
 
         private readonly float[] kd = { 1, 1, 1 }; /* White. */
         private readonly float[] projectionMatrix = new float[16];
@@ -95,9 +95,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    MyVertexProgramFileName, /* Name of file containing program */
+                    VertexProgramFileName, /* Name of file containing program */
                     this.vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName, /* Entry function name */
+                    VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.vertexProgram.Load();
 
@@ -116,9 +116,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.fragmentProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    MyFragmentProgramFileName,
+                    FragmentProgramFileName,
                     this.fragmentProfile, /* Profile: latest fragment profile */
-                    MyFragmentProgramName, /* Entry function name */
+                    FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.fragmentProgram.Load();
             this.SetupDemonSampler();
@@ -129,7 +129,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// </summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnRenderFrame(FrameEventArgs e)
+        protected override void DoRender(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 

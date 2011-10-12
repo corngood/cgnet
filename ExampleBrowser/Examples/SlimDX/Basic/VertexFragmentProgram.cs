@@ -15,11 +15,11 @@
     {
         #region Fields
 
-        private const string MyFragmentProgramFileName = "Data/C2E2f_passthru.cg";
-        private const string MyFragmentProgramName = "C2E2f_passthru";
+        private const string FragmentProgramFileName = "Data/C2E2f_passthru.cg";
+        private const string FragmentProgramName = "C2E2f_passthru";
         private const int MyStarCount = 6;
-        private const string MyVertexProgramFileName = "Data/C2E1v_green.cg";
-        private const string MyVertexProgramName = "C2E1v_green";
+        private const string VertexProgramFileName = "Data/C2E1v_green.cg";
+        private const string VertexProgramName = "C2E1v_green";
 
         private readonly StarList[] myStarList = {
                                                      /*                star    outer   inner  */
@@ -141,9 +141,9 @@
             vertexProgram =
                 CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    MyVertexProgramFileName, /* Name of file containing program */
+                    VertexProgramFileName, /* Name of file containing program */
                     vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName, /* Entry function name */
+                    VertexProgramName, /* Entry function name */
                     profileOpts); /* Pass optimal compiler options */
 
             fragmentProfile = CgD3D9.GetLatestPixelProfile();
@@ -151,9 +151,9 @@
             fragmentProgram =
                 CgContext.CreateProgramFromFile(
                     ProgramType.Source,
-                    MyFragmentProgramFileName,
+                    FragmentProgramFileName,
                     fragmentProfile,
-                    MyFragmentProgramName,
+                    FragmentProgramName,
                     profileOpts);
 
             vertexProgram.Load(false, 0);

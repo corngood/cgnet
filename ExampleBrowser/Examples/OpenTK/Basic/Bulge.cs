@@ -14,8 +14,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     {
         #region Fields
 
-        private const string MyVertexProgramFileName = "Data/C6E1v_bulge.cg";
-        private const string MyVertexProgramName = "C6E1v_bulge";
+        private const string VertexProgramFileName = "Data/C6E1v_bulge.cg";
+        private const string VertexProgramName = "C6E1v_bulge";
 
         private readonly float[] myLightColor = { 0.95f, 0.95f, 0.95f }; /* White */
         private readonly float[] myProjectionMatrix = new float[16];
@@ -62,9 +62,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    MyVertexProgramFileName, /* Name of file containing program */
+                    VertexProgramFileName, /* Name of file containing program */
                     this.vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName, /* Entry function name */
+                    VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.vertexProgram.Load();
 
@@ -120,7 +120,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// </summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnRenderFrame(FrameEventArgs e)
+        protected override void DoRender(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             /* World-space positions for light and eye. */

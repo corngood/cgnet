@@ -14,8 +14,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     {
         #region Fields
 
-        private const string MyVertexProgramFileName = "Data/C4E1v_transform.cg";
-        private const string MyVertexProgramName = "C4E1v_transform";
+        private const string VertexProgramFileName = "Data/C4E1v_transform.cg";
+        private const string VertexProgramName = "C4E1v_transform";
 
         private static readonly float[] MyProjectionMatrix = new float[16];
 
@@ -58,9 +58,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    MyVertexProgramFileName, /* Name of file containing program */
+                    VertexProgramFileName, /* Name of file containing program */
                     this.vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName, /* Entry function name */
+                    VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.vertexProgram.Load();
 
@@ -87,7 +87,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// </summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnRenderFrame(FrameEventArgs e)
+        protected override void DoRender(FrameEventArgs e)
         {
             float[] viewMatrix = new float[16];
             BuildLookAtMatrix(13 * Math.Sin(myEyeAngle), 0, 13 * Math.Cos(myEyeAngle), /* eye position */

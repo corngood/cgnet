@@ -16,10 +16,10 @@
     {
         #region Fields
 
-        private const string MyFragmentProgramFileName = "Data/C3E3f_texture.cg";
-        private const string MyFragmentProgramName = "C3E3f_texture";
-        private const string MyVertexProgramFileName = "Data/C3E2v_varying.cg";
-        private const string MyVertexProgramName = "C3E2v_varying";
+        private const string FragmentProgramFileName = "Data/C3E3f_texture.cg";
+        private const string FragmentProgramName = "C3E3f_texture";
+        private const string VertexProgramFileName = "Data/C3E2v_varying.cg";
+        private const string VertexProgramName = "C3E2v_varying";
 
         private Parameter fragmentParamDecal;
         private ProfileType fragmentProfile;
@@ -70,9 +70,9 @@
             vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    MyVertexProgramFileName, /* Name of file containing program */
+                    VertexProgramFileName, /* Name of file containing program */
                     vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    MyVertexProgramName, /* Entry function name */
+                    VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
 
             vertexProgram.Load();
@@ -84,9 +84,9 @@
             fragmentProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    MyFragmentProgramFileName, /* Name of file containing program */
+                    FragmentProgramFileName, /* Name of file containing program */
                     fragmentProfile, /* Profile: OpenGL ARB vertex program */
-                    MyFragmentProgramName, /* Entry function name */
+                    FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
 
             this.fragmentProgram.Load();
@@ -101,7 +101,7 @@
         /// </summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnRenderFrame(FrameEventArgs e)
+        protected override void DoRender(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
