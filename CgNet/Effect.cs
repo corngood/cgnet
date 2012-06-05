@@ -51,7 +51,7 @@ namespace CgNet
         {
             get
             {
-                return new Context(CgNativeMethods.cgGetEffectContext(this.Handle))
+                return new Context(NativeMethods.cgGetEffectContext(this.Handle))
                        {
                            OwnsHandle = false
                        };
@@ -62,7 +62,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetFirstEffectAnnotation(this.Handle);
+                var ptr = NativeMethods.cgGetFirstEffectAnnotation(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -74,7 +74,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetFirstLeafEffectParameter(this.Handle);
+                var ptr = NativeMethods.cgGetFirstLeafEffectParameter(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -86,7 +86,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetFirstEffectParameter(this.Handle);
+                var ptr = NativeMethods.cgGetFirstEffectParameter(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -98,7 +98,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetFirstTechnique(this.Handle);
+                var ptr = NativeMethods.cgGetFirstTechnique(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Technique(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -110,7 +110,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgIsEffect(this.Handle);
+                return NativeMethods.cgIsEffect(this.Handle);
             }
         }
 
@@ -118,12 +118,12 @@ namespace CgNet
         {
             get
             {
-                return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetEffectName(this.Handle));
+                return Marshal.PtrToStringAnsi(NativeMethods.cgGetEffectName(this.Handle));
             }
 
             set
             {
-                CgNativeMethods.cgSetEffectName(this.Handle, value);
+                NativeMethods.cgSetEffectName(this.Handle, value);
             }
         }
 
@@ -131,7 +131,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetNextEffect(this.Handle);
+                var ptr = NativeMethods.cgGetNextEffect(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Effect(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -159,7 +159,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetNumUserTypes(this.Handle);
+                return NativeMethods.cgGetNumUserTypes(this.Handle);
             }
         }
 
@@ -187,43 +187,43 @@ namespace CgNet
 
         public Effect Copy()
         {
-            var ptr = CgNativeMethods.cgCopyEffect(this.Handle);
+            var ptr = NativeMethods.cgCopyEffect(this.Handle);
             return ptr == IntPtr.Zero ? null : new Effect(ptr);
         }
 
         public Annotation CreateAnnotation(string name, ParameterType type)
         {
-            var ptr = CgNativeMethods.cgCreateEffectAnnotation(this.Handle, name, type);
+            var ptr = NativeMethods.cgCreateEffectAnnotation(this.Handle, name, type);
             return ptr == IntPtr.Zero ? null : new Annotation(ptr);
         }
 
         public Parameter CreateParameterArray(string name, ParameterType type, int length)
         {
-            var ptr = CgNativeMethods.cgCreateEffectParameterArray(this.Handle, name, type, length);
+            var ptr = NativeMethods.cgCreateEffectParameterArray(this.Handle, name, type, length);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr);
         }
 
         public Parameter CreateParameterMultiDimArray(string name, ParameterType type, int dim, int[] lengths)
         {
-            var ptr = CgNativeMethods.cgCreateEffectParameterMultiDimArray(this.Handle, name, type, dim, lengths);
+            var ptr = NativeMethods.cgCreateEffectParameterMultiDimArray(this.Handle, name, type, dim, lengths);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr);
         }
 
         public Program CreateProgram(ProfileType profile, string entry, params string[] args)
         {
-            var ptr = CgNativeMethods.cgCreateProgramFromEffect(this.Handle, profile, entry, args);
+            var ptr = NativeMethods.cgCreateProgramFromEffect(this.Handle, profile, entry, args);
             return ptr == IntPtr.Zero ? null : new Program(ptr);
         }
 
         public Technique CreateTechnique(string name)
         {
-            var ptr = CgNativeMethods.cgCreateTechnique(this.Handle, name);
+            var ptr = NativeMethods.cgCreateTechnique(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Technique(ptr);
         }
 
         public Annotation GetNamedAnnotation(string name)
         {
-            var ptr = CgNativeMethods.cgGetNamedEffectAnnotation(this.Handle, name);
+            var ptr = NativeMethods.cgGetNamedEffectAnnotation(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                {
                                                    OwnsHandle = false
@@ -232,7 +232,7 @@ namespace CgNet
 
         public Parameter GetNamedParameter(string name)
         {
-            var ptr = CgNativeMethods.cgGetNamedEffectParameter(this.Handle, name);
+            var ptr = NativeMethods.cgGetNamedEffectParameter(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
@@ -241,21 +241,30 @@ namespace CgNet
 
         public Technique GetNamedTechnique(string name)
         {
-            var ptr = CgNativeMethods.cgGetNamedTechnique(this.Handle, name);
+            var ptr = NativeMethods.cgGetNamedTechnique(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Technique(ptr)
                                                {
                                                    OwnsHandle = false
                                                };
         }
 
+        public Parameter GetNamedUniformBuffer(string blockName)
+        {
+            var ptr = NativeMethods.cgGetNamedEffectUniformBuffer(this.Handle, blockName);
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
+                                                   {
+                                                       OwnsHandle = false
+                                                   };
+        }
+
         public ParameterType GetNamedUserType(string name)
         {
-            return CgNativeMethods.cgGetNamedUserType(this.Handle, name);
+            return NativeMethods.cgGetNamedUserType(this.Handle, name);
         }
 
         public Parameter GetParameterBySemantic(string name)
         {
-            var ptr = CgNativeMethods.cgGetEffectParameterBySemantic(this.Handle, name);
+            var ptr = NativeMethods.cgGetEffectParameterBySemantic(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
@@ -264,12 +273,12 @@ namespace CgNet
 
         public ParameterType GetUserType(int index)
         {
-            return CgNativeMethods.cgGetUserType(this.Handle, index);
+            return NativeMethods.cgGetUserType(this.Handle, index);
         }
 
         public void SetLastListing(string listing)
         {
-            CgNativeMethods.cgSetLastListing(this.Handle, listing);
+            NativeMethods.cgSetLastListing(this.Handle, listing);
         }
 
         #endregion Public Methods
@@ -280,7 +289,7 @@ namespace CgNet
         {
             if (this.OwnsHandle && this.Handle != IntPtr.Zero && this.IsEffect)
             {
-                CgNativeMethods.cgDestroyEffect(this.Handle);
+                NativeMethods.cgDestroyEffect(this.Handle);
             }
         }
 

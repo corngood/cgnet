@@ -40,6 +40,14 @@ namespace CgNet
 
         #region Public Properties
 
+        public bool IsBuffer
+        {
+            get
+            {
+                return NativeMethods.cgIsBuffer(this.Handle);
+            }
+        }
+
         /// <summary>
         /// Gets the size.
         /// </summary>
@@ -47,7 +55,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetBufferSize(this.Handle);
+                return NativeMethods.cgGetBufferSize(this.Handle);
             }
         }
 
@@ -69,7 +77,7 @@ namespace CgNet
         /// <returns>Returns a Buffer on success.</returns>
         public static Buffer Create(Context context, int size, IntPtr data, BufferUsage bufferUsage)
         {
-            return new Buffer(CgNativeMethods.cgCreateBuffer(context.Handle, size, data, bufferUsage));
+            return new Buffer(NativeMethods.cgCreateBuffer(context.Handle, size, data, bufferUsage));
         }
 
         #endregion Public Static Methods
@@ -83,7 +91,7 @@ namespace CgNet
         /// <returns>Returns a pointer through which the application can read or write the buffer's data store.</returns>
         public IntPtr Map(BufferAccess access)
         {
-            return CgNativeMethods.cgMapBuffer(this.Handle, access);
+            return NativeMethods.cgMapBuffer(this.Handle, access);
         }
 
         /// <summary>
@@ -93,7 +101,7 @@ namespace CgNet
         /// <param name="data">Pointer to the data to copy into the buffer. The number of bytes to copy is determined by the size parameter.</param>
         public void SetData(int size, IntPtr data)
         {
-            CgNativeMethods.cgSetBufferData(this.Handle, size, data);
+            NativeMethods.cgSetBufferData(this.Handle, size, data);
         }
 
         /// <summary>
@@ -104,7 +112,7 @@ namespace CgNet
         /// <param name="data">Pointer to the start of the data being copied into the buffer.</param>
         public void SetSubData(int offset, int size, IntPtr data)
         {
-            CgNativeMethods.cgSetBufferSubData(this.Handle, offset, size, data);
+            NativeMethods.cgSetBufferSubData(this.Handle, offset, size, data);
         }
 
         /// <summary>
@@ -112,7 +120,7 @@ namespace CgNet
         /// </summary>
         public void Unmap()
         {
-            CgNativeMethods.cgUnmapBuffer(this.Handle);
+            NativeMethods.cgUnmapBuffer(this.Handle);
         }
 
         #endregion Public Methods
@@ -123,7 +131,7 @@ namespace CgNet
         {
             if (this.OwnsHandle && this.Handle != IntPtr.Zero)
             {
-                CgNativeMethods.cgDestroyBuffer(this.Handle);
+                NativeMethods.cgDestroyBuffer(this.Handle);
             }
         }
 

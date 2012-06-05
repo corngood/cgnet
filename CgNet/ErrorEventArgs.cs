@@ -29,7 +29,7 @@ namespace CgNet
         public ErrorEventArgs(ErrorType errorType)
         {
             this.ErrorType = errorType;
-            this.ErrorString = CgEnums.GetErrorString(errorType);
+            this.ErrorString = CgEnums.GetError(errorType);
         }
 
         #endregion Constructors

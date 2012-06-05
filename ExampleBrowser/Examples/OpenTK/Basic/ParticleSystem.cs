@@ -8,7 +8,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
+
     using Glu = global::OpenTK.Graphics.Glu;
+
     [ExampleDescription(NodePath = "OpenTK/Basic/15 Particle System")]
     public class ParticleSystem : Example
     {
@@ -43,6 +45,56 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         #region Methods
 
         #region Protected Methods
+
+        /// <summary>
+        /// Add your game rendering code here.
+        /// </summary>
+        /// <param name="e">Contains timing information.</param>
+        /// <remarks>There is no need to call the base implementation.</remarks>
+        protected override void DoRender(FrameEventArgs e)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+
+            const float Acceleration = -9.8f;
+            float viewAngle = myGlobalTime * 2.8f;
+            int i;
+
+            GL.LoadIdentity();
+            Glu.LookAt((float)Math.Cos(viewAngle), 0.3f, (float)Math.Sin(viewAngle),
+                       0, 0, 0, 0, 1, 0);
+            /* Set uniforms before glGLProgram bind. */
+            this.vertexParamGlobalTime.Set(myGlobalTime);
+            this.vertexParamAcceleration.Set(0, Acceleration, 0, 0);
+            this.vertexParamModelViewProj.SetStateMatrix(MatrixType.ModelviewProjectionMatrix, MatrixTransform.MatrixIdentity);
+
+            vertexProgram.Bind();
+
+            CgGL.EnableProfile(vertexProfile);
+
+            CgGL.EnableProfile(fragmentProfile);
+
+            /* Render live particles. */
+            GL.Begin(BeginMode.Points);
+            for (i = 0; i < 800; i++)
+            {
+                if (myParticleSystem[i].Alive)
+                {
+                    /* initial velocity */
+                    GL.TexCoord3(myParticleSystem[i].VInitial);
+                    /* initial time */
+                    GL.MultiTexCoord1(TextureUnit.Texture1, myParticleSystem[i].Initial);
+                    /* initial position */
+                    GL.Vertex3(myParticleSystem[i].PInitial);
+                }
+            }
+            GL.End();
+
+            CgGL.DisableProfile(vertexProfile);
+
+            CgGL.DisableProfile(fragmentProfile);
+
+            SwapBuffers();
+        }
 
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
@@ -118,56 +170,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.fragmentProgram.Load();
-        }
-
-        /// <summary>
-        /// Add your game rendering code here.
-        /// </summary>
-        /// <param name="e">Contains timing information.</param>
-        /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void DoRender(FrameEventArgs e)
-        {
-            GL.Clear(ClearBufferMask.ColorBufferBit);
-
-            const float Acceleration = -9.8f;
-            float viewAngle = myGlobalTime * 2.8f;
-            int i;
-
-            GL.LoadIdentity();
-            Glu.LookAt((float)Math.Cos(viewAngle), 0.3f, (float)Math.Sin(viewAngle),
-                       0, 0, 0, 0, 1, 0);
-            /* Set uniforms before glGLProgram bind. */
-            this.vertexParamGlobalTime.Set(myGlobalTime);
-            this.vertexParamAcceleration.Set(0, Acceleration, 0, 0);
-            this.vertexParamModelViewProj.SetStateMatrix(MatrixType.ModelviewProjectionMatrix, MatrixTransform.MatrixIdentity);
-
-            vertexProgram.Bind();
-
-            CgGL.EnableProfile(vertexProfile);
-
-            CgGL.EnableProfile(fragmentProfile);
-
-            /* Render live particles. */
-            GL.Begin(BeginMode.Points);
-            for (i = 0; i < 800; i++)
-            {
-                if (myParticleSystem[i].Alive)
-                {
-                    /* initial velocity */
-                    GL.TexCoord3(myParticleSystem[i].VInitial);
-                    /* initial time */
-                    GL.MultiTexCoord1(TextureUnit.Texture1, myParticleSystem[i].Initial);
-                    /* initial position */
-                    GL.Vertex3(myParticleSystem[i].PInitial);
-                }
-            }
-            GL.End();
-
-            CgGL.DisableProfile(vertexProfile);
-
-            CgGL.DisableProfile(fragmentProfile);
-
-            SwapBuffers();
         }
 
         /// <summary>

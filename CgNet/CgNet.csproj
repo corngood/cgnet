@@ -12,10 +12,13 @@
     <AssemblyName>CgNet</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>Full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -23,7 +26,6 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Debug\CgNet.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,6 +38,14 @@
     <PlatformTarget>x86</PlatformTarget>
     <DocumentationFile>bin\Release\CgNet.XML</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
     <Reference Include="SlimDX, Version=2.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64" />
@@ -44,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="D3D9\CgD3D9.cs" />
-    <Compile Include="D3D9\CgD3D9NativeMethods.cs" />
+    <Compile Include="D3D9\NativeMethods.cs" />
     <Compile Include="Annotation.cs" />
     <Compile Include="Buffer.cs" />
     <Compile Include="Context.cs" />
@@ -71,8 +81,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cg.cs" />
     <Compile Include="GL\CgGL.cs" />
-    <Compile Include="CgNativeMethods.cs" />
-    <Compile Include="GL\CgGLNativeMethods.cs" />
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="GL\NativeMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\App.config" />

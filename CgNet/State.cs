@@ -49,7 +49,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetStateContext(this.Handle);
+                var ptr = NativeMethods.cgGetStateContext(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Context(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -61,7 +61,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetNumStateEnumerants(this.Handle);
+                return NativeMethods.cgGetNumStateEnumerants(this.Handle);
             }
         }
 
@@ -69,7 +69,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgIsState(this.Handle);
+                return NativeMethods.cgIsState(this.Handle);
             }
         }
 
@@ -77,7 +77,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetStateLatestProfile(this.Handle);
+                return NativeMethods.cgGetStateLatestProfile(this.Handle);
             }
         }
 
@@ -85,7 +85,7 @@ namespace CgNet
         {
             get
             {
-                return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStateName(this.Handle));
+                return Marshal.PtrToStringAnsi(NativeMethods.cgGetStateName(this.Handle));
             }
         }
 
@@ -93,7 +93,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetNextState(this.Handle);
+                var ptr = NativeMethods.cgGetNextState(this.Handle);
                 return ptr == IntPtr.Zero ? null : new State(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -105,7 +105,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetStateResetCallback(this.Handle);
+                return NativeMethods.cgGetStateResetCallback(this.Handle);
             }
         }
 
@@ -113,7 +113,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetStateSetCallback(this.Handle);
+                return NativeMethods.cgGetStateSetCallback(this.Handle);
             }
         }
 
@@ -121,7 +121,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetStateType(this.Handle);
+                return NativeMethods.cgGetStateType(this.Handle);
             }
         }
 
@@ -129,7 +129,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetStateValidateCallback(this.Handle);
+                return NativeMethods.cgGetStateValidateCallback(this.Handle);
             }
         }
 
@@ -158,50 +158,50 @@ namespace CgNet
         public void AddEnumerant(string name, int value)
         {
             IntPtr state = this.Handle;
-            CgNativeMethods.cgAddStateEnumerant(state, name, value);
+            NativeMethods.cgAddStateEnumerant(state, name, value);
         }
 
         public bool CallResetCallback()
         {
             IntPtr stateassignment = this.Handle;
-            return CgNativeMethods.cgCallStateResetCallback(stateassignment);
+            return NativeMethods.cgCallStateResetCallback(stateassignment);
         }
 
         public bool CallSetCallback()
         {
             IntPtr stateassignment = this.Handle;
-            return CgNativeMethods.cgCallStateSetCallback(stateassignment);
+            return NativeMethods.cgCallStateSetCallback(stateassignment);
         }
 
         public bool CallValidateCallback()
         {
             IntPtr stateassignment = this.Handle;
-            return CgNativeMethods.cgCallStateValidateCallback(stateassignment);
+            return NativeMethods.cgCallStateValidateCallback(stateassignment);
         }
 
         public string GetEnumerant(int index, out int value)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStateEnumerant(this.Handle, index, out value));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetStateEnumerant(this.Handle, index, out value));
         }
 
         public string GetEnumerantName(int index)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStateEnumerantName(this.Handle, index));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetStateEnumerantName(this.Handle, index));
         }
 
         public int GetEnumerantValue(string name)
         {
-            return CgNativeMethods.cgGetStateEnumerantValue(this.Handle, name);
+            return NativeMethods.cgGetStateEnumerantValue(this.Handle, name);
         }
 
         public void SetCallbacks(CgStateCallbackDelegate set, CgStateCallbackDelegate reset, CgStateCallbackDelegate validate)
         {
-            CgNativeMethods.cgSetStateCallbacks(this.Handle, set, reset, validate);
+            NativeMethods.cgSetStateCallbacks(this.Handle, set, reset, validate);
         }
 
         public void SetLatestProfile(ProfileType profile)
         {
-            CgNativeMethods.cgSetStateLatestProfile(this.Handle, profile);
+            NativeMethods.cgSetStateLatestProfile(this.Handle, profile);
         }
 
         #endregion Public Methods

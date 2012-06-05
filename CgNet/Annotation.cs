@@ -50,7 +50,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetNumDependentAnnotationParameters(this.Handle);
+                return NativeMethods.cgGetNumDependentAnnotationParameters(this.Handle);
             }
         }
 
@@ -61,7 +61,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgIsAnnotation(this.Handle);
+                return NativeMethods.cgIsAnnotation(this.Handle);
             }
         }
 
@@ -72,7 +72,7 @@ namespace CgNet
         {
             get
             {
-                return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetAnnotationName(this.Handle));
+                return Marshal.PtrToStringAnsi(NativeMethods.cgGetAnnotationName(this.Handle));
             }
         }
 
@@ -83,7 +83,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetNextAnnotation(this.Handle);
+                var ptr = NativeMethods.cgGetNextAnnotation(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -98,7 +98,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetAnnotationType(this.Handle);
+                return NativeMethods.cgGetAnnotationType(this.Handle);
             }
         }
 
@@ -117,7 +117,7 @@ namespace CgNet
         public bool[] GetBoolValues()
         {
             int count;
-            var values = CgNativeMethods.cgGetBoolAnnotationValues(this.Handle, out count);
+            var values = NativeMethods.cgGetBoolAnnotationValues(this.Handle, out count);
             return Cg.IntPtrToBoolArray(values, count);
         }
 
@@ -128,7 +128,7 @@ namespace CgNet
         /// <returns>Returns the selected dependent annotation on success.</returns>
         public Parameter GetDependentParameter(int index)
         {
-            var ptr = CgNativeMethods.cgGetDependentAnnotationParameter(this.Handle, index);
+            var ptr = NativeMethods.cgGetDependentAnnotationParameter(this.Handle, index);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
@@ -142,7 +142,7 @@ namespace CgNet
         public float[] GetFloatValues()
         {
             int nvalues;
-            return CgNativeMethods.cgGetFloatAnnotationValues(this.Handle, out nvalues);
+            return NativeMethods.cgGetFloatAnnotationValues(this.Handle, out nvalues);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace CgNet
         public int[] GetIntValues()
         {
             int nvalues;
-            return CgNativeMethods.cgGetIntAnnotationValues(this.Handle, out nvalues);
+            return NativeMethods.cgGetIntAnnotationValues(this.Handle, out nvalues);
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace CgNet
         /// <returns>Returns a string contained by the annotation. </returns>
         public string GetStringValue()
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStringAnnotationValue(this.Handle));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetStringAnnotationValue(this.Handle));
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace CgNet
         public string[] GetStringValues()
         {
             int nvalues;
-            var ptr = CgNativeMethods.cgGetStringAnnotationValues(this.Handle, out nvalues);
+            var ptr = NativeMethods.cgGetStringAnnotationValues(this.Handle, out nvalues);
             if (nvalues == 0)
             {
                 return null;
@@ -214,7 +214,7 @@ namespace CgNet
         /// <returns>Returns <c>true</c> if it succeeds in setting the annotation; <c>false</c> otherwise.</returns>
         public bool Set(int value)
         {
-            return CgNativeMethods.cgSetIntAnnotation(this.Handle, value);
+            return NativeMethods.cgSetIntAnnotation(this.Handle, value);
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace CgNet
         /// <returns>Returns <c>true</c> if it succeeds in setting the annotation; <c>false</c> otherwise.</returns>
         public bool Set(float value)
         {
-            return CgNativeMethods.cgSetFloatAnnotation(this.Handle, value);
+            return NativeMethods.cgSetFloatAnnotation(this.Handle, value);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace CgNet
         /// <returns>Returns <c>true</c> if it succeeds in setting the annotation; <c>false</c> otherwise.</returns>
         public bool Set(string value)
         {
-            return CgNativeMethods.cgSetStringAnnotation(this.Handle, value);
+            return NativeMethods.cgSetStringAnnotation(this.Handle, value);
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace CgNet
         /// <returns>Returns <c>true</c> if it succeeds in setting the annotation; <c>false</c> otherwise.</returns>
         public bool Set(bool value)
         {
-            return CgNativeMethods.cgSetBoolAnnotation(this.Handle, value);
+            return NativeMethods.cgSetBoolAnnotation(this.Handle, value);
         }
 
         #endregion Public Methods

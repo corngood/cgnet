@@ -34,22 +34,49 @@ namespace CgNet.GL
 
         public static Buffer CreateBuffer(this Context context, int size, IntPtr data, BufferUsageHint bufferUsage)
         {
-            return new Buffer(CgGLNativeMethods.cgGLCreateBuffer(context.Handle, size, data, bufferUsage));
+            return new Buffer(NativeMethods.cgGLCreateBuffer(context.Handle, size, data, bufferUsage));
+        }
+
+        public static Buffer CreateBufferFromObject(this Context context, OpenTK.Graphics.OpenGL.BufferUsageHint flags, bool manageObject)
+        {
+            var retValue = new Buffer(NativeMethods.cgGLCreateBufferFromObject(context.Handle, flags, manageObject));
+            retValue.OwnsHandle = !manageObject;
+            return retValue;
+        }
+
+        public static GlslVersion GetGlslVersion(this Context context)
+        {
+            return NativeMethods.cgGLGetContextGLSLVersion(context.Handle);
         }
 
         public static bool GetManageTextureParameters(this Context context)
         {
-            return CgGLNativeMethods.cgGLGetManageTextureParameters(context.Handle);
+            return NativeMethods.cgGLGetManageTextureParameters(context.Handle);
+        }
+
+        public static string[] GetOptimalOptions(this Context context, ProfileType profile)
+        {
+            return Cg.IntPtrToStringArray(NativeMethods.cgGLGetContextOptimalOptions(context.Handle, profile));
         }
 
         public static void RegisterStates(this Context context)
         {
-            CgGLNativeMethods.cgGLRegisterStates(context.Handle);
+            NativeMethods.cgGLRegisterStates(context.Handle);
+        }
+
+        public static void SetGlslVersion(this Context context, GlslVersion version)
+        {
+            NativeMethods.cgGLSetContextGLSLVersion(context.Handle, version);
         }
 
         public static void SetManageTextureParameters(this Context context, bool flag)
         {
-            CgGLNativeMethods.cgGLSetManageTextureParameters(context.Handle, flag);
+            NativeMethods.cgGLSetManageTextureParameters(context.Handle, flag);
+        }
+
+        public static void SetOptimalOptions(this Context context, ProfileType profile)
+        {
+            NativeMethods.cgGLSetContextOptimalOptions(context.Handle, profile);
         }
 
         #endregion Public Static Methods

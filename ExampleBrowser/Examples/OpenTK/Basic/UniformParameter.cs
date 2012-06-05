@@ -41,6 +41,31 @@
         #region Protected Methods
 
         /// <summary>
+        /// Add your game rendering code here.
+        /// </summary>
+        /// <param name="e">Contains timing information.</param>
+        /// <remarks>There is no need to call the base implementation.</remarks>
+        protected override void DoRender(FrameEventArgs e)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            vertexProgram.Bind();
+
+            CgGL.EnableProfile(vertexProfile);
+
+            fragmentProgram.Bind();
+
+            CgGL.EnableProfile(fragmentProfile);
+
+            DrawStars();
+
+            CgGL.DisableProfile(vertexProfile);
+
+            CgGL.DisableProfile(fragmentProfile);
+            SwapBuffers();
+        }
+
+        /// <summary>
         /// Setup OpenGL and load resources here.
         /// </summary>
         /// <param name="e">Not used.</param>
@@ -77,31 +102,6 @@
                     FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.fragmentProgram.Load();
-        }
-
-        /// <summary>
-        /// Add your game rendering code here.
-        /// </summary>
-        /// <param name="e">Contains timing information.</param>
-        /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void DoRender(FrameEventArgs e)
-        {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            vertexProgram.Bind();
-
-            CgGL.EnableProfile(vertexProfile);
-
-            fragmentProgram.Bind();
-
-            CgGL.EnableProfile(fragmentProfile);
-
-            DrawStars();
-
-            CgGL.DisableProfile(vertexProfile);
-
-            CgGL.DisableProfile(fragmentProfile);
-            SwapBuffers();
         }
 
         /// <summary>

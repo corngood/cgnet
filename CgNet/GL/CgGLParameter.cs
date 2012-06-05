@@ -35,23 +35,23 @@ namespace CgNet.GL
         // TODO: TextureParameter
         public static void Disable(this Parameter param)
         {
-            CgGLNativeMethods.cgGLDisableTextureParameter(param.Handle);
+            NativeMethods.cgGLDisableTextureParameter(param.Handle);
         }
 
         public static void DisableClientState(this Parameter param)
         {
-            CgGLNativeMethods.cgGLDisableClientState(param.Handle);
+            NativeMethods.cgGLDisableClientState(param.Handle);
         }
 
         // TODO: TextureParameter
         public static void Enable(this Parameter param)
         {
-            CgGLNativeMethods.cgGLEnableTextureParameter(param.Handle);
+            NativeMethods.cgGLEnableTextureParameter(param.Handle);
         }
 
         public static void EnableClientState(this Parameter param)
         {
-            CgGLNativeMethods.cgGLEnableClientState(param.Handle);
+            NativeMethods.cgGLEnableClientState(param.Handle);
         }
 
         public static T Get<T>(this Parameter param)
@@ -63,35 +63,35 @@ namespace CgNet.GL
             {
                 if (typeof(T) == typeof(float))
                 {
-                    CgGLNativeMethods.cgGLGetParameter1f(param1, handle.AddrOfPinnedObject());
+                    NativeMethods.cgGLGetParameter1f(param1, handle.AddrOfPinnedObject());
                 }
                 else if (typeof(T) == typeof(double))
                 {
-                    CgGLNativeMethods.cgGLGetParameter1d(param1, handle.AddrOfPinnedObject());
+                    NativeMethods.cgGLGetParameter1d(param1, handle.AddrOfPinnedObject());
                 }
                 else if (typeof(T) == typeof(Vector2))
                 {
-                    CgGLNativeMethods.cgGLGetParameter2f(param1, handle.AddrOfPinnedObject());
+                    NativeMethods.cgGLGetParameter2f(param1, handle.AddrOfPinnedObject());
                 }
                 else if (typeof(T) == typeof(Vector2d))
                 {
-                    CgGLNativeMethods.cgGLGetParameter2d(param1, handle.AddrOfPinnedObject());
+                    NativeMethods.cgGLGetParameter2d(param1, handle.AddrOfPinnedObject());
                 }
                 else if (typeof(T) == typeof(Vector3))
                 {
-                    CgGLNativeMethods.cgGLGetParameter3f(param1, handle.AddrOfPinnedObject());
+                    NativeMethods.cgGLGetParameter3f(param1, handle.AddrOfPinnedObject());
                 }
                 else if (typeof(T) == typeof(Vector3d))
                 {
-                    CgGLNativeMethods.cgGLGetParameter3d(param1, handle.AddrOfPinnedObject());
+                    NativeMethods.cgGLGetParameter3d(param1, handle.AddrOfPinnedObject());
                 }
                 else if (typeof(T) == typeof(Vector4))
                 {
-                    CgGLNativeMethods.cgGLGetParameter4f(param1, handle.AddrOfPinnedObject());
+                    NativeMethods.cgGLGetParameter4f(param1, handle.AddrOfPinnedObject());
                 }
                 else if (typeof(T) == typeof(Vector4d))
                 {
-                    CgGLNativeMethods.cgGLGetParameter4d(param1, handle.AddrOfPinnedObject());
+                    NativeMethods.cgGLGetParameter4d(param1, handle.AddrOfPinnedObject());
                 }
                 else
                 {
@@ -115,16 +115,16 @@ namespace CgNet.GL
                 switch (values.Length)
                 {
                     case 1:
-                        CgGLNativeMethods.cgGLGetParameter1f(param1, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameter1f(param1, handle.AddrOfPinnedObject());
                         break;
                     case 2:
-                        CgGLNativeMethods.cgGLGetParameter2f(param1, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameter2f(param1, handle.AddrOfPinnedObject());
                         break;
                     case 3:
-                        CgGLNativeMethods.cgGLGetParameter3f(param1, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameter3f(param1, handle.AddrOfPinnedObject());
                         break;
                     case 4:
-                        CgGLNativeMethods.cgGLGetParameter4f(param1, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameter4f(param1, handle.AddrOfPinnedObject());
                         break;
                 }
             }
@@ -143,16 +143,16 @@ namespace CgNet.GL
                 switch (values.Length)
                 {
                     case 1:
-                        CgGLNativeMethods.cgGLGetParameter1d(param1, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameter1d(param1, handle.AddrOfPinnedObject());
                         break;
                     case 2:
-                        CgGLNativeMethods.cgGLGetParameter2d(param1, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameter2d(param1, handle.AddrOfPinnedObject());
                         break;
                     case 3:
-                        CgGLNativeMethods.cgGLGetParameter3d(param1, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameter3d(param1, handle.AddrOfPinnedObject());
                         break;
                     case 4:
-                        CgGLNativeMethods.cgGLGetParameter4d(param1, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameter4d(param1, handle.AddrOfPinnedObject());
                         break;
                 }
             }
@@ -172,16 +172,16 @@ namespace CgNet.GL
                 switch (values.Length / nelements)
                 {
                     case 1:
-                        CgGLNativeMethods.cgGLGetParameterArray1f(param1, offset, nelements, g.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameterArray1f(param1, offset, nelements, g.AddrOfPinnedObject());
                         break;
                     case 2:
-                        CgGLNativeMethods.cgGLGetParameterArray2f(param1, offset, nelements, g.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameterArray2f(param1, offset, nelements, g.AddrOfPinnedObject());
                         break;
                     case 3:
-                        CgGLNativeMethods.cgGLGetParameterArray3f(param1, offset, nelements, g.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameterArray3f(param1, offset, nelements, g.AddrOfPinnedObject());
                         break;
                     case 4:
-                        CgGLNativeMethods.cgGLGetParameterArray4f(param1, offset, nelements, g.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameterArray4f(param1, offset, nelements, g.AddrOfPinnedObject());
                         break;
                 }
             }
@@ -201,16 +201,16 @@ namespace CgNet.GL
                 switch (values.Length / nelements)
                 {
                     case 1:
-                        CgGLNativeMethods.cgGLGetParameterArray1d(param1, offset, nelements, g.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameterArray1d(param1, offset, nelements, g.AddrOfPinnedObject());
                         break;
                     case 2:
-                        CgGLNativeMethods.cgGLGetParameterArray2d(param1, offset, nelements, g.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameterArray2d(param1, offset, nelements, g.AddrOfPinnedObject());
                         break;
                     case 3:
-                        CgGLNativeMethods.cgGLGetParameterArray3d(param1, offset, nelements, g.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameterArray3d(param1, offset, nelements, g.AddrOfPinnedObject());
                         break;
                     case 4:
-                        CgGLNativeMethods.cgGLGetParameterArray4d(param1, offset, nelements, g.AddrOfPinnedObject());
+                        NativeMethods.cgGLGetParameterArray4d(param1, offset, nelements, g.AddrOfPinnedObject());
                         break;
                 }
             }
@@ -266,17 +266,17 @@ namespace CgNet.GL
 
         public static int GetTextureEnum(this Parameter param)
         {
-            return CgGLNativeMethods.cgGLGetTextureEnum(param.Handle);
+            return NativeMethods.cgGLGetTextureEnum(param.Handle);
         }
 
         public static int GetTextureParameter(this Parameter param)
         {
-            return CgGLNativeMethods.cgGLGetTextureParameter(param.Handle);
+            return NativeMethods.cgGLGetTextureParameter(param.Handle);
         }
 
         public static void Set(this Parameter param, double x)
         {
-            CgGLNativeMethods.cgGLSetParameter1d(param.Handle, x);
+            NativeMethods.cgGLSetParameter1d(param.Handle, x);
         }
 
         public static void Set(this Parameter param, double[] v)
@@ -285,16 +285,16 @@ namespace CgNet.GL
             switch (v.Length)
             {
                 case 1:
-                    CgGLNativeMethods.cgGLSetParameter1dv(param1, v);
+                    NativeMethods.cgGLSetParameter1dv(param1, v);
                     break;
                 case 2:
-                    CgGLNativeMethods.cgGLSetParameter2dv(param1, v);
+                    NativeMethods.cgGLSetParameter2dv(param1, v);
                     break;
                 case 3:
-                    CgGLNativeMethods.cgGLSetParameter3dv(param1, v);
+                    NativeMethods.cgGLSetParameter3dv(param1, v);
                     break;
                 case 4:
-                    CgGLNativeMethods.cgGLSetParameter4dv(param1, v);
+                    NativeMethods.cgGLSetParameter4dv(param1, v);
                     break;
                 default:
                     throw new ArgumentException();
@@ -307,16 +307,16 @@ namespace CgNet.GL
             switch (v.Length)
             {
                 case 1:
-                    CgGLNativeMethods.cgGLSetParameter1fv(param1, v);
+                    NativeMethods.cgGLSetParameter1fv(param1, v);
                     break;
                 case 2:
-                    CgGLNativeMethods.cgGLSetParameter2fv(param1, v);
+                    NativeMethods.cgGLSetParameter2fv(param1, v);
                     break;
                 case 3:
-                    CgGLNativeMethods.cgGLSetParameter3fv(param1, v);
+                    NativeMethods.cgGLSetParameter3fv(param1, v);
                     break;
                 case 4:
-                    CgGLNativeMethods.cgGLSetParameter4fv(param1, v);
+                    NativeMethods.cgGLSetParameter4fv(param1, v);
                     break;
                 default:
                     throw new ArgumentException();
@@ -325,73 +325,73 @@ namespace CgNet.GL
 
         public static void Set(this Parameter param, float x)
         {
-            CgGLNativeMethods.cgGLSetParameter1f(param.Handle, x);
+            NativeMethods.cgGLSetParameter1f(param.Handle, x);
         }
 
         public static void Set(this Parameter param, double x, double y)
         {
-            CgGLNativeMethods.cgGLSetParameter2d(param.Handle, x, y);
+            NativeMethods.cgGLSetParameter2d(param.Handle, x, y);
         }
 
         public static void Set(this Parameter param, float x, float y)
         {
-            CgGLNativeMethods.cgGLSetParameter2f(param.Handle, x, y);
+            NativeMethods.cgGLSetParameter2f(param.Handle, x, y);
         }
 
         public static void Set(this Parameter param, double x, double y, double z)
         {
-            CgGLNativeMethods.cgGLSetParameter3d(param.Handle, x, y, z);
+            NativeMethods.cgGLSetParameter3d(param.Handle, x, y, z);
         }
 
         public static void Set(this Parameter param, float x, float y, float z)
         {
-            CgGLNativeMethods.cgGLSetParameter3f(param.Handle, x, y, z);
+            NativeMethods.cgGLSetParameter3f(param.Handle, x, y, z);
         }
 
         public static void Set(this Parameter param, double x, double y, double z, double w)
         {
-            CgGLNativeMethods.cgGLSetParameter4d(param.Handle, x, y, z, w);
+            NativeMethods.cgGLSetParameter4d(param.Handle, x, y, z, w);
         }
 
         public static void Set(this Parameter param, float x, float y, float z, float w)
         {
-            CgGLNativeMethods.cgGLSetParameter4f(param.Handle, x, y, z, w);
+            NativeMethods.cgGLSetParameter4f(param.Handle, x, y, z, w);
         }
 
         public static void Set(this Parameter param, Vector2 v)
         {
             Vector2 v1 = v;
-            CgGLNativeMethods.cgGLSetParameter2f(param.Handle, v1.X, v1.Y);
+            NativeMethods.cgGLSetParameter2f(param.Handle, v1.X, v1.Y);
         }
 
         public static void Set(this Parameter param, Vector2d v)
         {
             Vector2d v1 = v;
-            CgGLNativeMethods.cgGLSetParameter2d(param.Handle, v1.X, v1.Y);
+            NativeMethods.cgGLSetParameter2d(param.Handle, v1.X, v1.Y);
         }
 
         public static void Set(this Parameter param, Vector3 v)
         {
             Vector3 v1 = v;
-            CgGLNativeMethods.cgGLSetParameter3f(param.Handle, v1.X, v1.Y, v1.Z);
+            NativeMethods.cgGLSetParameter3f(param.Handle, v1.X, v1.Y, v1.Z);
         }
 
         public static void Set(this Parameter param, Vector3d v)
         {
             Vector3d v1 = v;
-            CgGLNativeMethods.cgGLSetParameter3d(param.Handle, v1.X, v1.Y, v1.Z);
+            NativeMethods.cgGLSetParameter3d(param.Handle, v1.X, v1.Y, v1.Z);
         }
 
         public static void Set(this Parameter param, Vector4 v)
         {
             Vector4 v1 = v;
-            CgGLNativeMethods.cgGLSetParameter4f(param.Handle, v1.X, v1.Y, v1.Z, v1.W);
+            NativeMethods.cgGLSetParameter4f(param.Handle, v1.X, v1.Y, v1.Z, v1.W);
         }
 
         public static void Set(this Parameter param, Vector4d v)
         {
             Vector4d v1 = v;
-            CgGLNativeMethods.cgGLSetParameter4d(param.Handle, v1.X, v1.Y, v1.Z, v1.W);
+            NativeMethods.cgGLSetParameter4d(param.Handle, v1.X, v1.Y, v1.Z, v1.W);
         }
 
         public static void SetArray(this Parameter param, int offset, int nelements, float[] values)
@@ -400,16 +400,16 @@ namespace CgNet.GL
             switch (values.Length / nelements)
             {
                 case 1:
-                    CgGLNativeMethods.cgGLSetParameterArray1f(param1, offset, nelements, values);
+                    NativeMethods.cgGLSetParameterArray1f(param1, offset, nelements, values);
                     break;
                 case 2:
-                    CgGLNativeMethods.cgGLSetParameterArray2f(param1, offset, nelements, values);
+                    NativeMethods.cgGLSetParameterArray2f(param1, offset, nelements, values);
                     break;
                 case 3:
-                    CgGLNativeMethods.cgGLSetParameterArray3f(param1, offset, nelements, values);
+                    NativeMethods.cgGLSetParameterArray3f(param1, offset, nelements, values);
                     break;
                 case 4:
-                    CgGLNativeMethods.cgGLSetParameterArray4f(param1, offset, nelements, values);
+                    NativeMethods.cgGLSetParameterArray4f(param1, offset, nelements, values);
                     break;
             }
         }
@@ -420,16 +420,16 @@ namespace CgNet.GL
             switch (values.Length / nelements)
             {
                 case 1:
-                    CgGLNativeMethods.cgGLSetParameterArray1d(param1, offset, nelements, values);
+                    NativeMethods.cgGLSetParameterArray1d(param1, offset, nelements, values);
                     break;
                 case 2:
-                    CgGLNativeMethods.cgGLSetParameterArray2d(param1, offset, nelements, values);
+                    NativeMethods.cgGLSetParameterArray2d(param1, offset, nelements, values);
                     break;
                 case 3:
-                    CgGLNativeMethods.cgGLSetParameterArray3d(param1, offset, nelements, values);
+                    NativeMethods.cgGLSetParameterArray3d(param1, offset, nelements, values);
                     break;
                 case 4:
-                    CgGLNativeMethods.cgGLSetParameterArray4d(param1, offset, nelements, values);
+                    NativeMethods.cgGLSetParameterArray4d(param1, offset, nelements, values);
                     break;
             }
         }
@@ -444,10 +444,10 @@ namespace CgNet.GL
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterfc(param.Handle, ref matrix);
+                    NativeMethods.cgGLSetMatrixParameterfc(param.Handle, ref matrix);
                     break;
                 case Order.RowMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterfr(param.Handle, ref matrix);
+                    NativeMethods.cgGLSetMatrixParameterfr(param.Handle, ref matrix);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("order");
@@ -486,23 +486,23 @@ namespace CgNet.GL
 
         public static void SetPointer(this Parameter param, int fsize, DataType type, int stride, IntPtr pointer)
         {
-            CgGLNativeMethods.cgGLSetParameterPointer(param.Handle, fsize, type, stride, pointer);
+            NativeMethods.cgGLSetParameterPointer(param.Handle, fsize, type, stride, pointer);
         }
 
         public static void SetStateMatrix(this Parameter param, MatrixType matrix, MatrixTransform transform)
         {
-            CgGLNativeMethods.cgGLSetStateMatrixParameter(param.Handle, matrix, transform);
+            NativeMethods.cgGLSetStateMatrixParameter(param.Handle, matrix, transform);
         }
 
         // TODO: TextureParameter
         public static void SetTexture(this Parameter param, int texobj)
         {
-            CgGLNativeMethods.cgGLSetTextureParameter(param.Handle, texobj);
+            NativeMethods.cgGLSetTextureParameter(param.Handle, texobj);
         }
 
         public static void SetupSampler(this Parameter param, int texobj)
         {
-            CgGLNativeMethods.cgGLSetupSampler(param.Handle, texobj);
+            NativeMethods.cgGLSetupSampler(param.Handle, texobj);
         }
 
         #endregion Public Static Methods

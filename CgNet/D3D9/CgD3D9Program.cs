@@ -30,48 +30,48 @@ namespace CgNet.D3D9
 
         public static int Bind(this Program program)
         {
-            return CgD3D9NativeMethods.cgD3D9BindProgram(program.Handle);
+            return NativeMethods.cgD3D9BindProgram(program.Handle);
         }
 
         public static int EnableParameterShadowing(this Program prog, bool enable)
         {
-            return CgD3D9NativeMethods.cgD3D9EnableParameterShadowing(prog.Handle, enable);
+            return NativeMethods.cgD3D9EnableParameterShadowing(prog.Handle, enable);
         }
 
         public static VertexElement[] GetVertexDeclaration(this Program program)
         {
             var buf = new VertexElement[64];
-            return CgD3D9NativeMethods.cgD3D9GetVertexDeclaration(program.Handle, buf) ? buf : null;
+            return NativeMethods.cgD3D9GetVertexDeclaration(program.Handle, buf) ? buf : null;
         }
 
         public static bool IsLoaded(this Program program)
         {
-            return CgD3D9NativeMethods.cgD3D9IsProgramLoaded(program.Handle);
+            return NativeMethods.cgD3D9IsProgramLoaded(program.Handle);
         }
 
         public static bool IsParameterShadowingEnabled(this Program program)
         {
-            return CgD3D9NativeMethods.cgD3D9IsParameterShadowingEnabled(program.Handle);
+            return NativeMethods.cgD3D9IsParameterShadowingEnabled(program.Handle);
         }
 
         public static int Load(this Program program, bool paramShadowing, int assemFlags)
         {
-            return CgD3D9NativeMethods.cgD3D9LoadProgram(program.Handle, paramShadowing, (uint)assemFlags);
+            return NativeMethods.cgD3D9LoadProgram(program.Handle, paramShadowing, (uint)assemFlags);
         }
 
         public static int Unbind(this Program prog)
         {
-            return CgD3D9NativeMethods.cgD3D9UnbindProgram(prog.Handle);
+            return NativeMethods.cgD3D9UnbindProgram(prog.Handle);
         }
 
         public static int Unload(this Program program)
         {
-            return CgD3D9NativeMethods.cgD3D9UnloadProgram(program.Handle);
+            return NativeMethods.cgD3D9UnloadProgram(program.Handle);
         }
 
         public static bool ValidateVertexDeclaration(this Program program, VertexElement[] decl)
         {
-            return CgD3D9NativeMethods.cgD3D9ValidateVertexDeclaration(program.Handle, decl);
+            return NativeMethods.cgD3D9ValidateVertexDeclaration(program.Handle, decl);
         }
 
         #endregion Public Static Methods

@@ -55,14 +55,29 @@ namespace CgNet.GL
 
         #region Public Static Methods
 
+        public static GlslVersion DetectGLSLVersion()
+        {
+            return NativeMethods.cgGLDetectGLSLVersion();
+        }
+
         public static void DisableProfile(ProfileType profile)
         {
-            CgGLNativeMethods.cgGLDisableProfile(profile);
+            NativeMethods.cgGLDisableProfile(profile);
         }
 
         public static void EnableProfile(ProfileType profile)
         {
-            CgGLNativeMethods.cgGLEnableProfile(profile);
+            NativeMethods.cgGLEnableProfile(profile);
+        }
+
+        public static string GetGLSLVersion(GlslVersion version)
+        {
+            return NativeMethods.cgGLGetGLSLVersionString(version);
+        }
+
+        public static GlslVersion GetGLSLVersion(string version)
+        {
+            return NativeMethods.cgGLGetGLSLVersion(version);
         }
 
         /// <summary>
@@ -72,32 +87,32 @@ namespace CgNet.GL
         /// <returns>Returns a profile enumerant for the latest profile of the given class. Returns CG_PROFILE_UNKNOWN if no appropriate profile is available or an error occurs.</returns>
         public static ProfileType GetLatestProfile(ProfileClass profileClass)
         {
-            return CgGLNativeMethods.cgGLGetLatestProfile(profileClass);
+            return NativeMethods.cgGLGetLatestProfile(profileClass);
         }
 
         public static string[] GetOptimalOptions(ProfileType profile)
         {
-            return Cg.IntPtrToStringArray(CgGLNativeMethods.cgGLGetOptimalOptions(profile));
+            return Cg.IntPtrToStringArray(NativeMethods.cgGLGetOptimalOptions(profile));
         }
 
         public static bool IsProfileSupported(ProfileType profile)
         {
-            return CgGLNativeMethods.cgGLIsProfileSupported(profile);
+            return NativeMethods.cgGLIsProfileSupported(profile);
         }
 
         public static void SetDebugMode(bool debug)
         {
-            CgGLNativeMethods.cgGLSetDebugMode(debug);
+            NativeMethods.cgGLSetDebugMode(debug);
         }
 
         public static void SetOptimalOptions(ProfileType profile)
         {
-            CgGLNativeMethods.cgGLSetOptimalOptions(profile);
+            NativeMethods.cgGLSetOptimalOptions(profile);
         }
 
         public static void UnbindProgram(ProfileType profile)
         {
-            CgGLNativeMethods.cgGLUnbindProgram(profile);
+            NativeMethods.cgGLUnbindProgram(profile);
         }
 
         #endregion Public Static Methods
@@ -116,10 +131,10 @@ namespace CgNet.GL
                     switch (order)
                     {
                         case Order.ColumnMajor:
-                            CgGLNativeMethods.cgGLGetMatrixParameterdc(param, handle.AddrOfPinnedObject());
+                            NativeMethods.cgGLGetMatrixParameterdc(param, handle.AddrOfPinnedObject());
                             break;
                         case Order.RowMajor:
-                            CgGLNativeMethods.cgGLGetMatrixParameterdr(param, handle.AddrOfPinnedObject());
+                            NativeMethods.cgGLGetMatrixParameterdr(param, handle.AddrOfPinnedObject());
                             break;
                         default:
                             throw new InvalidEnumArgumentException("order");
@@ -130,10 +145,10 @@ namespace CgNet.GL
                     switch (order)
                     {
                         case Order.ColumnMajor:
-                            CgGLNativeMethods.cgGLGetMatrixParameterfc(param, handle.AddrOfPinnedObject());
+                            NativeMethods.cgGLGetMatrixParameterfc(param, handle.AddrOfPinnedObject());
                             break;
                         case Order.RowMajor:
-                            CgGLNativeMethods.cgGLGetMatrixParameterfr(param, handle.AddrOfPinnedObject());
+                            NativeMethods.cgGLGetMatrixParameterfr(param, handle.AddrOfPinnedObject());
                             break;
                         default:
                             throw new InvalidEnumArgumentException("order");
@@ -165,10 +180,10 @@ namespace CgNet.GL
                     switch (order)
                     {
                         case Order.ColumnMajor:
-                            CgGLNativeMethods.cgGLGetMatrixParameterArrayfc(param, offset, nelements, g.AddrOfPinnedObject());
+                            NativeMethods.cgGLGetMatrixParameterArrayfc(param, offset, nelements, g.AddrOfPinnedObject());
                             break;
                         case Order.RowMajor:
-                            CgGLNativeMethods.cgGLGetMatrixParameterArrayfr(param, offset, nelements, g.AddrOfPinnedObject());
+                            NativeMethods.cgGLGetMatrixParameterArrayfr(param, offset, nelements, g.AddrOfPinnedObject());
                             break;
                         default:
                             throw new InvalidEnumArgumentException("order");
@@ -179,10 +194,10 @@ namespace CgNet.GL
                     switch (order)
                     {
                         case Order.ColumnMajor:
-                            CgGLNativeMethods.cgGLGetMatrixParameterArraydc(param, offset, nelements, g.AddrOfPinnedObject());
+                            NativeMethods.cgGLGetMatrixParameterArraydc(param, offset, nelements, g.AddrOfPinnedObject());
                             break;
                         case Order.RowMajor:
-                            CgGLNativeMethods.cgGLGetMatrixParameterArraydr(param, offset, nelements, g.AddrOfPinnedObject());
+                            NativeMethods.cgGLGetMatrixParameterArraydr(param, offset, nelements, g.AddrOfPinnedObject());
                             break;
                         default:
                             throw new InvalidEnumArgumentException("order");
@@ -206,10 +221,10 @@ namespace CgNet.GL
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterdc(param, ref matrix);
+                    NativeMethods.cgGLSetMatrixParameterdc(param, ref matrix);
                     break;
                 case Order.RowMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterdr(param, ref matrix);
+                    NativeMethods.cgGLSetMatrixParameterdr(param, ref matrix);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("order");
@@ -221,10 +236,10 @@ namespace CgNet.GL
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterArraydc(param, offset, nelements, matrices);
+                    NativeMethods.cgGLSetMatrixParameterArraydc(param, offset, nelements, matrices);
                     break;
                 case Order.RowMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterArraydr(param, offset, nelements, matrices);
+                    NativeMethods.cgGLSetMatrixParameterArraydr(param, offset, nelements, matrices);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
@@ -236,10 +251,10 @@ namespace CgNet.GL
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterArrayfc(param, offset, nelements, matrices);
+                    NativeMethods.cgGLSetMatrixParameterArrayfc(param, offset, nelements, matrices);
                     break;
                 case Order.RowMajor:
-                    CgGLNativeMethods.cgGLSetMatrixParameterArrayfr(param, offset, nelements, matrices);
+                    NativeMethods.cgGLSetMatrixParameterArrayfr(param, offset, nelements, matrices);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");

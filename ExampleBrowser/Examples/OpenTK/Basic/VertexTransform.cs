@@ -41,48 +41,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         #region Protected Methods
 
         /// <summary>
-        /// Setup OpenGL and load resources here.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        protected override void OnLoad(EventArgs e)
-        {
-            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
-
-            this.CgContext = CgNet.Context.Create();
-            CgGL.SetDebugMode(false);
-            this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
-
-            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.vertexProfile);
-
-            this.vertexProgram =
-                this.CgContext.CreateProgramFromFile(
-                    ProgramType.Source, /* Program in human-readable form */
-                    VertexProgramFileName, /* Name of file containing program */
-                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    VertexProgramName, /* Entry function name */
-                    null); /* No extra compiler options */
-            this.vertexProgram.Load();
-
-            this.vertexParamModelViewProj = vertexProgram.GetNamedParameter("modelViewProj");
-
-            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(fragmentProfile);
-
-            /* Specify fragment program with a string. */
-            fragmentProgram =
-                this.CgContext.CreateProgram(
-                    ProgramType.Source, /* Program in human-readable form */
-                    "float4 main(uniform float4 c) : COLOR { return c; }",
-                    fragmentProfile, /* Profile: latest fragment profile */
-                    "main", /* Entry function name */
-                    null); /* No extra compiler options */
-            this.fragmentProgram.Load();
-
-            this.fragmentParamC = fragmentProgram.GetNamedParameter("c");
-        }
-
-        /// <summary>
         /// Add your game rendering code here.
         /// </summary>
         /// <param name="e">Contains timing information.</param>
@@ -152,6 +110,48 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.DisableProfile(fragmentProfile);
 
             this.SwapBuffers();
+        }
+
+        /// <summary>
+        /// Setup OpenGL and load resources here.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected override void OnLoad(EventArgs e)
+        {
+            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
+
+            this.CgContext = CgNet.Context.Create();
+            CgGL.SetDebugMode(false);
+            this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
+
+            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(this.vertexProfile);
+
+            this.vertexProgram =
+                this.CgContext.CreateProgramFromFile(
+                    ProgramType.Source, /* Program in human-readable form */
+                    VertexProgramFileName, /* Name of file containing program */
+                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    VertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
+            this.vertexProgram.Load();
+
+            this.vertexParamModelViewProj = vertexProgram.GetNamedParameter("modelViewProj");
+
+            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
+            CgGL.SetOptimalOptions(fragmentProfile);
+
+            /* Specify fragment program with a string. */
+            fragmentProgram =
+                this.CgContext.CreateProgram(
+                    ProgramType.Source, /* Program in human-readable form */
+                    "float4 main(uniform float4 c) : COLOR { return c; }",
+                    fragmentProfile, /* Profile: latest fragment profile */
+                    "main", /* Entry function name */
+                    null); /* No extra compiler options */
+            this.fragmentProgram.Load();
+
+            this.fragmentParamC = fragmentProgram.GetNamedParameter("c");
         }
 
         /// <summary>

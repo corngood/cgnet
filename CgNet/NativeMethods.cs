@@ -21,7 +21,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
+ */
 namespace CgNet
 {
     using System;
@@ -34,7 +34,7 @@ namespace CgNet
     /// <remarks>
     ///     Binds functions and definitions in cg.dll or libcg.so.
     /// </remarks>
-    internal static class CgNativeMethods
+    internal static class NativeMethods
     {
         #region Fields
 
@@ -52,7 +52,7 @@ namespace CgNet
         public delegate void CgIncludeCallbackFunc(IntPtr context, string filename);
 
         /// <summary>
-        ///    
+        ///
         /// </summary>
         // typedef void (*CGerrorCallbackFunc)(void);
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -511,7 +511,7 @@ namespace CgNet
         ///    Used to get the first leaf parameter from the specified program.
         /// </summary>
         /// <remarks>
-        ///    Leaf params read into params that are structs as well, eliminating the need to explictly 
+        ///    Leaf params read into params that are structs as well, eliminating the need to explictly
         ///    determine if the param is a struct or other type.
         /// </remarks>
         /// <param name="program">
@@ -651,6 +651,11 @@ namespace CgNet
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr cgGetFirstTechniqueAnnotation(IntPtr technique);
+
+        //CGparameter cgGetFirstUniformBufferParameter( CGparameter param );
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern IntPtr cgGetFirstUniformBufferParameter(IntPtr param);
 
         /// <summary>
         /// 
@@ -798,6 +803,11 @@ namespace CgNet
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr cgGetNamedEffectParameter(IntPtr effect, string name);
 
+        //CGparameter cgGetNamedEffectUniformBuffer( CGeffect effect,       const char * blockName );
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern IntPtr cgGetNamedEffectUniformBuffer(IntPtr effect, string blockName);
+
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr cgGetNamedParameter(IntPtr program, string parameter);
@@ -926,6 +936,16 @@ namespace CgNet
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr cgGetNamedTechniqueAnnotation(IntPtr technique, string name);
+
+        //CGparameter cgGetNamedProgramUniformBuffer ( CGeffect program,       const char * blockName );
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern IntPtr cgGetNamedUniformBuffer(IntPtr program, string blockName);
+
+        //CGparameter cgGetNamedUniformBufferParameter( CGparameter param,  const char * name );
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern IntPtr cgGetNamedUniformBufferParameter(IntPtr param, string name);
 
         /// <summary>
         /// 
@@ -1460,6 +1480,10 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
+        public static extern ProfileType cgGetProfileSibling(ProfileType profile, Domain domain);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr cgGetProfileString(ProfileType profile);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -1518,6 +1542,10 @@ namespace CgNet
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         public static extern ProgramOutput cgGetProgramOutput(IntPtr program);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern int cgGetProgramOutputVertices(IntPtr program);
 
         /// <summary>
         ///     Gets the profile enumeration of the program.
@@ -1821,6 +1849,14 @@ namespace CgNet
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr cgGetTypeString(ParameterType type);
 
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern string cgGetUniformBufferBlockName(IntPtr param);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern IntPtr cgGetUniformBufferParameter(IntPtr param);
+
         /// <summary>
         /// 
         /// </summary>
@@ -1842,6 +1878,10 @@ namespace CgNet
         [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool cgIsAnnotation(IntPtr annotation);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern bool cgIsBuffer(IntPtr buffer);
 
         /// <summary>
         ///     Given the specified context handle, returns true if it is a valid Cg context.
@@ -2564,6 +2604,10 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
+        public static extern void cgSetProgramOutputVertices(IntPtr handle, int value);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         public static extern void cgSetProgramProfile(IntPtr prog, ProfileType profile);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -2629,6 +2673,10 @@ namespace CgNet
         [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool cgSetTextureStateAssignment(IntPtr stateassignment, IntPtr param);
+
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern void cgSetUniformBufferParameter(IntPtr param, IntPtr buffer);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]

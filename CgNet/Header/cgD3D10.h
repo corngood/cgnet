@@ -1,6 +1,6 @@
 /*
  *
- * Copyright (c) 2002-2011, NVIDIA Corporation.
+ * Copyright (c) 2002-2012, NVIDIA Corporation.
  *
  *
  *
@@ -112,6 +112,9 @@ CGD3D10DLL_API HRESULT CGD3D10ENTRY cgD3D10GetLastError(void);
 CGD3D10DLL_API const char ** CGD3D10ENTRY cgD3D10GetOptimalOptions(CGprofile Profile);
 CGD3D10DLL_API const char * CGD3D10ENTRY cgD3D10TranslateCGerror(CGerror Error);
 CGD3D10DLL_API const char * CGD3D10ENTRY cgD3D10TranslateHRESULT(HRESULT hr);
+CGD3D10DLL_API CGbuffer CGD3D10ENTRY cgD3D10CreateBuffer(CGcontext Context, int size, const void *data, D3D10_USAGE bufferUsage);
+CGD3D10DLL_API CGbuffer CGD3D10ENTRY cgD3D10CreateBufferFromObject(CGcontext Context, ID3D10Buffer *obj, CGbool manageObject);
+CGD3D10DLL_API ID3D10Buffer * CGD3D10ENTRY cgD3D10GetBufferObject(CGbuffer buffer);
 
 #endif /* CGD3D10_EXPLICIT */
 

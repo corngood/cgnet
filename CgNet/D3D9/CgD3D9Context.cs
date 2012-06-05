@@ -28,17 +28,17 @@ namespace CgNet.D3D9
 
         public static bool GetManageTextureParameters(this Context context)
         {
-            return CgD3D9NativeMethods.cgD3D9GetManageTextureParameters(context.Handle);
+            return NativeMethods.cgD3D9GetManageTextureParameters(context.Handle);
         }
 
         public static void RegisterStates(this Context ctx)
         {
-            CgD3D9NativeMethods.cgD3D9RegisterStates(ctx.Handle);
+            NativeMethods.cgD3D9RegisterStates(ctx.Handle);
         }
 
         public static void SetManageTextureParameters(this Context ctx, bool flag)
         {
-            CgD3D9NativeMethods.cgD3D9SetManageTextureParameters(ctx.Handle, flag);
+            NativeMethods.cgD3D9SetManageTextureParameters(ctx.Handle, flag);
         }
 
         #endregion Public Static Methods

@@ -34,10 +34,11 @@ namespace CgNet
     public enum Behavior
     {
         Unknown = 0,
-        Latest = 1, /* latest behavior supported at runtime      */
-        Behavior2200 = 1000, /* default behavior                          */
+        Latest = 1,
+        Behavior2200 = 1000,
         Behavior3000 = 2000,
-        Current = Behavior3000 /* latest behavior supported at compile time */
+        Behavior3100 = 3000,
+        Current = Behavior3100
     }
 
     public enum BufferAccess
@@ -126,7 +127,9 @@ namespace CgNet
         IsTessellationControlProfile = 4149,
         IsTessellationEvaluationProfile = 4150,
         Patch = 4152, /* GetProgramInput and GetProgramOutput */
-        IsDirect3D11Profile = 4153
+        IsDirect3D11Profile = 4153,
+        SamplePos = 4420,
+        NumSamples = 4421,
     }
 
     public enum Domain
@@ -234,7 +237,8 @@ namespace CgNet
         Struct = 4,
         Array = 5,
         Sampler = 6,
-        Object = 7
+        Object = 7,
+        Buffer = 8
     }
 
     public enum ParameterDirection
@@ -265,17 +269,20 @@ namespace CgNet
         TypeStartEnum = 1024,
         Sampler = 1143,
         Sampler1D = 1065,
-        Sampler1Darray = 1138,
-        Sampler1Dshadow = 1313,
+        Sampler1DArray = 1138,
+        Sampler1DShadow = 1313,
         Sampler2D = 1066,
-        Sampler2Darray = 1139,
-        Sampler2Dshadow = 1314,
+        Sampler2DArray = 1139,
+        Sampler2DMS       = 1317,
+        Sampler2DMSArray  = 1318,
+        Sampler2DShadow = 1314,
+        SamplerRBuf       = 1316,
         Sampler3D = 1067,
-        Samplerbuf = 1144,
-        Samplercube = 1069,
-        Samplercubearray = 1140,
-        Samplerrect = 1068,
-        Samplerrectshadow = 1315,
+        SamplerBuf = 1144,
+        SamplerCube = 1069,
+        SamplerCubeArray = 1140,
+        SamplerRect = 1068,
+        SamplerRectShadow = 1315,
         Bool = 1114,
         Bool1 = 1115,
         Bool2 = 1116,
@@ -997,92 +1004,97 @@ namespace CgNet
 
         public static Behavior GetBehavior(string behaviorString)
         {
-            return CgNativeMethods.cgGetBehavior(behaviorString);
+            return NativeMethods.cgGetBehavior(behaviorString);
         }
 
-        public static string GetBehaviorString(Behavior behavior)
+        public static string GetBehavior(Behavior behavior)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetBehaviorString(behavior));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetBehaviorString(behavior));
         }
 
         public static Domain GetDomain(string domainString)
         {
-            return CgNativeMethods.cgGetDomain(domainString);
+            return NativeMethods.cgGetDomain(domainString);
         }
 
-        public static string GetDomainString(Domain domain)
+        public static string GetDomain(Domain domain)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetDomainString(domain));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetDomainString(domain));
         }
 
         public static int GetEnum(string enumString)
         {
-            return CgNativeMethods.cgGetEnum(enumString);
+            return NativeMethods.cgGetEnum(enumString);
         }
 
-        public static string GetEnumString(int @enum)
+        public static string GetEnum(int @enum)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetEnumString(@enum));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetEnumString(@enum));
         }
 
-        public static string GetErrorString(ErrorType error)
+        public static string GetError(ErrorType error)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetErrorString(error));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetErrorString(error));
         }
 
         public static ParameterClass GetParameterClassEnum(string pString)
         {
-            return CgNativeMethods.cgGetParameterClassEnum(pString);
+            return NativeMethods.cgGetParameterClassEnum(pString);
         }
 
         public static string GetParameterClassString(ParameterClass pc)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetParameterClassString(pc));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetParameterClassString(pc));
         }
 
         public static ProfileType GetProfile(string profile)
         {
-            return CgNativeMethods.cgGetProfile(profile);
+            return NativeMethods.cgGetProfile(profile);
         }
 
-        public static string GetProfileString(ProfileType profile)
+        public static string GetProfile(ProfileType profile)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetProfileString(profile));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetProfileString(profile));
+        }
+
+        public static ProfileType GetProfileSibling(ProfileType profile, Domain domain)
+        {
+            return NativeMethods.cgGetProfileSibling(profile, domain);
         }
 
         public static ResourceType GetResource(string resourceName)
         {
-            return CgNativeMethods.cgGetResource(resourceName);
+            return NativeMethods.cgGetResource(resourceName);
         }
 
-        public static string GetResourceString(ResourceType resource)
+        public static string GetResource(ResourceType resource)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetResourceString(resource));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetResourceString(resource));
         }
 
         public static string GetString(CgAll sname)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetString(sname));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetString(sname));
         }
 
         public static ParameterType GetType(string typeString)
         {
-            return CgNativeMethods.cgGetType(typeString);
+            return NativeMethods.cgGetType(typeString);
+        }
+
+        public static string GetType(ParameterType type)
+        {
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetTypeString(type));
         }
 
         public static ParameterType GetTypeBase(ParameterType type)
         {
-            return CgNativeMethods.cgGetTypeBase(type);
+            return NativeMethods.cgGetTypeBase(type);
         }
 
         public static ParameterClass GetTypeClass(ParameterType type)
         {
-            return CgNativeMethods.cgGetTypeClass(type);
-        }
-
-        public static string GetTypeString(ParameterType type)
-        {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetTypeString(type));
+            return NativeMethods.cgGetTypeClass(type);
         }
 
         #endregion Public Static Methods

@@ -51,11 +51,11 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetProgramContext(this.Handle);
+                var ptr = NativeMethods.cgGetProgramContext(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Context(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                {
+                    OwnsHandle = false
+                };
             }
         }
 
@@ -63,7 +63,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetNumProgramDomains(this.Handle);
+                return NativeMethods.cgGetNumProgramDomains(this.Handle);
             }
         }
 
@@ -71,11 +71,11 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetFirstProgramAnnotation(this.Handle);
+                var ptr = NativeMethods.cgGetFirstProgramAnnotation(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Annotation(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                {
+                    OwnsHandle = false
+                };
             }
         }
 
@@ -83,7 +83,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgIsProgramCompiled(this.Handle);
+                return NativeMethods.cgIsProgramCompiled(this.Handle);
             }
         }
 
@@ -91,7 +91,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgIsProgram(this.Handle);
+                return NativeMethods.cgIsProgram(this.Handle);
             }
         }
 
@@ -99,11 +99,24 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetNextProgram(this.Handle);
+                var ptr = NativeMethods.cgGetNextProgram(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Program(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                {
+                    OwnsHandle = false
+                };
+            }
+        }
+
+        public int OutputVertices
+        {
+            get
+            {
+               return NativeMethods.cgGetProgramOutputVertices(this.Handle);
+            }
+
+            set
+            {
+                 NativeMethods.cgSetProgramOutputVertices(this.Handle, value);
             }
         }
 
@@ -111,12 +124,12 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetProgramProfile(this.Handle);
+                return NativeMethods.cgGetProgramProfile(this.Handle);
             }
 
             set
             {
-                CgNativeMethods.cgSetProgramProfile(this.Handle, value);
+                NativeMethods.cgSetProgramProfile(this.Handle, value);
             }
         }
 
@@ -124,7 +137,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetProgramDomain(this.Handle);
+                return NativeMethods.cgGetProgramDomain(this.Handle);
             }
         }
 
@@ -132,7 +145,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetProgramInput(this.Handle);
+                return NativeMethods.cgGetProgramInput(this.Handle);
             }
         }
 
@@ -140,7 +153,7 @@ namespace CgNet
         {
             get
             {
-                return Cg.IntPtrToStringArray(CgNativeMethods.cgGetProgramOptions(this.Handle));
+                return Cg.IntPtrToStringArray(NativeMethods.cgGetProgramOptions(this.Handle));
             }
         }
 
@@ -148,7 +161,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetProgramOutput(this.Handle);
+                return NativeMethods.cgGetProgramOutput(this.Handle);
             }
         }
 
@@ -162,7 +175,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetNumUserTypes(this.Handle);
+                return NativeMethods.cgGetNumUserTypes(this.Handle);
             }
         }
 
@@ -182,7 +195,7 @@ namespace CgNet
                 buf[i] = programs[i].Handle;
             }
 
-            var ptr = CgNativeMethods.cgCombinePrograms(buf.Length, buf);
+            var ptr = NativeMethods.cgCombinePrograms(buf.Length, buf);
             return ptr == IntPtr.Zero ? null : new Program(ptr);
         }
 
@@ -207,135 +220,144 @@ namespace CgNet
 
         public Program Combine(Program exe1)
         {
-            var ptr = CgNativeMethods.cgCombinePrograms2(this.Handle, exe1.Handle);
+            var ptr = NativeMethods.cgCombinePrograms2(this.Handle, exe1.Handle);
             return ptr == IntPtr.Zero ? null : new Program(ptr);
         }
 
         public void Compile()
         {
-            CgNativeMethods.cgCompileProgram(this.Handle);
+            NativeMethods.cgCompileProgram(this.Handle);
         }
 
         public Program Copy()
         {
-            var ptr = CgNativeMethods.cgCopyProgram(this.Handle);
+            var ptr = NativeMethods.cgCopyProgram(this.Handle);
             return ptr == IntPtr.Zero ? null : new Program(ptr);
         }
 
         public Annotation CreateAnnotation(string name, ParameterType type)
         {
-            var ptr = CgNativeMethods.cgCreateProgramAnnotation(this.Handle, name, type);
+            var ptr = NativeMethods.cgCreateProgramAnnotation(this.Handle, name, type);
             return new Annotation(ptr);
         }
 
         public float[] EvaluateProgram(int ncomps, int nx, int ny, int nz)
         {
             var retValue = new float[ncomps * nx * ny * nz];
-            CgNativeMethods.cgEvaluateProgram(this.Handle, retValue, ncomps, nx, ny, nz);
+            NativeMethods.cgEvaluateProgram(this.Handle, retValue, ncomps, nx, ny, nz);
             return retValue;
         }
 
         public Buffer GetBuffer(int bufferIndex)
         {
-            var ptr = CgNativeMethods.cgGetProgramBuffer(this.Handle, bufferIndex);
+            var ptr = NativeMethods.cgGetProgramBuffer(this.Handle, bufferIndex);
             return ptr == IntPtr.Zero ? null : new Buffer(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public Parameter GetFirstLeafParameter(NameSpace nameSpace)
         {
-            var ptr = CgNativeMethods.cgGetFirstLeafParameter(this.Handle, nameSpace);
+            var ptr = NativeMethods.cgGetFirstLeafParameter(this.Handle, nameSpace);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public Parameter GetFirstParameter(NameSpace nameSpace)
         {
-            var ptr = CgNativeMethods.cgGetFirstParameter(this.Handle, nameSpace);
+            var ptr = NativeMethods.cgGetFirstParameter(this.Handle, nameSpace);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public Annotation GetNamedAnnotation(string name)
         {
-            var ptr = CgNativeMethods.cgGetNamedProgramAnnotation(this.Handle, name);
+            var ptr = NativeMethods.cgGetNamedProgramAnnotation(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Annotation(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public Parameter GetNamedParameter(NameSpace nameSpace, string name)
         {
-            var ptr = CgNativeMethods.cgGetNamedProgramParameter(this.Handle, nameSpace, name);
+            var ptr = NativeMethods.cgGetNamedProgramParameter(this.Handle, nameSpace, name);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public Parameter GetNamedParameter(string parameter)
         {
-            var ptr = CgNativeMethods.cgGetNamedParameter(this.Handle, parameter);
+            var ptr = NativeMethods.cgGetNamedParameter(this.Handle, parameter);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
+        }
+
+        public Parameter GetNamedProgramUniformBuffer(string blockName)
+        {
+            var ptr = NativeMethods.cgGetNamedUniformBuffer(this.Handle, blockName);
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
+            {
+                OwnsHandle = false
+            };
         }
 
         public ParameterType GetNamedUserType(string name)
         {
-            return CgNativeMethods.cgGetNamedUserType(this.Handle, name);
+            return NativeMethods.cgGetNamedUserType(this.Handle, name);
         }
 
         public ProfileType GetProgramDomainProfile(int index)
         {
-            return CgNativeMethods.cgGetProgramDomainProfile(this.Handle, index);
+            return NativeMethods.cgGetProgramDomainProfile(this.Handle, index);
         }
 
         public Program GetProgramDomainProgram(int index)
         {
-            var ptr = CgNativeMethods.cgGetProgramDomainProgram(this.Handle, index);
+            var ptr = NativeMethods.cgGetProgramDomainProgram(this.Handle, index);
             return ptr == IntPtr.Zero ? null : new Program(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public string GetProgramString(SourceType sourceType)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetProgramString(this.Handle, sourceType));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetProgramString(this.Handle, sourceType));
         }
 
         public ParameterType GetUserType(int index)
         {
-            return CgNativeMethods.cgGetUserType(this.Handle, index);
+            return NativeMethods.cgGetUserType(this.Handle, index);
         }
 
         public void SetLastListing(string listing)
         {
-            CgNativeMethods.cgSetLastListing(this.Handle, listing);
+            NativeMethods.cgSetLastListing(this.Handle, listing);
         }
 
         public void SetPassProgramParameters()
         {
-            CgNativeMethods.cgSetPassProgramParameters(this.Handle);
+            NativeMethods.cgSetPassProgramParameters(this.Handle);
         }
 
         public void SetProgramBuffer(int bufferIndex, Buffer buffer)
         {
-            CgNativeMethods.cgSetProgramBuffer(this.Handle, bufferIndex, buffer.Handle);
+            NativeMethods.cgSetProgramBuffer(this.Handle, bufferIndex, buffer.Handle);
         }
 
         public void UpdateParameters()
         {
-            CgNativeMethods.cgUpdateProgramParameters(this.Handle);
+            NativeMethods.cgUpdateProgramParameters(this.Handle);
         }
 
         #endregion Public Methods
@@ -350,7 +372,7 @@ namespace CgNet
         {
             if (this.OwnsHandle && this.Handle != IntPtr.Zero && this.IsProgram)
             {
-                CgNativeMethods.cgDestroyProgram(this.Handle);
+                NativeMethods.cgDestroyProgram(this.Handle);
             }
         }
 

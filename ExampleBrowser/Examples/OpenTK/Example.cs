@@ -58,14 +58,6 @@
         #endregion Public Methods
 
         #region Protected Static Methods
-        protected override void OnRenderFrame(FrameEventArgs e)
-        {
-            base.OnRenderFrame(e);
-            DoRender(e);
-            System.Windows.Forms.Application.DoEvents();
-        }
-
-        protected abstract void DoRender(FrameEventArgs e);
 
         protected static void BuildLookAtMatrix(double eyex, double eyey, double eyez,
             double centerx, double centery, double centerz,
@@ -516,6 +508,15 @@
         protected void CheckForCgError(object sender, ErrorEventArgs e)
         {
             Console.WriteLine("Cg Error: " + e.ErrorString);
+        }
+
+        protected abstract void DoRender(FrameEventArgs e);
+
+        protected override void OnRenderFrame(FrameEventArgs e)
+        {
+            base.OnRenderFrame(e);
+            DoRender(e);
+            System.Windows.Forms.Application.DoEvents();
         }
 
         #endregion Protected Methods

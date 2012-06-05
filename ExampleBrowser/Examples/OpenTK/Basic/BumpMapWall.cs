@@ -10,6 +10,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
     using global::OpenTK;
     using global::OpenTK.Graphics.OpenGL;
     using global::OpenTK.Input;
+
     using Glu = global::OpenTK.Graphics.Glu;
 
     [ExampleDescription(NodePath = "OpenTK/Basic/21 Bump Map Wall")]
@@ -49,6 +50,70 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         #region Methods
 
         #region Protected Methods
+
+        /// <summary>
+        /// Add your game rendering code here.
+        /// </summary>
+        /// <param name="e">Contains timing information.</param>
+        /// <remarks>There is no need to call the base implementation.</remarks>
+        protected override void DoRender(FrameEventArgs e)
+        {
+            float[] lightPosition = {
+                                        12.5f * (float)Math.Sin(this.myLightAngle),
+                                        12.5f * (float)Math.Cos(this.myLightAngle),
+                                        4
+                                    };
+
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            GL.LoadIdentity();
+            Glu.LookAt(
+                0.0, 0.0, 20.0,
+                0.0, 0.0, 0.0, /* XYZ view center */
+                0.0, 1.0, 0.0); /* Up is in positive Y direction */
+
+            vertexProgram.Bind();
+
+            this.vertexParamModelViewProj.SetStateMatrix(MatrixType.ModelviewProjectionMatrix, MatrixTransform.MatrixIdentity);
+
+            this.vertexParamLightPosition.Set(lightPosition);
+
+            CgGL.EnableProfile(vertexProfile);
+
+            fragmentProgram.Bind();
+
+            this.fragmentParamNormalMap.Enable();
+            this.fragmentParamNormalizeCube.Enable();
+
+            CgGL.EnableProfile(fragmentProfile);
+
+            vertexProgram.UpdateParameters();
+            fragmentProgram.UpdateParameters();
+
+            GL.Begin(BeginMode.Quads);
+            /* Counter clockwise (GL_CCW) winding */
+            GL.TexCoord2(0f, 0f);
+            GL.Vertex2(-7f, -7f);
+            GL.TexCoord2(1f, 0f);
+            GL.Vertex2(7f, -7f);
+            GL.TexCoord2(1f, 1f);
+            GL.Vertex2(7f, 7f);
+            GL.TexCoord2(0f, 1f);
+            GL.Vertex2(-7f, 7f);
+            GL.End();
+
+            CgGL.DisableProfile(vertexProfile);
+
+            CgGL.DisableProfile(fragmentProfile);
+
+            /*** Render light as white ball using fixed function pipe ***/
+
+            GL.Translate(lightPosition[0], lightPosition[1], lightPosition[2]);
+            GL.Color3(0.8f, 0.8f, 0.1f); /* yellow */
+            NativeMethods.glutSolidSphere(0.4, 12, 12);
+
+            this.SwapBuffers();
+        }
 
         /// <summary>
         /// Setup OpenGL and load resources here.
@@ -155,70 +220,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.fragmentParamNormalMap.SetTexture(texObj[1]);
 
             this.fragmentParamNormalizeCube.SetTexture(texObj[0]);
-        }
-
-        /// <summary>
-        /// Add your game rendering code here.
-        /// </summary>
-        /// <param name="e">Contains timing information.</param>
-        /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void DoRender(FrameEventArgs e)
-        {
-            float[] lightPosition = {
-                                        12.5f * (float)Math.Sin(this.myLightAngle),
-                                        12.5f * (float)Math.Cos(this.myLightAngle),
-                                        4
-                                    };
-
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            GL.LoadIdentity();
-            Glu.LookAt(
-                0.0, 0.0, 20.0,
-                0.0, 0.0, 0.0, /* XYZ view center */
-                0.0, 1.0, 0.0); /* Up is in positive Y direction */
-
-            vertexProgram.Bind();
-
-            this.vertexParamModelViewProj.SetStateMatrix(MatrixType.ModelviewProjectionMatrix, MatrixTransform.MatrixIdentity);
-
-            this.vertexParamLightPosition.Set(lightPosition);
-
-            CgGL.EnableProfile(vertexProfile);
-
-            fragmentProgram.Bind();
-
-            this.fragmentParamNormalMap.Enable();
-            this.fragmentParamNormalizeCube.Enable();
-
-            CgGL.EnableProfile(fragmentProfile);
-
-            vertexProgram.UpdateParameters();
-            fragmentProgram.UpdateParameters();
-
-            GL.Begin(BeginMode.Quads);
-            /* Counter clockwise (GL_CCW) winding */
-            GL.TexCoord2(0f, 0f);
-            GL.Vertex2(-7f, -7f);
-            GL.TexCoord2(1f, 0f);
-            GL.Vertex2(7f, -7f);
-            GL.TexCoord2(1f, 1f);
-            GL.Vertex2(7f, 7f);
-            GL.TexCoord2(0f, 1f);
-            GL.Vertex2(-7f, 7f);
-            GL.End();
-
-            CgGL.DisableProfile(vertexProfile);
-
-            CgGL.DisableProfile(fragmentProfile);
-
-            /*** Render light as white ball using fixed function pipe ***/
-
-            GL.Translate(lightPosition[0], lightPosition[1], lightPosition[2]);
-            GL.Color3(0.8f, 0.8f, 0.1f); /* yellow */
-            NativeMethods.glutSolidSphere(0.4, 12, 12);
-
-            this.SwapBuffers();
         }
 
         /// <summary>

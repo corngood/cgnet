@@ -21,7 +21,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
+ */
 namespace CgNet.GL
 {
     using System;
@@ -31,7 +31,7 @@ namespace CgNet.GL
     using OpenTK;
     using OpenTK.Graphics.OpenGL;
 
-    internal static class CgGLNativeMethods
+    internal static class NativeMethods
     {
         #region Fields
 
@@ -41,6 +41,34 @@ namespace CgNet.GL
         #endregion Fields
 
         #region Methods
+
+        #region Public Static Methods
+
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern IntPtr cgGLCreateBufferFromObject(IntPtr handle, OpenTK.Graphics.OpenGL.BufferUsageHint flags, [MarshalAs(UnmanagedType.Bool)] bool manageObject);
+
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern GlslVersion cgGLDetectGLSLVersion();
+
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern GlslVersion cgGLGetContextGLSLVersion(IntPtr handle);
+
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern IntPtr cgGLGetContextOptimalOptions(IntPtr handle, ProfileType profile);
+
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern void cgGLSetContextGLSLVersion(IntPtr handle, GlslVersion version);
+
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern void cgGLSetContextOptimalOptions(IntPtr handle, ProfileType profile);
+
+        #endregion Public Static Methods
 
         #region Internal Static Methods
 
@@ -128,10 +156,19 @@ namespace CgNet.GL
 
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
+        internal static extern GlslVersion cgGLGetGLSLVersion(string version);
+
+        //const char * cgGLGetGLSLVersionString( CGGLglslversion version );
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        internal static extern string cgGLGetGLSLVersionString(GlslVersion version);
+
+        [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern ProfileType cgGLGetLatestProfile(ProfileClass profileType);
 
         /// <summary>
-        /// Retreives the manage texture parameters flag from a context 
+        /// Retreives the manage texture parameters flag from a context
         /// </summary>
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -450,7 +487,7 @@ namespace CgNet.GL
         internal static extern void cgGLLoadProgram(IntPtr program);
 
         /// <summary>
-        ///  
+        ///
         /// </summary>
         // CGGLDLL_API void cgGLRegisterStates(CGcontext);
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]
@@ -992,7 +1029,7 @@ namespace CgNet.GL
         internal static extern void cgGLSetTextureParameter(IntPtr param, int texobj);
 
         /// <summary>
-        ///  
+        ///
         /// </summary>
         // CGGLDLL_API void cgGLSetupSampler(CGparameter param, GLuint texobj);
         [DllImport(CgGLNativeLibrary, CallingConvention = Convention)]

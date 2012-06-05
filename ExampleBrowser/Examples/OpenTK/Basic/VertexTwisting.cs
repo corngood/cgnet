@@ -43,6 +43,32 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         #region Protected Methods
 
+        /// <summary>
+        /// Add your game rendering code here.
+        /// </summary>
+        /// <param name="e">Contains timing information.</param>
+        /// <remarks>There is no need to call the base implementation.</remarks>
+        protected override void DoRender(FrameEventArgs e)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            vertexParam_twisting.Set(myTwisting);
+
+            this.vertexProgram.Bind();
+
+            CgGL.EnableProfile(this.vertexProfile);
+
+            this.fragmentProgram.Bind();
+
+            CgGL.EnableProfile(this.fragmentProfile);
+
+            DrawSubDividedTriangle(5);
+
+            CgGL.DisableProfile(this.vertexProfile);
+
+            CgGL.DisableProfile(this.fragmentProfile);
+            this.SwapBuffers();
+        }
+
         protected override void OnKeyPress(global::OpenTK.KeyPressEventArgs e)
         {
             base.OnKeyPress(e);
@@ -97,32 +123,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.fragmentProgram.Load();
-        }
-
-        /// <summary>
-        /// Add your game rendering code here.
-        /// </summary>
-        /// <param name="e">Contains timing information.</param>
-        /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void DoRender(FrameEventArgs e)
-        {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            vertexParam_twisting.Set(myTwisting);
-
-            this.vertexProgram.Bind();
-
-            CgGL.EnableProfile(this.vertexProfile);
-
-            this.fragmentProgram.Bind();
-
-            CgGL.EnableProfile(this.fragmentProfile);
-
-            DrawSubDividedTriangle(5);
-
-            CgGL.DisableProfile(this.vertexProfile);
-
-            CgGL.DisableProfile(this.fragmentProfile);
-            this.SwapBuffers();
         }
 
         /// <summary>

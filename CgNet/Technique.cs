@@ -51,7 +51,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetTechniqueEffect(this.Handle);
+                var ptr = NativeMethods.cgGetTechniqueEffect(this.Handle);
 
                 return ptr == IntPtr.Zero ? null : new Effect(ptr)
                                                    {
@@ -64,7 +64,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetFirstTechniqueAnnotation(this.Handle);
+                var ptr = NativeMethods.cgGetFirstTechniqueAnnotation(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -76,7 +76,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetFirstPass(this.Handle);
+                var ptr = NativeMethods.cgGetFirstPass(this.Handle);
 
                 return ptr == IntPtr.Zero ? null : new Pass(ptr)
                                                    {
@@ -89,7 +89,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgIsTechnique(this.Handle);
+                return NativeMethods.cgIsTechnique(this.Handle);
             }
         }
 
@@ -97,7 +97,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgIsTechniqueValidated(this.Handle);
+                return NativeMethods.cgIsTechniqueValidated(this.Handle);
             }
         }
 
@@ -105,7 +105,7 @@ namespace CgNet
         {
             get
             {
-                return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetTechniqueName(this.Handle));
+                return Marshal.PtrToStringAnsi(NativeMethods.cgGetTechniqueName(this.Handle));
             }
         }
 
@@ -113,7 +113,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetNextTechnique(this.Handle);
+                var ptr = NativeMethods.cgGetNextTechnique(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Technique(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -148,19 +148,19 @@ namespace CgNet
 
         public Pass CreatePass(string name)
         {
-            var ptr = CgNativeMethods.cgCreatePass(this.Handle, name);
+            var ptr = NativeMethods.cgCreatePass(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Pass(ptr);
         }
 
         public Annotation CreateTechniqueAnnotation(string name, ParameterType type)
         {
-            var ptr = CgNativeMethods.cgCreateTechniqueAnnotation(this.Handle, name, type);
+            var ptr = NativeMethods.cgCreateTechniqueAnnotation(this.Handle, name, type);
             return ptr == IntPtr.Zero ? null : new Annotation(ptr);
         }
 
         public Annotation GetNamedAnnotation(string name)
         {
-            var ptr = CgNativeMethods.cgGetNamedTechniqueAnnotation(this.Handle, name);
+            var ptr = NativeMethods.cgGetNamedTechniqueAnnotation(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Annotation(ptr)
                                                {
                                                    OwnsHandle = false
@@ -169,7 +169,7 @@ namespace CgNet
 
         public Pass GetNamedPass(string name)
         {
-            var ptr = CgNativeMethods.cgGetNamedPass(this.Handle, name);
+            var ptr = NativeMethods.cgGetNamedPass(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Pass(ptr)
                                                {
                                                    OwnsHandle = false
@@ -178,12 +178,12 @@ namespace CgNet
 
         public void SetLastListing(string listing)
         {
-            CgNativeMethods.cgSetLastListing(this.Handle, listing);
+            NativeMethods.cgSetLastListing(this.Handle, listing);
         }
 
         public bool Validate()
         {
-            return CgNativeMethods.cgValidateTechnique(this.Handle);
+            return NativeMethods.cgValidateTechnique(this.Handle);
         }
 
         #endregion Public Methods

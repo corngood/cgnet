@@ -41,7 +41,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetNumUserTypes(this.Handle);
+                return NativeMethods.cgGetNumUserTypes(this.Handle);
             }
         }
 
@@ -69,12 +69,12 @@ namespace CgNet
 
         public ParameterType GetNamedUserType(string name)
         {
-            return CgNativeMethods.cgGetNamedUserType(this.Handle, name);
+            return NativeMethods.cgGetNamedUserType(this.Handle, name);
         }
 
         public ParameterType GetUserType(int index)
         {
-            return CgNativeMethods.cgGetUserType(this.Handle, index);
+            return NativeMethods.cgGetUserType(this.Handle, index);
         }
 
         #endregion Public Methods
@@ -85,7 +85,7 @@ namespace CgNet
         {
             if (this.OwnsHandle && this.Handle != IntPtr.Zero)
             {
-                CgNativeMethods.cgDestroyObj(this.Handle);
+                NativeMethods.cgDestroyObj(this.Handle);
             }
         }
 

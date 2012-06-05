@@ -36,6 +36,31 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         #region Protected Methods
 
         /// <summary>
+        /// Add your game rendering code here.
+        /// </summary>
+        /// <param name="e">Contains timing information.</param>
+        /// <remarks>There is no need to call the base implementation.</remarks>
+        protected override void DoRender(FrameEventArgs e)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            this.vertexProgram.Bind();
+
+            CgGL.EnableProfile(this.vertexProfile);
+
+            /* Rendering code verbatim from Chapter 1, Section 2.4.1 "Rendering
+               a Triangle with OpenGL" (page 57). */
+            GL.Begin(BeginMode.Triangles);
+            GL.Vertex2(-0.8f, 0.8f);
+            GL.Vertex2(0.8f, 0.8f);
+            GL.Vertex2(0.0f, -0.8f);
+            GL.End();
+
+            CgGL.DisableProfile(this.vertexProfile);
+            this.SwapBuffers();
+        }
+
+        /// <summary>
         /// Setup OpenGL and load resources here.
         /// </summary>
         /// <param name="e">Not used.</param>
@@ -60,31 +85,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     null); /* No extra compiler options */
 
             this.vertexProgram.Load();
-        }
-
-        /// <summary>
-        /// Add your game rendering code here.
-        /// </summary>
-        /// <param name="e">Contains timing information.</param>
-        /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void DoRender(FrameEventArgs e)
-        {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            this.vertexProgram.Bind();
-
-            CgGL.EnableProfile(this.vertexProfile);
-
-            /* Rendering code verbatim from Chapter 1, Section 2.4.1 "Rendering
-               a Triangle with OpenGL" (page 57). */
-            GL.Begin(BeginMode.Triangles);
-            GL.Vertex2(-0.8f, 0.8f);
-            GL.Vertex2(0.8f, 0.8f);
-            GL.Vertex2(0.0f, -0.8f);
-            GL.End();
-
-            CgGL.DisableProfile(this.vertexProfile);
-            this.SwapBuffers();
         }
 
         /// <summary>

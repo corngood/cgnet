@@ -52,7 +52,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterBaseResource(this.Handle);
+                return NativeMethods.cgGetParameterBaseResource(this.Handle);
             }
         }
 
@@ -60,7 +60,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterBaseType(this.Handle);
+                return NativeMethods.cgGetParameterBaseType(this.Handle);
             }
         }
 
@@ -68,7 +68,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterBufferIndex(this.Handle);
+                return NativeMethods.cgGetParameterBufferIndex(this.Handle);
             }
         }
 
@@ -76,7 +76,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterBufferOffset(this.Handle);
+                return NativeMethods.cgGetParameterBufferOffset(this.Handle);
             }
         }
 
@@ -84,7 +84,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterClass(this.Handle);
+                return NativeMethods.cgGetParameterClass(this.Handle);
             }
         }
 
@@ -92,7 +92,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterColumns(this.Handle);
+                return NativeMethods.cgGetParameterColumns(this.Handle);
             }
         }
 
@@ -100,11 +100,11 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetConnectedParameter(this.Handle);
+                var ptr = NativeMethods.cgGetConnectedParameter(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                {
+                    OwnsHandle = false
+                };
             }
         }
 
@@ -112,7 +112,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetNumConnectedToParameters(this.Handle);
+                return NativeMethods.cgGetNumConnectedToParameters(this.Handle);
             }
         }
 
@@ -120,11 +120,11 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetParameterContext(this.Handle);
+                var ptr = NativeMethods.cgGetParameterContext(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Context(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                {
+                    OwnsHandle = false
+                };
             }
         }
 
@@ -132,11 +132,11 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetParameterEffect(this.Handle);
+                var ptr = NativeMethods.cgGetParameterEffect(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Effect(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                {
+                    OwnsHandle = false
+                };
             }
         }
 
@@ -144,11 +144,11 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetFirstParameterAnnotation(this.Handle);
+                var ptr = NativeMethods.cgGetFirstParameterAnnotation(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Annotation(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                {
+                    OwnsHandle = false
+                };
             }
         }
 
@@ -156,11 +156,23 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetFirstSamplerStateAssignment(this.Handle);
+                var ptr = NativeMethods.cgGetFirstSamplerStateAssignment(this.Handle);
                 return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                {
+                    OwnsHandle = false
+                };
+            }
+        }
+
+        public Parameter FirstUniformBufferParameter
+        {
+            get
+            {
+                var ptr = NativeMethods.cgGetFirstUniformBufferParameter(this.Handle);
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
+                {
+                    OwnsHandle = false
+                };
             }
         }
 
@@ -168,7 +180,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterIndex(this.Handle);
+                return NativeMethods.cgGetParameterIndex(this.Handle);
             }
         }
 
@@ -176,7 +188,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgIsParameterGlobal(this.Handle);
+                return NativeMethods.cgIsParameterGlobal(this.Handle);
             }
         }
 
@@ -184,7 +196,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgIsParameter(this.Handle);
+                return NativeMethods.cgIsParameter(this.Handle);
             }
         }
 
@@ -192,7 +204,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgIsParameterReferenced(this.Handle);
+                return NativeMethods.cgIsParameterReferenced(this.Handle);
             }
         }
 
@@ -200,7 +212,7 @@ namespace CgNet
         {
             get
             {
-                return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetParameterName(this.Handle));
+                return Marshal.PtrToStringAnsi(NativeMethods.cgGetParameterName(this.Handle));
             }
         }
 
@@ -208,7 +220,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterNamedType(this.Handle);
+                return NativeMethods.cgGetParameterNamedType(this.Handle);
             }
         }
 
@@ -216,11 +228,11 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetNextLeafParameter(this.Handle);
+                var ptr = NativeMethods.cgGetNextLeafParameter(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                {
+                    OwnsHandle = false
+                };
             }
         }
 
@@ -228,11 +240,11 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetNextParameter(this.Handle);
+                var ptr = NativeMethods.cgGetNextParameter(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                {
+                    OwnsHandle = false
+                };
             }
         }
 
@@ -240,7 +252,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterOrdinalNumber(this.Handle);
+                return NativeMethods.cgGetParameterOrdinalNumber(this.Handle);
             }
         }
 
@@ -248,7 +260,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterDirection(this.Handle);
+                return NativeMethods.cgGetParameterDirection(this.Handle);
             }
         }
 
@@ -256,11 +268,11 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetParameterProgram(this.Handle);
+                var ptr = NativeMethods.cgGetParameterProgram(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Program(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                {
+                    OwnsHandle = false
+                };
             }
         }
 
@@ -268,7 +280,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterResource(this.Handle);
+                return NativeMethods.cgGetParameterResource(this.Handle);
             }
         }
 
@@ -276,7 +288,7 @@ namespace CgNet
         {
             get
             {
-                return (int)CgNativeMethods.cgGetParameterResourceIndex(this.Handle);
+                return (int)NativeMethods.cgGetParameterResourceIndex(this.Handle);
             }
         }
 
@@ -284,7 +296,7 @@ namespace CgNet
         {
             get
             {
-                return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetParameterResourceName(this.Handle));
+                return Marshal.PtrToStringAnsi(NativeMethods.cgGetParameterResourceName(this.Handle));
             }
         }
 
@@ -292,7 +304,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterResourceSize(this.Handle);
+                return NativeMethods.cgGetParameterResourceSize(this.Handle);
             }
         }
 
@@ -300,7 +312,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterResourceType(this.Handle);
+                return NativeMethods.cgGetParameterResourceType(this.Handle);
             }
         }
 
@@ -308,7 +320,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterRows(this.Handle);
+                return NativeMethods.cgGetParameterRows(this.Handle);
             }
         }
 
@@ -316,7 +328,7 @@ namespace CgNet
         {
             get
             {
-                return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetParameterSemantic(this.Handle));
+                return Marshal.PtrToStringAnsi(NativeMethods.cgGetParameterSemantic(this.Handle));
             }
 
             set
@@ -326,7 +338,7 @@ namespace CgNet
                     throw new ArgumentNullException("value");
                 }
 
-                CgNativeMethods.cgSetParameterSemantic(this.Handle, value);
+                NativeMethods.cgSetParameterSemantic(this.Handle, value);
             }
         }
 
@@ -334,7 +346,32 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterType(this.Handle);
+                return NativeMethods.cgGetParameterType(this.Handle);
+            }
+        }
+
+        public Buffer UniformBuffer
+        {
+            get
+            {
+                var ptr = NativeMethods.cgGetUniformBufferParameter(this.Handle);
+                return ptr == IntPtr.Zero ? null : new Buffer(ptr)
+                {
+                    OwnsHandle = false
+                };
+            }
+
+            set
+            {
+                NativeMethods.cgSetUniformBufferParameter(this.Handle, value.Handle);
+            }
+        }
+
+        public string UniformBufferBlockName
+        {
+            get
+            {
+                return NativeMethods.cgGetUniformBufferBlockName(this.Handle);
             }
         }
 
@@ -342,7 +379,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetParameterVariability(this.Handle);
+                return NativeMethods.cgGetParameterVariability(this.Handle);
             }
 
             set
@@ -352,7 +389,7 @@ namespace CgNet
                     throw new ArgumentException("value must be CG_UNIFORM, CG_LITERAL, or CG_DEFAULT", "value");
                 }
 
-                CgNativeMethods.cgSetParameterVariability(this.Handle, value);
+                NativeMethods.cgSetParameterVariability(this.Handle, value);
             }
         }
 
@@ -366,7 +403,7 @@ namespace CgNet
 
         public static void ConnectParameters(Parameter from, Parameter to)
         {
-            CgNativeMethods.cgConnectParameter(from.Handle, to.Handle);
+            NativeMethods.cgConnectParameter(from.Handle, to.Handle);
         }
 
         public static Parameter Create(Context context, ParameterType type)
@@ -380,56 +417,56 @@ namespace CgNet
 
         public void Connect(Parameter to)
         {
-            CgNativeMethods.cgConnectParameter(this.Handle, to.Handle);
+            NativeMethods.cgConnectParameter(this.Handle, to.Handle);
         }
 
         public Annotation CreateAnnotation(string name, ParameterType type)
         {
-            var ptr = CgNativeMethods.cgCreateParameterAnnotation(this.Handle, name, type);
+            var ptr = NativeMethods.cgCreateParameterAnnotation(this.Handle, name, type);
             return ptr == IntPtr.Zero ? null : new Annotation(ptr);
         }
 
         public void Disconnect()
         {
-            CgNativeMethods.cgDisconnectParameter(this.Handle);
+            NativeMethods.cgDisconnectParameter(this.Handle);
         }
 
         public int GetArrayDimension()
         {
-            return CgNativeMethods.cgGetArrayDimension(this.Handle);
+            return NativeMethods.cgGetArrayDimension(this.Handle);
         }
 
         public Parameter GetArrayParameter(IntPtr aparam, int index)
         {
-            var ptr = CgNativeMethods.cgGetArrayParameter(this.Handle, index);
+            var ptr = NativeMethods.cgGetArrayParameter(this.Handle, index);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public int GetArraySize(int dimension)
         {
-            return CgNativeMethods.cgGetArraySize(this.Handle, dimension);
+            return NativeMethods.cgGetArraySize(this.Handle, dimension);
         }
 
         public int GetArrayTotalSize()
         {
-            return CgNativeMethods.cgGetArrayTotalSize(this.Handle);
+            return NativeMethods.cgGetArrayTotalSize(this.Handle);
         }
 
         public ParameterType GetArrayType()
         {
-            return CgNativeMethods.cgGetArrayType(this.Handle);
+            return NativeMethods.cgGetArrayType(this.Handle);
         }
 
         public Parameter GetConnectedToParameter(int index)
         {
-            var ptr = CgNativeMethods.cgGetConnectedToParameter(this.Handle, index);
+            var ptr = NativeMethods.cgGetConnectedToParameter(this.Handle, index);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public int GetDefaultValue(ref double[] values)
@@ -443,9 +480,9 @@ namespace CgNet
             switch (order)
             {
                 case Order.ColumnMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValuedc(param, values.Length, values);
+                    return NativeMethods.cgGetParameterDefaultValuedc(param, values.Length, values);
                 case Order.RowMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValuedr(param, values.Length, values);
+                    return NativeMethods.cgGetParameterDefaultValuedr(param, values.Length, values);
                 default:
                     throw new ArgumentOutOfRangeException("order");
             }
@@ -462,9 +499,9 @@ namespace CgNet
             switch (order)
             {
                 case Order.ColumnMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValueic(param, values.Length, values);
+                    return NativeMethods.cgGetParameterDefaultValueic(param, values.Length, values);
                 case Order.RowMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValueir(param, values.Length, values);
+                    return NativeMethods.cgGetParameterDefaultValueir(param, values.Length, values);
                 default:
                     throw new ArgumentOutOfRangeException("order");
             }
@@ -481,9 +518,9 @@ namespace CgNet
             switch (order)
             {
                 case Order.ColumnMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValuefc(param, values.Length, values);
+                    return NativeMethods.cgGetParameterDefaultValuefc(param, values.Length, values);
                 case Order.RowMajor:
-                    return CgNativeMethods.cgGetParameterDefaultValuefr(param, values.Length, values);
+                    return NativeMethods.cgGetParameterDefaultValuefr(param, values.Length, values);
                 default:
                     throw new ArgumentOutOfRangeException("order");
             }
@@ -491,29 +528,29 @@ namespace CgNet
 
         public Buffer GetEffectParameterBuffer()
         {
-            var ptr = CgNativeMethods.cgGetEffectParameterBuffer(this.Handle);
+            var ptr = NativeMethods.cgGetEffectParameterBuffer(this.Handle);
             return ptr == IntPtr.Zero ? null : new Buffer(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public Parameter GetFirstDependentParameter()
         {
-            var ptr = CgNativeMethods.cgGetFirstDependentParameter(this.Handle);
+            var ptr = NativeMethods.cgGetFirstDependentParameter(this.Handle);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public Parameter GetFirstStructParameter()
         {
-            var ptr = CgNativeMethods.cgGetFirstStructParameter(this.Handle);
+            var ptr = NativeMethods.cgGetFirstStructParameter(this.Handle);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public void GetMatrix(out int[] values)
@@ -551,10 +588,10 @@ namespace CgNet
                     switch (order)
                     {
                         case Order.ColumnMajor:
-                            CgNativeMethods.cgGetMatrixParameterdc(param, handle.AddrOfPinnedObject());
+                            NativeMethods.cgGetMatrixParameterdc(param, handle.AddrOfPinnedObject());
                             break;
                         case Order.RowMajor:
-                            CgNativeMethods.cgGetMatrixParameterdr(param, handle.AddrOfPinnedObject());
+                            NativeMethods.cgGetMatrixParameterdr(param, handle.AddrOfPinnedObject());
                             break;
                         default:
                             throw new InvalidEnumArgumentException("order");
@@ -565,10 +602,10 @@ namespace CgNet
                     switch (order)
                     {
                         case Order.ColumnMajor:
-                            CgNativeMethods.cgGetMatrixParameterfc(param, handle.AddrOfPinnedObject());
+                            NativeMethods.cgGetMatrixParameterfc(param, handle.AddrOfPinnedObject());
                             break;
                         case Order.RowMajor:
-                            CgNativeMethods.cgGetMatrixParameterfr(param, handle.AddrOfPinnedObject());
+                            NativeMethods.cgGetMatrixParameterfr(param, handle.AddrOfPinnedObject());
                             break;
                         default:
                             throw new InvalidEnumArgumentException("order");
@@ -579,10 +616,10 @@ namespace CgNet
                     switch (order)
                     {
                         case Order.ColumnMajor:
-                            CgNativeMethods.cgGetMatrixParameteric(param, handle.AddrOfPinnedObject());
+                            NativeMethods.cgGetMatrixParameteric(param, handle.AddrOfPinnedObject());
                             break;
                         case Order.RowMajor:
-                            CgNativeMethods.cgGetMatrixParameterir(param, handle.AddrOfPinnedObject());
+                            NativeMethods.cgGetMatrixParameterir(param, handle.AddrOfPinnedObject());
                             break;
                         default:
                             throw new InvalidEnumArgumentException("order");
@@ -603,48 +640,57 @@ namespace CgNet
 
         public Order GetMatrixOrder()
         {
-            return CgNativeMethods.cgGetMatrixParameterOrder(this.Handle);
+            return NativeMethods.cgGetMatrixParameterOrder(this.Handle);
         }
 
         public Annotation GetNamedAnnotation(string name)
         {
-            var ptr = CgNativeMethods.cgGetNamedParameterAnnotation(this.Handle, name);
+            var ptr = NativeMethods.cgGetNamedParameterAnnotation(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Annotation(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public StateAssignment GetNamedStateAssignment(string name)
         {
-            var ptr = CgNativeMethods.cgGetNamedSamplerStateAssignment(this.Handle, name);
+            var ptr = NativeMethods.cgGetNamedSamplerStateAssignment(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public Parameter GetNamedStructParameter(string name)
         {
-            var ptr = CgNativeMethods.cgGetNamedStructParameter(this.Handle, name);
+            var ptr = NativeMethods.cgGetNamedStructParameter(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
         }
 
         public Parameter GetNamedSubParameter(string name)
         {
-            var ptr = CgNativeMethods.cgGetNamedSubParameter(this.Handle, name);
+            var ptr = NativeMethods.cgGetNamedSubParameter(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            {
+                OwnsHandle = false
+            };
+        }
+
+        public Parameter GetNamedUniformBufferParameter(string name)
+        {
+            var ptr = NativeMethods.cgGetNamedUniformBufferParameter(this.Handle, name);
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
+            {
+                OwnsHandle = false
+            };
         }
 
         public string GetStringValue()
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStringParameterValue(this.Handle));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetStringParameterValue(this.Handle));
         }
 
         public void GetValue(ref int[] values)
@@ -660,10 +706,10 @@ namespace CgNet
                 switch (order)
                 {
                     case Order.ColumnMajor:
-                        CgNativeMethods.cgGetParameterValueic(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGetParameterValueic(this.Handle, values.Length, handle.AddrOfPinnedObject());
                         break;
                     case Order.RowMajor:
-                        CgNativeMethods.cgGetParameterValueir(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGetParameterValueir(this.Handle, values.Length, handle.AddrOfPinnedObject());
                         break;
                     default:
                         throw new InvalidEnumArgumentException("order");
@@ -688,10 +734,10 @@ namespace CgNet
                 switch (order)
                 {
                     case Order.ColumnMajor:
-                        CgNativeMethods.cgGetParameterValuedc(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGetParameterValuedc(this.Handle, values.Length, handle.AddrOfPinnedObject());
                         break;
                     case Order.RowMajor:
-                        CgNativeMethods.cgGetParameterValuedr(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGetParameterValuedr(this.Handle, values.Length, handle.AddrOfPinnedObject());
                         break;
                     default:
                         throw new InvalidEnumArgumentException("order");
@@ -716,10 +762,10 @@ namespace CgNet
                 switch (order)
                 {
                     case Order.ColumnMajor:
-                        CgNativeMethods.cgGetParameterValuefc(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGetParameterValuefc(this.Handle, values.Length, handle.AddrOfPinnedObject());
                         break;
                     case Order.RowMajor:
-                        CgNativeMethods.cgGetParameterValuefr(this.Handle, values.Length, handle.AddrOfPinnedObject());
+                        NativeMethods.cgGetParameterValuefr(this.Handle, values.Length, handle.AddrOfPinnedObject());
                         break;
                     default:
                         throw new InvalidEnumArgumentException("order");
@@ -740,15 +786,15 @@ namespace CgNet
             {
                 if (typeof(T) == typeof(int))
                 {
-                    CgNativeMethods.cgGetParameterValueir(this.Handle, f.Length, handle.AddrOfPinnedObject());
+                    NativeMethods.cgGetParameterValueir(this.Handle, f.Length, handle.AddrOfPinnedObject());
                 }
                 else if (typeof(T) == typeof(double))
                 {
-                    CgNativeMethods.cgGetParameterValuedr(this.Handle, f.Length, handle.AddrOfPinnedObject());
+                    NativeMethods.cgGetParameterValuedr(this.Handle, f.Length, handle.AddrOfPinnedObject());
                 }
                 else if (typeof(T) == typeof(float))
                 {
-                    CgNativeMethods.cgGetParameterValuefr(this.Handle, f.Length, handle.AddrOfPinnedObject());
+                    NativeMethods.cgGetParameterValuefr(this.Handle, f.Length, handle.AddrOfPinnedObject());
                 }
             }
             finally
@@ -761,27 +807,27 @@ namespace CgNet
 
         public bool IsParameterUsed(WrapperObject container)
         {
-            return CgNativeMethods.cgIsParameterUsed(this.Handle, container.Handle);
+            return NativeMethods.cgIsParameterUsed(this.Handle, container.Handle);
         }
 
         public void Set(float x)
         {
-            CgNativeMethods.cgSetParameter1f(this.Handle, x);
+            NativeMethods.cgSetParameter1f(this.Handle, x);
         }
 
         public void Set(float x, float y)
         {
-            CgNativeMethods.cgSetParameter2f(this.Handle, x, y);
+            NativeMethods.cgSetParameter2f(this.Handle, x, y);
         }
 
         public void Set(float x, float y, float z)
         {
-            CgNativeMethods.cgSetParameter3f(this.Handle, x, y, z);
+            NativeMethods.cgSetParameter3f(this.Handle, x, y, z);
         }
 
         public void Set(float x, float y, float z, float w)
         {
-            CgNativeMethods.cgSetParameter4f(this.Handle, x, y, z, w);
+            NativeMethods.cgSetParameter4f(this.Handle, x, y, z, w);
         }
 
         public void Set(float[] v)
@@ -790,16 +836,16 @@ namespace CgNet
             switch (v.Length)
             {
                 case 1:
-                    CgNativeMethods.cgSetParameter1fv(param, v);
+                    NativeMethods.cgSetParameter1fv(param, v);
                     break;
                 case 2:
-                    CgNativeMethods.cgSetParameter2fv(param, v);
+                    NativeMethods.cgSetParameter2fv(param, v);
                     break;
                 case 3:
-                    CgNativeMethods.cgSetParameter3fv(param, v);
+                    NativeMethods.cgSetParameter3fv(param, v);
                     break;
                 case 4:
-                    CgNativeMethods.cgSetParameter4fv(param, v);
+                    NativeMethods.cgSetParameter4fv(param, v);
                     break;
                 default:
                     throw new ArgumentException();
@@ -808,22 +854,22 @@ namespace CgNet
 
         public void Set(int x)
         {
-            CgNativeMethods.cgSetParameter1i(this.Handle, x);
+            NativeMethods.cgSetParameter1i(this.Handle, x);
         }
 
         public void Set(int x, int y)
         {
-            CgNativeMethods.cgSetParameter2i(this.Handle, x, y);
+            NativeMethods.cgSetParameter2i(this.Handle, x, y);
         }
 
         public void Set(int x, int y, int z)
         {
-            CgNativeMethods.cgSetParameter3i(this.Handle, x, y, z);
+            NativeMethods.cgSetParameter3i(this.Handle, x, y, z);
         }
 
         public void Set(int x, int y, int z, int w)
         {
-            CgNativeMethods.cgSetParameter4i(this.Handle, x, y, z, w);
+            NativeMethods.cgSetParameter4i(this.Handle, x, y, z, w);
         }
 
         public void Set(int[] v)
@@ -832,16 +878,16 @@ namespace CgNet
             switch (v.Length)
             {
                 case 1:
-                    CgNativeMethods.cgSetParameter1iv(param, v);
+                    NativeMethods.cgSetParameter1iv(param, v);
                     break;
                 case 2:
-                    CgNativeMethods.cgSetParameter2iv(param, v);
+                    NativeMethods.cgSetParameter2iv(param, v);
                     break;
                 case 3:
-                    CgNativeMethods.cgSetParameter3iv(param, v);
+                    NativeMethods.cgSetParameter3iv(param, v);
                     break;
                 case 4:
-                    CgNativeMethods.cgSetParameter4iv(param, v);
+                    NativeMethods.cgSetParameter4iv(param, v);
                     break;
                 default:
                     throw new ArgumentException();
@@ -850,22 +896,22 @@ namespace CgNet
 
         public void Set(double x)
         {
-            CgNativeMethods.cgSetParameter1d(this.Handle, x);
+            NativeMethods.cgSetParameter1d(this.Handle, x);
         }
 
         public void Set(double x, double y)
         {
-            CgNativeMethods.cgSetParameter2d(this.Handle, x, y);
+            NativeMethods.cgSetParameter2d(this.Handle, x, y);
         }
 
         public void Set(double x, double y, double z)
         {
-            CgNativeMethods.cgSetParameter3d(this.Handle, x, y, z);
+            NativeMethods.cgSetParameter3d(this.Handle, x, y, z);
         }
 
         public void Set(double x, double y, double z, double w)
         {
-            CgNativeMethods.cgSetParameter4d(this.Handle, x, y, z, w);
+            NativeMethods.cgSetParameter4d(this.Handle, x, y, z, w);
         }
 
         public void Set(double[] v)
@@ -874,16 +920,16 @@ namespace CgNet
             switch (v.Length)
             {
                 case 1:
-                    CgNativeMethods.cgSetParameter1dv(param, v);
+                    NativeMethods.cgSetParameter1dv(param, v);
                     break;
                 case 2:
-                    CgNativeMethods.cgSetParameter2dv(param, v);
+                    NativeMethods.cgSetParameter2dv(param, v);
                     break;
                 case 3:
-                    CgNativeMethods.cgSetParameter3dv(param, v);
+                    NativeMethods.cgSetParameter3dv(param, v);
                     break;
                 case 4:
-                    CgNativeMethods.cgSetParameter4dv(param, v);
+                    NativeMethods.cgSetParameter4dv(param, v);
                     break;
                 default:
                     throw new ArgumentException();
@@ -892,72 +938,72 @@ namespace CgNet
 
         public void Set1(int[] v)
         {
-            CgNativeMethods.cgSetParameter1iv(this.Handle, v);
+            NativeMethods.cgSetParameter1iv(this.Handle, v);
         }
 
         public void Set1(float[] v)
         {
-            CgNativeMethods.cgSetParameter1fv(this.Handle, v);
+            NativeMethods.cgSetParameter1fv(this.Handle, v);
         }
 
         public void Set1(double[] v)
         {
-            CgNativeMethods.cgSetParameter1dv(this.Handle, v);
+            NativeMethods.cgSetParameter1dv(this.Handle, v);
         }
 
         public void Set2(int[] v)
         {
-            CgNativeMethods.cgSetParameter2iv(this.Handle, v);
+            NativeMethods.cgSetParameter2iv(this.Handle, v);
         }
 
         public void Set2(float[] v)
         {
-            CgNativeMethods.cgSetParameter2fv(this.Handle, v);
+            NativeMethods.cgSetParameter2fv(this.Handle, v);
         }
 
         public void Set2(double[] v)
         {
-            CgNativeMethods.cgSetParameter2dv(this.Handle, v);
+            NativeMethods.cgSetParameter2dv(this.Handle, v);
         }
 
         public void Set3(int[] v)
         {
-            CgNativeMethods.cgSetParameter3iv(this.Handle, v);
+            NativeMethods.cgSetParameter3iv(this.Handle, v);
         }
 
         public void Set3(float[] v)
         {
-            CgNativeMethods.cgSetParameter3fv(this.Handle, v);
+            NativeMethods.cgSetParameter3fv(this.Handle, v);
         }
 
         public void Set3(double[] v)
         {
-            CgNativeMethods.cgSetParameter3dv(this.Handle, v);
+            NativeMethods.cgSetParameter3dv(this.Handle, v);
         }
 
         public void Set4(int[] v)
         {
-            CgNativeMethods.cgSetParameter4iv(this.Handle, v);
+            NativeMethods.cgSetParameter4iv(this.Handle, v);
         }
 
         public void Set4(float[] v)
         {
-            CgNativeMethods.cgSetParameter4fv(this.Handle, v);
+            NativeMethods.cgSetParameter4fv(this.Handle, v);
         }
 
         public void Set4(double[] v)
         {
-            CgNativeMethods.cgSetParameter4dv(this.Handle, v);
+            NativeMethods.cgSetParameter4dv(this.Handle, v);
         }
 
         public void SetArraySize(int size)
         {
-            CgNativeMethods.cgSetArraySize(this.Handle, size);
+            NativeMethods.cgSetArraySize(this.Handle, size);
         }
 
         public void SetEffectParameterBuffer(Buffer buffer)
         {
-            CgNativeMethods.cgSetEffectParameterBuffer(this.Handle, buffer.Handle);
+            NativeMethods.cgSetEffectParameterBuffer(this.Handle, buffer.Handle);
         }
 
         public void SetMatrix(float[] matrix)
@@ -971,10 +1017,10 @@ namespace CgNet
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgNativeMethods.cgSetMatrixParameterfc(param, matrix);
+                    NativeMethods.cgSetMatrixParameterfc(param, matrix);
                     break;
                 case Order.RowMajor:
-                    CgNativeMethods.cgSetMatrixParameterfr(param, matrix);
+                    NativeMethods.cgSetMatrixParameterfr(param, matrix);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
@@ -992,10 +1038,10 @@ namespace CgNet
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgNativeMethods.cgSetMatrixParameterdc(param, matrix);
+                    NativeMethods.cgSetMatrixParameterdc(param, matrix);
                     break;
                 case Order.RowMajor:
-                    CgNativeMethods.cgSetMatrixParameterdr(param, matrix);
+                    NativeMethods.cgSetMatrixParameterdr(param, matrix);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
@@ -1013,10 +1059,10 @@ namespace CgNet
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgNativeMethods.cgSetMatrixParameteric(param, matrix);
+                    NativeMethods.cgSetMatrixParameteric(param, matrix);
                     break;
                 case Order.RowMajor:
-                    CgNativeMethods.cgSetMatrixParameterir(param, matrix);
+                    NativeMethods.cgSetMatrixParameterir(param, matrix);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
@@ -1025,17 +1071,17 @@ namespace CgNet
 
         public void SetMultiDimArraySize(int[] sizes)
         {
-            CgNativeMethods.cgSetMultiDimArraySize(this.Handle, sizes);
+            NativeMethods.cgSetMultiDimArraySize(this.Handle, sizes);
         }
 
         public void SetSamplerState()
         {
-            CgNativeMethods.cgSetSamplerState(this.Handle);
+            NativeMethods.cgSetSamplerState(this.Handle);
         }
 
         public void SetStringValue(string str)
         {
-            CgNativeMethods.cgSetStringParameterValue(this.Handle, str);
+            NativeMethods.cgSetStringParameterValue(this.Handle, str);
         }
 
         public void SetValue(double[] vals)
@@ -1049,10 +1095,10 @@ namespace CgNet
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgNativeMethods.cgSetParameterValuedc(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValuedc(param, vals.Length, vals);
                     break;
                 case Order.RowMajor:
-                    CgNativeMethods.cgSetParameterValuedr(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValuedr(param, vals.Length, vals);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
@@ -1070,10 +1116,10 @@ namespace CgNet
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgNativeMethods.cgSetParameterValuefc(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValuefc(param, vals.Length, vals);
                     break;
                 case Order.RowMajor:
-                    CgNativeMethods.cgSetParameterValuefr(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValuefr(param, vals.Length, vals);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
@@ -1091,10 +1137,10 @@ namespace CgNet
             switch (order)
             {
                 case Order.ColumnMajor:
-                    CgNativeMethods.cgSetParameterValueic(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValueic(param, vals.Length, vals);
                     break;
                 case Order.RowMajor:
-                    CgNativeMethods.cgSetParameterValueir(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValueir(param, vals.Length, vals);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
@@ -1109,7 +1155,7 @@ namespace CgNet
         {
             if (this.OwnsHandle && this.Handle != IntPtr.Zero && this.IsParameter)
             {
-                CgNativeMethods.cgDestroyParameter(this.Handle);
+                NativeMethods.cgDestroyParameter(this.Handle);
             }
         }
 

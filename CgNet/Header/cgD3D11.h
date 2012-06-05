@@ -1,6 +1,6 @@
 /*
  *
- * Copyright (c) 2002-2011, NVIDIA Corporation.
+ * Copyright (c) 2002-2012, NVIDIA Corporation.
  *
  *
  *
@@ -114,6 +114,9 @@ CGD3D11DLL_API const char ** CGD3D11ENTRY cgD3D11GetOptimalOptions(CGprofile Pro
 CGD3D11DLL_API const char * CGD3D11ENTRY cgD3D11TranslateCGerror(CGerror Error);
 CGD3D11DLL_API const char * CGD3D11ENTRY cgD3D11TranslateHRESULT(HRESULT hr);
 CGD3D11DLL_API void CGD3D11ENTRY cgD3D11UnbindProgram(CGprogram Program);
+CGD3D11DLL_API CGbuffer CGD3D11ENTRY cgD3D11CreateBuffer(CGcontext Context, int size, const void *data, D3D11_USAGE bufferUsage);
+CGD3D11DLL_API CGbuffer CGD3D11ENTRY cgD3D11CreateBufferFromObject(CGcontext Context, ID3D11Buffer *obj, CGbool manageObject);
+CGD3D11DLL_API ID3D11Buffer * CGD3D11ENTRY cgD3D11GetBufferObject(CGbuffer buffer);
 
 #endif /* CGD3D11_EXPLICIT */
 

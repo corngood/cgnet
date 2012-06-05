@@ -42,7 +42,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetConnectedStateAssignmentParameter(this.Handle);
+                var ptr = NativeMethods.cgGetConnectedStateAssignmentParameter(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -54,7 +54,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetNumDependentStateAssignmentParameters(this.Handle);
+                return NativeMethods.cgGetNumDependentStateAssignmentParameters(this.Handle);
             }
         }
 
@@ -62,7 +62,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetNumDependentProgramArrayStateAssignmentParameters(this.Handle);
+                return NativeMethods.cgGetNumDependentProgramArrayStateAssignmentParameters(this.Handle);
             }
         }
 
@@ -70,7 +70,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetStateAssignmentIndex(this.Handle);
+                return NativeMethods.cgGetStateAssignmentIndex(this.Handle);
             }
         }
 
@@ -78,7 +78,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgIsStateAssignment(this.Handle);
+                return NativeMethods.cgIsStateAssignment(this.Handle);
             }
         }
 
@@ -86,7 +86,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetNextStateAssignment(this.Handle);
+                var ptr = NativeMethods.cgGetNextStateAssignment(this.Handle);
                 return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -98,7 +98,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetStateAssignmentPass(this.Handle);
+                var ptr = NativeMethods.cgGetStateAssignmentPass(this.Handle);
                 return ptr == IntPtr.Zero ? null : new Pass(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -110,7 +110,7 @@ namespace CgNet
         {
             get
             {
-                var ptr = CgNativeMethods.cgGetStateAssignmentState(this.Handle);
+                var ptr = NativeMethods.cgGetStateAssignmentState(this.Handle);
                 return ptr == IntPtr.Zero ? null : new State(ptr)
                                                    {
                                                        OwnsHandle = false
@@ -129,13 +129,13 @@ namespace CgNet
         public bool[] GetBoolValues()
         {
             int count;
-            var values = CgNativeMethods.cgGetBoolStateAssignmentValues(this.Handle, out count);
+            var values = NativeMethods.cgGetBoolStateAssignmentValues(this.Handle, out count);
             return Cg.IntPtrToBoolArray(values, count);
         }
 
         public Parameter GetDependentParameter(int index)
         {
-            var ptr = CgNativeMethods.cgGetDependentStateAssignmentParameter(this.Handle, index);
+            var ptr = NativeMethods.cgGetDependentStateAssignmentParameter(this.Handle, index);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
@@ -144,7 +144,7 @@ namespace CgNet
 
         public Parameter GetDependentProgramArrayParameter(int index)
         {
-            var ptr = CgNativeMethods.cgGetDependentProgramArrayStateAssignmentParameter(this.Handle, index);
+            var ptr = NativeMethods.cgGetDependentProgramArrayStateAssignmentParameter(this.Handle, index);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
@@ -154,18 +154,18 @@ namespace CgNet
         public float[] GetFloatValues()
         {
             int nVals;
-            return CgNativeMethods.cgGetFloatStateAssignmentValues(this.Handle, out nVals);
+            return NativeMethods.cgGetFloatStateAssignmentValues(this.Handle, out nVals);
         }
 
         public int[] GetIntValues()
         {
             int nVals;
-            return CgNativeMethods.cgGetIntStateAssignmentValues(this.Handle, out nVals);
+            return NativeMethods.cgGetIntStateAssignmentValues(this.Handle, out nVals);
         }
 
         public Program GetProgramValue()
         {
-            var ptr = CgNativeMethods.cgGetProgramStateAssignmentValue(this.Handle);
+            var ptr = NativeMethods.cgGetProgramStateAssignmentValue(this.Handle);
             return ptr == IntPtr.Zero ? null : new Program(ptr)
                                                {
                                                    OwnsHandle = false
@@ -174,7 +174,7 @@ namespace CgNet
 
         public Parameter GetSamplerParameter()
         {
-            var ptr = CgNativeMethods.cgGetSamplerStateAssignmentParameter(this.Handle);
+            var ptr = NativeMethods.cgGetSamplerStateAssignmentParameter(this.Handle);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
@@ -183,7 +183,7 @@ namespace CgNet
 
         public State GetSamplerState()
         {
-            var ptr = CgNativeMethods.cgGetSamplerStateAssignmentState(this.Handle);
+            var ptr = NativeMethods.cgGetSamplerStateAssignmentState(this.Handle);
             return ptr == IntPtr.Zero ? null : new State(ptr)
                                                {
                                                    OwnsHandle = false
@@ -192,7 +192,7 @@ namespace CgNet
 
         public Parameter GetSamplerStateAssignmentValue()
         {
-            var ptr = CgNativeMethods.cgGetSamplerStateAssignmentValue(this.Handle);
+            var ptr = NativeMethods.cgGetSamplerStateAssignmentValue(this.Handle);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
@@ -201,12 +201,12 @@ namespace CgNet
 
         public string GetStringValue()
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetStringStateAssignmentValue(this.Handle));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetStringStateAssignmentValue(this.Handle));
         }
 
         public Parameter GetTextureStateAssignmentValue()
         {
-            var ptr = CgNativeMethods.cgGetTextureStateAssignmentValue(this.Handle);
+            var ptr = NativeMethods.cgGetTextureStateAssignmentValue(this.Handle);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
                                                {
                                                    OwnsHandle = false
@@ -215,57 +215,57 @@ namespace CgNet
 
         public bool Set(float value)
         {
-            return CgNativeMethods.cgSetFloatStateAssignment(this.Handle, value);
+            return NativeMethods.cgSetFloatStateAssignment(this.Handle, value);
         }
 
         public bool Set(int value)
         {
-            return CgNativeMethods.cgSetIntStateAssignment(this.Handle, value);
+            return NativeMethods.cgSetIntStateAssignment(this.Handle, value);
         }
 
         public bool Set(bool value)
         {
-            return CgNativeMethods.cgSetBoolStateAssignment(this.Handle, value);
+            return NativeMethods.cgSetBoolStateAssignment(this.Handle, value);
         }
 
         public bool Set(string value)
         {
-            return CgNativeMethods.cgSetStringStateAssignment(this.Handle, value);
+            return NativeMethods.cgSetStringStateAssignment(this.Handle, value);
         }
 
         public bool Set(float[] value)
         {
-            return CgNativeMethods.cgSetFloatArrayStateAssignment(this.Handle, value);
+            return NativeMethods.cgSetFloatArrayStateAssignment(this.Handle, value);
         }
 
         public bool Set(int[] value)
         {
-            return CgNativeMethods.cgSetIntArrayStateAssignment(this.Handle, value);
+            return NativeMethods.cgSetIntArrayStateAssignment(this.Handle, value);
         }
 
         public bool Set(bool[] value)
         {
-            return CgNativeMethods.cgSetBoolArrayStateAssignment(this.Handle, value);
+            return NativeMethods.cgSetBoolArrayStateAssignment(this.Handle, value);
         }
 
         public void SetLastListing(string listing)
         {
-            CgNativeMethods.cgSetLastListing(this.Handle, listing);
+            NativeMethods.cgSetLastListing(this.Handle, listing);
         }
 
         public bool SetProgram(Program program)
         {
-            return CgNativeMethods.cgSetProgramStateAssignment(this.Handle, program.Handle);
+            return NativeMethods.cgSetProgramStateAssignment(this.Handle, program.Handle);
         }
 
         public bool SetSampler(Parameter param)
         {
-            return CgNativeMethods.cgSetSamplerStateAssignment(this.Handle, param.Handle);
+            return NativeMethods.cgSetSamplerStateAssignment(this.Handle, param.Handle);
         }
 
         public bool SetTexture(Parameter param)
         {
-            return CgNativeMethods.cgSetTextureStateAssignment(this.Handle, param.Handle);
+            return NativeMethods.cgSetTextureStateAssignment(this.Handle, param.Handle);
         }
 
         #endregion Public Methods

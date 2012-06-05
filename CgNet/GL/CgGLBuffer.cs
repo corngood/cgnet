@@ -28,7 +28,7 @@ namespace CgNet.GL
 
         public static int GetBufferObject(this Buffer buffer)
         {
-            return CgGLNativeMethods.cgGLGetBufferObject(buffer.Handle);
+            return NativeMethods.cgGLGetBufferObject(buffer.Handle);
         }
 
         #endregion Public Static Methods

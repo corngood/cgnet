@@ -66,7 +66,7 @@ namespace CgNet
                 {
                     if (error == null)
                     {
-                        CgNativeMethods.cgSetErrorCallback(OnError);
+                        NativeMethods.cgSetErrorCallback(OnError);
                     }
 
                     error += value;
@@ -81,7 +81,7 @@ namespace CgNet
 
                     if (error == null)
                     {
-                        CgNativeMethods.cgSetErrorCallback(null);
+                        NativeMethods.cgSetErrorCallback(null);
                     }
                 }
             }
@@ -105,12 +105,12 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetLockingPolicy();
+                return NativeMethods.cgGetLockingPolicy();
             }
 
             set
             {
-                CgNativeMethods.cgSetLockingPolicy(value);
+                NativeMethods.cgSetLockingPolicy(value);
             }
         }
 
@@ -118,12 +118,12 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetSemanticCasePolicy();
+                return NativeMethods.cgGetSemanticCasePolicy();
             }
 
             set
             {
-                CgNativeMethods.cgSetSemanticCasePolicy(value);
+                NativeMethods.cgSetSemanticCasePolicy(value);
             }
         }
 
@@ -143,7 +143,7 @@ namespace CgNet
         {
             get
             {
-                return CgNativeMethods.cgGetNumSupportedProfiles();
+                return NativeMethods.cgGetNumSupportedProfiles();
             }
         }
 
@@ -157,87 +157,87 @@ namespace CgNet
 
         public static ErrorType GetError()
         {
-            return CgNativeMethods.cgGetError();
+            return NativeMethods.cgGetError();
         }
 
         public static CgErrorHandlerFuncDelegate GetErrorHandler(IntPtr data)
         {
-            return CgNativeMethods.cgGetErrorHandler(data);
+            return NativeMethods.cgGetErrorHandler(data);
         }
 
         public static ErrorType GetFirstError()
         {
-            return CgNativeMethods.cgGetFirstError();
+            return NativeMethods.cgGetFirstError();
         }
 
         public static string GetLastErrorString(out ErrorType error)
         {
-            return Marshal.PtrToStringAnsi(CgNativeMethods.cgGetLastErrorString(out error));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgGetLastErrorString(out error));
         }
 
         public static ParameterType GetMatrixSize(ParameterType type, out int nrows, out int ncols)
         {
-            return CgNativeMethods.cgGetMatrixSize(type, out nrows, out ncols);
+            return NativeMethods.cgGetMatrixSize(type, out nrows, out ncols);
         }
 
         public static ParameterType GetParentType(ParameterType type, int index)
         {
-            return CgNativeMethods.cgGetParentType(type, index);
+            return NativeMethods.cgGetParentType(type, index);
         }
 
         public static int GetParentTypesCount(ParameterType type)
         {
-            return CgNativeMethods.cgGetNumParentTypes(type);
+            return NativeMethods.cgGetNumParentTypes(type);
         }
 
         public static Domain GetProfileDomain(ProfileType profile)
         {
-            return CgNativeMethods.cgGetProfileDomain(profile);
+            return NativeMethods.cgGetProfileDomain(profile);
         }
 
         public static bool GetProfileProperty(ProfileType profile, Query query)
         {
-            return CgNativeMethods.cgGetProfileProperty(profile, query);
+            return NativeMethods.cgGetProfileProperty(profile, query);
         }
 
         public static int GetProgramBufferMaxIndex(ProfileType profile)
         {
-            return CgNativeMethods.cgGetProgramBufferMaxIndex(profile);
+            return NativeMethods.cgGetProgramBufferMaxIndex(profile);
         }
 
         public static int GetProgramBufferMaxSize(ProfileType profile)
         {
-            return CgNativeMethods.cgGetProgramBufferMaxSize(profile);
+            return NativeMethods.cgGetProgramBufferMaxSize(profile);
         }
 
         public static ProfileType GetSupportedProfile(int index)
         {
-            return CgNativeMethods.cgGetSupportedProfile(index);
+            return NativeMethods.cgGetSupportedProfile(index);
         }
 
         public static bool GetTypeSizes(ParameterType type, out int nrows, out int ncols)
         {
-            return CgNativeMethods.cgGetTypeSizes(type, out nrows, out ncols);
+            return NativeMethods.cgGetTypeSizes(type, out nrows, out ncols);
         }
 
         public static bool IsInterfaceType(ParameterType type)
         {
-            return CgNativeMethods.cgIsInterfaceType(type);
+            return NativeMethods.cgIsInterfaceType(type);
         }
 
         public static bool IsParentType(ParameterType parent, int child)
         {
-            return CgNativeMethods.cgIsParentType(parent, child);
+            return NativeMethods.cgIsParentType(parent, child);
         }
 
         public static bool IsProfileSupported(ProfileType profile)
         {
-            return CgNativeMethods.cgIsProfileSupported(profile);
+            return NativeMethods.cgIsProfileSupported(profile);
         }
 
         public static void SetErrorHandler(CgErrorHandlerFuncDelegate func, IntPtr data)
         {
-            CgNativeMethods.cgSetErrorHandler(func, data);
+            NativeMethods.cgSetErrorHandler(func, data);
         }
 
         #endregion Public Static Methods
@@ -254,7 +254,7 @@ namespace CgNet
                     var ii = (int*)values;
                     for (int i = 0; i < count; i++)
                     {
-                        retValue[i] = ii[i] == CgNativeMethods.CgTrue;
+                        retValue[i] = ii[i] == NativeMethods.CgTrue;
                     }
                 }
 

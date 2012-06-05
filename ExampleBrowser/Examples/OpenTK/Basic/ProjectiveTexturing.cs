@@ -20,7 +20,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         private const float EyeAngle = 0.53f; /* Angle in radians eye rotates around scene. */
         private const float EyeHeight = 5.0f; /* Vertical height of light. */
-        private const float LightHeight = 2.0f; /* Vertical height of light. */
 
         /* Page 254 */
         private const string FragmentProgramFileName = "Data/C9E6f_projTex.cg";
@@ -28,6 +27,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /* Page 254 */
         /* Page 254 */
         private const string FragmentProgramName = "C9E6f_projTex";
+        private const float LightHeight = 2.0f; /* Vertical height of light. */
         private const string VertexProgramFileName = "Data/C9E5v_projTex.cg";
 
         /* Page 254 */
@@ -74,55 +74,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         #endregion Public Static Methods
 
         #region Protected Methods
-
-        /// <summary>
-        /// Setup OpenGL and load resources here.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        protected override void OnLoad(EventArgs e)
-        {
-            GL.ClearColor(0.1f, 0.1f, 0.1f, 0.0f);
-            GL.Enable(EnableCap.DepthTest);
-            this.CgContext = CgNet.Context.Create();
-
-            CgGL.SetDebugMode(false);
-            this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
-            this.CgContext.SetManageTextureParameters(true);
-
-            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.vertexProfile);
-
-            this.vertexProgram =
-                this.CgContext.CreateProgramFromFile(
-                    ProgramType.Source, /* Program in human-readable form */
-                    VertexProgramFileName, /* Name of file containing program */
-                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    VertexProgramName, /* Entry function name */
-                    null); /* No extra compiler options */
-            this.vertexProgram.Load();
-
-            this.myCgVertexParamModelViewProj = this.vertexProgram.GetNamedParameter("modelViewProj");
-            this.myCgVertexParamLightPosition = this.vertexProgram.GetNamedParameter("lightPosition");
-            this.myCgVertexParamKd = this.vertexProgram.GetNamedParameter("Kd");
-            this.myCgVertexParamTextureMatrix = this.vertexProgram.GetNamedParameter("textureMatrix");
-
-            /* Set light source color parameters once. */
-            this.myCgVertexParamKd.Set(this.kd);
-
-            this.fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(this.fragmentProfile);
-
-            /* Specify "color passthrough" fragment program with a string. */
-            this.fragmentProgram =
-                this.CgContext.CreateProgramFromFile(
-                    ProgramType.Source, /* Program in human-readable form */
-                    FragmentProgramFileName,
-                    this.fragmentProfile, /* Profile: latest fragment profile */
-                    FragmentProgramName, /* Entry function name */
-                    null); /* No extra compiler options */
-            this.fragmentProgram.Load();
-            this.SetupDemonSampler();
-        }
 
         /// <summary>
         /// Add your game rendering code here.
@@ -313,6 +264,55 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.PopMatrix();
 
             this.SwapBuffers();
+        }
+
+        /// <summary>
+        /// Setup OpenGL and load resources here.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected override void OnLoad(EventArgs e)
+        {
+            GL.ClearColor(0.1f, 0.1f, 0.1f, 0.0f);
+            GL.Enable(EnableCap.DepthTest);
+            this.CgContext = CgNet.Context.Create();
+
+            CgGL.SetDebugMode(false);
+            this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
+            this.CgContext.SetManageTextureParameters(true);
+
+            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(this.vertexProfile);
+
+            this.vertexProgram =
+                this.CgContext.CreateProgramFromFile(
+                    ProgramType.Source, /* Program in human-readable form */
+                    VertexProgramFileName, /* Name of file containing program */
+                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    VertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
+            this.vertexProgram.Load();
+
+            this.myCgVertexParamModelViewProj = this.vertexProgram.GetNamedParameter("modelViewProj");
+            this.myCgVertexParamLightPosition = this.vertexProgram.GetNamedParameter("lightPosition");
+            this.myCgVertexParamKd = this.vertexProgram.GetNamedParameter("Kd");
+            this.myCgVertexParamTextureMatrix = this.vertexProgram.GetNamedParameter("textureMatrix");
+
+            /* Set light source color parameters once. */
+            this.myCgVertexParamKd.Set(this.kd);
+
+            this.fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
+            CgGL.SetOptimalOptions(this.fragmentProfile);
+
+            /* Specify "color passthrough" fragment program with a string. */
+            this.fragmentProgram =
+                this.CgContext.CreateProgramFromFile(
+                    ProgramType.Source, /* Program in human-readable form */
+                    FragmentProgramFileName,
+                    this.fragmentProfile, /* Profile: latest fragment profile */
+                    FragmentProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
+            this.fragmentProgram.Load();
+            this.SetupDemonSampler();
         }
 
         /// <summary>

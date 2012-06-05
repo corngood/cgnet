@@ -24,7 +24,7 @@ namespace CgNet.D3D9
     using System.Runtime.InteropServices;
     using System.Security;
 
-    internal static class CgD3D9NativeMethods
+    internal static class NativeMethods
     {
         #region Fields
 

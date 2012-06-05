@@ -133,7 +133,7 @@
                 fragmentProfile,        /* Profile: OpenGL ARB fragment program */
                 FragmentProgramName,      /* Entry function name */
                 null);                      /* No extra compiler options */
-      
+
             combinedProgram = Program.CombinePrograms(vertexProgram, fragmentProgram, geometryProgram);
             combinedProgram.Load();
             Debug.Assert(combinedProgram.DomainsCount == 3);

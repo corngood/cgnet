@@ -14,23 +14,20 @@
     {
         #region Fields
 
-        private Program combinedProgram;
         private const string FragmentProgramFileName = "Data/gs_simple.cg";
         private const string FragmentProgramName = "fragment_passthru";
+        private const string GeometryProgramFileName = "Data/gs_simple.cg";
+        private const string GeometryProgramName = "geometry_passthru";
         private const string VertexProgramFileName = "Data/gs_simple.cg";
         private const string VertexProgramName = "vertex_passthru";
 
-        private const string GeometryProgramFileName = "Data/gs_simple.cg";
-        private const string GeometryProgramName = "geometry_passthru";
-
+        private Program combinedProgram;
         private ProfileType fragmentProfile;
         private Program fragmentProgram;
-
-        private ProfileType vertexProfile;
-        private Program vertexProgram;
-
         private ProfileType geometryProfile;
         private Program geometryProgram;
+        private ProfileType vertexProfile;
+        private Program vertexProgram;
 
         #endregion Fields
 
@@ -46,6 +43,38 @@
         #region Methods
 
         #region Protected Methods
+
+        /// <summary>
+        /// Add your game rendering code here.
+        /// </summary>
+        /// <param name="e">Contains timing information.</param>
+        /// <remarks>There is no need to call the base implementation.</remarks>
+        protected override void DoRender(FrameEventArgs e)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            CgGL.EnableProfile(vertexProfile);
+            CgGL.EnableProfile(geometryProfile);
+            CgGL.EnableProfile(fragmentProfile);
+
+            if (combinedProgram != null)
+            {
+                combinedProgram.Bind();
+            }
+            else
+            {
+                vertexProgram.Bind();
+                geometryProgram.Bind();
+                fragmentProgram.Bind();
+            }
+
+            DrawStars();
+
+            CgGL.DisableProfile(vertexProfile);
+            CgGL.DisableProfile(geometryProfile);
+            CgGL.DisableProfile(fragmentProfile);
+            SwapBuffers();
+        }
 
         /// <summary>
         /// Setup OpenGL and load resources here.
@@ -78,7 +107,7 @@
                 ProgramType.Source,                  /* Program in human-readable form */
                 GeometryProgramFileName,  /* Name of file containing program */
                 geometryProfile,        /* Profile: OpenGL ARB geometry program */
-               GeometryProgramName,      /* Entry function name */
+                GeometryProgramName,      /* Entry function name */
                 null);                      /* No extra compiler options */
 
             vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
@@ -115,12 +144,9 @@
                 FragmentProgramName,      /* Entry function name */
                 null);                      /* No extra compiler options */
 
-            if
-            (
-             vertexProfile == ProfileType.GlslV &&
-              geometryProfile == ProfileType.GlslG &&
-              fragmentProfile == ProfileType.GlslF
-            )
+            if (vertexProfile == ProfileType.GlslV
+                && geometryProfile == ProfileType.GlslG
+                && fragmentProfile == ProfileType.GlslF)
             {
                 /* Combine programs for GLSL... */
                 combinedProgram = Program.CombinePrograms(vertexProgram, geometryProgram, fragmentProgram);
@@ -133,38 +159,6 @@
                 geometryProgram.Load();
                 fragmentProgram.Load();
             }
-        }
-
-        /// <summary>
-        /// Add your game rendering code here.
-        /// </summary>
-        /// <param name="e">Contains timing information.</param>
-        /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void DoRender(FrameEventArgs e)
-        {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            CgGL.EnableProfile(vertexProfile);
-            CgGL.EnableProfile(geometryProfile);
-            CgGL.EnableProfile(fragmentProfile);
-
-            if (combinedProgram != null)
-            {
-                combinedProgram.Bind();
-            }
-            else
-            {
-                vertexProgram.Bind();
-                geometryProgram.Bind();
-                fragmentProgram.Bind();
-            }
-
-            DrawStars();
-
-            CgGL.DisableProfile(vertexProfile);
-            CgGL.DisableProfile(geometryProfile);
-            CgGL.DisableProfile(fragmentProfile);
-            SwapBuffers();
         }
 
         /// <summary>
@@ -205,11 +199,11 @@
 
         #endregion Protected Methods
 
-        #region Private Methods
+        #region Private Static Methods
 
         private static void drawStar(float x, float y,
-                              int starPoints, float R, float r,
-                              float[] color)
+            int starPoints, float R, float r,
+            float[] color)
         {
             int i;
             double piOverStarPoints = 3.14159 / starPoints,
@@ -234,9 +228,13 @@
             GL.End();
         }
 
+        #endregion Private Static Methods
+
+        #region Private Methods
+
         private void DrawStars()
         {
-            float[] 
+            float[]
                 red = { 1, 0, 0 },
                 green = { 0, 1, 0 },
                 blue = { 0, 0, 1 },

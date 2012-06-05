@@ -20,10 +20,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
         private Parameter myCgVertexParam_modelViewProj, myCgVertexParam_globalAmbient, myCgVertexParam_lightColor, myCgVertexParam_lightPosition, myCgVertexParam_eyePosition, myCgVertexParam_Ke, myCgVertexParam_Ka, myCgVertexParam_Kd, myCgVertexParam_Ks, myCgVertexParam_shininess;
         private double myLightAngle = -0.4f; /* Angle light rotates around scene. */
-        private string VertexProgramFileName = "Data/C5E1v_basicLight.cg",
-                       /* Page 111 */ VertexProgramName = "C5E1v_basicLight";
         private ProfileType vertexProfile, fragmentProfile;
         private Program vertexProgram, fragmentProgram;
+        private string VertexProgramFileName = "Data/C5E1v_basicLight.cg",
+                       /* Page 111 */ VertexProgramName = "C5E1v_basicLight";
 
         #endregion Fields
 
@@ -39,60 +39,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         #region Methods
 
         #region Protected Methods
-
-        /// <summary>
-        /// Setup OpenGL and load resources here.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        protected override void OnLoad(EventArgs e)
-        {
-            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
-            GL.Enable(EnableCap.DepthTest);
-            this.CgContext = CgNet.Context.Create();
-
-            CgGL.SetDebugMode(false);
-            this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
-
-            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(vertexProfile);
-
-            vertexProgram =
-                CgContext.CreateProgramFromFile(
-                    ProgramType.Source, /* Program in human-readable form */
-                    VertexProgramFileName, /* Name of file containing program */
-                    vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    VertexProgramName, /* Entry function name */
-                    null); /* No extra compiler options */
-            vertexProgram.Load();
-
-            myCgVertexParam_modelViewProj = vertexProgram.GetNamedParameter("modelViewProj");
-            myCgVertexParam_globalAmbient = vertexProgram.GetNamedParameter("globalAmbient");
-            myCgVertexParam_lightColor = vertexProgram.GetNamedParameter("lightColor");
-            myCgVertexParam_lightPosition = vertexProgram.GetNamedParameter("lightPosition");
-            myCgVertexParam_eyePosition = vertexProgram.GetNamedParameter("eyePosition");
-            myCgVertexParam_Ke = vertexProgram.GetNamedParameter("Ke");
-            myCgVertexParam_Ka = vertexProgram.GetNamedParameter("Ka");
-            myCgVertexParam_Kd = vertexProgram.GetNamedParameter("Kd");
-            myCgVertexParam_Ks = vertexProgram.GetNamedParameter("Ks");
-            myCgVertexParam_shininess = vertexProgram.GetNamedParameter("shininess");
-
-            /* Set light source color parameters once. */
-            myCgVertexParam_globalAmbient.Set(myGlobalAmbient);
-            myCgVertexParam_lightColor.Set(myLightColor);
-
-            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(fragmentProfile);
-
-            /* Specify "color passthrough" fragment program with a string. */
-            fragmentProgram =
-                CgContext.CreateProgram(
-                    ProgramType.Source, /* Program in human-readable form */
-                    "float4 main(float4 c : COLOR) : COLOR { return c; }",
-                    fragmentProfile, /* Profile: latest fragment profile */
-                    "main", /* Entry function name */
-                    null); /* No extra compiler options */
-            fragmentProgram.Load();
-        }
 
         /// <summary>
         /// Add your game rendering code here.
@@ -207,6 +153,60 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.DisableProfile(fragmentProfile);
 
             this.SwapBuffers();
+        }
+
+        /// <summary>
+        /// Setup OpenGL and load resources here.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        protected override void OnLoad(EventArgs e)
+        {
+            GL.ClearColor(0.1f, 0.3f, 0.6f, 0.0f); /* Blue background */
+            GL.Enable(EnableCap.DepthTest);
+            this.CgContext = CgNet.Context.Create();
+
+            CgGL.SetDebugMode(false);
+            this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
+
+            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(vertexProfile);
+
+            vertexProgram =
+                CgContext.CreateProgramFromFile(
+                    ProgramType.Source, /* Program in human-readable form */
+                    VertexProgramFileName, /* Name of file containing program */
+                    vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    VertexProgramName, /* Entry function name */
+                    null); /* No extra compiler options */
+            vertexProgram.Load();
+
+            myCgVertexParam_modelViewProj = vertexProgram.GetNamedParameter("modelViewProj");
+            myCgVertexParam_globalAmbient = vertexProgram.GetNamedParameter("globalAmbient");
+            myCgVertexParam_lightColor = vertexProgram.GetNamedParameter("lightColor");
+            myCgVertexParam_lightPosition = vertexProgram.GetNamedParameter("lightPosition");
+            myCgVertexParam_eyePosition = vertexProgram.GetNamedParameter("eyePosition");
+            myCgVertexParam_Ke = vertexProgram.GetNamedParameter("Ke");
+            myCgVertexParam_Ka = vertexProgram.GetNamedParameter("Ka");
+            myCgVertexParam_Kd = vertexProgram.GetNamedParameter("Kd");
+            myCgVertexParam_Ks = vertexProgram.GetNamedParameter("Ks");
+            myCgVertexParam_shininess = vertexProgram.GetNamedParameter("shininess");
+
+            /* Set light source color parameters once. */
+            myCgVertexParam_globalAmbient.Set(myGlobalAmbient);
+            myCgVertexParam_lightColor.Set(myLightColor);
+
+            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
+            CgGL.SetOptimalOptions(fragmentProfile);
+
+            /* Specify "color passthrough" fragment program with a string. */
+            fragmentProgram =
+                CgContext.CreateProgram(
+                    ProgramType.Source, /* Program in human-readable form */
+                    "float4 main(float4 c : COLOR) : COLOR { return c; }",
+                    fragmentProfile, /* Profile: latest fragment profile */
+                    "main", /* Entry function name */
+                    null); /* No extra compiler options */
+            fragmentProgram.Load();
         }
 
         /// <summary>

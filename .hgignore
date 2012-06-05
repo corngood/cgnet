@@ -35,3 +35,4 @@ glob:*.csproj.ReSharper
 glob:*.testsettings
 glob:CgReferenceManual.chw
 *.docstates
+Tools/CgToCode/*

@@ -39,6 +39,14 @@ namespace CgNet.GL
         TessellationEvaluation = 12
     }
 
+    public enum GlslVersion
+    {
+        Default = 0,
+        Glsl_100     = 1,
+        Glsl_110     = 2,
+        Glsl_120     = 3
+    }
+
     public enum MatrixTransform
     {
         MatrixIdentity = 0,

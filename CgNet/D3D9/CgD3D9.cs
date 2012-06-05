@@ -23,16 +23,19 @@ namespace CgNet.D3D9
     using System;
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
+
+    using ParameterType = CgNet.ParameterType;
+
+    using ResourceType = CgNet.ResourceType;
+
     using SlimDX;
     using SlimDX.Direct3D9;
-    using ParameterType = CgNet.ParameterType;
-    using ResourceType = CgNet.ResourceType;
 
     public static class CgD3D9
     {
-        #region Methods
+        #region Properties
 
-        #region Public Static Methods
+        #region Public Static Properties
 
         public static IEnumerable<ProfileType> SupportedProfiles
         {
@@ -48,69 +51,77 @@ namespace CgNet.D3D9
             }
         }
 
+        #endregion Public Static Properties
+
+        #endregion Properties
+
+        #region Methods
+
+        #region Public Static Methods
+
         public static void EnableDebugTracing(bool enable)
         {
-            CgD3D9NativeMethods.cgD3D9EnableDebugTracing(enable);
+            NativeMethods.cgD3D9EnableDebugTracing(enable);
         }
 
         public static Device GetDevice()
         {
-            return Device.FromPointer(CgD3D9NativeMethods.cgD3D9GetDevice());
+            return Device.FromPointer(NativeMethods.cgD3D9GetDevice());
         }
 
         public static int GetLastError()
         {
-            return CgD3D9NativeMethods.cgD3D9GetLastError();
+            return NativeMethods.cgD3D9GetLastError();
         }
 
         public static ProfileType GetLatestPixelProfile()
         {
-            return CgD3D9NativeMethods.cgD3D9GetLatestPixelProfile();
+            return NativeMethods.cgD3D9GetLatestPixelProfile();
         }
 
         public static ProfileType GetLatestVertexProfile()
         {
-            return CgD3D9NativeMethods.cgD3D9GetLatestVertexProfile();
+            return NativeMethods.cgD3D9GetLatestVertexProfile();
         }
 
         public static string[] GetOptimalOptions(ProfileType profile)
         {
-            return Cg.IntPtrToStringArray(CgD3D9NativeMethods.cgD3D9GetOptimalOptions(profile));
+            return Cg.IntPtrToStringArray(NativeMethods.cgD3D9GetOptimalOptions(profile));
         }
 
         public static bool IsProfileSupported(ProfileType profile)
         {
-            return CgD3D9NativeMethods.cgD3D9IsProfileSupported(profile);
+            return NativeMethods.cgD3D9IsProfileSupported(profile);
         }
 
         public static DeclarationUsage ResourceTypeToDeclarationUsage(ResourceType resourceType)
         {
-            return (DeclarationUsage)CgD3D9NativeMethods.cgD3D9ResourceToDeclUsage(resourceType);
+            return (DeclarationUsage)NativeMethods.cgD3D9ResourceToDeclUsage(resourceType);
         }
 
         public static int SetDevice(Device device)
         {
-            return CgD3D9NativeMethods.cgD3D9SetDevice(device != null ? device.ComPointer : IntPtr.Zero);
+            return NativeMethods.cgD3D9SetDevice(device != null ? device.ComPointer : IntPtr.Zero);
         }
 
         public static string TranslateCgError(ErrorType error)
         {
-            return Marshal.PtrToStringAnsi(CgD3D9NativeMethods.cgD3D9TranslateCGerror(error));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgD3D9TranslateCGerror(error));
         }
 
         public static string TranslateResult(Result result)
         {
-            return Marshal.PtrToStringAnsi(CgD3D9NativeMethods.cgD3D9TranslateHRESULT(result.Code));
+            return Marshal.PtrToStringAnsi(NativeMethods.cgD3D9TranslateHRESULT(result.Code));
         }
 
         public static int TypeToSize(ParameterType type)
         {
-            return (int)CgD3D9NativeMethods.cgD3D9TypeToSize(type);
+            return (int)NativeMethods.cgD3D9TypeToSize(type);
         }
 
         public static void UnloadAllPrograms()
         {
-            CgD3D9NativeMethods.cgD3D9UnloadAllPrograms();
+            NativeMethods.cgD3D9UnloadAllPrograms();
         }
 
         #endregion Public Static Methods

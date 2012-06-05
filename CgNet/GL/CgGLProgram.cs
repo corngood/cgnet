@@ -28,37 +28,37 @@ namespace CgNet.GL
 
         public static void Bind(this Program program)
         {
-            CgGLNativeMethods.cgGLBindProgram(program.Handle);
+            NativeMethods.cgGLBindProgram(program.Handle);
         }
 
         public static void DisableProgramProfiles(this Program program)
         {
-            CgGLNativeMethods.cgGLDisableProgramProfiles(program.Handle);
+            NativeMethods.cgGLDisableProgramProfiles(program.Handle);
         }
 
         public static void EnableProgramProfiles(this Program program)
         {
-            CgGLNativeMethods.cgGLEnableProgramProfiles(program.Handle);
+            NativeMethods.cgGLEnableProgramProfiles(program.Handle);
         }
 
         public static int GetProgramID(this Program program)
         {
-            return CgGLNativeMethods.cgGLGetProgramID(program.Handle);
+            return NativeMethods.cgGLGetProgramID(program.Handle);
         }
 
         public static bool IsLoaded(this Program program)
         {
-            return CgGLNativeMethods.cgGLIsProgramLoaded(program.Handle);
+            return NativeMethods.cgGLIsProgramLoaded(program.Handle);
         }
 
         public static void Load(this Program program)
         {
-            CgGLNativeMethods.cgGLLoadProgram(program.Handle);
+            NativeMethods.cgGLLoadProgram(program.Handle);
         }
 
         public static void Unload(this Program program)
         {
-            CgGLNativeMethods.cgGLUnloadProgram(program.Handle);
+            NativeMethods.cgGLUnloadProgram(program.Handle);
         }
 
         #endregion Public Static Methods

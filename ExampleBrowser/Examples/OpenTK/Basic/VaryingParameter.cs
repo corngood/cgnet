@@ -40,6 +40,40 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         #region Protected Methods
 
         /// <summary>
+        /// Add your game rendering code here.
+        /// </summary>
+        /// <param name="e">Contains timing information.</param>
+        /// <remarks>There is no need to call the base implementation.</remarks>
+        protected override void DoRender(FrameEventArgs e)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            this.vertexProgram.Bind();
+
+            CgGL.EnableProfile(this.vertexProfile);
+
+            this.fragmentProgram.Bind();
+
+            CgGL.EnableProfile(this.fragmentProfile);
+
+            GL.Begin(BeginMode.Triangles);
+            GL.Color3(1f, 0f, 0f); /* Red */
+            GL.Vertex2(-0.8f, 0.8f);
+
+            GL.Color3(0f, 1f, 0f); /* Green */
+            GL.Vertex2(0.8f, 0.8f);
+
+            GL.Color3(0f, 0f, 1f); /* Blue */
+            GL.Vertex2(0.0f, -0.8f);
+            GL.End();
+
+            CgGL.DisableProfile(this.vertexProfile);
+
+            CgGL.DisableProfile(this.fragmentProfile);
+            this.SwapBuffers();
+        }
+
+        /// <summary>
         /// Setup OpenGL and load resources here.
         /// </summary>
         /// <param name="e">Not used.</param>
@@ -74,40 +108,6 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
             this.fragmentProgram.Load();
-        }
-
-        /// <summary>
-        /// Add your game rendering code here.
-        /// </summary>
-        /// <param name="e">Contains timing information.</param>
-        /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void DoRender(FrameEventArgs e)
-        {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            this.vertexProgram.Bind();
-
-            CgGL.EnableProfile(this.vertexProfile);
-
-            this.fragmentProgram.Bind();
-
-            CgGL.EnableProfile(this.fragmentProfile);
-
-            GL.Begin(BeginMode.Triangles);
-            GL.Color3(1f, 0f, 0f); /* Red */
-            GL.Vertex2(-0.8f, 0.8f);
-
-            GL.Color3(0f, 1f, 0f); /* Green */
-            GL.Vertex2(0.8f, 0.8f);
-
-            GL.Color3(0f, 0f, 1f); /* Blue */
-            GL.Vertex2(0.0f, -0.8f);
-            GL.End();
-
-            CgGL.DisableProfile(this.vertexProfile);
-
-            CgGL.DisableProfile(this.fragmentProfile);
-            this.SwapBuffers();
         }
 
         /// <summary>
