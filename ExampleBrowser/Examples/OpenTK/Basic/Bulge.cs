@@ -169,8 +169,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(vertexProfile);
+            vertexProfile = ProfileClass.Vertex.GetLatestProfile();
+            vertexProfile.SetOptimalOptions();
 
             vertexProgram =
                 this.CgContext.CreateProgramFromFile(
@@ -198,8 +198,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.vertexParamFrequency.Set(2.4f);
             this.vertexParamShininess.Set(35f);
 
-            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(fragmentProfile);
+            fragmentProfile = ProfileClass.Fragment.GetLatestProfile();
+            fragmentProfile.SetOptimalOptions();
 
             fragmentProgram =
                 this.CgContext.CreateProgram(

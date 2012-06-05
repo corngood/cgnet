@@ -137,8 +137,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.CgContext = CgNet.Context.Create();
             CgGL.SetDebugMode(false);
 
-            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(vertexProfile);
+            vertexProfile = ProfileClass.Vertex.GetLatestProfile();
+            vertexProfile.SetOptimalOptions();
 
             vertexProgram =
                 this.CgContext.CreateProgramFromFile(
@@ -159,8 +159,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.vertexParamModelViewProj =
                 vertexProgram.GetNamedParameter("modelViewProj");
 
-            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(fragmentProfile);
+            fragmentProfile = ProfileClass.Fragment.GetLatestProfile();
+            fragmentProfile.SetOptimalOptions();
 
             fragmentProgram =
                 this.CgContext.CreateProgramFromFile(

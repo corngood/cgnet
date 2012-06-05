@@ -111,7 +111,7 @@
             var x = CgContext.LastListing;
 
             vertexProfile = ProfileType.GlslV;
-            CgGL.SetOptimalOptions(vertexProfile);
+            vertexProfile.SetOptimalOptions();
 
             vertexProgram =
                Program.CreateFromFile(
@@ -123,7 +123,7 @@
                  null);                    /* No extra compiler options */
 
             fragmentProfile = ProfileType.GlslF;
-             CgGL.SetOptimalOptions(fragmentProfile);
+             fragmentProfile.SetOptimalOptions();
 
             fragmentProgram =
               Program.CreateFromFile(

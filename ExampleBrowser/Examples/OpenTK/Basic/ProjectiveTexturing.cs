@@ -280,8 +280,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
             this.CgContext.SetManageTextureParameters(true);
 
-            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(vertexProfile);
+            vertexProfile = ProfileClass.Vertex.GetLatestProfile();
+            vertexProfile.SetOptimalOptions();
 
             vertexProgram =
                 this.CgContext.CreateProgramFromFile(
@@ -300,8 +300,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             /* Set light source color parameters once. */
             this.myCgVertexParamKd.Set(this.kd);
 
-            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(fragmentProfile);
+            fragmentProfile = ProfileClass.Fragment.GetLatestProfile();
+            fragmentProfile.SetOptimalOptions();
 
             /* Specify "color passthrough" fragment program with a string. */
             fragmentProgram =

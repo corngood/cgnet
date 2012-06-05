@@ -74,8 +74,8 @@
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(vertexProfile);
+            vertexProfile = ProfileClass.Vertex.GetLatestProfile();
+            vertexProfile.SetOptimalOptions();
 
             vertexProgram =
                 this.CgContext.CreateProgramFromFile(
@@ -88,8 +88,8 @@
 
             this.vertexParamConstantColor = vertexProgram.GetNamedParameter("constantColor");
 
-            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(fragmentProfile);
+            fragmentProfile = ProfileClass.Fragment.GetLatestProfile();
+            fragmentProfile.SetOptimalOptions();
 
             fragmentProgram =
                 this.CgContext.CreateProgramFromFile(

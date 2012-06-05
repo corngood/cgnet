@@ -56,11 +56,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             vertexProgram.Bind();
-
             vertexProfile.Enable();
 
             fragmentProgram.Bind();
-
             fragmentProfile.Enable();
 
             /* modelView = rotateMatrix * translateMatrix */
@@ -123,8 +121,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(vertexProfile);
+            vertexProfile = ProfileClass.Vertex.GetLatestProfile();
+            vertexProfile.SetOptimalOptions();
 
             vertexProgram =
                 this.CgContext.CreateProgramFromFile(
@@ -137,8 +135,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             this.vertexParamModelViewProj = vertexProgram.GetNamedParameter("modelViewProj");
 
-            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(fragmentProfile);
+            fragmentProfile = ProfileClass.Fragment.GetLatestProfile();
+            fragmentProfile.SetOptimalOptions();
 
             /* Specify fragment program with a string. */
             fragmentProgram =

@@ -110,13 +110,13 @@
                 GeometryProgramName,      /* Entry function name */
                 null);                      /* No extra compiler options */
 
-            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            vertexProfile = ProfileClass.Vertex.GetLatestProfile();
             if (geometryProfile == ProfileType.GlslG)
             {
                 vertexProfile = ProfileType.GlslV;
             }
 
-            CgGL.SetOptimalOptions(vertexProfile);
+            vertexProfile.SetOptimalOptions();
 
             vertexProgram =
                Program.CreateFromFile(
@@ -127,13 +127,13 @@
                  VertexProgramName,      /* Entry function name */
                  null);                    /* No extra compiler options */
 
-            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
+            fragmentProfile = ProfileClass.Fragment.GetLatestProfile();
             if (geometryProfile == ProfileType.GlslG)
             {
                 fragmentProfile = ProfileType.GlslF;
             }
 
-            CgGL.SetOptimalOptions(fragmentProfile);
+            fragmentProfile.SetOptimalOptions();
 
             fragmentProgram =
               Program.CreateFromFile(

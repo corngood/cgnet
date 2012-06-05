@@ -73,8 +73,8 @@ namespace ExampleBrowser.Examples.OpenTK.Advanced
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(vertexProfile);
+            vertexProfile = ProfileClass.Vertex.GetLatestProfile();
+            vertexProfile.SetOptimalOptions();
 
             this.CgContext.SetCompilerIncludeString("shader/output.cg",
             @"
