@@ -75,7 +75,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             CgGL.EnableProfile(this.fragmentProfile);
 
-            this.fragmentParamDecal.Enable();
+            this.fragmentParamDecal.EnableTexture();
 
             GL.Begin(BeginMode.Triangles);
             GL.TexCoord2(0, 0);
@@ -92,7 +92,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             CgGL.DisableProfile(this.fragmentProfile);
 
-            this.fragmentParamDecal.Disable();
+            this.fragmentParamDecal.DisableTexture();
 
             this.SwapBuffers();
         }

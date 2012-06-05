@@ -1,4 +1,4 @@
-namespace ExampleBrowser.Examples.OpenTK.Basic
+﻿namespace ExampleBrowser.Examples.OpenTK.Basic
 {
     using System;
 
@@ -13,35 +13,41 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
     using Glu = global::OpenTK.Graphics.Glu;
 
-    [ExampleDescription(NodePath = "OpenTK/Basic/21 Bump Map Wall")]
-    public class BumpMapWall : Example
+    [ExampleDescription(NodePath = "OpenTK/Basic/22 Specular Bump Map")]
+    public class SpecularBumpMap : Example
     {
         #region Fields
 
-        private const string FragmentProgramFileName = "Data/C8E2f_bumpSurf.cg";
-        private const string FragmentProgramName = "C8E2f_bumpSurf";
-        private const string VertexProgramFileName = "Data/C8E1v_bumpWall.cg";
-        private const string VertexProgramName = "C8E1v_bumpWall";
+        private const string FragmentProgramFileName = "Data/C8E4f_specSurf.cg";
+        private const string FragmentProgramName = "C8E4f_specSurf";
+        const float my2Pi = 2.0f * 3.14159265f;
+        private const string VertexProgramFileName = "Data/C8E3v_specWall.cg";
+        private const string VertexProgramName = "C8E3v_specWall";
 
         private readonly int[] texObj = new int[2];
 
-        private Parameter fragmentParamNormalizeCube;
-        private Parameter fragmentParamNormalMap;
-        private ProfileType fragmentProfile;
-        private Program fragmentProgram;
-        private float my2Pi = 2.0f * 3.14159265358979323846f;
-        private float myLightAngle = 4.0f; /* Angle light rotates around scene. */
-        private Parameter vertexParamLightPosition;
-        private Parameter vertexParamModelViewProj;
-        private ProfileType vertexProfile;
-        private Program vertexProgram;
+        static float eyeAngle = 0; /* Angle in radians eye rotates around scene. */
+        static float eyeHeight = 0; /* Vertical height of light. */
+        static float lightAngle = 4.0f; /* Angle light rotates around scene. */
+
+        private Parameter myCgFragmentParam_ambient;
+        private Parameter myCgFragmentParam_LMd;
+        private Parameter myCgFragmentParam_LMs;
+        private Parameter myCgFragmentParam_normalizeCube;
+        private Parameter myCgFragmentParam_normalizeCube2;
+        private Parameter myCgFragmentParam_normalMap;
+        private Parameter myCgVertexParam_eyePosition;
+        private Parameter myCgVertexParam_lightPosition;
+        private Parameter myCgVertexParam_modelViewProj;
+        private ProfileType vertexProfile, fragmentProfile;
+        private Program vertexProgram, fragmentProgram;
 
         #endregion Fields
 
         #region Constructors
 
-        public BumpMapWall()
-            : base("21_bump_map_wall")
+        public SpecularBumpMap()
+            : base("22_specular_bump_map")
         {
         }
 
@@ -59,31 +65,36 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void DoRender(FrameEventArgs e)
         {
             float[] lightPosition = {
-                                        12.5f * (float)Math.Sin(this.myLightAngle),
-                                        12.5f * (float)Math.Cos(this.myLightAngle),
-                                        4
-                                    };
+                12.5f * (float)Math.Sin(lightAngle),
+                12.5f * (float)Math.Cos(lightAngle),
+                4
+            };
+
+            float[] eyePosition = {
+                20f * (float)Math.Sin(eyeAngle),
+                eyeHeight,
+                20 * (float)Math.Cos(eyeAngle)
+            };
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.LoadIdentity();
             Glu.LookAt(
-                0.0, 0.0, 20.0,
+                eyePosition[0], eyePosition[1], eyePosition[2],
                 0.0, 0.0, 0.0, /* XYZ view center */
                 0.0, 1.0, 0.0); /* Up is in positive Y direction */
 
             vertexProgram.Bind();
 
-            this.vertexParamModelViewProj.SetStateMatrix(MatrixType.ModelviewProjectionMatrix, MatrixTransform.MatrixIdentity);
+            myCgVertexParam_modelViewProj.SetStateMatrix(MatrixType.ModelviewProjectionMatrix, MatrixTransform.MatrixIdentity);
 
-            this.vertexParamLightPosition.Set(lightPosition);
+            myCgVertexParam_lightPosition.Set3(lightPosition);
+            myCgVertexParam_eyePosition.Set3(eyePosition);
 
             CgGL.EnableProfile(vertexProfile);
-
             fragmentProgram.Bind();
-
-            this.fragmentParamNormalMap.EnableTexture();
-            this.fragmentParamNormalizeCube.EnableTexture();
+            myCgFragmentParam_normalMap.EnableTexture();
+            myCgFragmentParam_normalizeCube.EnableTexture();
 
             CgGL.EnableProfile(fragmentProfile);
 
@@ -92,25 +103,20 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             GL.Begin(BeginMode.Quads);
             /* Counter clockwise (GL_CCW) winding */
-            GL.TexCoord2(0f, 0f);
-            GL.Vertex2(-7f, -7f);
-            GL.TexCoord2(1f, 0f);
-            GL.Vertex2(7f, -7f);
-            GL.TexCoord2(1f, 1f);
-            GL.Vertex2(7f, 7f);
-            GL.TexCoord2(0f, 1f);
-            GL.Vertex2(-7f, 7f);
+            GL.TexCoord2(0f,0f); GL.Vertex2(-7f,-7f);
+            GL.TexCoord2(1f,0f); GL.Vertex2( 7f,-7f);
+            GL.TexCoord2(1f,1f); GL.Vertex2( 7f, 7f);
+            GL.TexCoord2(0f,1f); GL.Vertex2(-7f, 7f);
             GL.End();
 
             CgGL.DisableProfile(vertexProfile);
-
             CgGL.DisableProfile(fragmentProfile);
-
             /*** Render light as white ball using fixed function pipe ***/
 
             GL.Translate(lightPosition[0], lightPosition[1], lightPosition[2]);
             GL.Color3(0.8f, 0.8f, 0.1f); /* yellow */
-            NativeMethods.glutSolidSphere(0.4, 12, 12);
+
+            NativeMethods.glutSolidSphere(0.4f, 12, 12);
 
             this.SwapBuffers();
         }
@@ -180,6 +186,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.CgContext = CgNet.Context.Create();
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
+            this.CgContext.SetManageTextureParameters(true);
 
             this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
             CgGL.SetOptimalOptions(this.vertexProfile);
@@ -193,10 +200,13 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     null); /* No extra compiler options */
             this.vertexProgram.Load();
 
-            this.vertexParamLightPosition =
+            this.myCgVertexParam_lightPosition =
                 vertexProgram.GetNamedParameter("lightPosition");
 
-            this.vertexParamModelViewProj =
+            this.myCgVertexParam_eyePosition =
+                vertexProgram.GetNamedParameter("eyePosition");
+
+            this.myCgVertexParam_modelViewProj =
                 vertexProgram.GetNamedParameter("modelViewProj");
 
             this.fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
@@ -211,15 +221,30 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     null); /* No extra compiler options */
             this.fragmentProgram.Load();
 
-            this.fragmentParamNormalMap =
-                fragmentProgram.GetNamedParameter("normalMap");
+            myCgFragmentParam_ambient =
+                this.fragmentProgram.GetNamedParameter("ambient");
+            myCgFragmentParam_ambient.Set(0.2f);
 
-            this.fragmentParamNormalizeCube =
-                fragmentProgram.GetNamedParameter("normalizeCube");
+            myCgFragmentParam_LMd =
+                this.fragmentProgram.GetNamedParameter("LMd");
+            myCgFragmentParam_LMd.Set(0.8f, 0.7f, 0.2f);
 
-            this.fragmentParamNormalMap.SetTexture(texObj[1]);
+            myCgFragmentParam_LMs =
+                this.fragmentProgram.GetNamedParameter("LMs");
+            myCgFragmentParam_LMs.Set(0.5f, 0.5f, 0.8f);
 
-            this.fragmentParamNormalizeCube.SetTexture(texObj[0]);
+            myCgFragmentParam_normalMap =
+                this.fragmentProgram.GetNamedParameter("normalMap");
+
+            myCgFragmentParam_normalizeCube =
+                this.fragmentProgram.GetNamedParameter("normalizeCube");
+
+            myCgFragmentParam_normalizeCube2 =
+                this.fragmentProgram.GetNamedParameter("normalizeCube2");
+
+            myCgFragmentParam_normalMap.SetTexture(texObj[1]);
+            myCgFragmentParam_normalizeCube.SetTexture(texObj[0]);
+            myCgFragmentParam_normalizeCube2.SetTexture(texObj[0]);
         }
 
         /// <summary>
@@ -257,10 +282,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            this.myLightAngle += 0.008f; /* Add a small angle (in radians). */
-            if (this.myLightAngle > my2Pi)
+            lightAngle += 0.008f; /* Add a small angle (in radians). */
+            if (lightAngle > my2Pi)
             {
-                this.myLightAngle -= my2Pi;
+                lightAngle -= my2Pi;
             }
 
             if (this.Keyboard[Key.Escape])

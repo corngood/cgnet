@@ -52,7 +52,7 @@
         public void Start()
         {
             Cg.Error += this.CheckForCgError;
-            this.Run(30.0, 0.0);
+            this.Run(0.0, 0.0);
         }
 
         #endregion Public Methods

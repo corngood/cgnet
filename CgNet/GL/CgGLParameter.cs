@@ -32,26 +32,26 @@ namespace CgNet.GL
 
         #region Public Static Methods
 
-        // TODO: TextureParameter
-        public static void Disable(this Parameter param)
-        {
-            NativeMethods.cgGLDisableTextureParameter(param.Handle);
-        }
-
         public static void DisableClientState(this Parameter param)
         {
             NativeMethods.cgGLDisableClientState(param.Handle);
         }
 
         // TODO: TextureParameter
-        public static void Enable(this Parameter param)
+        public static void DisableTexture(this Parameter param)
         {
-            NativeMethods.cgGLEnableTextureParameter(param.Handle);
+            NativeMethods.cgGLDisableTextureParameter(param.Handle);
         }
 
         public static void EnableClientState(this Parameter param)
         {
             NativeMethods.cgGLEnableClientState(param.Handle);
+        }
+
+        // TODO: TextureParameter
+        public static void EnableTexture(this Parameter param)
+        {
+            NativeMethods.cgGLEnableTextureParameter(param.Handle);
         }
 
         public static T Get<T>(this Parameter param)

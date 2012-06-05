@@ -59,7 +59,7 @@
 
             CgGL.EnableProfile(fragmentProfile);
 
-            this.fragmentParamDecal.Enable();
+            this.fragmentParamDecal.EnableTexture();
 
             GL.Begin(BeginMode.Triangles);
             GL.TexCoord2(0, 0);
@@ -76,7 +76,7 @@
 
             CgGL.DisableProfile(fragmentProfile);
 
-            this.fragmentParamDecal.Disable();
+            this.fragmentParamDecal.DisableTexture();
 
             SwapBuffers();
         }
