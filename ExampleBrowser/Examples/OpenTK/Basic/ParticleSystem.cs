@@ -69,9 +69,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             vertexProgram.Bind();
 
-            CgGL.EnableProfile(vertexProfile);
+            vertexProfile.Enable();
 
-            CgGL.EnableProfile(fragmentProfile);
+            fragmentProfile.Enable();
 
             /* Render live particles. */
             GL.Begin(BeginMode.Points);
@@ -89,9 +89,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             }
             GL.End();
 
-            CgGL.DisableProfile(vertexProfile);
+            vertexProfile.Disable();
 
-            CgGL.DisableProfile(fragmentProfile);
+            fragmentProfile.Disable();
 
             SwapBuffers();
         }
@@ -169,7 +169,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     fragmentProfile, /* Profile: OpenGL ARB vertex program */
                     FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.fragmentProgram.Load();
+            fragmentProgram.Load();
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.vertexProgram.Dispose();
+            vertexProgram.Dispose();
             fragmentProgram.Dispose();
             this.CgContext.Dispose();
         }

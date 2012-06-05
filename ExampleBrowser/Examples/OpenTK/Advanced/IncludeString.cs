@@ -45,9 +45,8 @@ namespace ExampleBrowser.Examples.OpenTK.Advanced
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            this.vertexProgram.Bind();
-
-            CgGL.EnableProfile(this.vertexProfile);
+            vertexProgram.Bind();
+            vertexProfile.Enable();
 
             /* Rendering code verbatim from Chapter 1, Section 2.4.1 "Rendering
                a Triangle with OpenGL" (page 57). */
@@ -57,7 +56,7 @@ namespace ExampleBrowser.Examples.OpenTK.Advanced
             GL.Vertex2(0.0f, -0.8f);
             GL.End();
 
-            CgGL.DisableProfile(this.vertexProfile);
+            vertexProfile.Disable();
             this.SwapBuffers();
         }
 
@@ -74,8 +73,8 @@ namespace ExampleBrowser.Examples.OpenTK.Advanced
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.vertexProfile);
+            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(vertexProfile);
 
             this.CgContext.SetCompilerIncludeString("shader/output.cg",
             @"
@@ -95,14 +94,14 @@ namespace ExampleBrowser.Examples.OpenTK.Advanced
                 return OUT;
             }");
 
-            this.vertexProgram =
+            vertexProgram =
               this.CgContext.CreateProgram(
                 ProgramType.Source,                 /* Program in human-readable form */
                "#include \"vertexProgram.cg\"\n",
-                this.vertexProfile,         /* Profile: OpenGL ARB vertex program */
+                vertexProfile,         /* Profile: OpenGL ARB vertex program */
                 "vertexProgram",           /* Entry function name */
                 Args);                    /* Include path options */
-            this.vertexProgram.Load();
+            vertexProgram.Load();
         }
 
         /// <summary>
@@ -122,7 +121,7 @@ namespace ExampleBrowser.Examples.OpenTK.Advanced
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.vertexProgram.Dispose();
+            vertexProgram.Dispose();
             this.CgContext.Dispose();
         }
 

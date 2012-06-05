@@ -62,13 +62,13 @@
 
             // Enable all profiles needed
             for (int i = 0; i < combinedProgram.DomainsCount - 1; i++)
-                CgGL.EnableProfile(combinedProgram.GetProgramDomainProfile(i));
+                combinedProgram.GetProgramDomainProfile(i).Enable();
 
             DrawStars();
 
             // Disable all profiles needed
             for (int i = combinedProgram.DomainsCount - 1; i >= 0; i--)
-                CgGL.DisableProfile(combinedProgram.GetProgramDomainProfile(i));
+                combinedProgram.GetProgramDomainProfile(i).Disable();
 
             if (myShrinkFactor > 0.8)
             {

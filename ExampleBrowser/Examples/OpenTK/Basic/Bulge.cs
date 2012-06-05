@@ -67,9 +67,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                               0, 1, 0,
                               viewMatrix);
 
-            CgGL.EnableProfile(vertexProfile);
+            vertexProfile.Enable();
 
-            CgGL.EnableProfile(fragmentProfile);
+            fragmentProfile.Enable();
 
             vertexProgram.Bind();
 
@@ -150,9 +150,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             vertexProgram.UpdateParameters();
             NativeMethods.glutSolidSphere(0.1, 12, 12);
 
-            CgGL.DisableProfile(vertexProfile);
+            vertexProfile.Disable();
 
-            CgGL.DisableProfile(fragmentProfile);
+            fragmentProfile.Disable();
 
             this.SwapBuffers();
         }
@@ -169,17 +169,17 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.vertexProfile);
+            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(vertexProfile);
 
-            this.vertexProgram =
+            vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     VertexProgramFileName, /* Name of file containing program */
-                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    vertexProfile, /* Profile: OpenGL ARB vertex program */
                     VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.vertexProgram.Load();
+            vertexProgram.Load();
 
             this.vertexParamModelViewProj = vertexProgram.GetNamedParameter("modelViewProj");
             this.vertexParamTime = vertexProgram.GetNamedParameter("time");
@@ -198,17 +198,17 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.vertexParamFrequency.Set(2.4f);
             this.vertexParamShininess.Set(35f);
 
-            this.fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(this.fragmentProfile);
+            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
+            CgGL.SetOptimalOptions(fragmentProfile);
 
-            this.fragmentProgram =
+            fragmentProgram =
                 this.CgContext.CreateProgram(
                     ProgramType.Source, /* Program in human-readable form */
                     "float4 main(float4 c : COLOR) : COLOR { return c; }",
-                    this.fragmentProfile, /* Profile: OpenGL ARB vertex program */
+                    fragmentProfile, /* Profile: OpenGL ARB vertex program */
                     "main", /* Entry function name */
                     null); /* No extra compiler options */
-            this.fragmentProgram.Load();
+            fragmentProgram.Load();
 
             /* Specify vertex program for rendering the light source with a string. */
             this.lightVertexProgram =
@@ -243,8 +243,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.vertexProgram.Dispose();
-            this.fragmentProgram.Dispose();
+            vertexProgram.Dispose();
+            fragmentProgram.Dispose();
             this.lightVertexProgram.Dispose();
             this.CgContext.Dispose();
         }

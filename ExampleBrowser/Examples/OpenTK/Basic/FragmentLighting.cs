@@ -22,10 +22,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         private double myLightAngle = -0.4f; /* Angle light rotates around scene. */
         private ProfileType vertexProfile, fragmentProfile;
         private Program vertexProgram, fragmentProgram;
-        private string VertexProgramFileName = "Data/C5E2v_fragmentLighting.cg",
-            /* Page 124 */    VertexProgramName = "C5E2v_fragmentLighting",
-                  FragmentProgramFileName = "Data/C5E3f_basicLight.cg",
-            /* Page 125 */    FragmentProgramName = "C5E3f_basicLight";
+        private string vertexProgramFileName = "Data/C5E2v_fragmentLighting.cg",
+            /* Page 124 */    vertexProgramName = "C5E2v_fragmentLighting",
+                  fragmentProgramFileName = "Data/C5E3f_basicLight.cg",
+            /* Page 125 */    fragmentProgramName = "C5E3f_basicLight";
 
         #endregion Fields
 
@@ -68,11 +68,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                               0, 1, 0,
                               viewMatrix);
 
-            this.vertexProgram.Bind();
-            CgGL.EnableProfile(this.vertexProfile);
+            vertexProgram.Bind();
+            vertexProfile.Enable();
 
-            this.fragmentProgram.Bind();
-            CgGL.EnableProfile(this.fragmentProfile);
+            fragmentProgram.Bind();
+            fragmentProfile.Enable();
 
             this.setBrassMaterial();
 
@@ -98,8 +98,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             /* Set matrix parameter with row-major matrix. */
             this.myCgVertexParam_modelViewProj.SetMatrix(modelViewProjMatrix);
-            this.vertexProgram.UpdateParameters();
-            this.fragmentProgram.UpdateParameters();
+            vertexProgram.UpdateParameters();
+            fragmentProgram.UpdateParameters();
             NativeMethods.glutSolidSphere(2.0, 40, 40);
 
             /*** Render red plastic solid cone ***/
@@ -128,8 +128,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             /* Set matrix parameter with row-major matrix. */
             this.myCgVertexParam_modelViewProj.SetMatrix(modelViewProjMatrix);
-            this.vertexProgram.UpdateParameters();
-            this.fragmentProgram.UpdateParameters();
+            vertexProgram.UpdateParameters();
+            fragmentProgram.UpdateParameters();
             NativeMethods.glutSolidCone(1.5, 3.5, 30, 30);
 
             /*** Render light as emissive white ball ***/
@@ -150,12 +150,12 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             /* Set matrix parameter with row-major matrix. */
             this.myCgVertexParam_modelViewProj.SetMatrix(modelViewProjMatrix);
-            this.vertexProgram.UpdateParameters();
-            this.fragmentProgram.UpdateParameters();
+            vertexProgram.UpdateParameters();
+            fragmentProgram.UpdateParameters();
             NativeMethods.glutSolidSphere(0.2, 12, 12);
 
-            CgGL.DisableProfile(this.vertexProfile);
-            CgGL.DisableProfile(this.fragmentProfile);
+            vertexProfile.Disable();
+            fragmentProfile.Disable();
 
             this.SwapBuffers();
         }
@@ -173,42 +173,42 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.vertexProfile);
+            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(vertexProfile);
 
-            this.vertexProgram =
+            vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    this.VertexProgramFileName, /* Name of file containing program */
-                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
-                    this.VertexProgramName, /* Entry function name */
+                    vertexProgramFileName, /* Name of file containing program */
+                    vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    vertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.vertexProgram.Load();
+            vertexProgram.Load();
 
-            this.myCgVertexParam_modelViewProj = this.vertexProgram.GetNamedParameter("modelViewProj");
+            this.myCgVertexParam_modelViewProj = vertexProgram.GetNamedParameter("modelViewProj");
 
-            this.fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(this.fragmentProfile);
+            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
+            CgGL.SetOptimalOptions(fragmentProfile);
 
             /* Specify "color passthrough" fragment program with a string. */
-            this.fragmentProgram =
+            fragmentProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
-                    this.FragmentProgramFileName,
-                    this.fragmentProfile, /* Profile: latest fragment profile */
-                    this.FragmentProgramName, /* Entry function name */
+                    fragmentProgramFileName,
+                    fragmentProfile, /* Profile: latest fragment profile */
+                    fragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.fragmentProgram.Load();
+            fragmentProgram.Load();
 
-            this.myCgFragmentParam_globalAmbient = this.fragmentProgram.GetNamedParameter("globalAmbient");
-            this.myCgFragmentParam_lightColor = this.fragmentProgram.GetNamedParameter("lightColor");
-            this.myCgFragmentParam_lightPosition = this.fragmentProgram.GetNamedParameter("lightPosition");
-            this.myCgFragmentParam_eyePosition = this.fragmentProgram.GetNamedParameter("eyePosition");
-            this.myCgFragmentParam_Ke = this.fragmentProgram.GetNamedParameter("Ke");
-            this.myCgFragmentParam_Ka = this.fragmentProgram.GetNamedParameter("Ka");
-            this.myCgFragmentParam_Kd = this.fragmentProgram.GetNamedParameter("Kd");
-            this.myCgFragmentParam_Ks = this.fragmentProgram.GetNamedParameter("Ks");
-            this.myCgFragmentParam_shininess = this.fragmentProgram.GetNamedParameter("shininess");
+            this.myCgFragmentParam_globalAmbient = fragmentProgram.GetNamedParameter("globalAmbient");
+            this.myCgFragmentParam_lightColor = fragmentProgram.GetNamedParameter("lightColor");
+            this.myCgFragmentParam_lightPosition = fragmentProgram.GetNamedParameter("lightPosition");
+            this.myCgFragmentParam_eyePosition = fragmentProgram.GetNamedParameter("eyePosition");
+            this.myCgFragmentParam_Ke = fragmentProgram.GetNamedParameter("Ke");
+            this.myCgFragmentParam_Ka = fragmentProgram.GetNamedParameter("Ka");
+            this.myCgFragmentParam_Kd = fragmentProgram.GetNamedParameter("Kd");
+            this.myCgFragmentParam_Ks = fragmentProgram.GetNamedParameter("Ks");
+            this.myCgFragmentParam_shininess = fragmentProgram.GetNamedParameter("shininess");
 
             /* Set light source color parameters once. */
             this.myCgFragmentParam_globalAmbient.Set(this.myGlobalAmbient);
@@ -229,8 +229,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.vertexProgram.Dispose();
-            this.fragmentProgram.Dispose();
+            vertexProgram.Dispose();
+            fragmentProgram.Dispose();
             this.CgContext.Dispose();
         }
 

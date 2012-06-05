@@ -67,10 +67,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                               viewMatrix);
 
             vertexProgram.Bind();
-            CgGL.EnableProfile(vertexProfile);
+            vertexProfile.Enable();
 
             fragmentProgram.Bind();
-            CgGL.EnableProfile(fragmentProfile);
+            fragmentProfile.Enable();
 
             setBrassMaterial();
 
@@ -149,8 +149,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             vertexProgram.UpdateParameters();
             NativeMethods.glutSolidSphere(0.2, 12, 12);
 
-            CgGL.DisableProfile(vertexProfile);
-            CgGL.DisableProfile(fragmentProfile);
+            vertexProfile.Disable();
+            fragmentProfile.Disable();
 
             this.SwapBuffers();
         }
@@ -223,8 +223,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.vertexProgram.Dispose();
-            this.fragmentProgram.Dispose();
+            vertexProgram.Dispose();
+            fragmentProgram.Dispose();
             this.CgContext.Dispose();
         }
 

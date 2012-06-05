@@ -50,18 +50,15 @@
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             vertexProgram.Bind();
-
-            CgGL.EnableProfile(vertexProfile);
+            vertexProfile.Enable();
 
             fragmentProgram.Bind();
-
-            CgGL.EnableProfile(fragmentProfile);
+            fragmentProfile.Enable();
 
             DrawStars();
 
-            CgGL.DisableProfile(vertexProfile);
-
-            CgGL.DisableProfile(fragmentProfile);
+            vertexProfile.Disable();
+            fragmentProfile.Disable();
             SwapBuffers();
         }
 
@@ -101,7 +98,7 @@
                     fragmentProfile, /* Profile: OpenGL ARB vertex program */
                     FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.fragmentProgram.Load();
+            fragmentProgram.Load();
         }
 
         /// <summary>

@@ -39,7 +39,7 @@ namespace CgNet.GL
             {
                 foreach (var profile in Cg.SupportedProfiles)
                 {
-                    if (IsProfileSupported(profile))
+                    if (profile.IsSupported())
                     {
                         yield return profile;
                     }
@@ -60,12 +60,12 @@ namespace CgNet.GL
             return NativeMethods.cgGLDetectGLSLVersion();
         }
 
-        public static void DisableProfile(ProfileType profile)
+        public static void Disable(this ProfileType profile)
         {
             NativeMethods.cgGLDisableProfile(profile);
         }
 
-        public static void EnableProfile(ProfileType profile)
+        public static void Enable(this ProfileType profile)
         {
             NativeMethods.cgGLEnableProfile(profile);
         }
@@ -85,17 +85,17 @@ namespace CgNet.GL
         /// </summary>
         /// <param name="profileClass">The class of profile that will be returned.</param>
         /// <returns>Returns a profile enumerant for the latest profile of the given class. Returns CG_PROFILE_UNKNOWN if no appropriate profile is available or an error occurs.</returns>
-        public static ProfileType GetLatestProfile(ProfileClass profileClass)
+        public static ProfileType GetLatestProfile(this ProfileClass profileClass)
         {
             return NativeMethods.cgGLGetLatestProfile(profileClass);
         }
 
-        public static string[] GetOptimalOptions(ProfileType profile)
+        public static string[] GetOptimalOptions(this ProfileType profile)
         {
             return Cg.IntPtrToStringArray(NativeMethods.cgGLGetOptimalOptions(profile));
         }
 
-        public static bool IsProfileSupported(ProfileType profile)
+        public static bool IsSupported(this ProfileType profile)
         {
             return NativeMethods.cgGLIsProfileSupported(profile);
         }
@@ -105,12 +105,12 @@ namespace CgNet.GL
             NativeMethods.cgGLSetDebugMode(debug);
         }
 
-        public static void SetOptimalOptions(ProfileType profile)
+        public static void SetOptimalOptions(this ProfileType profile)
         {
             NativeMethods.cgGLSetOptimalOptions(profile);
         }
 
-        public static void UnbindProgram(ProfileType profile)
+        public static void UnbindProgram(this ProfileType profile)
         {
             NativeMethods.cgGLUnbindProgram(profile);
         }

@@ -44,9 +44,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            this.vertexProgram.Bind();
-
-            CgGL.EnableProfile(this.vertexProfile);
+            vertexProgram.Bind();
+            vertexProfile.Enable();
 
             /* Rendering code verbatim from Chapter 1, Section 2.4.1 "Rendering
                a Triangle with OpenGL" (page 57). */
@@ -56,7 +55,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.Vertex2(0.0f, -0.8f);
             GL.End();
 
-            CgGL.DisableProfile(this.vertexProfile);
+            vertexProfile.Disable();
             this.SwapBuffers();
         }
 
@@ -73,18 +72,18 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.vertexProfile);
+            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(vertexProfile);
 
-            this.vertexProgram =
+            vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     VertexProgramFileName, /* Name of file containing program */
-                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    vertexProfile, /* Profile: OpenGL ARB vertex program */
                     VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
 
-            this.vertexProgram.Load();
+            vertexProgram.Load();
         }
 
         /// <summary>
@@ -104,7 +103,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.vertexProgram.Dispose();
+            vertexProgram.Dispose();
             this.CgContext.Dispose();
         }
 

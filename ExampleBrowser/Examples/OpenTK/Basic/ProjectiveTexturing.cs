@@ -121,11 +121,11 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                   up[0], -up[1], up[2],
                   lightViewMatrix);
 
-            this.vertexProgram.Bind();
-            CgGL.EnableProfile(this.vertexProfile);
+            vertexProgram.Bind();
+            vertexProfile.Enable();
 
-            this.fragmentProgram.Bind();
-            CgGL.EnableProfile(this.fragmentProfile);
+            fragmentProgram.Bind();
+            fragmentProfile.Enable();
 
             /* modelView = rotateMatrix * translateMatrix */
             MakeRotateMatrix(70, 1, 1, 1, rotateMatrix);
@@ -150,8 +150,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             /* Set matrix parameter with row-major matrix. */
             this.myCgVertexParamModelViewProj.SetMatrix(modelViewProjMatrix);
             this.myCgVertexParamTextureMatrix.SetMatrix(textureMatrix);
-            this.vertexProgram.UpdateParameters();
-            this.fragmentProgram.UpdateParameters();
+            vertexProgram.UpdateParameters();
+            fragmentProgram.UpdateParameters();
             NativeMethods.glutSolidSphere(2.0, 40, 40);
 
             /*** Render solid cube ***/
@@ -179,8 +179,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             /* Set matrix parameter with row-major matrix. */
             this.myCgVertexParamModelViewProj.SetMatrix(modelViewProjMatrix);
             this.myCgVertexParamTextureMatrix.SetMatrix(textureMatrix);
-            this.vertexProgram.UpdateParameters();
-            this.fragmentProgram.UpdateParameters();
+            vertexProgram.UpdateParameters();
+            fragmentProgram.UpdateParameters();
             NativeMethods.glutSolidCube(2.5);
 
             /*** Render floor ***/
@@ -241,9 +241,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             GL.Disable(EnableCap.CullFace);
 
-            CgGL.DisableProfile(vertexProfile);
+            vertexProfile.Disable();
 
-            CgGL.DisableProfile(fragmentProfile);
+            fragmentProfile.Disable();
 
             /*** Render light as white cone ***/
 
@@ -280,38 +280,38 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
             this.CgContext.SetManageTextureParameters(true);
 
-            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.vertexProfile);
+            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(vertexProfile);
 
-            this.vertexProgram =
+            vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     VertexProgramFileName, /* Name of file containing program */
-                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    vertexProfile, /* Profile: OpenGL ARB vertex program */
                     VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.vertexProgram.Load();
+            vertexProgram.Load();
 
-            this.myCgVertexParamModelViewProj = this.vertexProgram.GetNamedParameter("modelViewProj");
-            this.myCgVertexParamLightPosition = this.vertexProgram.GetNamedParameter("lightPosition");
-            this.myCgVertexParamKd = this.vertexProgram.GetNamedParameter("Kd");
-            this.myCgVertexParamTextureMatrix = this.vertexProgram.GetNamedParameter("textureMatrix");
+            this.myCgVertexParamModelViewProj = vertexProgram.GetNamedParameter("modelViewProj");
+            this.myCgVertexParamLightPosition = vertexProgram.GetNamedParameter("lightPosition");
+            this.myCgVertexParamKd = vertexProgram.GetNamedParameter("Kd");
+            this.myCgVertexParamTextureMatrix = vertexProgram.GetNamedParameter("textureMatrix");
 
             /* Set light source color parameters once. */
             this.myCgVertexParamKd.Set(this.kd);
 
-            this.fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(this.fragmentProfile);
+            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
+            CgGL.SetOptimalOptions(fragmentProfile);
 
             /* Specify "color passthrough" fragment program with a string. */
-            this.fragmentProgram =
+            fragmentProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     FragmentProgramFileName,
-                    this.fragmentProfile, /* Profile: latest fragment profile */
+                    fragmentProfile, /* Profile: latest fragment profile */
                     FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.fragmentProgram.Load();
+            fragmentProgram.Load();
             this.SetupDemonSampler();
         }
 
@@ -329,8 +329,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.vertexProgram.Dispose();
-            this.fragmentProgram.Dispose();
+            vertexProgram.Dispose();
+            fragmentProgram.Dispose();
             this.CgContext.Dispose();
         }
 
@@ -430,7 +430,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, 0x812D);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, 0x812D);
 
-            Parameter sampler = this.fragmentProgram.GetNamedParameter("projectiveMap");
+            Parameter sampler = fragmentProgram.GetNamedParameter("projectiveMap");
             sampler.SetTexture(Texobj);
         }
 

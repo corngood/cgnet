@@ -91,12 +91,12 @@
             myCgVertexParam_lightPosition.Set3(lightPosition);
             myCgVertexParam_eyePosition.Set3(eyePosition);
 
-            CgGL.EnableProfile(vertexProfile);
+            vertexProfile.Enable();
             fragmentProgram.Bind();
             myCgFragmentParam_normalMap.EnableTexture();
             myCgFragmentParam_normalizeCube.EnableTexture();
 
-            CgGL.EnableProfile(fragmentProfile);
+            fragmentProfile.Enable();
 
             vertexProgram.UpdateParameters();
             fragmentProgram.UpdateParameters();
@@ -109,8 +109,8 @@
             GL.TexCoord2(0f,1f); GL.Vertex2(-7f, 7f);
             GL.End();
 
-            CgGL.DisableProfile(vertexProfile);
-            CgGL.DisableProfile(fragmentProfile);
+            vertexProfile.Disable();
+            fragmentProfile.Disable();
             /*** Render light as white ball using fixed function pipe ***/
 
             GL.Translate(lightPosition[0], lightPosition[1], lightPosition[2]);
@@ -188,17 +188,17 @@
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
             this.CgContext.SetManageTextureParameters(true);
 
-            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.vertexProfile);
+            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(vertexProfile);
 
-            this.vertexProgram =
+            vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     VertexProgramFileName, /* Name of file containing program */
-                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    vertexProfile, /* Profile: OpenGL ARB vertex program */
                     VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.vertexProgram.Load();
+            vertexProgram.Load();
 
             this.myCgVertexParam_lightPosition =
                 vertexProgram.GetNamedParameter("lightPosition");
@@ -209,38 +209,38 @@
             this.myCgVertexParam_modelViewProj =
                 vertexProgram.GetNamedParameter("modelViewProj");
 
-            this.fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(this.fragmentProfile);
+            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
+            CgGL.SetOptimalOptions(fragmentProfile);
 
-            this.fragmentProgram =
+            fragmentProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     FragmentProgramFileName, /* Name of file containing program */
-                    this.fragmentProfile, /* Profile: OpenGL ARB vertex program */
+                    fragmentProfile, /* Profile: OpenGL ARB vertex program */
                     FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.fragmentProgram.Load();
+            fragmentProgram.Load();
 
             myCgFragmentParam_ambient =
-                this.fragmentProgram.GetNamedParameter("ambient");
+                fragmentProgram.GetNamedParameter("ambient");
             myCgFragmentParam_ambient.Set(0.2f);
 
             myCgFragmentParam_LMd =
-                this.fragmentProgram.GetNamedParameter("LMd");
+                fragmentProgram.GetNamedParameter("LMd");
             myCgFragmentParam_LMd.Set(0.8f, 0.7f, 0.2f);
 
             myCgFragmentParam_LMs =
-                this.fragmentProgram.GetNamedParameter("LMs");
+                fragmentProgram.GetNamedParameter("LMs");
             myCgFragmentParam_LMs.Set(0.5f, 0.5f, 0.8f);
 
             myCgFragmentParam_normalMap =
-                this.fragmentProgram.GetNamedParameter("normalMap");
+                fragmentProgram.GetNamedParameter("normalMap");
 
             myCgFragmentParam_normalizeCube =
-                this.fragmentProgram.GetNamedParameter("normalizeCube");
+                fragmentProgram.GetNamedParameter("normalizeCube");
 
             myCgFragmentParam_normalizeCube2 =
-                this.fragmentProgram.GetNamedParameter("normalizeCube2");
+                fragmentProgram.GetNamedParameter("normalizeCube2");
 
             myCgFragmentParam_normalMap.SetTexture(texObj[1]);
             myCgFragmentParam_normalizeCube.SetTexture(texObj[0]);
@@ -270,8 +270,8 @@
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.vertexProgram.Dispose();
-            this.fragmentProgram.Dispose();
+            vertexProgram.Dispose();
+            fragmentProgram.Dispose();
             this.CgContext.Dispose();
         }
 

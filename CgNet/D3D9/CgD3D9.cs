@@ -43,7 +43,7 @@ namespace CgNet.D3D9
             {
                 foreach (var profile in Cg.SupportedProfiles)
                 {
-                    if (IsProfileSupported(profile))
+                    if (profile.IsSupported())
                     {
                         yield return profile;
                     }
@@ -84,17 +84,17 @@ namespace CgNet.D3D9
             return NativeMethods.cgD3D9GetLatestVertexProfile();
         }
 
-        public static string[] GetOptimalOptions(ProfileType profile)
+        public static string[] GetOptimalOptions(this ProfileType profile)
         {
             return Cg.IntPtrToStringArray(NativeMethods.cgD3D9GetOptimalOptions(profile));
         }
 
-        public static bool IsProfileSupported(ProfileType profile)
+        public static bool IsSupported(this ProfileType profile)
         {
             return NativeMethods.cgD3D9IsProfileSupported(profile);
         }
 
-        public static DeclarationUsage ResourceTypeToDeclarationUsage(ResourceType resourceType)
+        public static DeclarationUsage ResourceTypeToDeclarationUsage(this ResourceType resourceType)
         {
             return (DeclarationUsage)NativeMethods.cgD3D9ResourceToDeclUsage(resourceType);
         }
@@ -114,7 +114,7 @@ namespace CgNet.D3D9
             return Marshal.PtrToStringAnsi(NativeMethods.cgD3D9TranslateHRESULT(result.Code));
         }
 
-        public static int TypeToSize(ParameterType type)
+        public static int TypeToSize(this ParameterType type)
         {
             return (int)NativeMethods.cgD3D9TypeToSize(type);
         }

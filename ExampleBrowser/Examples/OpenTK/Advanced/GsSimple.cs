@@ -53,9 +53,9 @@
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            CgGL.EnableProfile(vertexProfile);
-            CgGL.EnableProfile(geometryProfile);
-            CgGL.EnableProfile(fragmentProfile);
+            vertexProfile.Enable();
+            geometryProfile.Enable();
+            fragmentProfile.Enable();
 
             if (combinedProgram != null)
             {
@@ -70,9 +70,9 @@
 
             DrawStars();
 
-            CgGL.DisableProfile(vertexProfile);
-            CgGL.DisableProfile(geometryProfile);
-            CgGL.DisableProfile(fragmentProfile);
+            vertexProfile.Disable();
+            geometryProfile.Disable();
+            fragmentProfile.Disable();
             SwapBuffers();
         }
 
@@ -91,7 +91,7 @@
             geometryProfile = CgGL.GetLatestProfile(ProfileClass.Geometry);
             if (geometryProfile == ProfileType.Unknown)
             {
-                if (CgGL.IsProfileSupported(ProfileType.GlslG))
+                if (ProfileType.GlslG.IsSupported())
                     geometryProfile = ProfileType.GlslG;
                 else
                 {

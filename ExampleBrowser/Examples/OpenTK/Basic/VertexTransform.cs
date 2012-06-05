@@ -55,13 +55,13 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            this.vertexProgram.Bind();
+            vertexProgram.Bind();
 
-            CgGL.EnableProfile(this.vertexProfile);
+            vertexProfile.Enable();
 
-            this.fragmentProgram.Bind();
+            fragmentProgram.Bind();
 
-            CgGL.EnableProfile(this.fragmentProfile);
+            fragmentProfile.Enable();
 
             /* modelView = rotateMatrix * translateMatrix */
             float[] rotateMatrix = new float[16];
@@ -105,9 +105,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             fragmentProgram.UpdateParameters();
             NativeMethods.glutWireCone(1.5, 3.5, 20, 20);
 
-            CgGL.DisableProfile(vertexProfile);
-
-            CgGL.DisableProfile(fragmentProfile);
+            vertexProfile.Disable();
+            fragmentProfile.Disable();
 
             this.SwapBuffers();
         }
@@ -124,17 +123,17 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.vertexProfile);
+            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(vertexProfile);
 
-            this.vertexProgram =
+            vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     VertexProgramFileName, /* Name of file containing program */
-                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    vertexProfile, /* Profile: OpenGL ARB vertex program */
                     VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.vertexProgram.Load();
+            vertexProgram.Load();
 
             this.vertexParamModelViewProj = vertexProgram.GetNamedParameter("modelViewProj");
 
@@ -149,7 +148,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                     fragmentProfile, /* Profile: latest fragment profile */
                     "main", /* Entry function name */
                     null); /* No extra compiler options */
-            this.fragmentProgram.Load();
+            fragmentProgram.Load();
 
             this.fragmentParamC = fragmentProgram.GetNamedParameter("c");
         }
@@ -172,7 +171,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.vertexProgram.Dispose();
+            vertexProgram.Dispose();
             fragmentProgram.Dispose();
             this.CgContext.Dispose();
         }

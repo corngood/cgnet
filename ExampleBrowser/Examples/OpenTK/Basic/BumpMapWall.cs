@@ -78,14 +78,14 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             this.vertexParamLightPosition.Set(lightPosition);
 
-            CgGL.EnableProfile(vertexProfile);
+            vertexProfile.Enable();
 
             fragmentProgram.Bind();
 
             this.fragmentParamNormalMap.EnableTexture();
             this.fragmentParamNormalizeCube.EnableTexture();
 
-            CgGL.EnableProfile(fragmentProfile);
+            fragmentProfile.Enable();
 
             vertexProgram.UpdateParameters();
             fragmentProgram.UpdateParameters();
@@ -102,9 +102,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.Vertex2(-7f, 7f);
             GL.End();
 
-            CgGL.DisableProfile(vertexProfile);
+            vertexProfile.Disable();
 
-            CgGL.DisableProfile(fragmentProfile);
+            fragmentProfile.Disable();
 
             /*** Render light as white ball using fixed function pipe ***/
 
@@ -181,17 +181,17 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.vertexProfile);
+            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(vertexProfile);
 
-            this.vertexProgram =
+            vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     VertexProgramFileName, /* Name of file containing program */
-                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    vertexProfile, /* Profile: OpenGL ARB vertex program */
                     VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.vertexProgram.Load();
+            vertexProgram.Load();
 
             this.vertexParamLightPosition =
                 vertexProgram.GetNamedParameter("lightPosition");
@@ -199,17 +199,17 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             this.vertexParamModelViewProj =
                 vertexProgram.GetNamedParameter("modelViewProj");
 
-            this.fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(this.fragmentProfile);
+            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
+            CgGL.SetOptimalOptions(fragmentProfile);
 
-            this.fragmentProgram =
+            fragmentProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     FragmentProgramFileName, /* Name of file containing program */
-                    this.fragmentProfile, /* Profile: OpenGL ARB vertex program */
+                    fragmentProfile, /* Profile: OpenGL ARB vertex program */
                     FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.fragmentProgram.Load();
+            fragmentProgram.Load();
 
             this.fragmentParamNormalMap =
                 fragmentProgram.GetNamedParameter("normalMap");
@@ -245,8 +245,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.vertexProgram.Dispose();
-            this.fragmentProgram.Dispose();
+            vertexProgram.Dispose();
+            fragmentProgram.Dispose();
             this.CgContext.Dispose();
         }
 

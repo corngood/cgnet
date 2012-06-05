@@ -52,12 +52,10 @@
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             vertexProgram.Bind();
-
-            CgGL.EnableProfile(vertexProfile);
+            vertexProfile.Enable();
 
             fragmentProgram.Bind();
-
-            CgGL.EnableProfile(fragmentProfile);
+            fragmentProfile.Enable();
 
             this.fragmentParamDecal.EnableTexture();
 
@@ -72,9 +70,9 @@
             GL.Vertex2(0.0f, -0.8f);
             GL.End();
 
-            CgGL.DisableProfile(vertexProfile);
+            vertexProfile.Disable();
 
-            CgGL.DisableProfile(fragmentProfile);
+            fragmentProfile.Disable();
 
             this.fragmentParamDecal.DisableTexture();
 
@@ -128,7 +126,7 @@
                     FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
 
-            this.fragmentProgram.Load();
+            fragmentProgram.Load();
 
             this.fragmentParamDecal = fragmentProgram.GetNamedParameter("decal");
 

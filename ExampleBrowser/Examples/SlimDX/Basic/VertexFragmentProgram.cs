@@ -117,8 +117,8 @@
                 Application.DoEvents();
             }
 
-            this.fragmentProgram.Dispose();
-            this.vertexProgram.Dispose();
+            fragmentProgram.Dispose();
+            vertexProgram.Dispose();
             this.CgContext.Dispose();
             foreach (var item in ObjectTable.Objects)
             {

@@ -67,13 +67,13 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
                 this.vertexParamRightSeparation.Set(0, mySeparation);
             }
 
-            this.vertexProgram.Bind();
+            vertexProgram.Bind();
 
-            CgGL.EnableProfile(this.vertexProfile);
+            vertexProfile.Enable();
 
-            this.fragmentProgram.Bind();
+            fragmentProgram.Bind();
 
-            CgGL.EnableProfile(this.fragmentProfile);
+            fragmentProfile.Enable();
 
             this.fragmentParamDecal.EnableTexture();
 
@@ -88,9 +88,9 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.Vertex2(0.0f, -0.8f);
             GL.End();
 
-            CgGL.DisableProfile(this.vertexProfile);
+            vertexProfile.Enable();
 
-            CgGL.DisableProfile(this.fragmentProfile);
+            fragmentProfile.Disable();
 
             this.fragmentParamDecal.DisableTexture();
 
@@ -118,37 +118,37 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             CgGL.SetDebugMode(false);
             this.CgContext.ParameterSettingMode = ParameterSettingMode.Deferred;
 
-            this.vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
-            CgGL.SetOptimalOptions(this.vertexProfile);
+            vertexProfile = CgGL.GetLatestProfile(ProfileClass.Vertex);
+            CgGL.SetOptimalOptions(vertexProfile);
 
-            this.vertexProgram =
+            vertexProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     VertexProgramFileName, /* Name of file containing program */
-                    this.vertexProfile, /* Profile: OpenGL ARB vertex program */
+                    vertexProfile, /* Profile: OpenGL ARB vertex program */
                     VertexProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.vertexProgram.Load();
+            vertexProgram.Load();
 
             this.vertexParamLeftSeparation =
                 vertexProgram.GetNamedParameter("leftSeparation");
             this.vertexParamRightSeparation =
                 vertexProgram.GetNamedParameter("rightSeparation");
 
-            this.fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
-            CgGL.SetOptimalOptions(this.fragmentProfile);
+            fragmentProfile = CgGL.GetLatestProfile(ProfileClass.Fragment);
+            CgGL.SetOptimalOptions(fragmentProfile);
 
-            this.fragmentProgram =
+            fragmentProgram =
                 this.CgContext.CreateProgramFromFile(
                     ProgramType.Source, /* Program in human-readable form */
                     FragmentProgramFileName, /* Name of file containing program */
-                    this.fragmentProfile, /* Profile: OpenGL ARB vertex program */
+                    fragmentProfile, /* Profile: OpenGL ARB vertex program */
                     FragmentProgramName, /* Entry function name */
                     null); /* No extra compiler options */
-            this.fragmentProgram.Load();
+            fragmentProgram.Load();
 
             this.fragmentParamDecal =
-                this.fragmentProgram.GetNamedParameter("decal");
+                fragmentProgram.GetNamedParameter("decal");
 
             this.fragmentParamDecal.SetTexture(666);
         }
@@ -170,8 +170,8 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-            this.vertexProgram.Dispose();
-            this.fragmentProgram.Dispose();
+            vertexProgram.Dispose();
+            fragmentProgram.Dispose();
             this.CgContext.Dispose();
         }
 
