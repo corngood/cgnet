@@ -436,7 +436,7 @@ namespace CgNet
             return NativeMethods.cgGetArrayDimension(this.Handle);
         }
 
-        public Parameter GetArrayParameter(IntPtr aparam, int index)
+        public Parameter GetArrayParameter(int index)
         {
             var ptr = NativeMethods.cgGetArrayParameter(this.Handle, index);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
@@ -1034,14 +1034,13 @@ namespace CgNet
 
         public void SetMatrix(double[] matrix, Order order)
         {
-            IntPtr param = this.Handle;
             switch (order)
             {
                 case Order.ColumnMajor:
-                    NativeMethods.cgSetMatrixParameterdc(param, matrix);
+                    NativeMethods.cgSetMatrixParameterdc(this.Handle, matrix);
                     break;
                 case Order.RowMajor:
-                    NativeMethods.cgSetMatrixParameterdr(param, matrix);
+                    NativeMethods.cgSetMatrixParameterdr(this.Handle, matrix);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
@@ -1055,14 +1054,13 @@ namespace CgNet
 
         public void SetMatrix(int[] matrix, Order order)
         {
-            IntPtr param = this.Handle;
             switch (order)
             {
                 case Order.ColumnMajor:
-                    NativeMethods.cgSetMatrixParameteric(param, matrix);
+                    NativeMethods.cgSetMatrixParameteric(this.Handle, matrix);
                     break;
                 case Order.RowMajor:
-                    NativeMethods.cgSetMatrixParameterir(param, matrix);
+                    NativeMethods.cgSetMatrixParameterir(this.Handle, matrix);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
@@ -1091,14 +1089,13 @@ namespace CgNet
 
         public void SetValue(double[] vals, Order order)
         {
-            IntPtr param = this.Handle;
             switch (order)
             {
                 case Order.ColumnMajor:
-                    NativeMethods.cgSetParameterValuedc(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValuedc(this.Handle, vals.Length, vals);
                     break;
                 case Order.RowMajor:
-                    NativeMethods.cgSetParameterValuedr(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValuedr(this.Handle, vals.Length, vals);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
@@ -1112,14 +1109,13 @@ namespace CgNet
 
         public void SetValue(float[] vals, Order order)
         {
-            IntPtr param = this.Handle;
             switch (order)
             {
                 case Order.ColumnMajor:
-                    NativeMethods.cgSetParameterValuefc(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValuefc(this.Handle, vals.Length, vals);
                     break;
                 case Order.RowMajor:
-                    NativeMethods.cgSetParameterValuefr(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValuefr(this.Handle, vals.Length, vals);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
@@ -1133,14 +1129,13 @@ namespace CgNet
 
         public void SetValue(int[] vals, Order order)
         {
-            IntPtr param = this.Handle;
             switch (order)
             {
                 case Order.ColumnMajor:
-                    NativeMethods.cgSetParameterValueic(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValueic(this.Handle, vals.Length, vals);
                     break;
                 case Order.RowMajor:
-                    NativeMethods.cgSetParameterValueir(param, vals.Length, vals);
+                    NativeMethods.cgSetParameterValueir(this.Handle, vals.Length, vals);
                     break;
                 default:
                     throw new InvalidEnumArgumentException("order");
