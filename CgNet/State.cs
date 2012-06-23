@@ -37,7 +37,7 @@ namespace CgNet
         #region Delegates
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate bool CgStateCallbackDelegate(IntPtr cGstateassignment);
+        public delegate bool CallbackDelegate(IntPtr cGstateassignment);
 
         #endregion Delegates
 
@@ -101,7 +101,7 @@ namespace CgNet
             }
         }
 
-        public CgStateCallbackDelegate ResetCallback
+        public CallbackDelegate ResetCallback
         {
             get
             {
@@ -109,7 +109,7 @@ namespace CgNet
             }
         }
 
-        public CgStateCallbackDelegate SetCallback
+        public CallbackDelegate SetCallback
         {
             get
             {
@@ -125,7 +125,7 @@ namespace CgNet
             }
         }
 
-        public CgStateCallbackDelegate ValidateCallback
+        public CallbackDelegate ValidateCallback
         {
             get
             {
@@ -194,7 +194,7 @@ namespace CgNet
             return NativeMethods.cgGetStateEnumerantValue(this.Handle, name);
         }
 
-        public void SetCallbacks(CgStateCallbackDelegate set, CgStateCallbackDelegate reset, CgStateCallbackDelegate validate)
+        public void SetCallbacks(CallbackDelegate set, CallbackDelegate reset, CallbackDelegate validate)
         {
             NativeMethods.cgSetStateCallbacks(this.Handle, set, reset, validate);
         }

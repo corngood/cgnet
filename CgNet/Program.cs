@@ -59,6 +59,14 @@ namespace CgNet
             }
         }
 
+        public Domain Domain
+        {
+            get
+            {
+                return NativeMethods.cgGetProgramDomain(this.Handle);
+            }
+        }
+
         public int DomainsCount
         {
             get
@@ -76,6 +84,14 @@ namespace CgNet
                 {
                     OwnsHandle = false
                 };
+            }
+        }
+
+        public ProgramInput Input
+        {
+            get
+            {
+                return NativeMethods.cgGetProgramInput(this.Handle);
             }
         }
 
@@ -107,6 +123,22 @@ namespace CgNet
             }
         }
 
+        public string[] Options
+        {
+            get
+            {
+                return Cg.IntPtrToStringArray(NativeMethods.cgGetProgramOptions(this.Handle));
+            }
+        }
+
+        public ProgramOutput Output
+        {
+            get
+            {
+                return NativeMethods.cgGetProgramOutput(this.Handle);
+            }
+        }
+
         public int OutputVertices
         {
             get
@@ -133,38 +165,6 @@ namespace CgNet
             }
         }
 
-        public Domain ProgramDomain
-        {
-            get
-            {
-                return NativeMethods.cgGetProgramDomain(this.Handle);
-            }
-        }
-
-        public ProgramInput ProgramInput
-        {
-            get
-            {
-                return NativeMethods.cgGetProgramInput(this.Handle);
-            }
-        }
-
-        public string[] ProgramOptions
-        {
-            get
-            {
-                return Cg.IntPtrToStringArray(NativeMethods.cgGetProgramOptions(this.Handle));
-            }
-        }
-
-        public ProgramOutput ProgramOutput
-        {
-            get
-            {
-                return NativeMethods.cgGetProgramOutput(this.Handle);
-            }
-        }
-
         public ProgramType Type
         {
             get;
@@ -187,7 +187,7 @@ namespace CgNet
 
         #region Public Static Methods
 
-        public static Program CombinePrograms(params Program[] programs)
+        public static Program Combine(params Program[] programs)
         {
             var buf = new IntPtr[programs.Length];
             for (int i = 0; i < programs.Length; i++)
@@ -241,7 +241,7 @@ namespace CgNet
             return new Annotation(ptr);
         }
 
-        public float[] EvaluateProgram(int ncomps, int nx, int ny, int nz)
+        public float[] Evaluate(int ncomps, int nx, int ny, int nz)
         {
             var retValue = new float[ncomps * nx * ny * nz];
             NativeMethods.cgEvaluateProgram(this.Handle, retValue, ncomps, nx, ny, nz);
@@ -252,6 +252,20 @@ namespace CgNet
         {
             var ptr = NativeMethods.cgGetProgramBuffer(this.Handle, bufferIndex);
             return ptr == IntPtr.Zero ? null : new Buffer(ptr)
+            {
+                OwnsHandle = false
+            };
+        }
+
+        public ProfileType GetDomainProfile(int index)
+        {
+            return NativeMethods.cgGetProgramDomainProfile(this.Handle, index);
+        }
+
+        public Program GetDomainProgram(int index)
+        {
+            var ptr = NativeMethods.cgGetProgramDomainProgram(this.Handle, index);
+            return ptr == IntPtr.Zero ? null : new Program(ptr)
             {
                 OwnsHandle = false
             };
@@ -302,9 +316,9 @@ namespace CgNet
             };
         }
 
-        public Parameter GetNamedProgramUniformBuffer(string blockName)
+        public Parameter GetNamedUniformBuffer(string blockName)
         {
-            var ptr = NativeMethods.cgGetNamedUniformBuffer(this.Handle, blockName);
+            var ptr = NativeMethods.cgGetNamedProgramUniformBuffer(this.Handle, blockName);
             return ptr == IntPtr.Zero ? null : new Parameter(ptr)
             {
                 OwnsHandle = false
@@ -316,21 +330,7 @@ namespace CgNet
             return NativeMethods.cgGetNamedUserType(this.Handle, name);
         }
 
-        public ProfileType GetProgramDomainProfile(int index)
-        {
-            return NativeMethods.cgGetProgramDomainProfile(this.Handle, index);
-        }
-
-        public Program GetProgramDomainProgram(int index)
-        {
-            var ptr = NativeMethods.cgGetProgramDomainProgram(this.Handle, index);
-            return ptr == IntPtr.Zero ? null : new Program(ptr)
-            {
-                OwnsHandle = false
-            };
-        }
-
-        public string GetProgramString(SourceType sourceType)
+        public string GetString(SourceType sourceType)
         {
             return Marshal.PtrToStringAnsi(NativeMethods.cgGetProgramString(this.Handle, sourceType));
         }
@@ -338,6 +338,11 @@ namespace CgNet
         public ParameterType GetUserType(int index)
         {
             return NativeMethods.cgGetUserType(this.Handle, index);
+        }
+
+        public void SetBuffer(int bufferIndex, Buffer buffer)
+        {
+            NativeMethods.cgSetProgramBuffer(this.Handle, bufferIndex, buffer.Handle);
         }
 
         public void SetLastListing(string listing)
@@ -348,11 +353,6 @@ namespace CgNet
         public void SetPassProgramParameters()
         {
             NativeMethods.cgSetPassProgramParameters(this.Handle);
-        }
-
-        public void SetProgramBuffer(int bufferIndex, Buffer buffer)
-        {
-            NativeMethods.cgSetProgramBuffer(this.Handle, bufferIndex, buffer.Handle);
         }
 
         public void UpdateParameters()

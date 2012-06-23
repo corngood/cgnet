@@ -62,13 +62,13 @@
 
             // Enable all profiles needed
             for (int i = 0; i < combinedProgram.DomainsCount - 1; i++)
-                combinedProgram.GetProgramDomainProfile(i).Enable();
+                combinedProgram.GetDomainProfile(i).Enable();
 
             DrawStars();
 
             // Disable all profiles needed
             for (int i = combinedProgram.DomainsCount - 1; i >= 0; i--)
-                combinedProgram.GetProgramDomainProfile(i).Disable();
+                combinedProgram.GetDomainProfile(i).Disable();
 
             if (myShrinkFactor > 0.8)
             {
@@ -134,7 +134,7 @@
                 FragmentProgramName,      /* Entry function name */
                 null);                      /* No extra compiler options */
 
-            combinedProgram = Program.CombinePrograms(vertexProgram, fragmentProgram, geometryProgram);
+            combinedProgram = Program.Combine(vertexProgram, fragmentProgram, geometryProgram);
             combinedProgram.Load();
             Debug.Assert(combinedProgram.DomainsCount == 3);
 

@@ -146,16 +146,16 @@ namespace CgNet
 
         #region Public Methods
 
+        public Annotation CreateAnnotation(string name, ParameterType type)
+        {
+            var ptr = NativeMethods.cgCreateTechniqueAnnotation(this.Handle, name, type);
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr);
+        }
+
         public Pass CreatePass(string name)
         {
             var ptr = NativeMethods.cgCreatePass(this.Handle, name);
             return ptr == IntPtr.Zero ? null : new Pass(ptr);
-        }
-
-        public Annotation CreateTechniqueAnnotation(string name, ParameterType type)
-        {
-            var ptr = NativeMethods.cgCreateTechniqueAnnotation(this.Handle, name, type);
-            return ptr == IntPtr.Zero ? null : new Annotation(ptr);
         }
 
         public Annotation GetNamedAnnotation(string name)

@@ -149,7 +149,7 @@
                 && fragmentProfile == ProfileType.GlslF)
             {
                 /* Combine programs for GLSL... */
-                combinedProgram = Program.CombinePrograms(vertexProgram, geometryProgram, fragmentProgram);
+                combinedProgram = Program.Combine(vertexProgram, geometryProgram, fragmentProgram);
                 combinedProgram.Load();
             }
             else

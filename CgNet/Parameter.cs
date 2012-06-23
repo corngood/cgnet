@@ -108,7 +108,7 @@ namespace CgNet
             }
         }
 
-        public int ConnectedToCount
+        public int ConnectedToParametersCount
         {
             get
             {
@@ -401,7 +401,7 @@ namespace CgNet
 
         #region Public Static Methods
 
-        public static void ConnectParameters(Parameter from, Parameter to)
+        public static void Connect(Parameter from, Parameter to)
         {
             NativeMethods.cgConnectParameter(from.Handle, to.Handle);
         }
@@ -805,7 +805,7 @@ namespace CgNet
             return f[0];
         }
 
-        public bool IsParameterUsed(WrapperObject container)
+        public bool IsUsed(WrapperObject container)
         {
             return NativeMethods.cgIsParameterUsed(this.Handle, container.Handle);
         }

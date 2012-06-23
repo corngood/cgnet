@@ -868,6 +868,11 @@ namespace CgNet
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr cgGetNamedProgramParameter(IntPtr prog, NameSpace nameSpace, string name);
 
+        //CGparameter cgGetNamedProgramUniformBuffer ( CGeffect program,       const char * blockName );
+        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
+        [SuppressUnmanagedCodeSecurity]
+        public static extern IntPtr cgGetNamedProgramUniformBuffer(IntPtr program, string blockName);
+
         // CGDLL_API CGstate cgGetNamedSamplerState(CGcontext, string name);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -936,11 +941,6 @@ namespace CgNet
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr cgGetNamedTechniqueAnnotation(IntPtr technique, string name);
-
-        //CGparameter cgGetNamedProgramUniformBuffer ( CGeffect program,       const char * blockName );
-        [DllImport(CgNativeLibrary, CallingConvention = Convention)]
-        [SuppressUnmanagedCodeSecurity]
-        public static extern IntPtr cgGetNamedUniformBuffer(IntPtr program, string blockName);
 
         //CGparameter cgGetNamedUniformBufferParameter( CGparameter param,  const char * name );
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -1709,7 +1709,7 @@ namespace CgNet
         // CGDLL_API CGstatecallback cgGetStateResetCallback(CGstate);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern State.CgStateCallbackDelegate cgGetStateResetCallback(IntPtr state);
+        public static extern State.CallbackDelegate cgGetStateResetCallback(IntPtr state);
 
         /// <summary>
         /// 
@@ -1719,7 +1719,7 @@ namespace CgNet
         // CGDLL_API CGstatecallback cgGetStateSetCallback(CGstate);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern State.CgStateCallbackDelegate cgGetStateSetCallback(IntPtr state);
+        public static extern State.CallbackDelegate cgGetStateSetCallback(IntPtr state);
 
         /// <summary>
         /// 
@@ -1739,7 +1739,7 @@ namespace CgNet
         // CGDLL_API CGstatecallback cgGetStateValidateCallback(CGstate);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern State.CgStateCallbackDelegate cgGetStateValidateCallback(IntPtr state);
+        public static extern State.CallbackDelegate cgGetStateValidateCallback(IntPtr state);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -2643,7 +2643,7 @@ namespace CgNet
         // CGDLL_API void cgSetStateCallbacks(CGstate, CGstatecallback set, CGstatecallback reset, CGstatecallback validate);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void cgSetStateCallbacks(IntPtr state, State.CgStateCallbackDelegate set, State.CgStateCallbackDelegate reset, State.CgStateCallbackDelegate validate);
+        public static extern void cgSetStateCallbacks(IntPtr state, State.CallbackDelegate set, State.CallbackDelegate reset, State.CallbackDelegate validate);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]

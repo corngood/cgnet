@@ -62,17 +62,17 @@
                         var vertexProgram = pass.GetProgram(Domain.VertexDomain);
                         if (vertexProgram != null)
                         {
-                            programsNode.Nodes.Add(vertexProgram.GetProgramString(SourceType.ProgramEntry));
+                            programsNode.Nodes.Add(vertexProgram.GetString(SourceType.ProgramEntry));
                         }
                         var fragmentProgram = pass.GetProgram(Domain.FragmentDomain);
                         if (fragmentProgram != null)
                         {
-                            programsNode.Nodes.Add(fragmentProgram.GetProgramString(SourceType.ProgramEntry));
+                            programsNode.Nodes.Add(fragmentProgram.GetString(SourceType.ProgramEntry));
                         }
                         var geometryProgram = pass.GetProgram(Domain.GeometryDomain);
                         if (geometryProgram != null)
                         {
-                            programsNode.Nodes.Add(geometryProgram.GetProgramString(SourceType.ProgramEntry));
+                            programsNode.Nodes.Add(geometryProgram.GetString(SourceType.ProgramEntry));
                         }
 
                         if (programsNode.Nodes.Count > 0)
