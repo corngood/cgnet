@@ -721,7 +721,7 @@ namespace CgNet
         // CGDLL_API void cgGetMatrixParameterdc(CGparameter param, double *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void cgGetMatrixParameterdc(IntPtr param, IntPtr matrix);
+        public static extern void cgGetMatrixParameterdc(IntPtr param, double[] matrix);
 
         /// <summary>
         /// 
@@ -731,7 +731,7 @@ namespace CgNet
         // CGDLL_API void cgGetMatrixParameterdr(CGparameter param, double *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void cgGetMatrixParameterdr(IntPtr param, IntPtr matrix);
+        public static extern void cgGetMatrixParameterdr(IntPtr param, double[] matrix);
 
         /// <summary>
         /// 
@@ -741,7 +741,7 @@ namespace CgNet
         // CGDLL_API void cgGetMatrixParameterfc(CGparameter param, float *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void cgGetMatrixParameterfc(IntPtr param, IntPtr matrix);
+        public static extern void cgGetMatrixParameterfc(IntPtr param, float[] matrix);
 
         /// <summary>
         /// 
@@ -751,7 +751,7 @@ namespace CgNet
         // CGDLL_API void cgGetMatrixParameterfr(CGparameter param, float *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void cgGetMatrixParameterfr(IntPtr param, IntPtr matrix);
+        public static extern void cgGetMatrixParameterfr(IntPtr param, float[] matrix);
 
         /// <summary>
         /// 
@@ -761,7 +761,7 @@ namespace CgNet
         // CGDLL_API void cgGetMatrixParameteric(CGparameter param, int *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void cgGetMatrixParameteric(IntPtr param, IntPtr matrix);
+        public static extern void cgGetMatrixParameteric(IntPtr param, int[] matrix);
 
         /// <summary>
         /// 
@@ -771,11 +771,11 @@ namespace CgNet
         // CGDLL_API void cgGetMatrixParameterir(CGparameter param, int *matrix);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void cgGetMatrixParameterir(IntPtr param, IntPtr matrix);
+        public static extern void cgGetMatrixParameterir(IntPtr param, int[] matrix);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern Order cgGetMatrixParameterOrder(IntPtr param);
+        public static extern MatrixOrder cgGetMatrixParameterOrder(IntPtr param);
 
         //CG_API void CGENTRY cgGetMatrixSize(CGtype type, int *nrows, int *ncols);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
@@ -1352,7 +1352,7 @@ namespace CgNet
         // CGDLL_API int cgGetParameterValuedc(CGparameter param, int n, double *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern int cgGetParameterValuedc(IntPtr param, int n, IntPtr vals);
+        public static extern int cgGetParameterValuedc(IntPtr param, int n, double[] vals);
 
         /// <summary>
         /// 
@@ -1364,7 +1364,7 @@ namespace CgNet
         // CGDLL_API int cgGetParameterValuedr(CGparameter param, int n, double *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern int cgGetParameterValuedr(IntPtr param, int n, IntPtr vals);
+        public static extern int cgGetParameterValuedr(IntPtr param, int n, double[] vals);
 
         /// <summary>
         /// 
@@ -1376,7 +1376,7 @@ namespace CgNet
         // CGDLL_API int cgGetParameterValuefc(CGparameter param, int n, float *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern int cgGetParameterValuefc(IntPtr param, int n, IntPtr vals);
+        public static extern int cgGetParameterValuefc(IntPtr param, int n, float[] vals);
 
         /// <summary>
         /// 
@@ -1388,7 +1388,7 @@ namespace CgNet
         // CGDLL_API int cgGetParameterValuefr(CGparameter param, int n, float *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern int cgGetParameterValuefr(IntPtr param, int n, IntPtr vals);
+        public static extern int cgGetParameterValuefr(IntPtr param, int n, float[] vals);
 
         /// <summary>
         /// 
@@ -1400,7 +1400,7 @@ namespace CgNet
         // CGDLL_API int cgGetParameterValueic(CGparameter param, int n, int *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern int cgGetParameterValueic(IntPtr param, int n, IntPtr vals);
+        public static extern int cgGetParameterValueic(IntPtr param, int n, int[] vals);
 
         /// <summary>
         /// 
@@ -1412,7 +1412,7 @@ namespace CgNet
         // CGDLL_API int cgGetParameterValueir(CGparameter param, int n, int *vals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern int cgGetParameterValueir(IntPtr param, int n, IntPtr vals);
+        public static extern int cgGetParameterValueir(IntPtr param, int n, int[] vals);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]

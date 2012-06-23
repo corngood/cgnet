@@ -119,7 +119,7 @@ namespace CgNet.GL
 
         #region Internal Static Methods
 
-        internal static T GetMatrixParameter<T>(IntPtr param, Order order)
+        internal static T GetMatrixParameter<T>(IntPtr param, MatrixOrder order)
             where T : struct
         {
             GCHandle handle = GCHandle.Alloc(new T(), GCHandleType.Pinned);
@@ -130,10 +130,10 @@ namespace CgNet.GL
                 {
                     switch (order)
                     {
-                        case Order.ColumnMajor:
+                        case MatrixOrder.ColumnMajor:
                             NativeMethods.cgGLGetMatrixParameterdc(param, handle.AddrOfPinnedObject());
                             break;
-                        case Order.RowMajor:
+                        case MatrixOrder.RowMajor:
                             NativeMethods.cgGLGetMatrixParameterdr(param, handle.AddrOfPinnedObject());
                             break;
                         default:
@@ -144,10 +144,10 @@ namespace CgNet.GL
                 {
                     switch (order)
                     {
-                        case Order.ColumnMajor:
+                        case MatrixOrder.ColumnMajor:
                             NativeMethods.cgGLGetMatrixParameterfc(param, handle.AddrOfPinnedObject());
                             break;
-                        case Order.RowMajor:
+                        case MatrixOrder.RowMajor:
                             NativeMethods.cgGLGetMatrixParameterfr(param, handle.AddrOfPinnedObject());
                             break;
                         default:
@@ -167,7 +167,7 @@ namespace CgNet.GL
             }
         }
 
-        internal static T[] GetMatrixParameterArray<T>(IntPtr param, int offset, int nelements, Order order)
+        internal static T[] GetMatrixParameterArray<T>(IntPtr param, int offset, int nelements, MatrixOrder order)
             where T : struct
         {
             var retValue = new T[nelements];
@@ -179,10 +179,10 @@ namespace CgNet.GL
                 {
                     switch (order)
                     {
-                        case Order.ColumnMajor:
+                        case MatrixOrder.ColumnMajor:
                             NativeMethods.cgGLGetMatrixParameterArrayfc(param, offset, nelements, g.AddrOfPinnedObject());
                             break;
-                        case Order.RowMajor:
+                        case MatrixOrder.RowMajor:
                             NativeMethods.cgGLGetMatrixParameterArrayfr(param, offset, nelements, g.AddrOfPinnedObject());
                             break;
                         default:
@@ -193,10 +193,10 @@ namespace CgNet.GL
                 {
                     switch (order)
                     {
-                        case Order.ColumnMajor:
+                        case MatrixOrder.ColumnMajor:
                             NativeMethods.cgGLGetMatrixParameterArraydc(param, offset, nelements, g.AddrOfPinnedObject());
                             break;
-                        case Order.RowMajor:
+                        case MatrixOrder.RowMajor:
                             NativeMethods.cgGLGetMatrixParameterArraydr(param, offset, nelements, g.AddrOfPinnedObject());
                             break;
                         default:
@@ -216,14 +216,14 @@ namespace CgNet.GL
             }
         }
 
-        internal static void SetMatrixParameter(IntPtr param, Matrix4d matrix, Order order)
+        internal static void SetMatrixParameter(IntPtr param, Matrix4d matrix, MatrixOrder order)
         {
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     NativeMethods.cgGLSetMatrixParameterdc(param, ref matrix);
                     break;
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     NativeMethods.cgGLSetMatrixParameterdr(param, ref matrix);
                     break;
                 default:
@@ -231,14 +231,14 @@ namespace CgNet.GL
             }
         }
 
-        internal static void SetMatrixParameterArray(IntPtr param, int offset, int nelements, Matrix4d[] matrices, Order order)
+        internal static void SetMatrixParameterArray(IntPtr param, int offset, int nelements, Matrix4d[] matrices, MatrixOrder order)
         {
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     NativeMethods.cgGLSetMatrixParameterArraydc(param, offset, nelements, matrices);
                     break;
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     NativeMethods.cgGLSetMatrixParameterArraydr(param, offset, nelements, matrices);
                     break;
                 default:
@@ -246,14 +246,14 @@ namespace CgNet.GL
             }
         }
 
-        internal static void SetMatrixParameterArray(IntPtr param, int offset, int nelements, Matrix4[] matrices, Order order)
+        internal static void SetMatrixParameterArray(IntPtr param, int offset, int nelements, Matrix4[] matrices, MatrixOrder order)
         {
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     NativeMethods.cgGLSetMatrixParameterArrayfc(param, offset, nelements, matrices);
                     break;
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     NativeMethods.cgGLSetMatrixParameterArrayfr(param, offset, nelements, matrices);
                     break;
                 default:

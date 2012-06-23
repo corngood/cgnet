@@ -40,7 +40,7 @@ namespace CgNet
 
         static Cg()
         {
-            DefaultOrder = Order.RowMajor;
+            DefaultMatrixOrder = MatrixOrder.RowMajor;
         }
 
         #endregion Constructors
@@ -95,7 +95,7 @@ namespace CgNet
 
         #region Public Static Properties
 
-        public static Order DefaultOrder
+        public static MatrixOrder DefaultMatrixOrder
         {
             get;
             set;

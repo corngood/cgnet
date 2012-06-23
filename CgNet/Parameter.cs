@@ -471,17 +471,17 @@ namespace CgNet
 
         public int GetDefaultValue(ref double[] values)
         {
-            return this.GetDefaultValue(ref values, Cg.DefaultOrder);
+            return this.GetDefaultValue(ref values, Cg.DefaultMatrixOrder);
         }
 
-        public int GetDefaultValue(ref double[] values, Order order)
+        public int GetDefaultValue(ref double[] values, MatrixOrder order)
         {
             IntPtr param = this.Handle;
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     return NativeMethods.cgGetParameterDefaultValuedc(param, values.Length, values);
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     return NativeMethods.cgGetParameterDefaultValuedr(param, values.Length, values);
                 default:
                     throw new ArgumentOutOfRangeException("order");
@@ -490,17 +490,17 @@ namespace CgNet
 
         public int GetDefaultValue(ref int[] values)
         {
-            return this.GetDefaultValue(ref values, Cg.DefaultOrder);
+            return this.GetDefaultValue(ref values, Cg.DefaultMatrixOrder);
         }
 
-        public int GetDefaultValue(ref int[] values, Order order)
+        public int GetDefaultValue(ref int[] values, MatrixOrder order)
         {
             IntPtr param = this.Handle;
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     return NativeMethods.cgGetParameterDefaultValueic(param, values.Length, values);
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     return NativeMethods.cgGetParameterDefaultValueir(param, values.Length, values);
                 default:
                     throw new ArgumentOutOfRangeException("order");
@@ -509,17 +509,17 @@ namespace CgNet
 
         public int GetDefaultValue(ref float[] values)
         {
-            return this.GetDefaultValue(ref values, Cg.DefaultOrder);
+            return this.GetDefaultValue(ref values, Cg.DefaultMatrixOrder);
         }
 
-        public int GetDefaultValue(ref float[] values, Order order)
+        public int GetDefaultValue(ref float[] values, MatrixOrder order)
         {
             IntPtr param = this.Handle;
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     return NativeMethods.cgGetParameterDefaultValuefc(param, values.Length, values);
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     return NativeMethods.cgGetParameterDefaultValuefr(param, values.Length, values);
                 default:
                     throw new ArgumentOutOfRangeException("order");
@@ -555,90 +555,68 @@ namespace CgNet
 
         public void GetMatrix(out int[] values)
         {
-            values = this.GetMatrix<int>(Cg.DefaultOrder);
+            GetMatrix(out values, Cg.DefaultMatrixOrder);
+        }
+
+        public void GetMatrix(out int[] values, MatrixOrder order)
+        {
+            values = new int[16];
+            switch (order)
+            {
+                case MatrixOrder.ColumnMajor:
+                    NativeMethods.cgGetMatrixParameteric(this.Handle, values);
+                    break;
+                case MatrixOrder.RowMajor:
+                    NativeMethods.cgGetMatrixParameterir(this.Handle, values);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
+            }
         }
 
         public void GetMatrix(out float[] values)
         {
-            values = this.GetMatrix<float>(Cg.DefaultOrder);
+            GetMatrix(out values, Cg.DefaultMatrixOrder);
+        }
+
+        public void GetMatrix(out float[] values, MatrixOrder order)
+        {
+            values = new float[16];
+            switch (order)
+            {
+                case MatrixOrder.ColumnMajor:
+                    NativeMethods.cgGetMatrixParameterfc(this.Handle, values);
+                    break;
+                case MatrixOrder.RowMajor:
+                    NativeMethods.cgGetMatrixParameterfr(this.Handle, values);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
+            }
         }
 
         public void GetMatrix(out double[] values)
         {
-            values = this.GetMatrix<double>(Cg.DefaultOrder);
+            GetMatrix(out values, Cg.DefaultMatrixOrder);
         }
 
-        public T[] GetMatrix<T>()
-            where T : struct
+        public void GetMatrix(out double[] values, MatrixOrder order)
         {
-            return this.GetMatrix<T>(Cg.DefaultOrder);
-        }
-
-        public T[] GetMatrix<T>(Order order)
-            where T : struct
-        {
-            IntPtr param = this.Handle;
-            var retValue = new T[16];
-            GCHandle handle = GCHandle.Alloc(retValue, GCHandleType.Pinned);
-
-            try
+            values = new double[16];
+            switch (order)
             {
-                if (typeof(T) == typeof(double))
-                {
-                    switch (order)
-                    {
-                        case Order.ColumnMajor:
-                            NativeMethods.cgGetMatrixParameterdc(param, handle.AddrOfPinnedObject());
-                            break;
-                        case Order.RowMajor:
-                            NativeMethods.cgGetMatrixParameterdr(param, handle.AddrOfPinnedObject());
-                            break;
-                        default:
-                            throw new InvalidEnumArgumentException("order");
-                    }
-                }
-                else if (typeof(T) == typeof(float))
-                {
-                    switch (order)
-                    {
-                        case Order.ColumnMajor:
-                            NativeMethods.cgGetMatrixParameterfc(param, handle.AddrOfPinnedObject());
-                            break;
-                        case Order.RowMajor:
-                            NativeMethods.cgGetMatrixParameterfr(param, handle.AddrOfPinnedObject());
-                            break;
-                        default:
-                            throw new InvalidEnumArgumentException("order");
-                    }
-                }
-                else if (typeof(T) == typeof(int))
-                {
-                    switch (order)
-                    {
-                        case Order.ColumnMajor:
-                            NativeMethods.cgGetMatrixParameteric(param, handle.AddrOfPinnedObject());
-                            break;
-                        case Order.RowMajor:
-                            NativeMethods.cgGetMatrixParameterir(param, handle.AddrOfPinnedObject());
-                            break;
-                        default:
-                            throw new InvalidEnumArgumentException("order");
-                    }
-                }
-                else
-                {
-                    throw new ArgumentException();
-                }
-
-                return retValue;
-            }
-            finally
-            {
-                handle.Free();
+                case MatrixOrder.ColumnMajor:
+                    NativeMethods.cgGetMatrixParameterdc(this.Handle, values);
+                    break;
+                case MatrixOrder.RowMajor:
+                    NativeMethods.cgGetMatrixParameterdr(this.Handle, values);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
             }
         }
 
-        public Order GetMatrixOrder()
+        public MatrixOrder GetMatrixOrder()
         {
             return NativeMethods.cgGetMatrixParameterOrder(this.Handle);
         }
@@ -693,116 +671,64 @@ namespace CgNet
             return Marshal.PtrToStringAnsi(NativeMethods.cgGetStringParameterValue(this.Handle));
         }
 
-        public void GetValue(ref int[] values)
+        public void GetValue(int[] values)
         {
-            this.GetValue(ref values, Cg.DefaultOrder);
+            this.GetValue(values, Cg.DefaultMatrixOrder);
         }
 
-        public void GetValue(ref int[] values, Order order)
+        public void GetValue(int[] values, MatrixOrder order)
         {
-            GCHandle handle = GCHandle.Alloc(values, GCHandleType.Pinned);
-            try
+            switch (order)
             {
-                switch (order)
-                {
-                    case Order.ColumnMajor:
-                        NativeMethods.cgGetParameterValueic(this.Handle, values.Length, handle.AddrOfPinnedObject());
-                        break;
-                    case Order.RowMajor:
-                        NativeMethods.cgGetParameterValueir(this.Handle, values.Length, handle.AddrOfPinnedObject());
-                        break;
-                    default:
-                        throw new InvalidEnumArgumentException("order");
-                }
-            }
-            finally
-            {
-                handle.Free();
+                case MatrixOrder.ColumnMajor:
+                    NativeMethods.cgGetParameterValueic(this.Handle, values.Length, values);
+                    break;
+                case MatrixOrder.RowMajor:
+                    NativeMethods.cgGetParameterValueir(this.Handle, values.Length, values);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
             }
         }
 
-        public void GetValue(ref double[] values)
+        public void GetValue(double[] values)
         {
-            this.GetValue(ref values, Cg.DefaultOrder);
+            this.GetValue(values, Cg.DefaultMatrixOrder);
         }
 
-        public void GetValue(ref double[] values, Order order)
+        public void GetValue(double[] values, MatrixOrder order)
         {
-            GCHandle handle = GCHandle.Alloc(values, GCHandleType.Pinned);
-            try
+            switch (order)
             {
-                switch (order)
-                {
-                    case Order.ColumnMajor:
-                        NativeMethods.cgGetParameterValuedc(this.Handle, values.Length, handle.AddrOfPinnedObject());
-                        break;
-                    case Order.RowMajor:
-                        NativeMethods.cgGetParameterValuedr(this.Handle, values.Length, handle.AddrOfPinnedObject());
-                        break;
-                    default:
-                        throw new InvalidEnumArgumentException("order");
-                }
-            }
-            finally
-            {
-                handle.Free();
+                case MatrixOrder.ColumnMajor:
+                    NativeMethods.cgGetParameterValuedc(this.Handle, values.Length, values);
+                    break;
+                case MatrixOrder.RowMajor:
+                    NativeMethods.cgGetParameterValuedr(this.Handle, values.Length, values);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
             }
         }
 
-        public void GetValue(ref float[] values)
+        public void GetValue(float[] values)
         {
-            this.GetValue(ref values, Cg.DefaultOrder);
+            this.GetValue(values, Cg.DefaultMatrixOrder);
         }
 
-        public void GetValue(ref float[] values, Order order)
+        public void GetValue(float[] values, MatrixOrder order)
         {
-            GCHandle handle = GCHandle.Alloc(values, GCHandleType.Pinned);
-            try
+            switch (order)
             {
-                switch (order)
-                {
-                    case Order.ColumnMajor:
-                        NativeMethods.cgGetParameterValuefc(this.Handle, values.Length, handle.AddrOfPinnedObject());
-                        break;
-                    case Order.RowMajor:
-                        NativeMethods.cgGetParameterValuefr(this.Handle, values.Length, handle.AddrOfPinnedObject());
-                        break;
-                    default:
-                        throw new InvalidEnumArgumentException("order");
-                }
+                case MatrixOrder.ColumnMajor:
+                    NativeMethods.cgGetParameterValuefc(this.Handle, values.Length, values);
+                    break;
+                case MatrixOrder.RowMajor:
+                    NativeMethods.cgGetParameterValuefr(this.Handle, values.Length, values);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("order");
             }
-            finally
-            {
-                handle.Free();
-            }
-        }
-
-        public T GetValue<T>()
-            where T : struct
-        {
-            var f = new T[1];
-            GCHandle handle = GCHandle.Alloc(f, GCHandleType.Pinned);
-            try
-            {
-                if (typeof(T) == typeof(int))
-                {
-                    NativeMethods.cgGetParameterValueir(this.Handle, f.Length, handle.AddrOfPinnedObject());
-                }
-                else if (typeof(T) == typeof(double))
-                {
-                    NativeMethods.cgGetParameterValuedr(this.Handle, f.Length, handle.AddrOfPinnedObject());
-                }
-                else if (typeof(T) == typeof(float))
-                {
-                    NativeMethods.cgGetParameterValuefr(this.Handle, f.Length, handle.AddrOfPinnedObject());
-                }
-            }
-            finally
-            {
-                handle.Free();
-            }
-
-            return f[0];
         }
 
         public bool IsUsed(WrapperObject container)
@@ -1008,18 +934,18 @@ namespace CgNet
 
         public void SetMatrix(float[] matrix)
         {
-            this.SetMatrix(matrix, Cg.DefaultOrder);
+            this.SetMatrix(matrix, Cg.DefaultMatrixOrder);
         }
 
-        public void SetMatrix(float[] matrix, Order order)
+        public void SetMatrix(float[] matrix, MatrixOrder order)
         {
             IntPtr param = this.Handle;
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     NativeMethods.cgSetMatrixParameterfc(param, matrix);
                     break;
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     NativeMethods.cgSetMatrixParameterfr(param, matrix);
                     break;
                 default:
@@ -1029,17 +955,17 @@ namespace CgNet
 
         public void SetMatrix(double[] matrix)
         {
-            this.SetMatrix(matrix, Cg.DefaultOrder);
+            this.SetMatrix(matrix, Cg.DefaultMatrixOrder);
         }
 
-        public void SetMatrix(double[] matrix, Order order)
+        public void SetMatrix(double[] matrix, MatrixOrder order)
         {
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     NativeMethods.cgSetMatrixParameterdc(this.Handle, matrix);
                     break;
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     NativeMethods.cgSetMatrixParameterdr(this.Handle, matrix);
                     break;
                 default:
@@ -1049,17 +975,17 @@ namespace CgNet
 
         public void SetMatrix(int[] matrix)
         {
-            this.SetMatrix(matrix, Cg.DefaultOrder);
+            this.SetMatrix(matrix, Cg.DefaultMatrixOrder);
         }
 
-        public void SetMatrix(int[] matrix, Order order)
+        public void SetMatrix(int[] matrix, MatrixOrder order)
         {
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     NativeMethods.cgSetMatrixParameteric(this.Handle, matrix);
                     break;
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     NativeMethods.cgSetMatrixParameterir(this.Handle, matrix);
                     break;
                 default:
@@ -1084,17 +1010,17 @@ namespace CgNet
 
         public void SetValue(double[] vals)
         {
-            this.SetValue(vals, Cg.DefaultOrder);
+            this.SetValue(vals, Cg.DefaultMatrixOrder);
         }
 
-        public void SetValue(double[] vals, Order order)
+        public void SetValue(double[] vals, MatrixOrder order)
         {
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     NativeMethods.cgSetParameterValuedc(this.Handle, vals.Length, vals);
                     break;
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     NativeMethods.cgSetParameterValuedr(this.Handle, vals.Length, vals);
                     break;
                 default:
@@ -1104,17 +1030,17 @@ namespace CgNet
 
         public void SetValue(float[] vals)
         {
-            this.SetValue(vals, Cg.DefaultOrder);
+            this.SetValue(vals, Cg.DefaultMatrixOrder);
         }
 
-        public void SetValue(float[] vals, Order order)
+        public void SetValue(float[] vals, MatrixOrder order)
         {
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     NativeMethods.cgSetParameterValuefc(this.Handle, vals.Length, vals);
                     break;
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     NativeMethods.cgSetParameterValuefr(this.Handle, vals.Length, vals);
                     break;
                 default:
@@ -1124,17 +1050,17 @@ namespace CgNet
 
         public void SetValue(int[] vals)
         {
-            this.SetValue(vals, Cg.DefaultOrder);
+            this.SetValue(vals, Cg.DefaultMatrixOrder);
         }
 
-        public void SetValue(int[] vals, Order order)
+        public void SetValue(int[] vals, MatrixOrder order)
         {
             switch (order)
             {
-                case Order.ColumnMajor:
+                case MatrixOrder.ColumnMajor:
                     NativeMethods.cgSetParameterValueic(this.Handle, vals.Length, vals);
                     break;
-                case Order.RowMajor:
+                case MatrixOrder.RowMajor:
                     NativeMethods.cgSetParameterValueir(this.Handle, vals.Length, vals);
                     break;
                 default:

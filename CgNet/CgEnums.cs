@@ -216,16 +216,16 @@ namespace CgNet
         ThreadSafePolicy = 4135,
     }
 
+    public enum MatrixOrder
+    {
+        ColumnMajor = 4121,
+        RowMajor = 4120
+    }
+
     public enum NameSpace
     {
         Global = 4108,
         Program = 4109,
-    }
-
-    public enum Order
-    {
-        ColumnMajor = 4121,
-        RowMajor = 4120
     }
 
     public enum ParameterClass
