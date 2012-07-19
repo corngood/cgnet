@@ -59,10 +59,10 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
         protected override void DoRender(FrameEventArgs e)
         {
             float[] lightPosition = {
-                                        12.5f * (float)Math.Sin(this.myLightAngle),
-                                        12.5f * (float)Math.Cos(this.myLightAngle),
-                                        4
-                                    };
+                12.5f * (float)Math.Sin(this.myLightAngle),
+                12.5f * (float)Math.Cos(this.myLightAngle),
+                4
+            };
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -89,7 +89,7 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
 
             vertexProgram.UpdateParameters();
             fragmentProgram.UpdateParameters();
-
+            
             GL.Begin(BeginMode.Quads);
             /* Counter clockwise (GL_CCW) winding */
             GL.TexCoord2(0f, 0f);
@@ -102,14 +102,16 @@ namespace ExampleBrowser.Examples.OpenTK.Basic
             GL.Vertex2(-7f, 7f);
             GL.End();
 
+            fragmentParamNormalizeCube.DisableTexture();
+            fragmentParamNormalMap.DisableTexture();
+            
             vertexProfile.Disable();
-
             fragmentProfile.Disable();
-
+            
             /*** Render light as white ball using fixed function pipe ***/
-
             GL.Translate(lightPosition[0], lightPosition[1], lightPosition[2]);
-            GL.Color3(0.8f, 0.8f, 0.1f); /* yellow */
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+            GL.Color3(0.8, 0.8, 0.1); /* yellow */
             NativeMethods.glutSolidSphere(0.4, 12, 12);
 
             this.SwapBuffers();

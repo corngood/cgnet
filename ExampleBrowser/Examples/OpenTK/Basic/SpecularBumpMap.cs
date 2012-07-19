@@ -111,11 +111,11 @@
 
             vertexProfile.Disable();
             fragmentProfile.Disable();
+            
             /*** Render light as white ball using fixed function pipe ***/
-
             GL.Translate(lightPosition[0], lightPosition[1], lightPosition[2]);
+                  GL.BindTexture(TextureTarget.Texture2D, 0);
             GL.Color3(0.8f, 0.8f, 0.1f); /* yellow */
-
             NativeMethods.glutSolidSphere(0.4f, 12, 12);
 
             this.SwapBuffers();
