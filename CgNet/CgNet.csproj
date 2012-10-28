@@ -15,6 +15,11 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <NoStdLib>False</NoStdLib>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\CgNet.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,7 +30,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,14 +52,10 @@
     <BaseAddress>4194304</BaseAddress>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
-    <Reference Include="SlimDX, Version=2.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="D3D9\CgD3D9.cs" />
-    <Compile Include="D3D9\NativeMethods.cs" />
     <Compile Include="Annotation.cs" />
     <Compile Include="Buffer.cs" />
     <Compile Include="Context.cs" />
@@ -68,21 +69,11 @@
     <Compile Include="State.cs" />
     <Compile Include="StateAssignment.cs" />
     <Compile Include="Technique.cs" />
-    <Compile Include="D3D9\CgD3D9Parameter.cs" />
-    <Compile Include="D3D9\CgD3D9Context.cs" />
-    <Compile Include="D3D9\CgD3D9Program.cs" />
-    <Compile Include="GL\CgGLBuffer.cs" />
-    <Compile Include="GL\CgGLContext.cs" />
-    <Compile Include="GL\CgGLParameter.cs" />
-    <Compile Include="GL\CgGLProgram.cs" />
     <Compile Include="WrapperObject.cs" />
     <Compile Include="CgEnums.cs" />
-    <Compile Include="GL\CgGLEnums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cg.cs" />
-    <Compile Include="GL\CgGL.cs" />
     <Compile Include="NativeMethods.cs" />
-    <Compile Include="GL\NativeMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\App.config" />

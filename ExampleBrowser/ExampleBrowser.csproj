@@ -48,7 +48,7 @@
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
     <Reference Include="OpenTK.Compatibility, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
-    <Reference Include="SlimDX, Version=2.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
+    <Reference Include="SlimDX" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -181,6 +181,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CgNet.OpenTK\CgNet.OpenTK.csproj">
+      <Project>{BA459981-3292-4716-954D-E21BD06A8B0B}</Project>
+      <Name>CgNet.OpenTK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CgNet.SlimDX\CgNet.SlimDX.csproj">
+      <Project>{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}</Project>
+      <Name>CgNet.SlimDX</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CgNet\CgNet.csproj">
       <Project>{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}</Project>
       <Name>CgNet</Name>

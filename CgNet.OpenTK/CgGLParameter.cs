@@ -106,7 +106,7 @@ namespace CgNet.GL
             }
         }
 
-        public static void Get(this Parameter param, ref float[] values)
+        public static void Get(this Parameter param, float[] values)
         {
             IntPtr param1 = param.Handle;
             GCHandle handle = GCHandle.Alloc(values, GCHandleType.Pinned);
@@ -134,7 +134,7 @@ namespace CgNet.GL
             }
         }
 
-        public static void Get(this Parameter param, ref double[] values)
+        public static void Get(this Parameter param, double[] values)
         {
             IntPtr param1 = param.Handle;
             GCHandle handle = GCHandle.Alloc(values);
@@ -162,11 +162,10 @@ namespace CgNet.GL
             }
         }
 
-        public static void GetArray(this Parameter param, int offset, int nelements, ref float[] values)
+        public static void GetArray(this Parameter param, int offset, int nelements, float[] values)
         {
             IntPtr param1 = param.Handle;
             GCHandle g = GCHandle.Alloc(values, GCHandleType.Pinned);
-
             try
             {
                 switch (values.Length / nelements)
@@ -191,11 +190,10 @@ namespace CgNet.GL
             }
         }
 
-        public static void GetArray(this Parameter param, int offset, int nelements, ref double[] values)
+        public static void GetArray(this Parameter param, int offset, int nelements, double[] values)
         {
             IntPtr param1 = param.Handle;
             GCHandle g = GCHandle.Alloc(values, GCHandleType.Pinned);
-
             try
             {
                 switch (values.Length / nelements)
