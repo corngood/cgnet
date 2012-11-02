@@ -29,8 +29,8 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Buffer(IntPtr handle)
-            : base(handle)
+        internal Buffer(IntPtr handle, bool ownsHandle)
+            : base(handle, ownsHandle)
         {
         }
 
@@ -77,7 +77,7 @@ namespace CgNet
         /// <returns>Returns a Buffer on success.</returns>
         public static Buffer Create(Context context, int size, IntPtr data, BufferUsage bufferUsage)
         {
-            return new Buffer(NativeMethods.cgCreateBuffer(context.Handle, size, data, bufferUsage));
+            return new Buffer(NativeMethods.cgCreateBuffer(context.Handle, size, data, bufferUsage), true);
         }
 
         #endregion Public Static Methods

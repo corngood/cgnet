@@ -28,8 +28,8 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Technique(IntPtr handle)
-            : base(handle)
+        internal Technique(IntPtr handle, bool ownsHandle)
+            : base(handle, ownsHandle)
         {
         }
 
@@ -52,11 +52,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetTechniqueEffect(this.Handle);
-
-                return ptr == IntPtr.Zero ? null : new Effect(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new Effect(ptr, false);
             }
         }
 
@@ -65,10 +61,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetFirstTechniqueAnnotation(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Annotation(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new Annotation(ptr, false);
             }
         }
 
@@ -77,11 +70,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetFirstPass(this.Handle);
-
-                return ptr == IntPtr.Zero ? null : new Pass(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new Pass(ptr, false);
             }
         }
 
@@ -114,10 +103,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetNextTechnique(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Technique(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new Technique(ptr, false);
             }
         }
 
@@ -149,31 +135,25 @@ namespace CgNet
         public Annotation CreateAnnotation(string name, ParameterType type)
         {
             var ptr = NativeMethods.cgCreateTechniqueAnnotation(this.Handle, name, type);
-            return ptr == IntPtr.Zero ? null : new Annotation(ptr);
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr, true);
         }
 
         public Pass CreatePass(string name)
         {
             var ptr = NativeMethods.cgCreatePass(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new Pass(ptr);
+            return ptr == IntPtr.Zero ? null : new Pass(ptr, true);
         }
 
         public Annotation GetNamedAnnotation(string name)
         {
             var ptr = NativeMethods.cgGetNamedTechniqueAnnotation(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new Annotation(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr, false);
         }
 
         public Pass GetNamedPass(string name)
         {
             var ptr = NativeMethods.cgGetNamedPass(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new Pass(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            return ptr == IntPtr.Zero ? null : new Pass(ptr, false);
         }
 
         public void SetLastListing(string listing)

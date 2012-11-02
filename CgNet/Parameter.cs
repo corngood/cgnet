@@ -29,8 +29,8 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Parameter(IntPtr handle)
-            : base(handle)
+        internal Parameter(IntPtr handle, bool ownsHandle)
+            : base(handle, ownsHandle)
         {
         }
 
@@ -101,10 +101,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetConnectedParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                {
-                    OwnsHandle = false
-                };
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
             }
         }
 
@@ -121,10 +118,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetParameterContext(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Context(ptr)
-                {
-                    OwnsHandle = false
-                };
+                return ptr == IntPtr.Zero ? null : new Context(ptr, false);
             }
         }
 
@@ -133,10 +127,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetParameterEffect(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Effect(ptr)
-                {
-                    OwnsHandle = false
-                };
+                return ptr == IntPtr.Zero ? null : new Effect(ptr, false);
             }
         }
 
@@ -145,10 +136,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetFirstParameterAnnotation(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Annotation(ptr)
-                {
-                    OwnsHandle = false
-                };
+                return ptr == IntPtr.Zero ? null : new Annotation(ptr, false);
             }
         }
 
@@ -157,10 +145,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetFirstSamplerStateAssignment(this.Handle);
-                return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
-                {
-                    OwnsHandle = false
-                };
+                return ptr == IntPtr.Zero ? null : new StateAssignment(ptr, false);
             }
         }
 
@@ -169,10 +154,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetFirstUniformBufferParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                {
-                    OwnsHandle = false
-                };
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
             }
         }
 
@@ -229,10 +211,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetNextLeafParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                {
-                    OwnsHandle = false
-                };
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
             }
         }
 
@@ -241,10 +220,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetNextParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                {
-                    OwnsHandle = false
-                };
+                return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
             }
         }
 
@@ -269,10 +245,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetParameterProgram(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Program(ptr)
-                {
-                    OwnsHandle = false
-                };
+                return ptr == IntPtr.Zero ? null : new Program(ptr, false);
             }
         }
 
@@ -355,10 +328,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetUniformBufferParameter(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Buffer(ptr)
-                {
-                    OwnsHandle = false
-                };
+                return ptr == IntPtr.Zero ? null : new Buffer(ptr, false);
             }
 
             set
@@ -423,7 +393,7 @@ namespace CgNet
         public Annotation CreateAnnotation(string name, ParameterType type)
         {
             var ptr = NativeMethods.cgCreateParameterAnnotation(this.Handle, name, type);
-            return ptr == IntPtr.Zero ? null : new Annotation(ptr);
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr, true);
         }
 
         public void Disconnect()
@@ -439,10 +409,7 @@ namespace CgNet
         public Parameter GetArrayParameter(int index)
         {
             var ptr = NativeMethods.cgGetArrayParameter(this.Handle, index);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-            {
-                OwnsHandle = false
-            };
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
         }
 
         public int GetArraySize(int dimension)
@@ -463,10 +430,7 @@ namespace CgNet
         public Parameter GetConnectedToParameter(int index)
         {
             var ptr = NativeMethods.cgGetConnectedToParameter(this.Handle, index);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-            {
-                OwnsHandle = false
-            };
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
         }
 
         public int GetDefaultValue(ref double[] values)
@@ -529,28 +493,19 @@ namespace CgNet
         public Buffer GetEffectParameterBuffer()
         {
             var ptr = NativeMethods.cgGetEffectParameterBuffer(this.Handle);
-            return ptr == IntPtr.Zero ? null : new Buffer(ptr)
-            {
-                OwnsHandle = false
-            };
+            return ptr == IntPtr.Zero ? null : new Buffer(ptr, false);
         }
 
         public Parameter GetFirstDependentParameter()
         {
             var ptr = NativeMethods.cgGetFirstDependentParameter(this.Handle);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-            {
-                OwnsHandle = false
-            };
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
         }
 
         public Parameter GetFirstStructParameter()
         {
             var ptr = NativeMethods.cgGetFirstStructParameter(this.Handle);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-            {
-                OwnsHandle = false
-            };
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
         }
 
         public void GetMatrix(out int[] values)
@@ -624,46 +579,31 @@ namespace CgNet
         public Annotation GetNamedAnnotation(string name)
         {
             var ptr = NativeMethods.cgGetNamedParameterAnnotation(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new Annotation(ptr)
-            {
-                OwnsHandle = false
-            };
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr, false);
         }
 
         public StateAssignment GetNamedStateAssignment(string name)
         {
             var ptr = NativeMethods.cgGetNamedSamplerStateAssignment(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
-            {
-                OwnsHandle = false
-            };
+            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr, false);
         }
 
         public Parameter GetNamedStructParameter(string name)
         {
             var ptr = NativeMethods.cgGetNamedStructParameter(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-            {
-                OwnsHandle = false
-            };
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
         }
 
         public Parameter GetNamedSubParameter(string name)
         {
             var ptr = NativeMethods.cgGetNamedSubParameter(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-            {
-                OwnsHandle = false
-            };
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
         }
 
         public Parameter GetNamedUniformBufferParameter(string name)
         {
             var ptr = NativeMethods.cgGetNamedUniformBufferParameter(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-            {
-                OwnsHandle = false
-            };
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
         }
 
         public string GetStringValue()

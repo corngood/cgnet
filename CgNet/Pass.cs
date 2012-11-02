@@ -28,8 +28,8 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Pass(IntPtr handle)
-            : base(handle)
+        internal Pass(IntPtr handle, bool ownsHandle)
+            : base(handle, ownsHandle)
         {
         }
 
@@ -52,10 +52,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetFirstPassAnnotation(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Annotation(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new Annotation(ptr, false);
             }
         }
 
@@ -64,10 +61,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetFirstStateAssignment(this.Handle);
-                return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new StateAssignment(ptr, false);
             }
         }
 
@@ -93,10 +87,7 @@ namespace CgNet
             {
                 var ptr = NativeMethods.cgGetNextPass(this.Handle);
 
-                return ptr == IntPtr.Zero ? null : new Pass(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new Pass(ptr, false);
             }
         }
 
@@ -106,10 +97,7 @@ namespace CgNet
             {
                 var ptr = NativeMethods.cgGetPassTechnique(this.Handle);
 
-                return ptr == IntPtr.Zero ? null : new Technique(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new Technique(ptr, false);
             }
         }
 
@@ -133,53 +121,43 @@ namespace CgNet
         public Annotation CreateAnnotation(string name, ParameterType type)
         {
             var ptr = NativeMethods.cgCreatePassAnnotation(this.Handle, name, type);
-            return ptr == IntPtr.Zero ? null : new Annotation(ptr);
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr, true);
         }
 
         public StateAssignment CreateSamplerStateAssignment(State state)
         {
             var ptr = NativeMethods.cgCreateSamplerStateAssignment(this.Handle, state.Handle);
-            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr);
+            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr, true);
         }
 
         public StateAssignment CreateStateAssignment(State state)
         {
             var ptr = NativeMethods.cgCreateStateAssignment(this.Handle, state.Handle);
-            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr);
+            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr, true);
         }
 
         public StateAssignment CreateStateAssignmentIndex(State state, int index)
         {
             var ptr = NativeMethods.cgCreateStateAssignmentIndex(this.Handle, state.Handle, index);
-            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr);
+            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr, true);
         }
 
         public Annotation GetNamedAnnotation(string name)
         {
             var ptr = NativeMethods.cgGetNamedPassAnnotation(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new Annotation(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            return ptr == IntPtr.Zero ? null : new Annotation(ptr, false);
         }
 
         public StateAssignment GetNamedStateAssignment(string name)
         {
             var ptr = NativeMethods.cgGetNamedStateAssignment(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            return ptr == IntPtr.Zero ? null : new StateAssignment(ptr, false);
         }
 
         public Program GetProgram(Domain domain)
         {
             var ptr = NativeMethods.cgGetPassProgram(this.Handle, domain);
-
-            return ptr == IntPtr.Zero ? null : new Program(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            return ptr == IntPtr.Zero ? null : new Program(ptr, false);
         }
 
         public void ResetState()

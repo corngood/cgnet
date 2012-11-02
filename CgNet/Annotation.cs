@@ -32,8 +32,8 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Annotation(IntPtr handle)
-            : base(handle)
+        internal Annotation(IntPtr handle, bool ownsHandle)
+            : base(handle, ownsHandle)
         {
         }
 
@@ -84,10 +84,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetNextAnnotation(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Annotation(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new Annotation(ptr, false);
             }
         }
 
@@ -129,10 +126,7 @@ namespace CgNet
         public Parameter GetDependentParameter(int index)
         {
             var ptr = NativeMethods.cgGetDependentAnnotationParameter(this.Handle, index);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
         }
 
         /// <summary>

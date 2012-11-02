@@ -34,13 +34,12 @@ namespace CgNet.GL
 
         public static Buffer CreateBuffer(this Context context, int size, IntPtr data, BufferUsageHint bufferUsage)
         {
-            return new Buffer(NativeMethods.cgGLCreateBuffer(context.Handle, size, data, bufferUsage));
+            return new Buffer(NativeMethods.cgGLCreateBuffer(context.Handle, size, data, bufferUsage), true);
         }
 
         public static Buffer CreateBufferFromObject(this Context context, OpenTK.Graphics.OpenGL.BufferUsageHint flags, bool manageObject)
         {
-            var retValue = new Buffer(NativeMethods.cgGLCreateBufferFromObject(context.Handle, flags, manageObject));
-            retValue.OwnsHandle = !manageObject;
+            var retValue = new Buffer(NativeMethods.cgGLCreateBufferFromObject(context.Handle, flags, manageObject), !manageObject);
             return retValue;
         }
 

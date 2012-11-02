@@ -34,8 +34,8 @@ namespace CgNet
 
         #region Constructors
 
-        internal Context(IntPtr handle)
-            : base(handle)
+        internal Context(IntPtr handle, bool ownsHandle)
+            : base(handle, ownsHandle)
         {
         }
 
@@ -119,10 +119,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetFirstEffect(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Effect(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new Effect(ptr, false);
             }
         }
 
@@ -131,10 +128,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetFirstProgram(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Program(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new Program(ptr, false);
             }
         }
 
@@ -143,10 +137,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetFirstSamplerState(this.Handle);
-                return ptr == IntPtr.Zero ? null : new State(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new State(ptr, false);
             }
         }
 
@@ -155,13 +146,10 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetFirstState(this.Handle);
-                return ptr == IntPtr.Zero ? null : new State(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new State(ptr, false);
             }
         }
-
+        
         public bool IsContext
         {
             get
@@ -223,7 +211,7 @@ namespace CgNet
         public static Context Create()
         {
             var ptr = NativeMethods.cgCreateContext();
-            return ptr == IntPtr.Zero ? null : new Context(ptr);
+            return ptr == IntPtr.Zero ? null : new Context(ptr, true);
         }
 
         #endregion Public Static Methods
@@ -240,124 +228,115 @@ namespace CgNet
         public State CreateArraySamplerState(string name, ParameterType type, int elementCount)
         {
             var ptr = NativeMethods.cgCreateArraySamplerState(this.Handle, name, type, elementCount);
-            return ptr == IntPtr.Zero ? null : new State(ptr);
+            return ptr == IntPtr.Zero ? null : new State(ptr, true);
         }
 
         public State CreateArrayState(string name, ParameterType type, int elementCount)
         {
             var ptr = NativeMethods.cgCreateArrayState(this.Handle, name, type, elementCount);
-            return ptr == IntPtr.Zero ? null : new State(ptr);
+            return ptr == IntPtr.Zero ? null : new State(ptr, true);
         }
 
         public Buffer CreateBuffer(int size, IntPtr data, BufferUsage bufferUsage)
         {
             var ptr = NativeMethods.cgCreateBuffer(this.Handle, size, data, bufferUsage);
-            return ptr == IntPtr.Zero ? null : new Buffer(ptr);
+            return ptr == IntPtr.Zero ? null : new Buffer(ptr, true);
         }
 
         public Effect CreateEffect(string code, params string[] args)
         {
             var ptr = NativeMethods.cgCreateEffect(this.Handle, code, args);
-            return ptr == IntPtr.Zero ? null : new Effect(ptr);
+            return ptr == IntPtr.Zero ? null : new Effect(ptr, true);
         }
 
         public Effect CreateEffectFromFile(string filename, params string[] args)
         {
             var ptr = NativeMethods.cgCreateEffectFromFile(this.Handle, filename, args);
-            return ptr == IntPtr.Zero ? null : new Effect(ptr);
+            return ptr == IntPtr.Zero ? null : new Effect(ptr, true);
         }
 
         public Parameter CreateEffectParameter(string name, ParameterType type)
         {
             var ptr = NativeMethods.cgCreateEffectParameter(this.Handle, name, type);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr);
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, true);
         }
 
         public Obj CreateObj(ProgramType programType, string source, ProfileType profile, params string[] args)
         {
             var ptr = NativeMethods.cgCreateObj(this.Handle, programType, source, profile, args);
-            return ptr == IntPtr.Zero ? null : new Obj(ptr);
+            return ptr == IntPtr.Zero ? null : new Obj(ptr, true);
         }
 
         public Obj CreateObjFromFile(ProgramType programType, string sourceFile, ProfileType profile, params string[] args)
         {
             var ptr = NativeMethods.cgCreateObjFromFile(this.Handle, programType, sourceFile, profile, args);
-            return ptr == IntPtr.Zero ? null : new Obj(ptr);
+            return ptr == IntPtr.Zero ? null : new Obj(ptr, true);
         }
 
         public Parameter CreateParameter(ParameterType type)
         {
             var ptr = NativeMethods.cgCreateParameter(this.Handle, type);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr);
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, true);
         }
 
         public Parameter CreateParameterArray(ParameterType type, int length)
         {
             var ptr = NativeMethods.cgCreateParameterArray(this.Handle, type, length);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr);
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, true);
         }
 
         public Parameter CreateParameterMultiDimArray(ParameterType type, int dim, int[] lengths)
         {
             var ptr = NativeMethods.cgCreateParameterMultiDimArray(this.Handle, type, dim, lengths);
-            return ptr == IntPtr.Zero ? null : new Parameter(ptr);
+            return ptr == IntPtr.Zero ? null : new Parameter(ptr, true);
         }
 
         public Program CreateProgram(ProgramType type, string source, ProfileType profile, string entry, params string[] args)
         {
             var ptr = NativeMethods.cgCreateProgram(this.Handle, type, source, profile, entry, args);
-            return ptr == IntPtr.Zero ? null : new Program(ptr)
-                                               {
-                                                   Type = type,
-                                               };
+            return ptr == IntPtr.Zero ? null : new Program(ptr, true)
+            {
+                Type = type,
+            };
         }
 
         public Program CreateProgramFromFile(ProgramType type, string file, ProfileType profile, string entry, params string[] args)
         {
             var ptr = NativeMethods.cgCreateProgramFromFile(this.Handle, type, file, profile, entry, args);
-            return ptr == IntPtr.Zero ? null : new Program(ptr)
-                                               {
-                                                   Type = type,
-                                               };
+            return ptr == IntPtr.Zero ? null : new Program(ptr, true)
+            {
+                Type = type,
+            };
         }
 
         public State CreateSamplerState(string name, ParameterType type)
         {
             var ptr = NativeMethods.cgCreateSamplerState(this.Handle, name, type);
-            return ptr == IntPtr.Zero ? null : new State(ptr);
+            return ptr == IntPtr.Zero ? null : new State(ptr, true);
         }
 
         public State CreateState(string name, ParameterType type)
         {
             var ptr = NativeMethods.cgCreateState(this.Handle, name, type);
-            return ptr == IntPtr.Zero ? null : new State(ptr);
+            return ptr == IntPtr.Zero ? null : new State(ptr, true);
         }
 
         public Effect GetNamedEffect(string name)
         {
             var ptr = NativeMethods.cgGetNamedEffect(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new Effect(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            return ptr == IntPtr.Zero ? null : new Effect(ptr, false);
         }
 
         public State GetNamedSamplerState(string name)
         {
             var ptr = NativeMethods.cgGetNamedSamplerState(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new State(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            return ptr == IntPtr.Zero ? null : new State(ptr, false);
         }
 
         public State GetNamedState(string name)
         {
             var ptr = NativeMethods.cgGetNamedState(this.Handle, name);
-            return ptr == IntPtr.Zero ? null : new State(ptr)
-                                               {
-                                                   OwnsHandle = false
-                                               };
+            return ptr == IntPtr.Zero ? null : new State(ptr, false);
         }
 
         public void SetCompilerIncludeFile(string name, string filename)

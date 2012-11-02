@@ -30,14 +30,14 @@ namespace CgNet
     {
         #region Constructors
 
-        protected WrapperObject(IntPtr handle)
+        protected WrapperObject(IntPtr handle, bool ownsHandle)
         {
             if (handle == IntPtr.Zero)
             {
                 throw new ArgumentException("handle is invalid", "handle");
             }
 
-            this.OwnsHandle = true;
+            this.OwnsHandle = ownsHandle;
             this.Handle = handle;
         }
 
@@ -66,20 +66,16 @@ namespace CgNet
             private set;
         }
 
-        #endregion Public Properties
-
-        #region Internal Properties
-
         /// <summary>
         /// Gets or sets a value indicating whether the WrapperObject owns the handle.
         /// </summary>
-        internal bool OwnsHandle
+        public bool OwnsHandle
         {
             get;
-            set;
+            private set;
         }
 
-        #endregion Internal Properties
+        #endregion Public Properties
 
         #endregion Properties
 
@@ -198,7 +194,7 @@ namespace CgNet
         /// Returns a hash code for this instance.
         /// </summary>
         /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         public override int GetHashCode()
         {

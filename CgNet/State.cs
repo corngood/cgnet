@@ -27,8 +27,8 @@ namespace CgNet
     {
         #region Constructors
 
-        internal State(IntPtr handle)
-            : base(handle)
+        internal State(IntPtr handle, bool ownsHandle)
+            : base(handle, ownsHandle)
         {
         }
 
@@ -50,10 +50,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetStateContext(this.Handle);
-                return ptr == IntPtr.Zero ? null : new Context(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new Context(ptr, false);
             }
         }
 
@@ -94,10 +91,7 @@ namespace CgNet
             get
             {
                 var ptr = NativeMethods.cgGetNextState(this.Handle);
-                return ptr == IntPtr.Zero ? null : new State(ptr)
-                                                   {
-                                                       OwnsHandle = false
-                                                   };
+                return ptr == IntPtr.Zero ? null : new State(ptr, false);
             }
         }
 
