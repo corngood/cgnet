@@ -193,6 +193,11 @@ namespace CgNet
 
         public Program CreateProgram(ProfileType profile, string entry, params string[] args)
         {
+            if (args != null && args.Length == 0)
+            {
+                args = null;
+            }
+
             var ptr = NativeMethods.cgCreateProgramFromEffect(this.Handle, profile, entry, args);
             return ptr == IntPtr.Zero ? null : new Program(ptr, true);
         }
