@@ -29,7 +29,7 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Buffer(IntPtr handle, bool ownsHandle)
+        public Buffer(IntPtr handle, bool ownsHandle)
             : base(handle, ownsHandle)
         {
         }

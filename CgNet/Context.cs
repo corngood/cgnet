@@ -34,7 +34,7 @@ namespace CgNet
 
         #region Constructors
 
-        internal Context(IntPtr handle, bool ownsHandle)
+        public Context(IntPtr handle, bool ownsHandle)
             : base(handle, ownsHandle)
         {
         }
@@ -149,7 +149,7 @@ namespace CgNet
                 return ptr == IntPtr.Zero ? null : new State(ptr, false);
             }
         }
-        
+
         public bool IsContext
         {
             get

@@ -28,7 +28,7 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Effect(IntPtr handle, bool ownsHandle)
+        public Effect(IntPtr handle, bool ownsHandle)
             : base(handle, ownsHandle)
         {
         }
@@ -81,7 +81,7 @@ namespace CgNet
                 return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
             }
         }
-        
+
         public Technique FirstTechnique
         {
             get
@@ -90,7 +90,7 @@ namespace CgNet
                 return ptr == IntPtr.Zero ? null : new Technique(ptr, false);
             }
         }
-        
+
         public bool IsEffect
         {
             get

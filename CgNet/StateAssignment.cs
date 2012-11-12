@@ -27,7 +27,7 @@ namespace CgNet
     {
         #region Constructors
 
-        internal StateAssignment(IntPtr handle, bool ownsHandle)
+        public StateAssignment(IntPtr handle, bool ownsHandle)
             : base(handle, ownsHandle)
         {
         }

@@ -28,7 +28,7 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Program(IntPtr handle, bool ownsHandle)
+        public Program(IntPtr handle, bool ownsHandle)
             : base(handle, ownsHandle)
         {
         }

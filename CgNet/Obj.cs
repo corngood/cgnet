@@ -26,7 +26,7 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Obj(IntPtr handle, bool ownsHandle)
+        public Obj(IntPtr handle, bool ownsHandle)
             : base(handle, ownsHandle)
         {
         }

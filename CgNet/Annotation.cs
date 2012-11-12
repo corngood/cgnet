@@ -32,7 +32,7 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Annotation(IntPtr handle, bool ownsHandle)
+        public Annotation(IntPtr handle, bool ownsHandle)
             : base(handle, ownsHandle)
         {
         }

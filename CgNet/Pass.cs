@@ -28,7 +28,7 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Pass(IntPtr handle, bool ownsHandle)
+        public Pass(IntPtr handle, bool ownsHandle)
             : base(handle, ownsHandle)
         {
         }

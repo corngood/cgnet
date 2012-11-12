@@ -220,6 +220,48 @@ namespace CgNet
             return NativeMethods.cgGetTypeSizes(type, out nrows, out ncols);
         }
 
+        public static unsafe string[] IntPtrToStringArray(IntPtr ptr)
+        {
+            if (ptr == IntPtr.Zero)
+            {
+                return null;
+            }
+
+            var byteArray = (byte**)ptr;
+            var lines = new List<string>();
+            var buffer = new List<byte>();
+
+            for (; ; )
+            {
+                byte* b = *byteArray;
+                for (; ; )
+                {
+                    if (b == null || *b == '\0')
+                    {
+                        if (buffer.Count > 0)
+                        {
+                            char[] cc = Encoding.ASCII.GetChars(buffer.ToArray());
+                            lines.Add(new string(cc));
+                            buffer.Clear();
+                        }
+                        break;
+                    }
+
+                    buffer.Add(*b);
+                    b++;
+                }
+
+                byteArray++;
+
+                if (b == null)
+                {
+                    break;
+                }
+            }
+
+            return lines.Count == 0 ? null : lines.ToArray();
+        }
+
         public static bool IsInterfaceType(ParameterType type)
         {
             return NativeMethods.cgIsInterfaceType(type);
@@ -262,48 +304,6 @@ namespace CgNet
             }
 
             return null;
-        }
-
-        internal static unsafe string[] IntPtrToStringArray(IntPtr ptr)
-        {
-            if (ptr == IntPtr.Zero)
-            {
-                return null;
-            }
-
-            var byteArray = (byte**)ptr;
-            var lines = new List<string>();
-            var buffer = new List<byte>();
-
-            for (; ; )
-            {
-                byte* b = *byteArray;
-                for (; ; )
-                {
-                    if (b == null || *b == '\0')
-                    {
-                        if (buffer.Count > 0)
-                        {
-                            char[] cc = Encoding.ASCII.GetChars(buffer.ToArray());
-                            lines.Add(new string(cc));
-                            buffer.Clear();
-                        }
-                        break;
-                    }
-
-                    buffer.Add(*b);
-                    b++;
-                }
-
-                byteArray++;
-
-                if (b == null)
-                {
-                    break;
-                }
-            }
-
-            return lines.Count == 0 ? null : lines.ToArray();
         }
 
         #endregion Internal Static Methods

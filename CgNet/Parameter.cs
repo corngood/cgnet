@@ -29,7 +29,7 @@ namespace CgNet
     {
         #region Constructors
 
-        internal Parameter(IntPtr handle, bool ownsHandle)
+        public Parameter(IntPtr handle, bool ownsHandle)
             : base(handle, ownsHandle)
         {
         }
