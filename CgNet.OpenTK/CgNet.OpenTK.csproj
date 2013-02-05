@@ -7,7 +7,6 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CgNet.GL</RootNamespace>
     <AssemblyName>CgNet.OpenTK</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SignAssembly>False</SignAssembly>
     <DelaySign>False</DelaySign>
@@ -16,9 +15,10 @@
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <AssemblyOriginatorKeyFile>..\CgNet.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -44,9 +44,6 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK">
-      <HintPath>..\..\..\..\..\SDKs\OpenTK\1.0\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -54,6 +51,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\..\..\svn\opentk\Binaries\OpenTK\Debug\OpenTK.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

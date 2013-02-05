@@ -1,7 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-# SharpDevelop 4.2.2.8818
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Header", "Header", "{7A1819A1-B466-4835-8AF1-D75FD7515CFD}"
 	ProjectSection(SolutionItems) = preProject
 		CgNet\Header\cg.h = CgNet\Header\cg.h
@@ -30,16 +29,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Release|x86.ActiveCfg = Release|Any CPU
 		{33E464A2-1599-4D09-9D07-E2FB1B82AD1E}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{33E464A2-1599-4D09-9D07-E2FB1B82AD1E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{33E464A2-1599-4D09-9D07-E2FB1B82AD1E}.Debug|Mixed Platforms.Build.0 = Debug|x86
@@ -50,30 +39,69 @@ Global
 		{33E464A2-1599-4D09-9D07-E2FB1B82AD1E}.Release|Mixed Platforms.Build.0 = Release|x86
 		{33E464A2-1599-4D09-9D07-E2FB1B82AD1E}.Release|x86.ActiveCfg = Release|x86
 		{33E464A2-1599-4D09-9D07-E2FB1B82AD1E}.Release|x86.Build.0 = Release|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|Any CPU.Build.0 = Debug|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|x86.Build.0 = Debug|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|x86.ActiveCfg = Debug|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|Any CPU.Build.0 = Release|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|Any CPU.ActiveCfg = Release|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|Mixed Platforms.Build.0 = Release|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|x86.Build.0 = Release|x86
-		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|x86.ActiveCfg = Release|x86
-		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Debug|Any CPU.Build.0 = Debug|x86
 		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Debug|Any CPU.Build.0 = Debug|x86
 		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Debug|x86.Build.0 = Debug|x86
+		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Debug|x86.ActiveCfg = Debug|x86
-		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Release|Any CPU.Build.0 = Release|x86
+		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Debug|x86.Build.0 = Debug|x86
 		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Release|Any CPU.ActiveCfg = Release|x86
-		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Release|Mixed Platforms.Build.0 = Release|x86
+		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Release|Any CPU.Build.0 = Release|x86
 		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Release|x86.Build.0 = Release|x86
+		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Release|Mixed Platforms.Build.0 = Release|x86
 		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Release|x86.ActiveCfg = Release|x86
+		{69FF2AB3-3BD1-4B96-92DE-28DEA92D6A14}.Release|x86.Build.0 = Release|x86
+		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8F858C68-C03F-4394-8FDE-B6BA2B9EBA99}.Release|x86.ActiveCfg = Release|Any CPU
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|Any CPU.Build.0 = Debug|x86
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|x86.ActiveCfg = Debug|x86
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Debug|x86.Build.0 = Debug|x86
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|Any CPU.ActiveCfg = Release|x86
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|Any CPU.Build.0 = Release|x86
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|Mixed Platforms.Build.0 = Release|x86
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|x86.ActiveCfg = Release|x86
+		{BA459981-3292-4716-954D-E21BD06A8B0B}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = CgNet\CgNet.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.IndentSwitchBody = True
+		$2.AnonymousMethodBraceStyle = NextLine
+		$2.PropertyBraceStyle = NextLine
+		$2.PropertyGetBraceStyle = NextLine
+		$2.PropertySetBraceStyle = NextLine
+		$2.EventBraceStyle = NextLine
+		$2.EventAddBraceStyle = NextLine
+		$2.EventRemoveBraceStyle = NextLine
+		$2.StatementBraceStyle = NextLine
+		$2.ArrayInitializerBraceStyle = NextLine
+		$2.BeforeMethodDeclarationParentheses = False
+		$2.BeforeMethodCallParentheses = False
+		$2.BeforeConstructorDeclarationParentheses = False
+		$2.BeforeDelegateDeclarationParentheses = False
+		$2.NewParentheses = False
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

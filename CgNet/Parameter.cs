@@ -149,7 +149,18 @@ namespace CgNet
             }
         }
 
-        public Parameter FirstUniformBufferParameter
+		public IEnumerable<StateAssignment> StateAssignments
+		{
+			get
+			{
+				for (StateAssignment sa = FirstStateAssignment; sa != null; sa = sa.NextStateAssignment)
+				{
+					yield return sa;
+				}
+			}
+		}
+
+		public Parameter FirstUniformBufferParameter
         {
             get
             {
@@ -422,6 +433,11 @@ namespace CgNet
             return NativeMethods.cgGetArrayTotalSize(this.Handle);
         }
 
+		public int GetTotalSize()
+		{
+			return Rows * Columns * Math.Max(GetArrayTotalSize(), 1);
+		}
+
         public ParameterType GetArrayType()
         {
             return NativeMethods.cgGetArrayType(this.Handle);
@@ -433,12 +449,12 @@ namespace CgNet
             return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
         }
 
-        public int GetDefaultValue(ref double[] values)
+        public int GetDefaultValue(double[] values)
         {
-            return this.GetDefaultValue(ref values, Cg.DefaultMatrixOrder);
+            return this.GetDefaultValue(values, Cg.DefaultMatrixOrder);
         }
 
-        public int GetDefaultValue(ref double[] values, MatrixOrder order)
+        public int GetDefaultValue(double[] values, MatrixOrder order)
         {
             IntPtr param = this.Handle;
             switch (order)
@@ -452,12 +468,12 @@ namespace CgNet
             }
         }
 
-        public int GetDefaultValue(ref int[] values)
+        public int GetDefaultValue(int[] values)
         {
-            return this.GetDefaultValue(ref values, Cg.DefaultMatrixOrder);
+            return this.GetDefaultValue(values, Cg.DefaultMatrixOrder);
         }
 
-        public int GetDefaultValue(ref int[] values, MatrixOrder order)
+        public int GetDefaultValue(int[] values, MatrixOrder order)
         {
             IntPtr param = this.Handle;
             switch (order)
@@ -471,12 +487,12 @@ namespace CgNet
             }
         }
 
-        public int GetDefaultValue(ref float[] values)
+        public int GetDefaultValue(float[] values)
         {
-            return this.GetDefaultValue(ref values, Cg.DefaultMatrixOrder);
+            return this.GetDefaultValue(values, Cg.DefaultMatrixOrder);
         }
 
-        public int GetDefaultValue(ref float[] values, MatrixOrder order)
+        public int GetDefaultValue(float[] values, MatrixOrder order)
         {
             IntPtr param = this.Handle;
             switch (order)
@@ -490,7 +506,35 @@ namespace CgNet
             }
         }
 
-        public Buffer GetEffectParameterBuffer()
+        public float GetDefaultValueSingle()
+        {
+            var value = new float[1];
+            if(GetDefaultValue(value) != value.Length) throw new InvalidOperationException();
+            return value[0];
+        }
+
+        public float[] GetDefaultValuesSingle()
+		{
+			var value = new float[GetTotalSize()];
+            if(GetDefaultValue(value) != value.Length) throw new InvalidOperationException();
+            return value;
+		}
+
+		public float GetDefaultValueInt32()
+		{
+			var value = new int[1];
+            if(GetDefaultValue(value) != value.Length) throw new InvalidOperationException();
+            return value[0];
+		}
+
+		public int[] GetDefaultValuesInt32()
+		{
+			var value = new int[GetTotalSize()];
+            if(GetDefaultValue(value) != value.Length) throw new InvalidOperationException();
+            return value;
+		}
+
+		public Buffer GetEffectParameterBuffer()
         {
             var ptr = NativeMethods.cgGetEffectParameterBuffer(this.Handle);
             return ptr == IntPtr.Zero ? null : new Buffer(ptr, false);

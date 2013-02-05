@@ -22,6 +22,7 @@ namespace CgNet
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.InteropServices;
 
     public sealed class Program : WrapperObject
@@ -105,7 +106,7 @@ namespace CgNet
             }
         }
 
-        public Program NextProgram
+		public Program NextProgram
         {
             get
             {
@@ -156,7 +157,23 @@ namespace CgNet
             }
         }
 
-        public ProgramType Type
+		public string ProfileString
+		{
+			get
+			{
+				return GetString(SourceType.ProgramProfile);
+			}
+		}
+
+		public string Entry
+		{
+			get
+			{
+				return GetString(SourceType.ProgramEntry);
+			}
+		}
+
+		public ProgramType Type
         {
             get;
             internal set;
@@ -268,6 +285,16 @@ namespace CgNet
             return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
         }
 
+		public IEnumerable<Parameter> GetLeafParameters(NameSpace nameSpace)
+		{
+            return Enumerate(() => this.GetFirstLeafParameter(nameSpace), t => t.NextLeafParameter);
+		}
+
+        public IEnumerable<Parameter> GetLeafParameters()
+        {
+            return GetLeafParameters(NameSpace.Global).Concat(GetLeafParameters(NameSpace.Program));
+        }
+
         public Annotation GetNamedAnnotation(string name)
         {
             var ptr = NativeMethods.cgGetNamedProgramAnnotation(this.Handle, name);
@@ -297,7 +324,15 @@ namespace CgNet
             return NativeMethods.cgGetNamedUserType(this.Handle, name);
         }
 
-        public string GetString(SourceType sourceType)
+		public IEnumerable<Parameter> GetParameters(NameSpace nameSpace)
+		{
+			for (Parameter p = GetFirstParameter(nameSpace); p != null; p = p.NextParameter)
+			{
+				yield return p;
+			}
+		}
+
+		public string GetString(SourceType sourceType)
         {
             return Marshal.PtrToStringAnsi(NativeMethods.cgGetProgramString(this.Handle, sourceType));
         }

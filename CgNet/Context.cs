@@ -22,6 +22,7 @@ namespace CgNet
 {
     using System;
     using System.Collections.Generic;
+	using System.Linq;
     using System.Runtime.InteropServices;
 
     public sealed class Context : WrapperObject
@@ -162,7 +163,7 @@ namespace CgNet
         {
             get
             {
-                return Marshal.PtrToStringAnsi(NativeMethods.cgGetLastListing(this.Handle));
+                return NativeMethods.cgGetLastListing(this.Handle);
             }
 
             set
@@ -245,23 +246,15 @@ namespace CgNet
 
         public Effect CreateEffect(string code, params string[] args)
         {
-            if (args != null && args.Length == 0)
-            {
-                args = null;
-            }
-
-            var ptr = NativeMethods.cgCreateEffect(this.Handle, code, args);
+            Cg.CompilerContext = this;
+            var ptr = NativeMethods.cgCreateEffect(this.Handle, code, convertArgs(args));
             return ptr == IntPtr.Zero ? null : new Effect(ptr, true);
         }
 
         public Effect CreateEffectFromFile(string filename, params string[] args)
         {
-            if (args != null && args.Length == 0)
-            {
-                args = null;
-            }
-
-            var ptr = NativeMethods.cgCreateEffectFromFile(this.Handle, filename, args);
+            Cg.CompilerContext = this;
+            var ptr = NativeMethods.cgCreateEffectFromFile(this.Handle, filename, convertArgs(args));
             return ptr == IntPtr.Zero ? null : new Effect(ptr, true);
         }
 
@@ -273,23 +266,15 @@ namespace CgNet
 
         public Obj CreateObj(ProgramType programType, string source, ProfileType profile, params string[] args)
         {
-            if (args != null && args.Length == 0)
-            {
-                args = null;
-            }
-
-            var ptr = NativeMethods.cgCreateObj(this.Handle, programType, source, profile, args);
+            Cg.CompilerContext = this;
+            var ptr = NativeMethods.cgCreateObj(this.Handle, programType, source, profile, convertArgs(args));
             return ptr == IntPtr.Zero ? null : new Obj(ptr, true);
         }
 
         public Obj CreateObjFromFile(ProgramType programType, string sourceFile, ProfileType profile, params string[] args)
         {
-            if (args != null && args.Length == 0)
-            {
-                args = null;
-            }
-
-            var ptr = NativeMethods.cgCreateObjFromFile(this.Handle, programType, sourceFile, profile, args);
+            Cg.CompilerContext = this;
+            var ptr = NativeMethods.cgCreateObjFromFile(this.Handle, programType, sourceFile, profile, convertArgs(args));
             return ptr == IntPtr.Zero ? null : new Obj(ptr, true);
         }
 
@@ -313,12 +298,8 @@ namespace CgNet
 
         public Program CreateProgram(ProgramType type, string source, ProfileType profile, string entry, params string[] args)
         {
-            if (args != null && args.Length == 0)
-            {
-                args = null;
-            }
-
-            var ptr = NativeMethods.cgCreateProgram(this.Handle, type, source, profile, entry, args);
+            Cg.CompilerContext = this;
+            var ptr = NativeMethods.cgCreateProgram(this.Handle, type, source, profile, entry, convertArgs(args));
             return ptr == IntPtr.Zero ? null : new Program(ptr, true)
             {
                 Type = type,
@@ -327,12 +308,8 @@ namespace CgNet
 
         public Program CreateProgramFromFile(ProgramType type, string file, ProfileType profile, string entry, params string[] args)
         {
-            if (args != null && args.Length == 0)
-            {
-                args = null;
-            }
-
-            var ptr = NativeMethods.cgCreateProgramFromFile(this.Handle, type, file, profile, entry, args);
+            Cg.CompilerContext = this;
+            var ptr = NativeMethods.cgCreateProgramFromFile(this.Handle, type, file, profile, entry, convertArgs(args));
             return ptr == IntPtr.Zero ? null : new Program(ptr, true)
             {
                 Type = type,
@@ -401,6 +378,13 @@ namespace CgNet
             {
                 this.compilerInclude(this, new CompilerIncludeEventArgs(filename));
             }
+        }
+
+        static string[] convertArgs(string[] args)
+        {
+            return args != null && args.Length > 0
+                ? args.Concat(new string[] { null }).ToArray()
+                : null;
         }
 
         #endregion Private Methods

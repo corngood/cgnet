@@ -21,6 +21,7 @@
 namespace CgNet
 {
     using System;
+    using System.Linq;
     using System.Runtime.InteropServices;
 
     public sealed class StateAssignment : WrapperObject
@@ -121,6 +122,16 @@ namespace CgNet
             return Cg.IntPtrToBoolArray(values, count);
         }
 
+		public bool[] GetBooleanValues()
+		{
+			return GetBoolValues();
+		}
+
+		public bool GetBooleanValue()
+		{
+			return GetBooleanValues()[0];
+		}
+
         public Parameter GetDependentParameter(int index)
         {
             var ptr = NativeMethods.cgGetDependentStateAssignmentParameter(this.Handle, index);
@@ -133,19 +144,41 @@ namespace CgNet
             return ptr == IntPtr.Zero ? null : new Parameter(ptr, false);
         }
 
-        public float[] GetFloatValues()
+        public unsafe float[] GetFloatValues()
         {
             int nVals;
-            return NativeMethods.cgGetFloatStateAssignmentValues(this.Handle, out nVals);
+            var data = NativeMethods.cgGetFloatStateAssignmentValues(this.Handle, out nVals);
+            return Enumerable.Range(0, nVals).Select(x => data[x]).ToArray();
         }
 
-        public int[] GetIntValues()
+		public float[] GetSingleValues()
+		{
+			return GetFloatValues();
+		}
+		
+		public float GetSingleValue()
+		{
+			return GetSingleValues()[0];
+		}
+
+		public unsafe int[] GetIntValues()
         {
             int nVals;
-            return NativeMethods.cgGetIntStateAssignmentValues(this.Handle, out nVals);
+            var data = NativeMethods.cgGetIntStateAssignmentValues(this.Handle, out nVals);
+            return Enumerable.Range(0, nVals).Select(x => data[x]).ToArray();
         }
 
-        public Program GetProgramValue()
+		public int[] GetInt32Values()
+		{
+			return GetIntValues();
+		}
+		
+		public int GetInt32Value()
+		{
+			return GetIntValues()[0];
+		}
+
+		public Program GetProgramValue()
         {
             var ptr = NativeMethods.cgGetProgramStateAssignmentValue(this.Handle);
             return ptr == IntPtr.Zero ? null : new Program(ptr, false);

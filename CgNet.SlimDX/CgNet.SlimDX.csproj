@@ -10,6 +10,8 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -44,9 +46,6 @@
     <Compile Include="D3D9\CgD3D9Program.cs" />
     <Compile Include="D3D9\NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="D3D9" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CgNet\CgNet.csproj">

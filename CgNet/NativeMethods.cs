@@ -41,7 +41,7 @@ namespace CgNet
         internal const int CgFalse = 0;
         internal const int CgTrue = 1;
 
-        private const string CgNativeLibrary = "cg.dll";
+        private const string CgNativeLibrary = "Cg.dll";
         private const CallingConvention Convention = CallingConvention.Cdecl;
 
         #endregion Fields
@@ -328,7 +328,7 @@ namespace CgNet
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         [Obsolete]
-        public static extern int[] cgGetBooleanAnnotationValues(IntPtr annotation, out int[] nvalues);
+        public static unsafe extern int* cgGetBooleanAnnotationValues(IntPtr annotation, out int[] nvalues);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -666,7 +666,7 @@ namespace CgNet
         // CGDLL_API const float *cgGetFloatAnnotationValues(CGannotation, int *nvalues);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern float[] cgGetFloatAnnotationValues(IntPtr annotation, out int nvalues);
+        public static unsafe extern float* cgGetFloatAnnotationValues(IntPtr annotation, out int nvalues);
 
         /// <summary>
         /// 
@@ -677,7 +677,7 @@ namespace CgNet
         // CGDLL_API const float *cgGetFloatStateAssignmentValues(CGstateassignment, int *nVals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern float[] cgGetFloatStateAssignmentValues(IntPtr stateassignment, out int nVals);
+        public static unsafe extern float* cgGetFloatStateAssignmentValues(IntPtr stateassignment, out int nVals);
 
         /// <summary>
         /// 
@@ -688,7 +688,7 @@ namespace CgNet
         // CGDLL_API const int *cgGetIntAnnotationValues(CGannotation, int *nvalues);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern int[] cgGetIntAnnotationValues(IntPtr annotation, out int nvalues);
+        public static unsafe extern int* cgGetIntAnnotationValues(IntPtr annotation, out int nvalues);
 
         /// <summary>
         /// 
@@ -699,7 +699,7 @@ namespace CgNet
         // CGDLL_API const int *cgGetIntStateAssignmentValues(CGstateassignment, int *nVals);
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern int[] cgGetIntStateAssignmentValues(IntPtr stateassignment, out int nVals);
+        public static unsafe extern int* cgGetIntStateAssignmentValues(IntPtr stateassignment, out int nVals);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -707,7 +707,7 @@ namespace CgNet
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern IntPtr cgGetLastListing(IntPtr context);
+        public static extern string cgGetLastListing(IntPtr context);
 
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
@@ -1417,7 +1417,7 @@ namespace CgNet
         [DllImport(CgNativeLibrary, CallingConvention = Convention)]
         [SuppressUnmanagedCodeSecurity]
         [Obsolete]
-        public static extern double[] cgGetParameterValues(IntPtr param, int valueType, int[] nvalues);
+        public static unsafe extern double* cgGetParameterValues(IntPtr param, int valueType, int[] nvalues);
 
         /// <summary>
         ///    Gets the variability of the specified param (i.e, uniform, varying, etc).

@@ -35,7 +35,7 @@ namespace CgNet.GL
     {
         #region Fields
 
-        private const string CgGLNativeLibrary = "cgGL.dll";
+        private const string CgGLNativeLibrary = "CgGL.dll";
         private const CallingConvention Convention = CallingConvention.Cdecl;
 
         #endregion Fields

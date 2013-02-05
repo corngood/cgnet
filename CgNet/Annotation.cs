@@ -22,6 +22,7 @@ namespace CgNet
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
 
@@ -51,6 +52,17 @@ namespace CgNet
             get
             {
                 return NativeMethods.cgGetNumDependentAnnotationParameters(this.Handle);
+            }
+        }
+
+        public IEnumerable<Parameter> DependentParameters
+        {
+            get
+            {
+                for (int i = 0; i < DependentParametersCount; ++i)
+                {
+                    yield return GetDependentParameter(i);
+                }
             }
         }
 
@@ -118,6 +130,16 @@ namespace CgNet
             return Cg.IntPtrToBoolArray(values, count);
         }
 
+		public bool[] GetBooleanValues()
+		{
+			return GetBoolValues();
+		}
+
+		public bool GetBooleanValue()
+		{
+			return GetBooleanValues()[0];
+		}
+
         /// <summary>
         /// Get one of the parameters that an annotation's value depends on.
         /// </summary>
@@ -133,21 +155,33 @@ namespace CgNet
         /// Get the values from a float-valued annotation.
         /// </summary>
         /// <returns>Returns an array of float values.</returns>
-        public float[] GetFloatValues()
+        public unsafe float[] GetFloatValues()
         {
             int nvalues;
-            return NativeMethods.cgGetFloatAnnotationValues(this.Handle, out nvalues);
+            var data = NativeMethods.cgGetFloatAnnotationValues(this.Handle, out nvalues);
+            return Enumerable.Range(0, nvalues).Select(x => data[x]).ToArray();
         }
 
         /// <summary>
         /// Get the values from a integer-valued annotation.
         /// </summary>
         /// <returns>Returns an array of integer values.</returns>
-        public int[] GetIntValues()
+        public unsafe int[] GetIntValues()
         {
             int nvalues;
-            return NativeMethods.cgGetIntAnnotationValues(this.Handle, out nvalues);
+            var data = NativeMethods.cgGetIntAnnotationValues(this.Handle, out nvalues);
+            return Enumerable.Range(0, nvalues).Select(x => data[x]).ToArray();
         }
+
+		public int[] GetInt32Values()
+		{
+			return GetIntValues();
+		}
+
+		public int GetInt32Value()
+		{
+			return GetIntValues()[0];
+		}
 
         /// <summary>
         /// Get a string-valued annotation's value.

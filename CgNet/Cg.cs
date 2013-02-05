@@ -25,6 +25,36 @@ namespace CgNet
     using System.Runtime.InteropServices;
     using System.Text;
 
+	public class ErrorException : Exception
+	{
+		public readonly ErrorType Type;
+		
+		public ErrorException(ErrorType type)
+		{
+			Type = type;
+		}
+		
+		public override string ToString()
+		{
+			return string.Format("[ErrorException: {0:x} ({1})]", Type, CgEnums.GetError(Type));
+		}
+	}
+
+    public class CompilerErrorException : ErrorException
+    {
+        public readonly string Listing;
+        
+        public CompilerErrorException(ErrorType type, string listing) : base(type)
+        {
+            Listing = listing;
+        }
+        
+        public override string ToString()
+        {
+            return string.Format("[CompilerErrorException: {0:x} ({1})]", Type, CgEnums.GetError(Type));
+        }
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -34,6 +64,9 @@ namespace CgNet
 
         private static readonly object PadLock = new object();
 
+        [ThreadStatic]
+        internal static Context CompilerContext;
+
         #endregion Fields
 
         #region Constructors
@@ -41,6 +74,18 @@ namespace CgNet
         static Cg()
         {
             DefaultMatrixOrder = MatrixOrder.RowMajor;
+
+            Error += (sender, e) => 
+            {
+                if(e.ErrorType == ErrorType.CompilerError)
+                {
+                    throw new CompilerErrorException(e.ErrorType, CompilerContext.LastListing);
+                }
+                else
+                {
+                    throw new ErrorException(e.ErrorType);
+                }
+            };
         }
 
         #endregion Constructors
@@ -220,7 +265,28 @@ namespace CgNet
             return NativeMethods.cgGetTypeSizes(type, out nrows, out ncols);
         }
 
-        public static unsafe string[] IntPtrToStringArray(IntPtr ptr)
+		public static int GetTypeRows(ParameterType type)
+		{
+			int nrows, ncols;
+			GetTypeSizes(type, out nrows, out ncols);
+			return nrows;
+		}
+
+		public static int GetTypeColumns(ParameterType type)
+		{
+			int nrows, ncols;
+			GetTypeSizes(type, out nrows, out ncols);
+			return ncols;
+		}
+
+		public static int GetTypeSize(ParameterType type)
+		{
+			int nrows, ncols;
+			GetTypeSizes(type, out nrows, out ncols);
+			return nrows * ncols;
+		}
+
+		public static unsafe string[] IntPtrToStringArray(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
             {

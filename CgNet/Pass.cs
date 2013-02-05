@@ -65,7 +65,18 @@ namespace CgNet
             }
         }
 
-        public bool IsPass
+		public IEnumerable<StateAssignment> StateAssignments
+		{
+			get
+			{
+				for (StateAssignment sa = FirstStateAssignment; sa != null; sa = sa.NextStateAssignment)
+				{
+					yield return sa;
+				}
+			}
+		}
+
+		public bool IsPass
         {
             get
             {
